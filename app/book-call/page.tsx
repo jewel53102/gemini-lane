@@ -1,51 +1,88 @@
+import Link from "next/link";
+
+export const metadata = {
+  title: "Book a Strategy Call | Gemini Lane",
+  description:
+    "Book a 15-minute strategy call to identify workflow, automation, and operations improvements for your business.",
+};
+
 export default function BookCallPage() {
   return (
     <main className="booking-page">
-      {/* HERO */}
       <section className="booking-hero">
-        <p className="eyebrow">Free Strategy Call</p>
+        <p className="eyebrow">Free 15-Minute Strategy Call</p>
 
-        <h1>Let’s identify exactly where your business is losing time.</h1>
+        <h1>Let’s see if better systems could save your business time.</h1>
 
         <p>
-          This is a focused 15-minute call where we’ll look at your workflows,
-          identify bottlenecks, and map out what to fix first.
+          This call is for business owners who are ready to improve workflows,
+          reduce repetitive work, and explore practical automation or dashboard
+          solutions.
+        </p>
+
+        <p className="hero-positioning">
+          Best fit for service-based businesses doing $100K–$5M/year • Typical
+          engagements range from $1,500–$5,000
         </p>
       </section>
 
-      {/* CONTENT */}
       <section className="booking-section">
         <div className="booking-grid">
           <div className="booking-card">
-            <h2>What we’ll cover</h2>
+            <h2>This call is a good fit if you...</h2>
 
             <ul>
-              <li>Where your time is being lost</li>
-              <li>What tasks can be automated</li>
-              <li>How your workflows can be simplified</li>
-              <li>What system would make the biggest impact</li>
+              <li>Are losing time to repetitive admin work</li>
+              <li>Need better workflows or project visibility</li>
+              <li>Want to automate follow-up or backend tasks</li>
+              <li>Are ready to invest in better systems</li>
             </ul>
           </div>
 
           <div className="booking-card">
-            <h2>Who this is for</h2>
+            <h2>This may not be the right fit if you...</h2>
 
             <ul>
-              <li>Business owners doing $100K–$5M</li>
-              <li>Managing too many day-to-day tasks</li>
-              <li>Looking to improve efficiency and systems</li>
-              <li>Open to automation and AI tools</li>
+              <li>Only need general business advice</li>
+              <li>Are looking for a free full consulting session</li>
+              <li>Are not ready to make operational changes</li>
+              <li>Need emergency same-day technical support</li>
             </ul>
           </div>
         </div>
 
-        {/* CTA + CALENDAR */}
+        <div className="booking-card booking-expectations">
+          <h2>What we’ll cover in 15 minutes</h2>
+
+          <div className="booking-steps">
+            <div>
+              <span>01</span>
+              <h3>Your bottleneck</h3>
+              <p>Where work feels manual, scattered, or harder than it should be.</p>
+            </div>
+
+            <div>
+              <span>02</span>
+              <h3>Your best first fix</h3>
+              <p>What workflow, dashboard, or automation would create the fastest improvement.</p>
+            </div>
+
+            <div>
+              <span>03</span>
+              <h3>Your next step</h3>
+              <p>Whether a Quick Fix, Core Systems Build, or Full Optimization makes sense.</p>
+            </div>
+          </div>
+        </div>
+
         <div className="booking-cta">
-          <h2>Choose a time below</h2>
+          <p className="eyebrow">Book your call</p>
+
+          <h2>Choose a time below.</h2>
 
           <p className="booking-subtext">
-            This is not a sales call. You’ll leave with clear next steps whether
-            we work together or not.
+            You’ll leave with a clear recommendation, even if we decide it is
+            not the right time to work together.
           </p>
 
           <div
@@ -53,6 +90,11 @@ export default function BookCallPage() {
               __html: `<iframe src="https://calendly.com/groves-ruby/geminilanebizanalysis" width="100%" height="700" frameBorder="0"></iframe>`,
             }}
           />
+
+          <p className="cta-micro">
+            Prefer to start with the assessment?{" "}
+            <Link href="/free-business-analysis">Take the free analysis first.</Link>
+          </p>
         </div>
       </section>
     </main>

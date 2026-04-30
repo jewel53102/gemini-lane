@@ -1,9 +1,9 @@
 "use client";
 
-import Link from "next/link";
 import { useEffect, useState } from "react";
+import Link from "next/link";
 
-type AnalysisResult = {
+type Result = {
   score: number;
   level: string;
   timeLoss: string;
@@ -13,26 +13,19 @@ type AnalysisResult = {
 };
 
 export default function ResultsPage() {
-  const [result, setResult] = useState<AnalysisResult | null>(null);
+  const [result, setResult] = useState<Result | null>(null);
 
   useEffect(() => {
-    const saved = localStorage.getItem("geminiLaneAnalysisResult");
-
-    if (saved) {
-      setResult(JSON.parse(saved));
+    const stored = localStorage.getItem("geminiLaneAnalysisResult");
+    if (stored) {
+      setResult(JSON.parse(stored));
     }
   }, []);
 
   if (!result) {
     return (
       <main className="results-page">
-        <section className="results-hero">
-          <h1>No results found.</h1>
-          <p>Please complete the free business analysis first.</p>
-          <Link href="/free-business-analysis" className="primary-button">
-            Take the Analysis
-          </Link>
-        </section>
+        <p>Loading your results...</p>
       </main>
     );
   }
@@ -40,74 +33,97 @@ export default function ResultsPage() {
   return (
     <main className="results-page">
       <section className="results-hero">
-        <p className="eyebrow">Your Results Are Ready</p>
+        <p className="eyebrow">Your Business Analysis</p>
 
-        <h1>Your Business Efficiency Score: {result.score}/100</h1>
+        <h1>Your efficiency score: {result.score}/100</h1>
+
+        <p className="results-summary">
+          Based on your answers, your business is currently experiencing{" "}
+          <strong>{result.level}</strong> and may be losing{" "}
+          <strong>{result.timeLoss}</strong> every week due to workflow gaps,
+          manual work, or lack of systems.
+        </p>
+      </section>
+
+      {/* 🔥 Urgency block */}
+      <section className="results-warning">
+        <h2>This is what that actually means</h2>
 
         <p>
-          Based on your answers, your business currently falls into the{" "}
-          <strong>{result.level}</strong> range.
+          That time loss compounds every week. What feels like small inefficiencies
+          usually turns into:
         </p>
 
-        <div className="score-card">
-          <span>{result.score}</span>
-          <p>
-  {result.recommendation ||
-    "Your results show opportunities to improve workflows, reduce manual work, and build stronger operating systems."}
-</p>
-        </div>
+        <ul>
+          <li>Missed follow-ups and lost opportunities</li>
+          <li>Constant context switching and mental overload</li>
+          <li>More work falling back on you instead of your systems</li>
+        </ul>
       </section>
 
+      {/* 🔥 Problems */}
       <section className="results-section">
-        <div className="results-grid">
-          <div className="results-card">
-            <h2>Where you are likely losing time</h2>
-            <p className="time-loss">{result.timeLoss}</p>
-          </div>
+        <h2>Your biggest problem areas</h2>
 
-          <div className="results-card">
-            <h2>Your main problem areas</h2>
-            <ul>
-              {result.problemAreas.map((area) => (
-                <li key={area}>{area}</li>
-              ))}
-            </ul>
-          </div>
-
-          <div className="results-card">
-            <h2>What to fix first</h2>
-            <ul>
-              {result.quickWins.map((win) => (
-                <li key={win}>{win}</li>
-              ))}
-            </ul>
-          </div>
-        </div>
+        <ul>
+          {result.problemAreas.map((item) => (
+            <li key={item}>{item}</li>
+          ))}
+        </ul>
       </section>
 
+      {/* 🔥 Quick wins */}
+      <section className="results-section">
+        <h2>What you can improve quickly</h2>
+
+        <ul>
+          {result.quickWins.map((item) => (
+            <li key={item}>{item}</li>
+          ))}
+        </ul>
+      </section>
+
+      {/* 🔥 Recommendation */}
+      <section className="results-section">
+        <h2>Recommended next step</h2>
+
+        <p>{result.recommendation}</p>
+      </section>
+
+      {/* 🔥 Conversion block */}
       <section className="results-cta">
-        <p className="eyebrow">Next Step</p>
-        <h2>Your results show exactly where we should start.</h2>
+        <h2>Want help fixing this?</h2>
+
         <p>
-  Gemini Lane can help you turn these findings into a practical 2–4 week
-  systems improvement plan. We’ll identify what to automate first, what workflow
-  needs cleanup, and what dashboard or operating system would make the biggest
-  difference.
-</p>
+          We can use a short 15-minute call to identify exactly what to fix first,
+          what can be automated, and what system would make the biggest impact
+          on your business.
+        </p>
 
         <div className="hero-actions center">
-            <p className="results-urgency">
-  I’m currently opening a limited number of workflow improvement spots for local
-  Frederick-area businesses.
-</p>
-          <Link href="/contact" className="primary-button">
-  Book My Free 15-Minute Strategy Call
-</Link>
+          <Link href="/book-call" className="primary-button">
+            Book Your Free 15-Minute Call
+          </Link>
 
           <Link href="/dashboards" className="secondary-button">
-    View Sample Dashboards
-  </Link>
+            View Sample Dashboards
+          </Link>
         </div>
+
+        <p className="cta-micro">
+          No pressure • No long sales call • Just clarity on what to fix
+        </p>
+      </section>
+
+      {/* 🔥 Secondary trust section */}
+      <section className="results-trust">
+        <h3>What happens on the call?</h3>
+
+        <ul>
+          <li>We identify your biggest bottleneck</li>
+          <li>We map what’s causing the inefficiency</li>
+          <li>We outline a simple, realistic fix</li>
+        </ul>
       </section>
     </main>
   );

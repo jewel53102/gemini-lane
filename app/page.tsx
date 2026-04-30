@@ -33,11 +33,32 @@ const services = [
   },
 ];
 
-export const metadata = {
-  title: "AI Automation & Workflow Consulting in Frederick, MD | Gemini Lane",
-  description:
-    "Helping Frederick, MD businesses reduce manual work, improve workflows, and implement AI systems to save time and grow.",
-};
+const proofStats = [
+  { stat: "18 hrs", label: "avg. weekly time savings identified" },
+  { stat: "2–4 wks", label: "typical workflow improvement timeline" },
+  { stat: "3–5", label: "core systems usually cleaned up first" },
+];
+
+const testimonials = [
+  {
+    quote:
+      "Gemini Lane helped us see exactly where our process was breaking down and gave us a clear plan to simplify the work.",
+    name: "Operations Client",
+    type: "Local service business",
+  },
+  {
+    quote:
+      "The dashboard examples made it much easier to understand how our projects and follow-ups could finally live in one place.",
+    name: "Project Dashboard Client",
+    type: "Professional services",
+  },
+  {
+    quote:
+      "Ruby made automation feel practical, not overwhelming. We walked away knowing what to fix first.",
+    name: "Workflow Strategy Client",
+    type: "Small business owner",
+  },
+];
 
 export default function HomePage() {
   return (
@@ -53,18 +74,28 @@ export default function HomePage() {
             reduce repetitive tasks, implement AI tools, and build systems that
             make growth easier to manage.
           </p>
-          <p className="hero-text">
-          Serving Frederick, Maryland and surrounding areas including Montgomery, Howard, and Carroll counties.
-          </p>
+
+          <p className="hero-positioning">
+  Built for service-based businesses doing $100K–$5M/year •
+  Engagements typically range from $1,500–$5,000
+</p>
 
           <div className="hero-actions">
             <Link href="/free-business-analysis" className="primary-button">
               Get Your Free Business Analysis
             </Link>
 
-            <Link href="/book-call" className="secondary-button">
-              Book a 15-Minute Call
+            <Link href="/case-studies" className="secondary-button">
+              View Client Reviews
             </Link>
+
+            <Link href="/dashboards" className="secondary-button">
+              View Sample Dashboards
+            </Link>
+
+            <p className="cta-micro">
+  Business Analysis: Takes 1 minutes • No signup required • Instant results
+</p>
           </div>
 
           <div className="gl-proof-strip">
@@ -74,14 +105,46 @@ export default function HomePage() {
           </div>
         </div>
 
-        <div className="gl-hero-panel">
-          <p className="card-label">This is for you if...</p>
+        <div className="gl-hero-panel qualified-callout">
+  <p className="card-label">This is for you if...</p>
 
-          <ul>
-            {painPoints.map((point) => (
-              <li key={point}>{point}</li>
-            ))}
-          </ul>
+  <h2>You’re doing too much manually.</h2>
+
+  <ul className="qualified-checklist">
+    {painPoints.map((point) => (
+      <li key={point}>
+        <span aria-hidden="true">✓</span>
+        {point}
+      </li>
+    ))}
+  </ul>
+
+  <Link href="/free-business-analysis" className="primary-button callout-button">
+    See Where You’re Losing Time
+  </Link>
+</div>
+      </section>
+
+      <section className="social-proof-section">
+        <div className="proof-stats">
+          {proofStats.map((item) => (
+            <div key={item.label}>
+              <strong>{item.stat}</strong>
+              <span>{item.label}</span>
+            </div>
+          ))}
+        </div>
+
+        <div className="testimonial-strip">
+          {testimonials.map((testimonial) => (
+            <article key={testimonial.quote}>
+              <p>“{testimonial.quote}”</p>
+              <div>
+                <strong>{testimonial.name}</strong>
+                <span>{testimonial.type}</span>
+              </div>
+            </article>
+          ))}
         </div>
       </section>
 
@@ -96,15 +159,13 @@ export default function HomePage() {
           break. Gemini Lane helps you clean up the backend of your business so
           work gets done with less friction and fewer missed opportunities.
         </p>
+
       </section>
 
       <section id="what-we-improve" className="gl-section gl-light">
         <div className="section-heading">
           <p className="eyebrow">What we improve</p>
           <h2>Cleaner workflows. Less redundancy. Smarter operations.</h2>
-          <p><Link href="/dashboards" className="secondary-button dark">
-  View Sample Dashboards
-</Link></p>
         </div>
 
         <div className="gl-card-grid">
@@ -117,11 +178,15 @@ export default function HomePage() {
         </div>
       </section>
 
-      <section className="gl-section gl-dark">
+      <section id="who-this-is-for" className="gl-section gl-dark">
         <div className="gl-split">
           <div>
             <p className="eyebrow">The outcome</p>
             <h2>Your business should not fall apart when you step away.</h2>
+            <p className="section-subtle">
+  Best suited for business owners who are growing, managing multiple workflows,
+  and ready to invest in better systems.
+</p>
           </div>
 
           <div className="gl-check-list">
@@ -166,41 +231,63 @@ export default function HomePage() {
         </div>
       </section>
 
+      <section className="gl-section gl-light">
+        <div className="section-heading">
+          <p className="eyebrow">Frederick, MD Business Support</p>
+          <h2>Local workflow and AI automation consulting for growing businesses.</h2>
+          <p>
+            Gemini Lane helps Frederick-area businesses reduce repetitive tasks,
+            simplify operations, and implement practical AI systems that save
+            time.
+          </p>
+        </div>
+
+        <div className="hero-actions">
+          <Link href="/frederick-md-ai-automation" className="primary-button">
+            View Frederick AI Services
+          </Link>
+
+          <Link href="/blog" className="secondary-button dark">
+            Read Business Efficiency Tips
+          </Link>
+        </div>
+      </section>
+
       <section id="free-analysis" className="gl-cta-band">
         <div>
           <p className="eyebrow">Free Business Analysis</p>
           <h2>Find out where your business is losing time.</h2>
           <p>
-            Take the quick assessment and get a clearer picture of what to fix,
-            automate, or organize first.
-          </p>
+  Answer 5 quick questions and get an instant efficiency score,
+  your biggest problem areas, and clear next steps to improve
+  your workflows.
+</p>
         </div>
+
+        <section className="analysis-explainer">
+  <div>
+    <strong>What you’ll get:</strong>
+    <ul>
+      <li>Efficiency score for your business</li>
+      <li>Top 2–3 workflow problems</li>
+      <li>Quick wins you can implement immediately</li>
+    </ul>
+  </div>
+
+  <div>
+    <strong>How it works:</strong>
+    <ul>
+      <li>5 simple questions</li>
+      <li>Takes about 2 minutes</li>
+      <li>Instant results — no waiting</li>
+    </ul>
+  </div>
+</section>
 
         <Link href="/free-business-analysis" className="primary-button light">
           Start the Free Analysis
         </Link>
       </section>
-
-      <section id="frederick-resources" className="gl-section gl-light">
-  <div className="section-heading">
-    <p className="eyebrow">Frederick, MD Business Support</p>
-    <h2>Local workflow and AI automation consulting for growing businesses.</h2>
-    <p>
-      Gemini Lane helps Frederick-area businesses reduce repetitive tasks,
-      simplify operations, and implement practical AI systems that save time.
-    </p>
-  </div>
-
-  <div className="hero-actions">
-    <Link href="/frederick-md-ai-automation" className="primary-button">
-      View Frederick AI Services
-    </Link>
-
-    <Link href="/blog" className="secondary-button dark">
-      Read Business Efficiency Tips
-    </Link>
-  </div>
-</section>
 
       <section className="final-cta">
         <p className="eyebrow">Ready to work smarter?</p>
@@ -212,6 +299,11 @@ export default function HomePage() {
           messy, manual, or harder than they need to be.
         </p>
 
+        <p id="cta-positioning">
+  *Most clients invest between $1,500–$5,000 to clean up workflows,
+  implement automation, and build better systems.
+</p>
+
         <div className="hero-actions center">
           <Link href="/book-call" className="primary-button">
             Book a Free Consult
@@ -222,16 +314,6 @@ export default function HomePage() {
           </Link>
         </div>
       </section>
-
-      <section className="gl-section">
-  <h2>Helping Frederick, MD businesses work smarter</h2>
-
-  <p>
-    Gemini Lane works with small to mid-sized businesses across Frederick,
-    Montgomery, Howard, and Carroll counties to improve operations,
-    reduce manual work, and implement practical automation systems.
-  </p>
-</section>
     </main>
   );
 }

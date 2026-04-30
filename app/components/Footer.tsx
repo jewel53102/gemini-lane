@@ -33,17 +33,22 @@ export default function Footer() {
         </div>
 
         <div>
-          <h3>Ready to simplify your business?</h3>
+  <h3>Prefer to reach out directly?</h3>
 
-          <p>
-            Start with a free analysis to see where your business may be losing
-            time through manual work, unclear workflows, or disconnected systems.
-          </p>
+  <p>
+    Have a question before taking the analysis? Contact Gemini Lane directly and
+    we’ll point you toward the right next step.
+  </p>
 
-          <Link href="/free-business-analysis" className="footer-button">
-            Get My Free Analysis
-          </Link>
-        </div>
+  <p>
+    <strong>Email:</strong>{" "}
+    <a href="mailto:info@gemini-lane.com">info@gemini-lane.com</a>
+  </p>
+
+  <Link href="/contact" className="footer-button">
+    Contact Gemini Lane
+  </Link>
+</div>
       </div>
 
       <div className="footer-bottom">
