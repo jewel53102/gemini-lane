@@ -17,19 +17,19 @@ const outcomes = [
 const services = [
   {
     title: "AI Automation",
-    text: "Use AI and automation to reduce manual work, improve follow-up, and create faster internal workflows.",
+    text: "Turn repetitive work into automated systems that run in the background—so you can focus on growth instead of busywork.",
   },
   {
     title: "Workflow Optimization",
-    text: "Clean up messy processes, remove duplicate work, and build repeatable systems for your day-to-day operations.",
+    text: "We redesign your workflows so your day-to-day operations feel clear, structured, and easy to manage.",
   },
   {
     title: "Project Dashboards",
-    text: "Replace scattered tools with dashboards that track clients, tasks, timelines, and responsibilities.",
+    text: "See exactly what’s happening in your business at a glance—without digging through spreadsheets or scattered tools.",
   },
   {
     title: "Operations Consulting",
-    text: "Create structure behind the scenes so your business can grow without depending on you for every detail.",
+    text: "Replace chaos with a system that actually supports growth—so your business can scale without relying on you for everything.",
   },
 ];
 
@@ -81,22 +81,14 @@ export default function HomePage() {
 </p>
 
           <div className="hero-actions">
-            <Link href="/free-business-analysis" className="primary-button">
-              Get Your Free Business Analysis
-            </Link>
+  <Link href="/free-business-analysis" className="primary-button">
+    Get Your Free Business Analysis
+  </Link>
 
-            <Link href="/case-studies" className="secondary-button">
-              View Client Reviews
-            </Link>
-
-            <Link href="/dashboards" className="secondary-button">
-              View Sample Dashboards
-            </Link>
-
-            <p className="cta-micro">
-  Business Analysis: Takes 1 minutes • No signup required • Instant results
-</p>
-          </div>
+  <p className="cta-micro">
+    Takes 1 minute • No signup required • Instant results
+  </p>
+</div>
 
           <div className="gl-proof-strip">
             <span>AI Automation</span>
@@ -176,6 +168,16 @@ export default function HomePage() {
             </article>
           ))}
         </div>
+
+        <div className="hero-actions center">
+  <Link href="/case-studies" className="primary-button">
+    View Client Reviews
+  </Link>
+
+  <Link href="/dashboards" className="primary-button">
+    View Sample Dashboards
+  </Link>
+</div>
       </section>
 
       <section id="who-this-is-for" className="gl-section gl-dark">
@@ -204,31 +206,36 @@ export default function HomePage() {
         </div>
 
         <div className="process-grid">
-          <div>
-            <span>01</span>
-            <h3>Analyze</h3>
-            <p>
-              We review your current workflows, tools, tasks, and bottlenecks.
-            </p>
-          </div>
+  <div>
+    <span>01</span>
+    <p className="process-timeframe">Day 1–3</p>
+    <h3>Analyze</h3>
+    <p>
+      We review your current workflows, tools, tasks, and bottlenecks so we can
+      identify where time, money, and follow-up are slipping through the cracks.
+    </p>
+  </div>
 
-          <div>
-            <span>02</span>
-            <h3>Build</h3>
-            <p>
-              We create better processes, dashboards, automations, and operating
-              systems.
-            </p>
-          </div>
+  <div>
+    <span>02</span>
+    <p className="process-timeframe">Week 1–3</p>
+    <h3>Build</h3>
+    <p>
+      We create better processes, dashboards, automations, and operating systems
+      that make your day-to-day work easier to manage.
+    </p>
+  </div>
 
-          <div>
-            <span>03</span>
-            <h3>Optimize</h3>
-            <p>
-              We refine the system so your business runs with more consistency.
-            </p>
-          </div>
-        </div>
+  <div>
+    <span>03</span>
+    <p className="process-timeframe">Week 3–4</p>
+    <h3>Optimize</h3>
+    <p>
+      We refine the system, test what is working, and make adjustments so your
+      business runs with more consistency.
+    </p>
+  </div>
+</div>
       </section>
 
       <section className="gl-section gl-light">
@@ -254,40 +261,41 @@ export default function HomePage() {
       </section>
 
       <section id="free-analysis" className="gl-cta-band">
-        <div>
-          <p className="eyebrow">Free Business Analysis</p>
-          <h2>Find out where your business is losing time.</h2>
-          <p>
-  Answer 5 quick questions and get an instant efficiency score,
-  your biggest problem areas, and clear next steps to improve
-  your workflows.
-</p>
-        </div>
+  <div className="cta-content">
+    <p className="eyebrow">Free Business Analysis</p>
 
-        <section className="analysis-explainer">
-  <div>
-    <strong>What you’ll get:</strong>
-    <ul>
-      <li>Efficiency score for your business</li>
-      <li>Top 2–3 workflow problems</li>
-      <li>Quick wins you can implement immediately</li>
-    </ul>
+    <h2>Find out where your business is losing time.</h2>
+
+    <p>
+      Answer 5 quick questions and get an instant efficiency score, your biggest
+      problem areas, and clear next steps to improve your workflows.
+    </p>
+
+    <Link href="/free-business-analysis" className="primary-button light">
+      Start the Free Analysis
+    </Link>
   </div>
 
-  <div>
-    <strong>How it works:</strong>
-    <ul>
-      <li>5 simple questions</li>
-      <li>Takes about 2 minutes</li>
-      <li>Instant results — no waiting</li>
-    </ul>
+  <div className="analysis-explainer">
+    <div>
+      <strong>What you’ll get:</strong>
+      <ul>
+        <li>Efficiency score for your business</li>
+        <li>Top 2–3 workflow problems</li>
+        <li>Quick wins you can implement immediately</li>
+      </ul>
+    </div>
+
+    <div>
+      <strong>How it works:</strong>
+      <ul>
+        <li>5 simple questions</li>
+        <li>Takes about 1 minute</li>
+        <li>Instant results — no waiting</li>
+      </ul>
+    </div>
   </div>
 </section>
-
-        <Link href="/free-business-analysis" className="primary-button light">
-          Start the Free Analysis
-        </Link>
-      </section>
 
       <section className="final-cta">
         <p className="eyebrow">Ready to work smarter?</p>
@@ -295,8 +303,7 @@ export default function HomePage() {
         <h2>Let’s build the systems your business needs to grow.</h2>
 
         <p>
-          Book a free consult and we’ll talk through where your workflows feel
-          messy, manual, or harder than they need to be.
+          In 15 minutes, we'll pinpoint your biggest bottleneck and tell you exactly what to fix first.
         </p>
 
         <p id="cta-positioning">

@@ -1811,3 +1811,16 @@ p { margin-top: 0; }
     width: 190px;
   }
 }
+
+.process-timeframe {
+  margin: 0.5rem 0 0.75rem;
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: #8a5a2b;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.gl-cta-band .eyebrow {
+  color: var(--ink);
+}
