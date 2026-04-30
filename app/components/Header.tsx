@@ -6,7 +6,7 @@ export default function Header() {
     <header className="site-header">
       <Link href="/" className="site-logo image-logo">
         <Image
-          src="/gemini-lane-logo.png"
+          src="/Gemini-Lane-Logo.png"
           alt="Gemini Lane Consulting & Acquisitions"
           width={240}
           height={70}
