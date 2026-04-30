@@ -1,0 +1,237 @@
+import Link from "next/link";
+
+const painPoints = [
+  "You are answering the same questions over and over.",
+  "Leads are coming in, but follow-up is inconsistent.",
+  "Your team relies on memory instead of repeatable systems.",
+  "Tasks live across texts, emails, spreadsheets, and notebooks.",
+];
+
+const outcomes = [
+  "Reduce repetitive admin work",
+  "Automate lead follow-up",
+  "Organize projects and workflows",
+  "Build systems your team can actually use",
+];
+
+const services = [
+  {
+    title: "AI Automation",
+    text: "Use AI and automation to reduce manual work, improve follow-up, and create faster internal workflows.",
+  },
+  {
+    title: "Workflow Optimization",
+    text: "Clean up messy processes, remove duplicate work, and build repeatable systems for your day-to-day operations.",
+  },
+  {
+    title: "Project Dashboards",
+    text: "Replace scattered tools with dashboards that track clients, tasks, timelines, and responsibilities.",
+  },
+  {
+    title: "Operations Consulting",
+    text: "Create structure behind the scenes so your business can grow without depending on you for every detail.",
+  },
+];
+
+export const metadata = {
+  title: "AI Automation & Workflow Consulting in Frederick, MD | Gemini Lane",
+  description:
+    "Helping Frederick, MD businesses reduce manual work, improve workflows, and implement AI systems to save time and grow.",
+};
+
+export default function HomePage() {
+  return (
+    <main className="home-page">
+      <section className="gl-hero">
+        <div className="gl-hero-content">
+          <p className="eyebrow">Frederick, MD AI & Operations Consulting</p>
+
+          <h1>Get 10–30 hours back every week by fixing how your business runs.</h1>
+
+          <p className="hero-text">
+            Gemini Lane helps small to medium-sized businesses simplify workflows,
+            reduce repetitive tasks, implement AI tools, and build systems that
+            make growth easier to manage.
+          </p>
+          <p className="hero-text">
+          Serving Frederick, Maryland and surrounding areas including Montgomery, Howard, and Carroll counties.
+          </p>
+
+          <div className="hero-actions">
+            <Link href="/free-business-analysis" className="primary-button">
+              Get Your Free Business Analysis
+            </Link>
+
+            <Link href="/book-call" className="secondary-button">
+              Book a 15-Minute Call
+            </Link>
+          </div>
+
+          <div className="gl-proof-strip">
+            <span>AI Automation</span>
+            <span>Workflow Systems</span>
+            <span>Project Dashboards</span>
+          </div>
+        </div>
+
+        <div className="gl-hero-panel">
+          <p className="card-label">This is for you if...</p>
+
+          <ul>
+            {painPoints.map((point) => (
+              <li key={point}>{point}</li>
+            ))}
+          </ul>
+        </div>
+      </section>
+
+      <section className="gl-section gl-intro">
+        <p className="eyebrow">The real problem</p>
+
+        <h2>Most business owners do not need more hours. They need better systems.</h2>
+
+        <p>
+          When your business grows, the old way of managing everything through
+          memory, inboxes, spreadsheets, and last-minute follow-ups starts to
+          break. Gemini Lane helps you clean up the backend of your business so
+          work gets done with less friction and fewer missed opportunities.
+        </p>
+      </section>
+
+      <section id="what-we-improve" className="gl-section gl-light">
+        <div className="section-heading">
+          <p className="eyebrow">What we improve</p>
+          <h2>Cleaner workflows. Less redundancy. Smarter operations.</h2>
+          <p><Link href="/dashboards" className="secondary-button dark">
+  View Sample Dashboards
+</Link></p>
+        </div>
+
+        <div className="gl-card-grid">
+          {services.map((service) => (
+            <article className="gl-card" key={service.title}>
+              <h3>{service.title}</h3>
+              <p>{service.text}</p>
+            </article>
+          ))}
+        </div>
+      </section>
+
+      <section className="gl-section gl-dark">
+        <div className="gl-split">
+          <div>
+            <p className="eyebrow">The outcome</p>
+            <h2>Your business should not fall apart when you step away.</h2>
+          </div>
+
+          <div className="gl-check-list">
+            {outcomes.map((outcome) => (
+              <span key={outcome}>{outcome}</span>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section id="how-it-works" className="gl-section">
+        <div className="section-heading">
+          <p className="eyebrow">How it works</p>
+          <h2>A simple path from chaos to clarity.</h2>
+        </div>
+
+        <div className="process-grid">
+          <div>
+            <span>01</span>
+            <h3>Analyze</h3>
+            <p>
+              We review your current workflows, tools, tasks, and bottlenecks.
+            </p>
+          </div>
+
+          <div>
+            <span>02</span>
+            <h3>Build</h3>
+            <p>
+              We create better processes, dashboards, automations, and operating
+              systems.
+            </p>
+          </div>
+
+          <div>
+            <span>03</span>
+            <h3>Optimize</h3>
+            <p>
+              We refine the system so your business runs with more consistency.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <section id="free-analysis" className="gl-cta-band">
+        <div>
+          <p className="eyebrow">Free Business Analysis</p>
+          <h2>Find out where your business is losing time.</h2>
+          <p>
+            Take the quick assessment and get a clearer picture of what to fix,
+            automate, or organize first.
+          </p>
+        </div>
+
+        <Link href="/free-business-analysis" className="primary-button light">
+          Start the Free Analysis
+        </Link>
+      </section>
+
+      <section id="frederick-resources" className="gl-section gl-light">
+  <div className="section-heading">
+    <p className="eyebrow">Frederick, MD Business Support</p>
+    <h2>Local workflow and AI automation consulting for growing businesses.</h2>
+    <p>
+      Gemini Lane helps Frederick-area businesses reduce repetitive tasks,
+      simplify operations, and implement practical AI systems that save time.
+    </p>
+  </div>
+
+  <div className="hero-actions">
+    <Link href="/frederick-md-ai-automation" className="primary-button">
+      View Frederick AI Services
+    </Link>
+
+    <Link href="/blog" className="secondary-button dark">
+      Read Business Efficiency Tips
+    </Link>
+  </div>
+</section>
+
+      <section className="final-cta">
+        <p className="eyebrow">Ready to work smarter?</p>
+
+        <h2>Let’s build the systems your business needs to grow.</h2>
+
+        <p>
+          Book a free consult and we’ll talk through where your workflows feel
+          messy, manual, or harder than they need to be.
+        </p>
+
+        <div className="hero-actions center">
+          <Link href="/book-call" className="primary-button">
+            Book a Free Consult
+          </Link>
+
+          <Link href="/free-business-analysis" className="secondary-button">
+            Take the Free Analysis
+          </Link>
+        </div>
+      </section>
+
+      <section className="gl-section">
+  <h2>Helping Frederick, MD businesses work smarter</h2>
+
+  <p>
+    Gemini Lane works with small to mid-sized businesses across Frederick,
+    Montgomery, Howard, and Carroll counties to improve operations,
+    reduce manual work, and implement practical automation systems.
+  </p>
+</section>
+    </main>
+  );
+}
