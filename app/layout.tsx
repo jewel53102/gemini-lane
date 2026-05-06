@@ -24,7 +24,7 @@ export const metadata: Metadata = {
       "Stop losing time to manual work. Gemini Lane builds AI automation, workflow systems, and project dashboards for small businesses in Frederick, MD.",
     images: [
       {
-        url: "/og-image.png",
+        url: "https://www.gemini-lane.com/og-image.png",
         width: 1200,
         height: 630,
         alt: "Gemini Lane – AI Automation & Operations Consulting in Frederick, MD",
@@ -36,7 +36,7 @@ export const metadata: Metadata = {
     title: "Gemini Lane | AI Automation & Operations Consulting | Frederick, MD",
     description:
       "Stop losing time to manual work. Gemini Lane builds AI automation, workflow systems, and project dashboards for small businesses in Frederick, MD.",
-    images: ["/og-image.png"],
+    images: ["https://www.gemini-lane.com/og-image.png"],
   },
 };
 
