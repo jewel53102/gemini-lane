@@ -4,6 +4,8 @@ import Footer from "./components/Footer";
 import "./globals.css";
 import CookieBanner from "./components/CookieBanner";
 import { Analytics } from "@vercel/analytics/next";
+import { SpeedInsights } from "@vercel/speed-insights/next";
+
 
 export const metadata: Metadata = {
   title: "Gemini Lane | AI Automation & Operations Consulting | Frederick, Maryland",
@@ -24,6 +26,7 @@ export default function RootLayout({
         <Header />
         {children}
         <Analytics />
+        <SpeedInsights />
         <Footer />
         <CookieBanner />
       </body>
