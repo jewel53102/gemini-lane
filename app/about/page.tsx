@@ -75,18 +75,17 @@ export default function AboutPage() {
       <section className="about-hero">
         <div>
           <p className="eyebrow">About Gemini Lane</p>
-          <h1>The person behind the systems</h1>
+          <h1>The systems expert behind smarter, more scalable businesses</h1>
 
           <p>
-            Hi, I'm Ruby Groves — founder of Gemini Lane. I help small to
-            mid-sized businesses streamline operations, eliminate manual work,
-            and implement smarter systems so owners can focus on growth instead
-            of getting stuck in the day-to-day.
+            I’m Ruby Groves, founder of Gemini Lane. I work with growing businesses 
+            to streamline operations, eliminate inefficiencies, and implement AI-driven 
+            workflows that save time and unlock growth.
           </p>
 
           <p>
-            But this didn't start as a consulting business. It started with a
-            pattern I couldn't ignore.
+            This didn’t start as a consulting business. It started with a desire to help 
+            businesses run more efficiently and free owners from the day-to-day chaos.
           </p>
 
           <div className="hero-actions">
@@ -116,7 +115,7 @@ export default function AboutPage() {
           <h2>Over a decade of making complex systems work.</h2>
           <p>
             Before Gemini Lane, I spent more than ten years as a Technical
-            Project Manager — most recently at SiriusXM, leading large-scale
+            Project Manager, leading large-scale
             digital initiatives, system migrations, and process improvements
             across high-traffic platforms. Across all of it, one thing kept
             showing up: most problems weren't technical. They were operational.
