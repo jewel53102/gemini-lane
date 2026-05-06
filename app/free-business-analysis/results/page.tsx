@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 import Link from "next/link";
 
 type Result = {
@@ -14,13 +15,16 @@ type Result = {
 
 export default function ResultsPage() {
   const [result, setResult] = useState<Result | null>(null);
+  const router = useRouter();
 
   useEffect(() => {
     const stored = localStorage.getItem("geminiLaneAnalysisResult");
     if (stored) {
       setResult(JSON.parse(stored));
+    } else {
+      router.replace("/free-business-analysis");
     }
-  }, []);
+  }, [router]);
 
   if (!result) {
     return (

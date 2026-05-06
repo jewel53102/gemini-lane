@@ -1,0 +1,80 @@
+CONTACT FORM CONFIRMATION EMAIL — IMPLEMENTATION PLAN
+gemini-lane.com / app/api/contact/route.ts
+======================================================
+
+PROBLEM
+-------
+When someone submits the contact form they see a success message in the UI
+but receive no email confirmation. Adding one improves the experience and
+gives submitters a paper trail.
+
+RECOMMENDED TOOL: RESEND
+------------------------
+- Purpose-built for transactional email from Next.js API routes
+- Free tier: 3,000 emails/month, 100/day
+- Simple single-package install, ~20 lines of code
+- Why not Mailchimp: it's already used for marketing sequences on the
+  free-business-analysis route. Wrong tool for transactional confirmation.
+
+ONE-TIME SETUP (outside the code)
+----------------------------------
+1. Create a free account at resend.com
+2. Add and verify the gemini-lane.com domain (adds DNS records, ~10–30 min to propagate)
+3. Generate an API key
+4. Add to environment variables: RESEND_API_KEY=your_key_here
+
+INSTALL
+-------
+npm install resend
+
+CODE CHANGE
+-----------
+File: app/api/contact/route.ts
+
+After the successful Supabase insert, add a Resend call to send the
+confirmation email. IMPORTANT: the email send must be non-blocking —
+if it fails, still return { success: true } and log the error.
+The lead is already saved; a broken email should not make the form
+appear to fail for the user.
+
+Flow:
+  Validate → Insert to Supabase → [on success] Send confirmation email → Return success
+
+Data available in the request body to personalize the email:
+  - data.name
+  - data.email
+  - data.interest
+  - data.message
+  - data.businessName
+
+EMAIL CONTENT
+-------------
+Keep it short. Three things:
+  1. Confirm receipt, addressed by their first name
+  2. Set response time expectation ("you'll hear back within 1 business day")
+  3. Escape hatch if they want faster ("book a 15-minute call: gemini-lane.com/book-call")
+
+No React Email templates needed — a plain HTML template string is fine.
+
+DECISION NEEDED BEFORE WRITING CODE
+-------------------------------------
+What FROM address should the confirmation come from?
+
+  Option A: info@gemini-lane.com
+    - Feels personal
+    - Replies go to your main inbox (good if you want that)
+
+  Option B: noreply@gemini-lane.com
+    - Cleaner signal that it's automated
+    - Less warm for a local service business
+
+  Option C: hello@gemini-lane.com
+    - Friendly middle ground
+
+Recommendation for a local consulting business: info@gemini-lane.com
+
+WHAT DOES NOT CHANGE
+---------------------
+- No frontend changes needed (success message stays as-is)
+- free-business-analysis route already has Mailchimp follow-up — leave it alone
+- No other API routes affected

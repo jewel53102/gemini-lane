@@ -22,6 +22,7 @@ export default function Footer() {
           <Link href="/frederick-md-ai-automation">Frederick AI Automation</Link>
           <Link href="/dashboards">Sample Dashboards</Link>
           <Link href="/free-business-analysis">Free Business Analysis</Link>
+          <Link href="/acquisition">Business Acquisitions</Link>
         </div>
 
         <div>
