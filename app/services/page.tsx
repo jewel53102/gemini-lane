@@ -2,6 +2,8 @@ import Link from "next/link";
 
 export const metadata = {
   title: "Services | Gemini Lane",
+  description:
+    "AI automation, workflow optimization, custom dashboards, and operations consulting for Frederick-area businesses — engagements from $1,500–$5,000.",
 };
 
 export default function ServicesPage() {

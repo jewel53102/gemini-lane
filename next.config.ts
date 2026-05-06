@@ -40,7 +40,7 @@ const securityHeaders = [
       // Images: self + data URIs (used by some Next.js internals)
       "img-src 'self' data: blob:",
       // Fetch/XHR: self (API routes) + Vercel Speed Insights telemetry
-      "connect-src 'self' https://vitals.vercel-insights.com https://va.vercel-scripts.com",
+      "connect-src 'self' https://vitals.vercel-insights.com https://va.vercel-scripts.com https://calendly.com https://*.calendly.com",
       // Block all framing from external origins
       "frame-ancestors 'self'",
       // Restrict <base> tag to same origin

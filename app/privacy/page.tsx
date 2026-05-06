@@ -17,8 +17,7 @@ export default function PrivacyPage() {
       </p>
 
       <p>
-  This site uses cookies to improve your experience. By using this site, you
-  agree to our Privacy Policy.
+  This site uses cookies to improve your experience. 
 </p>
 
       <h2>How We Use Your Information</h2>

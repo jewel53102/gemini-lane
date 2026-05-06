@@ -11,7 +11,6 @@ export default function robots(): MetadataRoute.Robots {
         userAgent: "*",
         allow: "/",
         disallow: [
-          "/acquisition",
           "/api/",
           "/free-business-analysis/results",
         ],
