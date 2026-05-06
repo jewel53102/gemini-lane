@@ -85,11 +85,23 @@ export default function BookCallPage() {
             not the right time to work together.
           </p>
 
-          <div
-            dangerouslySetInnerHTML={{
-              __html: `<iframe src="https://calendly.com/groves-ruby/geminilanebizanalysis" width="100%" height="700" frameBorder="0"></iframe>`,
-            }}
-          />
+          <div className="calendly-wrapper">
+            <iframe
+              src="https://calendly.com/groves-ruby/geminilanebizanalysis"
+              width="100%"
+              height="700"
+              frameBorder="0"
+              loading="lazy"
+              title="Book a 15-minute strategy call with Gemini Lane"
+            />
+            <p className="calendly-fallback">
+              If the calendar isn't loading,{" "}
+              <a href="mailto:info@gemini-lane.com">email info@gemini-lane.com</a>{" "}
+              or{" "}
+              <Link href="/contact">use the contact form</Link>{" "}
+              to request a time.
+            </p>
+          </div>
 
           <p className="cta-micro">
             Prefer to start with the assessment?{" "}

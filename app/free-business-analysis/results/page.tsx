@@ -20,6 +20,7 @@ export default function ResultsPage() {
   useEffect(() => {
     const stored = localStorage.getItem("geminiLaneAnalysisResult");
     if (stored) {
+      localStorage.removeItem("geminiLaneAnalysisResult");
       setResult(JSON.parse(stored));
     } else {
       router.replace("/free-business-analysis");

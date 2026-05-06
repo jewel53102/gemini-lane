@@ -47,6 +47,8 @@ const securityHeaders = [
       "base-uri 'self'",
       // Restrict form submissions to same origin
       "form-action 'self'",
+      // Allow Calendly to be embedded as an iframe
+      "frame-src https://calendly.com",
       // Block Flash and other plugins entirely
       "object-src 'none'",
     ].join("; "),
