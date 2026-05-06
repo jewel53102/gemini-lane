@@ -1,6 +1,9 @@
 import { NextResponse } from "next/server";
 import { createClient } from "@supabase/supabase-js";
 import { rateLimit } from "@/app/lib/rateLimit";
+import { z } from "zod";
+
+const emailSchema = z.string().email();
 
 export async function POST(request: Request) {
   try {
@@ -24,7 +27,7 @@ export async function POST(request: Request) {
       );
     }
 
-    if (!data.name || !data.email || !data.email.includes("@")) {
+    if (!data.name || !emailSchema.safeParse(data.email).success) {
       return NextResponse.json(
         { error: "A valid name and email are required." },
         { status: 400 }

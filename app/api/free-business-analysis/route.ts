@@ -2,6 +2,9 @@ import { createHash } from "crypto";
 import { NextResponse } from "next/server";
 import { createClient } from "@supabase/supabase-js";
 import { rateLimit } from "@/app/lib/rateLimit";
+import { z } from "zod";
+
+const emailSchema = z.string().email();
 
 type AnalysisResult = {
   score: number;
@@ -212,7 +215,7 @@ export async function POST(request: Request) {
       );
     }
 
-    if (!data.name || !data.email || !data.email.includes("@")) {
+    if (!data.name || !emailSchema.safeParse(data.email).success) {
       return NextResponse.json(
         { error: "A valid name and email are required." },
         { status: 400 }

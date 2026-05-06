@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 
 export const metadata = {
   title: "Sample Business Dashboards | Gemini Lane",
@@ -9,6 +10,7 @@ export const metadata = {
 const dashboards = [
   {
     title: "Client Project Dashboard",
+    screenshot: "/dashboards/client-project-dashboard.png",
     bestFor: "Construction, home services, agencies, consultants",
     description:
       "A centralized client view that keeps project details, deadlines, budget notes, contracts, risks, and communication in one place.",
@@ -24,6 +26,7 @@ const dashboards = [
   },
   {
     title: "Lead Follow-Up Dashboard",
+    screenshot: "/dashboards/lead-followup-dashboard.png",
     bestFor: "Service businesses, local contractors, consultants, sales teams",
     description:
       "A simple sales pipeline that tracks new leads, follow-up dates, lead source, estimated value, and next action.",
@@ -39,6 +42,7 @@ const dashboards = [
   },
   {
     title: "Operations Workflow Dashboard",
+    screenshot: "/dashboards/operations-workflow-dashboard.png",
     bestFor: "Growing businesses with repeatable weekly work",
     description:
       "A backend operating system for recurring tasks, team responsibilities, SOPs, and workflow bottlenecks.",
@@ -54,6 +58,7 @@ const dashboards = [
   },
   {
     title: "AI Automation Opportunity Dashboard",
+    screenshot: "/dashboards/ai-automation-dashboard.png",
     bestFor: "Businesses ready to use AI but unsure where to start",
     description:
       "A practical dashboard for identifying which manual tasks can be automated, delegated, simplified, or supported with AI.",
@@ -69,6 +74,7 @@ const dashboards = [
   },
   {
     title: "Owner Command Center",
+    screenshot: "/dashboards/owner-command-center.png",
     bestFor: "Owners managing too many moving pieces",
     description:
       "A high-level dashboard that gives the owner visibility into priorities, projects, leads, team tasks, and operational issues.",
@@ -84,6 +90,7 @@ const dashboards = [
   },
   {
     title: "Client Onboarding Dashboard",
+    screenshot: "/dashboards/sop-client-onboarding-dashboard.png",
     bestFor: "Consultants, agencies, professional services, service providers",
     description:
       "A repeatable onboarding system that guides every new client through the same organized process from signed agreement to kickoff.",
@@ -196,25 +203,13 @@ export default function DashboardsPage() {
               <p>{dashboard.description}</p>
 
               <div className="dashboard-preview">
-                <div className="preview-topbar">
-                  <span />
-                  <span />
-                  <span />
-                </div>
-
-                <div className="preview-row strong">
-                  <span>Workflow Area</span>
-                  <span>Status</span>
-                  <span>Owner</span>
-                </div>
-
-                {dashboard.features.slice(0, 4).map((feature, index) => (
-                  <div className="preview-row" key={feature}>
-                    <span>{feature}</span>
-                    <span>{index % 2 === 0 ? "Active" : "Review"}</span>
-                    <span>{index % 2 === 0 ? "Owner" : "Team"}</span>
-                  </div>
-                ))}
+                <Image
+                  src={dashboard.screenshot}
+                  alt={`${dashboard.title} screenshot`}
+                  width={1200}
+                  height={750}
+                  className="dashboard-screenshot"
+                />
               </div>
 
               <div className="dashboard-feature-list">

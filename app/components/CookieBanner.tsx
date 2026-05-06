@@ -14,6 +14,13 @@ export default function CookieBanner() {
 
   function acceptCookies() {
     localStorage.setItem("cookie_consent", "accepted");
+    window.dispatchEvent(new Event("cookieConsentUpdated"));
+    setVisible(false);
+  }
+
+  function declineCookies() {
+    localStorage.setItem("cookie_consent", "declined");
+    window.dispatchEvent(new Event("cookieConsentUpdated"));
     setVisible(false);
   }
 
@@ -22,14 +29,18 @@ export default function CookieBanner() {
   return (
     <div className="cookie-banner">
       <p>
-        This site uses cookies and similar technologies to improve your
-        experience, analyze traffic, and support marketing efforts. By continuing
-        to use this site, you agree to our use of cookies.
+        This site uses cookies to analyze traffic and improve your experience.
+        You can accept or decline non-essential cookies below.
       </p>
 
-      <button onClick={acceptCookies} className="cookie-button">
-        Accept
-      </button>
+      <div className="cookie-buttons">
+        <button onClick={declineCookies} className="cookie-button-decline">
+          Decline
+        </button>
+        <button onClick={acceptCookies} className="cookie-button">
+          Accept
+        </button>
+      </div>
     </div>
   );
 }
