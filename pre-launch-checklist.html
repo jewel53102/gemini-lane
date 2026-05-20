@@ -1,0 +1,471 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Gemini Lane — Pre-Launch Checklist</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: #f5f5f3;
+      color: #1a1a1a;
+      padding: 40px 20px;
+      min-height: 100vh;
+    }
+
+    .container {
+      max-width: 780px;
+      margin: 0 auto;
+    }
+
+    header {
+      margin-bottom: 36px;
+    }
+
+    header h1 {
+      font-size: 1.75rem;
+      font-weight: 700;
+      letter-spacing: -0.03em;
+      margin-bottom: 6px;
+    }
+
+    header p {
+      color: #666;
+      font-size: 0.95rem;
+    }
+
+    .progress-bar-wrap {
+      background: #e0e0dc;
+      border-radius: 99px;
+      height: 8px;
+      margin: 20px 0 8px;
+      overflow: hidden;
+    }
+
+    .progress-bar-fill {
+      height: 100%;
+      background: #2a7a6e;
+      border-radius: 99px;
+      transition: width 0.4s ease;
+    }
+
+    .progress-label {
+      font-size: 0.85rem;
+      color: #666;
+      margin-bottom: 32px;
+    }
+
+    .progress-label span {
+      font-weight: 600;
+      color: #2a7a6e;
+    }
+
+    .section {
+      margin-bottom: 32px;
+    }
+
+    .section-header {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 12px;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      padding: 3px 10px;
+      border-radius: 99px;
+      letter-spacing: 0.03em;
+      text-transform: uppercase;
+    }
+
+    .badge-red    { background: #fee2e2; color: #991b1b; }
+    .badge-yellow { background: #fef9c3; color: #854d0e; }
+    .badge-green  { background: #dcfce7; color: #166534; }
+
+    .section-title {
+      font-size: 1rem;
+      font-weight: 600;
+      color: #1a1a1a;
+    }
+
+    .items {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .item {
+      background: #fff;
+      border: 1.5px solid #e5e5e0;
+      border-radius: 10px;
+      padding: 16px 18px;
+      display: flex;
+      gap: 14px;
+      align-items: flex-start;
+      cursor: pointer;
+      transition: border-color 0.15s, opacity 0.2s;
+      user-select: none;
+    }
+
+    .item:hover { border-color: #aaa; }
+
+    .item.done {
+      opacity: 0.5;
+      border-color: #d4d4ce;
+    }
+
+    .item.done .item-title {
+      text-decoration: line-through;
+      color: #888;
+    }
+
+    .checkbox {
+      width: 20px;
+      height: 20px;
+      border: 2px solid #ccc;
+      border-radius: 5px;
+      flex-shrink: 0;
+      margin-top: 1px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.15s, border-color 0.15s;
+    }
+
+    .item.done .checkbox {
+      background: #2a7a6e;
+      border-color: #2a7a6e;
+    }
+
+    .checkmark {
+      display: none;
+      color: #fff;
+      font-size: 12px;
+      font-weight: 700;
+    }
+
+    .item.done .checkmark { display: block; }
+
+    .item-body { flex: 1; min-width: 0; }
+
+    .item-meta {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 4px;
+    }
+
+    .item-num {
+      font-size: 0.72rem;
+      font-weight: 700;
+      color: #999;
+      letter-spacing: 0.05em;
+    }
+
+    .item-title {
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: #1a1a1a;
+      line-height: 1.4;
+    }
+
+    .item-detail {
+      font-size: 0.84rem;
+      color: #666;
+      line-height: 1.55;
+      margin-top: 4px;
+    }
+
+    .item-tag {
+      font-size: 0.7rem;
+      font-weight: 600;
+      padding: 2px 7px;
+      border-radius: 99px;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+
+    .tag-code   { background: #ede9fe; color: #5b21b6; }
+    .tag-seo    { background: #dbeafe; color: #1d4ed8; }
+    .tag-ux     { background: #fce7f3; color: #9d174d; }
+    .tag-legal  { background: #f3f4f6; color: #374151; }
+    .tag-offsite { background: #d1fae5; color: #065f46; }
+
+    .reset-btn {
+      display: inline-block;
+      margin-top: 36px;
+      background: none;
+      border: 1.5px solid #ccc;
+      border-radius: 7px;
+      padding: 8px 16px;
+      font-size: 0.85rem;
+      color: #666;
+      cursor: pointer;
+      transition: border-color 0.15s, color 0.15s;
+    }
+
+    .reset-btn:hover { border-color: #888; color: #333; }
+
+    footer {
+      margin-top: 48px;
+      padding-top: 24px;
+      border-top: 1px solid #e5e5e0;
+      font-size: 0.82rem;
+      color: #aaa;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+<div class="container">
+
+  <header>
+    <h1>Gemini Lane — Pre-Launch Checklist</h1>
+    <p>Generated from site audit · May 2026</p>
+    <div class="progress-bar-wrap">
+      <div class="progress-bar-fill" id="progressFill" style="width:0%"></div>
+    </div>
+    <p class="progress-label"><span id="progressText">0 of 12</span> items complete</p>
+  </header>
+
+  <!-- RED: Fix Before Launch -->
+  <div class="section">
+    <div class="section-header">
+      <span class="badge badge-red">🔴 Fix Before Launch</span>
+    </div>
+    <div class="items">
+
+      <div class="item" data-id="1" onclick="toggle(this)">
+        <div class="checkbox"><span class="checkmark">✓</span></div>
+        <div class="item-body">
+          <div class="item-meta">
+            <span class="item-num">#1</span>
+            <span class="item-tag tag-code">Code</span>
+            <span class="item-tag tag-seo">SEO</span>
+          </div>
+          <div class="item-title">Add metadata to /contact and /free-business-analysis</div>
+          <div class="item-detail">Both pages use "use client" at the top level so Next.js can't read their metadata export — Google gets no title or description. Split each page: move the form into a child Client Component (ContactForm.tsx, AnalysisForm.tsx), make the page file a Server Component that exports metadata and renders the child.</div>
+        </div>
+      </div>
+
+      <div class="item" data-id="2" onclick="toggle(this)">
+        <div class="checkbox"><span class="checkmark">✓</span></div>
+        <div class="item-body">
+          <div class="item-meta">
+            <span class="item-num">#2</span>
+            <span class="item-tag tag-code">Code</span>
+            <span class="item-tag tag-ux">UX</span>
+          </div>
+          <div class="item-title">Use or remove the revenueRange question from the analysis form</div>
+          <div class="item-detail">The form asks "What is your approximate annual revenue?" and saves the answer — but calculateAnalysis() in the API route never reads it. It doesn't affect the score at all. Either wire it into the scoring logic (great ICP filter) or remove the question to avoid a mismatch between what you ask and what you use.</div>
+        </div>
+      </div>
+
+      <div class="item" data-id="3" onclick="toggle(this)">
+        <div class="checkbox"><span class="checkmark">✓</span></div>
+        <div class="item-body">
+          <div class="item-meta">
+            <span class="item-num">#3</span>
+            <span class="item-tag tag-legal">Legal</span>
+          </div>
+          <div class="item-title">Delete orphaned cookie sentence from Privacy Policy</div>
+          <div class="item-detail">app/privacy/page.tsx still has a stray paragraph: "This site uses cookies to improve your experience." sitting mid-page with no context. The original self-referencing link was removed but the sentence wasn't. Delete the whole paragraph.</div>
+        </div>
+      </div>
+
+      <div class="item" data-id="4" onclick="toggle(this)">
+        <div class="checkbox"><span class="checkmark">✓</span></div>
+        <div class="item-body">
+          <div class="item-meta">
+            <span class="item-num">#4</span>
+            <span class="item-tag tag-code">Code</span>
+          </div>
+          <div class="item-title">Add aria-hidden="true" to contact form honeypot field</div>
+          <div class="item-detail">The analysis form honeypot already has aria-hidden="true" — the contact form honeypot is missing it. Screen readers will encounter a hidden unlabeled input, which is an accessibility issue. One attribute addition in app/contact/page.tsx.</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- YELLOW: Should Fix Before Launch -->
+  <div class="section">
+    <div class="section-header">
+      <span class="badge badge-yellow">🟡 Should Fix Before Launch</span>
+    </div>
+    <div class="items">
+
+      <div class="item" data-id="5" onclick="toggle(this)">
+        <div class="checkbox"><span class="checkmark">✓</span></div>
+        <div class="item-body">
+          <div class="item-meta">
+            <span class="item-num">#5</span>
+            <span class="item-tag tag-code">Code</span>
+            <span class="item-tag tag-ux">UX</span>
+          </div>
+          <div class="item-title">Build contact form confirmation email (Resend)</div>
+          <div class="item-detail">Plan is written in contact-confirmation-email-plan.txt. Install Resend (npm install resend), verify gemini-lane.com domain, add RESEND_API_KEY to env, send from info@gemini-lane.com after successful Supabase insert. Make the send non-blocking — if it fails, still return success. People currently submit the contact form and hear nothing until you manually reply.</div>
+        </div>
+      </div>
+
+      <div class="item" data-id="6" onclick="toggle(this)">
+        <div class="checkbox"><span class="checkmark">✓</span></div>
+        <div class="item-body">
+          <div class="item-meta">
+            <span class="item-num">#6</span>
+            <span class="item-tag tag-seo">SEO</span>
+            <span class="item-tag tag-ux">UX</span>
+          </div>
+          <div class="item-title">Add visible published date and author byline to blog posts</div>
+          <div class="item-detail">All three blog posts show no date or author on the page. Undated articles feel thin to readers and hurt freshness signals for Google. Add a simple "By Ruby Groves · [Month Year]" line near the top of each article in the blog post components.</div>
+        </div>
+      </div>
+
+      <div class="item" data-id="7" onclick="toggle(this)">
+        <div class="checkbox"><span class="checkmark">✓</span></div>
+        <div class="item-body">
+          <div class="item-meta">
+            <span class="item-num">#7</span>
+            <span class="item-tag tag-seo">SEO</span>
+          </div>
+          <div class="item-title">Add article OG type and publishedTime to blog post metadata</div>
+          <div class="item-detail">All three blog pages inherit the default "website" OG type from the root layout. Each should set openGraph: { type: "article", publishedTime: "2025-XX-XXT00:00:00Z", authors: ["Ruby Groves"] } in its own metadata export. This tells Google and social platforms they're articles, improves social previews, and gives crawlers a freshness date.</div>
+        </div>
+      </div>
+
+      <div class="item" data-id="8" onclick="toggle(this)">
+        <div class="checkbox"><span class="checkmark">✓</span></div>
+        <div class="item-body">
+          <div class="item-meta">
+            <span class="item-num">#8</span>
+            <span class="item-tag tag-code">Code</span>
+          </div>
+          <div class="item-title">Delete or gitignore contact-confirmation-email-plan.txt</div>
+          <div class="item-detail">The planning doc sits in the project root and is not in .gitignore, so it gets committed to the repo. No security risk (no credentials), but it's noise. Delete it once the Resend email feature is built, or move to docs/ and add docs/ to .gitignore if you want to keep planning notes.</div>
+        </div>
+      </div>
+
+      <div class="item" data-id="9" onclick="toggle(this)">
+        <div class="checkbox"><span class="checkmark">✓</span></div>
+        <div class="item-body">
+          <div class="item-meta">
+            <span class="item-num">#9</span>
+            <span class="item-tag tag-code">Code</span>
+          </div>
+          <div class="item-title">Delete or use ruby-gemini-lane02.jpeg from /public</div>
+          <div class="item-detail">A second headshot is in /public but referenced nowhere in the codebase. Either use it (the About page could benefit from a second contextual image) or delete it to keep the public folder clean.</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- GREEN: Post-Launch / Off-Site -->
+  <div class="section">
+    <div class="section-header">
+      <span class="badge badge-green">🟢 Post-Launch / Nice to Have</span>
+    </div>
+    <div class="items">
+
+      <div class="item" data-id="10" onclick="toggle(this)">
+        <div class="checkbox"><span class="checkmark">✓</span></div>
+        <div class="item-body">
+          <div class="item-meta">
+            <span class="item-num">#10</span>
+            <span class="item-tag tag-ux">UX</span>
+          </div>
+          <div class="item-title">Add visual score gauge to the analysis results page</div>
+          <div class="item-detail">"Your efficiency score: 64/100" is functional but flat. A simple SVG arc or progress dial at the moment of peak engagement would make the tool feel like a real diagnostic product and likely improve conversion to booking a call.</div>
+        </div>
+      </div>
+
+      <div class="item" data-id="11" onclick="toggle(this)">
+        <div class="checkbox"><span class="checkmark">✓</span></div>
+        <div class="item-body">
+          <div class="item-meta">
+            <span class="item-num">#11</span>
+            <span class="item-tag tag-ux">UX</span>
+          </div>
+          <div class="item-title">Update homepage testimonials with partial names</div>
+          <div class="item-detail">Testimonials currently read "Operations Client / Local service business" — the weakest form of attribution. Even "Sarah M., Frederick contractor" adds credibility. Update when you can get permission from past clients for even partial identification.</div>
+        </div>
+      </div>
+
+      <div class="item" data-id="12" onclick="toggle(this)">
+        <div class="checkbox"><span class="checkmark">✓</span></div>
+        <div class="item-body">
+          <div class="item-meta">
+            <span class="item-num">#12</span>
+            <span class="item-tag tag-offsite">Off-Site</span>
+            <span class="item-tag tag-seo">SEO</span>
+          </div>
+          <div class="item-title">Set up and verify Google Business Profile</div>
+          <div class="item-detail">Highest-ROI local SEO action. Set up at business.google.com — choose "Business Management Consultant" category, add Frederick MD service area, write a keyword-rich description, upload logo and headshot, list all services. Start collecting reviews immediately after launch. The map pack (top 3 local results) is driven almost entirely by GBP, not the website.</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <button class="reset-btn" onclick="resetAll()">Reset all checkboxes</button>
+
+  <footer>
+    Gemini Lane Pre-Launch Audit · Generated May 2026
+  </footer>
+
+</div>
+
+<script>
+  const STORAGE_KEY = "geminiLaneChecklist";
+
+  function loadState() {
+    try { return JSON.parse(localStorage.getItem(STORAGE_KEY) || "{}"); }
+    catch { return {}; }
+  }
+
+  function saveState(state) {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+  }
+
+  function toggle(el) {
+    el.classList.toggle("done");
+    const state = loadState();
+    state[el.dataset.id] = el.classList.contains("done");
+    saveState(state);
+    updateProgress();
+  }
+
+  function updateProgress() {
+    const items = document.querySelectorAll(".item");
+    const done  = document.querySelectorAll(".item.done").length;
+    const total = items.length;
+    const pct   = total ? Math.round((done / total) * 100) : 0;
+    document.getElementById("progressFill").style.width = pct + "%";
+    document.getElementById("progressText").textContent = `${done} of ${total}`;
+  }
+
+  function resetAll() {
+    if (!confirm("Reset all checkboxes?")) return;
+    document.querySelectorAll(".item").forEach(el => el.classList.remove("done"));
+    saveState({});
+    updateProgress();
+  }
+
+  // Restore state on load
+  (function init() {
+    const state = loadState();
+    document.querySelectorAll(".item").forEach(el => {
+      if (state[el.dataset.id]) el.classList.add("done");
+    });
+    updateProgress();
+  })();
+</script>
+</body>
+</html>
