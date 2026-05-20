@@ -31,16 +31,16 @@ const securityHeaders = [
     value: [
       // Default: only load from same origin
       "default-src 'self'",
-      // Scripts: self + inline (required by Next.js) + Vercel Analytics external script
-      "script-src 'self' 'unsafe-inline' https://va.vercel-scripts.com",
+      // Scripts: self + inline (required by Next.js) + Vercel Analytics + Google Analytics
+      "script-src 'self' 'unsafe-inline' https://va.vercel-scripts.com https://www.googletagmanager.com",
       // Styles: self + inline (required by Next.js/Tailwind) + Google Fonts CSS
       "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
       // Fonts: self + Google Fonts files
       "font-src 'self' https://fonts.gstatic.com",
       // Images: self + data URIs (used by some Next.js internals)
       "img-src 'self' data: blob:",
-      // Fetch/XHR: self (API routes) + Vercel Speed Insights telemetry
-      "connect-src 'self' https://vitals.vercel-insights.com https://va.vercel-scripts.com https://calendly.com https://*.calendly.com",
+      // Fetch/XHR: self (API routes) + Vercel Speed Insights + Google Analytics telemetry
+      "connect-src 'self' https://vitals.vercel-insights.com https://va.vercel-scripts.com https://calendly.com https://*.calendly.com https://www.google-analytics.com https://analytics.google.com https://region1.google-analytics.com",
       // Block all framing from external origins
       "frame-ancestors 'self'",
       // Restrict <base> tag to same origin
