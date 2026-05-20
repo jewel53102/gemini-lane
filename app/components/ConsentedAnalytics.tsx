@@ -5,7 +5,7 @@ import Script from "next/script";
 import { Analytics } from "@vercel/analytics/next";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 
-const GA_ID = "G-H72ECQWZVK";
+const GA_ID = "G-193PQ3VFVC";
 
 export default function ConsentedAnalytics() {
   const [consented, setConsented] = useState(false);
