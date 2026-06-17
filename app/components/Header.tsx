@@ -17,6 +17,7 @@ export default function Header() {
       <nav className="site-nav" aria-label="Main navigation">
         <Link href="/services">Services</Link>
         <Link href="/dashboards">Dashboards</Link>
+        <Link href="/new-website">New Website</Link>
         <Link href="/blog">Resources</Link>
         <Link href="/about">About</Link>
       </nav>
