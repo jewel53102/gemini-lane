@@ -1349,6 +1349,22 @@ p { margin-top: 0; }
   }
 }
 
+.portfolio-skills-grid {
+  grid-template-columns: repeat(3, 1fr);
+}
+
+@media (max-width: 900px) {
+  .portfolio-skills-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 640px) {
+  .portfolio-skills-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
 /* Acquisition page */
 
 .acquisition-page { overflow: hidden; }

@@ -304,7 +304,7 @@ export default function PortfolioPage() {
           <p className="eyebrow">Skills</p>
           <h2>Tools and technical skills.</h2>
         </div>
-        <div className="about-method-grid" style={{ gridTemplateColumns: "repeat(3, 1fr)" }}>
+        <div className="about-method-grid portfolio-skills-grid">
           {skillGroups.map((group, index) => {
             const accent = SKILL_ACCENTS[index % SKILL_ACCENTS.length];
             return (
