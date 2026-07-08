@@ -1,10 +1,8 @@
 import type { Metadata } from "next";
-import Header from "./components/Header";
-import Footer from "./components/Footer";
 import "./globals.css";
 import CookieBanner from "./components/CookieBanner";
 import ConsentedAnalytics from "./components/ConsentedAnalytics";
-import LocalBusinessSchema from "./components/LocalBusinessSchema";
+import SiteChrome from "./components/SiteChrome";
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://www.gemini-lane.com"),
@@ -48,11 +46,8 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
-        <LocalBusinessSchema />
-        <Header />
-        {children}
+        <SiteChrome>{children}</SiteChrome>
         <ConsentedAnalytics />
-        <Footer />
         <CookieBanner />
       </body>
     </html>
