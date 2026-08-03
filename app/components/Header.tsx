@@ -15,9 +15,15 @@ export default function Header() {
       </Link>
 
       <nav className="site-nav" aria-label="Main navigation">
-        <Link href="/services">Services</Link>
-        <Link href="/dashboards">Dashboards</Link>
-        <Link href="/new-website">New Website</Link>
+        <div className="nav-dropdown">
+          <Link href="/services">Services</Link>
+          <div className="nav-dropdown-menu">
+            <Link href="/free-business-analysis">Free Business Analysis</Link>
+            <Link href="/new-website">New Website Build</Link>
+            <Link href="/full-business-audit">Full Website Audit</Link>
+          </div>
+        </div>
+        <Link href="/dashboards">Business Dashboards</Link>
         <Link href="/blog">Resources</Link>
         <Link href="/about">About</Link>
       </nav>

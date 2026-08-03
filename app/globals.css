@@ -345,6 +345,47 @@ p { margin-top: 0; }
 .site-nav a:hover,
 .site-footer a:hover { color: var(--teal); }
 
+.nav-dropdown { position: relative; }
+
+.nav-dropdown-menu {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  z-index: 60;
+  min-width: 200px;
+  margin-top: 8px;
+  padding: 8px;
+  border: 1px solid var(--gray-border);
+  border-radius: var(--radius-sm);
+  background: var(--white);
+  box-shadow: var(--shadow-card);
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-6px);
+  transition: opacity 0.15s ease, transform 0.15s ease, visibility 0.15s;
+}
+
+.nav-dropdown:hover .nav-dropdown-menu,
+.nav-dropdown:focus-within .nav-dropdown-menu {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+.nav-dropdown-menu a {
+  display: block;
+  padding: 10px 12px;
+  border-radius: 6px;
+  font-size: 0.9rem;
+  white-space: nowrap;
+  color: var(--ink-soft);
+}
+
+.nav-dropdown-menu a:hover {
+  background: var(--gray);
+  color: var(--teal);
+}
+
 .header-right {
   display: flex;
   align-items: center;
