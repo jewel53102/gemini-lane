@@ -118,6 +118,14 @@ export default function ResultsPage() {
         <p className="cta-micro">
           No pressure • No long sales call • Just clarity on what to fix
         </p>
+
+        <p className="cta-micro">
+          Want the full picture instead of a quick call?{" "}
+          <Link href="/full-business-audit">
+            See the Full Business Audit
+          </Link>{" "}
+          — a written report across ten areas of your business.
+        </p>
       </section>
 
       {/* 🔥 Secondary trust section */}

@@ -1,0 +1,555 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Business Analyzer — Client Questionnaire</title>
+<style>
+:root{
+  --bg:#0a0d14; --panel:#111621; --panel-2:#161d2b; --line:#243044; --line-soft:#1b2434;
+  --text:#e8edf6; --muted:#8fa0bd; --accent:#4de3c1; --accent-2:#7aa2ff; --warn:#ffcc66; --radius:14px;
+}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0}
+body{background:var(--bg);color:var(--text);
+  font:16px/1.65 -apple-system,BlinkMacSystemFont,"Segoe UI",Inter,Roboto,Helvetica,Arial,sans-serif;
+  -webkit-font-smoothing:antialiased}
+a{color:var(--accent)}
+
+.topbar{position:sticky;top:0;z-index:50;background:rgba(10,13,20,.92);backdrop-filter:blur(10px);
+  border-bottom:1px solid var(--line)}
+.topbar-inner{max-width:1000px;margin:0 auto;padding:10px 22px;display:flex;align-items:center;gap:16px;flex-wrap:wrap}
+.brandmark{font-weight:700;letter-spacing:.14em;font-size:11px;text-transform:uppercase;color:var(--accent)}
+.progress-wrap{flex:1;min-width:180px}
+.progress-track{height:7px;background:var(--line-soft);border-radius:99px;overflow:hidden}
+.progress-fill{height:100%;width:0%;background:linear-gradient(90deg,var(--accent),var(--accent-2));transition:width .3s ease}
+.progress-label{font-size:11px;color:var(--muted);margin-top:4px;letter-spacing:.03em}
+.savestate{font-size:11px;color:var(--muted);white-space:nowrap}
+.savestate.on{color:var(--accent)}
+
+.wrap{max-width:1000px;margin:0 auto;padding:0 22px 120px}
+.hero{padding:64px 0 40px;border-bottom:1px solid var(--line)}
+.eyebrow{font-size:11px;letter-spacing:.22em;text-transform:uppercase;color:var(--accent);font-weight:700;margin-bottom:16px}
+h1{font-size:clamp(30px,5vw,48px);line-height:1.1;margin:0 0 18px;letter-spacing:-.02em}
+.lede{font-size:18px;color:var(--muted);max-width:64ch;margin:0}
+
+.secnav{display:flex;flex-wrap:wrap;gap:8px;margin:34px 0 8px;position:sticky;top:58px;z-index:40;
+  background:rgba(10,13,20,.92);backdrop-filter:blur(10px);padding:10px 0}
+.secnav a{font-size:12px;text-decoration:none;color:var(--muted);border:1px solid var(--line);
+  border-radius:99px;padding:6px 13px;transition:.18s;white-space:nowrap}
+.secnav a:hover{color:var(--text);border-color:var(--accent);background:var(--panel)}
+.secnav a .cnt{color:#5b6c88;margin-left:6px;font-variant-numeric:tabular-nums}
+.secnav a.done{border-color:var(--accent);color:var(--accent)}
+
+section{padding:52px 0;border-bottom:1px solid var(--line-soft)}
+.sec-head{display:flex;align-items:baseline;gap:14px;margin-bottom:8px;flex-wrap:wrap}
+.sec-num{font-size:12px;font-weight:800;letter-spacing:.1em;color:var(--bg);background:var(--accent);
+  border-radius:6px;padding:3px 9px}
+h2{font-size:clamp(22px,3.2vw,30px);margin:0;letter-spacing:-.01em}
+.sec-note{color:var(--muted);font-size:15px;margin:10px 0 30px;max-width:72ch}
+.sec-meta{font-size:11px;color:#5b6c88;letter-spacing:.06em;text-transform:uppercase;margin-left:auto}
+
+.q{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);padding:18px 20px;margin-bottom:14px}
+.q:focus-within{border-color:var(--accent-2)}
+.q.answered{border-left:3px solid var(--accent)}
+.q.hidden{display:none!important}
+.privacy{border-left:3px solid var(--accent-2);background:var(--panel);border-radius:0 12px 12px 0;
+  padding:14px 18px;margin:16px 0 0;font-size:13.5px;color:#a8b6cd}
+.privacy strong{color:var(--text)}
+.q-label{display:block;font-weight:620;font-size:15.5px;margin-bottom:6px;line-height:1.5}
+.q-num{color:var(--accent);font-weight:800;margin-right:9px;font-variant-numeric:tabular-nums}
+.q-hint{color:var(--muted);font-size:13.5px;margin:0 0 12px;line-height:1.55}
+.q-multi{font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:#5b6c88;margin:0 0 10px}
+textarea,input[type=text],input[type=email],input[type=tel],input[type=number],select{
+  width:100%;background:var(--panel-2);color:var(--text);border:1px solid var(--line);
+  border-radius:9px;padding:11px 13px;font:inherit;font-size:15px;resize:vertical}
+select{appearance:none;background-image:linear-gradient(45deg,transparent 50%,var(--muted) 50%),linear-gradient(135deg,var(--muted) 50%,transparent 50%);
+  background-position:calc(100% - 19px) 50%,calc(100% - 13px) 50%;background-size:6px 6px,6px 6px;background-repeat:no-repeat;padding-right:38px}
+option{background:var(--panel-2);color:var(--text)}
+textarea:focus,input:focus,select:focus{outline:none;border-color:var(--accent)}
+textarea::placeholder,input::placeholder{color:#5b6c88}
+.suffixed{display:flex;align-items:center;gap:9px}
+.suffixed .sfx{color:var(--muted);font-size:14px;white-space:nowrap}
+
+.opts{display:flex;flex-wrap:wrap;gap:9px}
+.opt{display:inline-flex;align-items:center;gap:8px;cursor:pointer;border:1px solid var(--line);
+  background:var(--panel-2);border-radius:99px;padding:7px 14px;font-size:14px;transition:.15s}
+.opt:hover{border-color:var(--accent-2)}
+.opt input{accent-color:var(--accent);margin:0}
+.opt.checked{border-color:var(--accent);background:rgba(77,227,193,.09)}
+
+.panelbox{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);padding:26px 28px}
+.callout{border-left:3px solid var(--accent);background:var(--panel);border-radius:0 12px 12px 0;
+  padding:16px 20px;margin:22px 0;font-size:14.5px;color:#c6d2e6}
+.callout strong{color:var(--text)}
+
+.actionbar{position:fixed;bottom:0;left:0;right:0;z-index:60;background:rgba(10,13,20,.96);
+  backdrop-filter:blur(12px);border-top:1px solid var(--line);padding:12px 22px}
+.actionbar-inner{max-width:1000px;margin:0 auto;display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+.btn{border:0;border-radius:10px;padding:11px 18px;font:inherit;font-weight:650;font-size:14px;cursor:pointer;transition:.15s}
+.btn-primary{background:var(--accent);color:#06231d}
+.btn-primary:hover{filter:brightness(1.1)}
+.btn-ghost{background:transparent;color:var(--text);border:1px solid var(--line)}
+.btn-ghost:hover{border-color:var(--accent);color:var(--accent)}
+.btn-danger{background:transparent;color:#ff8b8b;border:1px solid #3d2230;margin-left:auto}
+.btn-danger:hover{border-color:#ff8b8b}
+
+.toast{position:fixed;bottom:78px;left:50%;transform:translateX(-50%) translateY(14px);background:var(--accent);
+  color:#06231d;font-weight:650;font-size:14px;padding:11px 20px;border-radius:10px;opacity:0;
+  pointer-events:none;transition:.25s;z-index:70}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+.footnote{color:var(--muted);font-size:13px;margin-top:26px;text-align:center}
+.totop{position:fixed;right:22px;bottom:76px;z-index:55;background:var(--panel);border:1px solid var(--line);
+  color:var(--muted);border-radius:9px;padding:8px 12px;font-size:12px;cursor:pointer;opacity:0;
+  pointer-events:none;transition:.2s}
+.totop.show{opacity:1;pointer-events:auto}
+.totop:hover{color:var(--accent);border-color:var(--accent)}
+
+@media print{
+  :root{--bg:#fff;--panel:#fff;--panel-2:#fff;--line:#c9d0da;--line-soft:#e4e8ee;
+        --text:#111;--muted:#555;--accent:#0a7d68;--accent-2:#2a4f9e}
+  body{background:#fff;color:#111;font-size:11pt}
+  .topbar,.secnav,.actionbar,.toast,.totop,.no-print{display:none!important}
+  .wrap{max-width:100%;padding:0}
+  .hero{padding:0 0 16px;page-break-after:avoid}
+  section{padding:18px 0;border-bottom:1px solid #e4e8ee}
+  .sec-head{page-break-after:avoid}
+  .q{border:1px solid #d6dbe3;border-left:1px solid #d6dbe3;padding:9px 11px;margin-bottom:7px;
+     page-break-inside:avoid;background:#fff}
+  .q-hint{font-size:9pt}
+  textarea,input,select{border:1px solid #c9d0da;background:#fff;color:#111;font-size:10pt}
+  textarea{height:auto!important;overflow:visible!important}
+  .opt{border:1px solid #c9d0da;background:#fff;font-size:9.5pt;padding:4px 9px}
+  .sec-num{background:#0a7d68;color:#fff;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  .callout{border-left:3px solid #0a7d68;background:#f6f8fa}
+  @page{margin:14mm 12mm}
+}
+@media (max-width:640px){.panelbox{padding:20px 16px}.btn-danger{margin-left:0}}
+</style>
+</head>
+<body>
+
+<div class="topbar no-print">
+  <div class="topbar-inner">
+    <span class="brandmark">Business Analyzer</span>
+    <div class="progress-wrap">
+      <div class="progress-track"><div class="progress-fill" id="bar"></div></div>
+      <div class="progress-label" id="barlabel">0 answered</div>
+    </div>
+    <span class="savestate" id="save">Auto-save on</span>
+  </div>
+</div>
+
+<div class="wrap">
+  <header class="hero">
+    <div class="eyebrow">Client Questionnaire</div>
+    <h1>Business Analyzer</h1>
+    <p class="lede">This is a full diagnostic of your business across eight areas. Most questions are
+      multiple choice, so it moves faster than it looks. Answer based on how things actually work today,
+      not how you intend them to work — an accurate picture is what makes the analysis useful.</p>
+
+    <div class="callout" style="margin-top:30px">
+      <strong>How to use this file.</strong> Answer directly in the page. Everything saves automatically in this
+      browser, so you can close it and pick up where you left off. Use the section links below to jump around —
+      you do not have to go in order. When you're done, use the buttons at the bottom to save a PDF, download
+      your answers, or email them to me.
+      <br><br>
+      <strong>If you're not sure, pick "Unsure."</strong> It's an honest answer and it tells me something real.
+      Guessing does not.
+    </div>
+
+    <div class="privacy">
+      <strong>Your answers stay between us.</strong> Everything you enter here is confidential and covered by the
+      confidentiality clause of your service agreement. It is used only to produce your audit, is never sold or
+      shared, and you will not be identified by name in any case study or marketing material without your written
+      consent. Nothing is transmitted anywhere until you choose to send it — this file has no internet connection
+      of its own.
+      <br><br>
+      <strong>One thing to know about saving:</strong> your progress is stored in this browser on this device
+      only. If you start on your laptop, finish on your laptop — opening the file on your phone or in a different
+      browser will show a blank form. Clearing your browsing data will also erase your answers. If you need to
+      switch devices, use <em>Download My Answers</em> first so you have a copy.
+    </div>
+  </header>
+
+  <nav class="secnav no-print" id="nav"></nav>
+  <div id="questionnaire"></div>
+
+  <p class="footnote no-print">That's everything. Thank you for taking the time to do it properly.</p>
+</div>
+
+<button class="totop no-print" id="totop" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑ Top</button>
+
+<div class="actionbar no-print">
+  <div class="actionbar-inner">
+    <button class="btn btn-primary" onclick="window.print()">Save as PDF / Print</button>
+    <button class="btn btn-ghost" onclick="downloadAnswers()">Download My Answers</button>
+    <button class="btn btn-ghost" onclick="emailAnswers()">Email My Answers</button>
+    <button class="btn btn-ghost" onclick="copyAnswers()">Copy to Clipboard</button>
+    <button class="btn btn-danger" onclick="clearAll()">Clear Form</button>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+/* ======================================================================
+   CONFIG — put your email here so "Email My Answers" pre-addresses to you.
+   ====================================================================== */
+var CONSULTANT_EMAIL = "ruby.groves@gemini-lane.com";
+
+/* Scoring is intentionally invisible to the client. Point values are never
+   rendered on the page; they are calculated only when answers are exported. */
+var SECTIONS = [{"id":"general","title":"General","note":"Basic details so I know whose analysis this is. These are not scored.","questions":[{"q":"Name","type":"text","score":false,"key":"name"},{"q":"Business Name","type":"text","score":false,"key":"business"},{"q":"Email Address","type":"text","key":"email","score":false,"hint":"This is where your completed audit report will be sent."},{"q":"Industry","type":"select","opts":[["Accounting / Bookkeeping",0],["Agriculture",0],["Automotive",0],["Beauty / Salon / Spa",0],["Cleaning Services",0],["Construction / Trades",0],["Consulting / Professional Services",0],["Creative / Design / Media",0],["E-commerce / Online Retail",0],["Education / Training",0],["Event Services",0],["Fitness / Wellness",0],["Food & Beverage / Restaurant",0],["Health Care / Medical",0],["Home Services",0],["Insurance",0],["Landscaping / Lawn Care",0],["Legal Services",0],["Logistics / Transportation",0],["Manufacturing",0],["Marketing / Advertising Agency",0],["Nonprofit",0],["Pet Services",0],["Real Estate / Property Management",0],["Retail (Brick & Mortar)",0],["Technology / Software",0],["Travel / Hospitality",0],["Other",0]],"score":false,"key":"industry"},{"q":"Address","type":"textarea","rows":2,"score":false},{"q":"Phone Number","type":"tel","score":false,"key":"phone"},{"q":"Yearly Revenue","type":"number","score":false},{"q":"Approx. Profit Margin","type":"percent","score":false},{"q":"# of Employees","type":"number","score":false}]},{"id":"goals","title":"Business Goals","note":"What matters most to you right now, and where your time actually goes.","questions":[{"q":"What is your most important Business Goal right now?","type":"checkbox","opts":[["Growth through Marketing & Advertising",5.0],["Daily Operational Process Efficiency & Automations",5.0],["Delegation of Tasks / Employee Management",5.0],["Technology Enhancement",5.0],["Customer Relationship Outreach",5.0]],"score":true},{"q":"What takes up the most of your time?","type":"radio","opts":[["Growth through Marketing & Advertising",5.0],["Daily Operational Process Efficiency & Automations",5.0],["Delegation of Tasks / Employee Management",5.0],["Technology Enhancement",5.0],["Customer Relationship Outreach",5.0]],"score":true},{"q":"What part of your business is the most fulfilling?","type":"radio","opts":[["Growth through Marketing & Advertising",5.0],["Daily Operational Process Efficiency & Automations",5.0],["Delegation of Tasks / Employee Management",5.0],["Technology Enhancement",5.0],["Customer Relationship Outreach",5.0]],"score":true},{"q":"Do you plan to retire or leave your business in the next 2 - 5 years?","type":"radio","opts":[["Yes",1.0],["No",5.0],["Unsure",2.0]],"score":true},{"q":"How many hours do you currently work per week on your business?","type":"radio","opts":[["Under 20",5.0],["20 to 40",5.0],["40 to 50",3.0],["50 to 60",2.0],["Over 60",1.0]],"score":true,"hint":"Scored from the standpoint of getting time back — fewer owner hours for the same output is the goal."}]},{"id":"marketing","title":"Marketing & Advertising","note":"The longest section. It covers strategy, channels, social platforms, website, campaigns, budget, and lead conversion. Platform questions only appear for accounts you tell me you have.","questions":[{"q":"What are the main goals of your marketing and advertising efforts?","type":"checkbox","opts":[["Lead Generation/More Customers/Clients",5.0],["Brand Awareness",5.0],["Customer Retention",5.0],["Expand into New Markets",5.0],["Enhance product/service viewability",5.0],["Other",1.0],["Unsure",0.5]],"score":true},{"q":"Do you have a centralized marketing plan that integrates all channels for consistency?","type":"radio","opts":[["Yes",2.0],["No",0.0],["Unsure",0.5]],"score":true},{"q":"Do you use a customer relationship management database?","type":"radio","opts":[["Yes",2.0],["No",0.0],["Unsure",0.5]],"score":true},{"q":"Do you have a dedicated person or team handling marketing & advertising efforts?","type":"radio","opts":[["Yes",2.0],["No",0.0]],"score":true},{"q":"How do you currently advertise and get more clients/customers?","type":"checkbox","opts":[["E-Mail Marketing",5.0],["Social media advertising",5.0],["Google Ads and SEO",2.0],["Referral and word-of-mouth marketing",4.0],["Partnerships and collaborations",3.0],["Traditional advertising",1.0],["Networking and events",0.5],["Content marketing",0.5],["None",0.0]],"score":true},{"q":"Do you have any of the following social media accounts?","type":"checkbox","opts":[["Facebook",5.0],["Instagram",5.0],["X (Formerly Twitter)",5.0],["TikTok",5.0],["Snapchat",5.0],["Pinterest",5.0],["Other",1.0],["Unsure",0.5],["None",0.0]],"score":true,"key":"social_accounts","hint":"Your answer here decides which platform questions you get asked next."},{"q":"How often do you use Facebook?","type":"radio","opts":[["Daily/Weekly",5.0],["Frequently",4.0],["Sometimes",3.0],["Little",2.0],["Unsure",0.5],["None",0.0]],"score":true,"showIf":{"key":"social_accounts","value":"Facebook"}},{"q":"How often do you use Instagram?","type":"radio","opts":[["Daily/Weekly",5.0],["Frequently",4.0],["Sometimes",3.0],["Little",2.0],["Unsure",0.5],["None",0.0]],"score":true,"showIf":{"key":"social_accounts","value":"Instagram"}},{"q":"How often do you use X (Formerly Twitter)?","type":"radio","opts":[["Daily/Weekly",5.0],["Frequently",4.0],["Sometimes",3.0],["Little",2.0],["Unsure",0.5],["None",0.0]],"score":true,"showIf":{"key":"social_accounts","value":"X (Formerly Twitter)"}},{"q":"How often do you use TikTok?","type":"radio","opts":[["Daily/Weekly",5.0],["Frequently",4.0],["Sometimes",3.0],["Little",2.0],["Unsure",0.5],["None",0.0]],"score":true,"showIf":{"key":"social_accounts","value":"TikTok"}},{"q":"How often do you use Snapchat?","type":"radio","opts":[["Daily/Weekly",5.0],["Frequently",4.0],["Sometimes",3.0],["Little",2.0],["Unsure",0.5],["None",0.0]],"score":true,"showIf":{"key":"social_accounts","value":"Snapchat"}},{"q":"How often do you use Pinterest?","type":"radio","opts":[["Daily/Weekly",5.0],["Frequently",4.0],["Sometimes",3.0],["Little",2.0],["Unsure",0.5],["None",0.0]],"score":true,"showIf":{"key":"social_accounts","value":"Pinterest"}},{"q":"How often do you use Other Social Media Platforms?","type":"radio","opts":[["Daily/Weekly",5.0],["Frequently",4.0],["Sometimes",3.0],["Little",2.0],["Unsure",0.5],["None",0.0]],"score":true,"showIf":{"key":"social_accounts","value":"Other"}},{"q":"Do you segment your target audience, and target different segments with tailored messages?","type":"radio","opts":[["Yes",5.0],["No",1.0],["Unsure",0.5]],"score":true},{"q":"How often do you evaluate and adjust your marketing strategy based on performance data?","type":"radio","opts":[["Daily/Weekly",4.0],["Frequently",4.0],["Sometimes",3.0],["Little",2.0],["None",0.0]],"score":true},{"q":"Do you allocate your marketing budget across various channels based on performance data?","type":"radio","opts":[["Yes",5.0],["Not Really",3.0],["No",0.0],["Unsure",0.5],["Not Applicable",0.0]],"score":true},{"q":"Do you have a clear content calendar or campaign schedule that coordinates marketing activities?","type":"radio","opts":[["Yes",5.0],["Not Really",3.0],["No",0.0],["Unsure",0.5],["Not Applicable",0.0]],"score":true},{"q":"Do you prioritize and manage different marketing initiatives and campaigns?","type":"radio","opts":[["Yes",5.0],["Not Really",3.0],["No",0.0],["Unsure",0.5],["Not Applicable",0.0]],"score":true},{"q":"How effective is your website in driving traffic, conversions, and sales?","type":"radio","opts":[["Very Good",5.0],["Needs Improvement",4.0],["Not Good",3.0],["Unsure",0.5],["Not Applicable",0.0]],"score":true},{"q":"What tools do you use to track digital marketing performance?","type":"checkbox","opts":[["Google Analytics",5.0],["Adobe Analytics",5.0],["Social Media Analytics Programs",5.0],["Other",1.0],["Unsure",0.5],["Not Applicable",0.0]],"score":true},{"q":"How often do you update your website’s content?","type":"radio","opts":[["Daily/Weekly",4.0],["Frequently",4.0],["Sometimes",3.0],["Little",2.0],["None",0.0]],"score":true},{"q":"Is your website optimized for SEO?","type":"radio","opts":[["Yes",5.0],["Not Really",2.0],["No",0.0],["Unsure",0.5],["Not Applicable",0.0]],"score":true},{"q":"Do you use any email marketing?","type":"radio","opts":[["Yes",5.0],["Not Really",2.0],["No",0.0],["Unsure",0.5],["Not Applicable",0.0]],"score":true},{"q":"How successful is your email marketing strategy?","type":"radio","opts":[["Very Good",5.0],["Needs Improvement",2.0],["Not Good",1.0],["Not at all",0.0],["Unsure",0.5],["Not Applicable",0.0]],"score":true},{"q":"Do you use any automation tools for digital marketing?","type":"radio","opts":[["Yes",5.0],["Not Really",2.0],["No",0.0],["Unsure",0.5],["Not Applicable",0.0]],"score":true},{"q":"Do you manage your online reputation, including reviews and customer feedback on digital platforms?","type":"radio","opts":[["Yes",5.0],["Not Really",2.0],["No",0.0],["Unsure",0.5],["Not Applicable",0.0]],"score":true},{"q":"Do you use retargeting strategies for visitors who engage with your website but don’t convert?","type":"radio","opts":[["Yes",5.0],["Not Really",2.0],["No",0.0],["Unsure",0.5],["Not Applicable",0.0]],"score":true},{"q":"Do you software to plan, execute and track your advertising campaigns?","type":"radio","opts":[["Yes",5.0],["Not Really",2.0],["No",0.0],["Unsure",0.5],["Not Applicable",0.0]],"score":true},{"q":"Do you use software to manage and monitor your advertising campaigns?","type":"radio","opts":[["Yes",5.0],["Not Really",2.0],["No",0.0],["Unsure",0.5],["Not Applicable",0.0]],"score":true},{"q":"Are campaigns typically handled in-house, or do you work with external agencies or freelancers?","type":"radio","opts":[["Owner Managed",2.0],["Employee Managed",3.0],["External Vendors",5.0],["Freelance",3.0]],"score":true},{"q":"Do you have a set budget for Marketing and Advertising?","type":"radio","opts":[["Yes",5.0],["Not Really",2.0],["No",0.0],["Unsure",0.5],["Not Applicable",0.0]],"score":true},{"q":"How often do you review and analyze your ad spend to ensure budget efficiency?","type":"radio","opts":[["Daily/Weekly",5.0],["Frequently",4.0],["Sometimes",3.0],["Little",2.0],["Unsure",0.5],["None",0.0]],"score":true},{"q":"Do you ensure that messaging and branding are consistent across all advertising channels?","type":"radio","opts":[["Yes",5.0],["Not Really",3.0],["No",0.0],["Unsure",0.5],["Not Applicable",0.0]],"score":true},{"q":"Are you looking to expand into new markets or regions over the long term?","type":"radio","opts":[["Yes",5.0],["No",0.0],["Unsure",0.5]],"score":true},{"q":"How do you plan to differentiate your business from competitors in the future?","type":"checkbox","opts":[["Social Media Marketing",5.0],["Email Marketing",5.0],["Paid Advertising",5.0],["Other",1.0],["Unsure",0.5]],"score":true},{"q":"Do you anticipate any changes in your industry that will affect your long-term strategy?","type":"radio","opts":[["Yes",5.0],["No",0.0],["Unsure",0.5]],"score":true},{"q":"Have you thought about how you will scale operations as your business grows?","type":"radio","opts":[["Yes",5.0],["No",0.0],["Unsure",0.5]],"score":true},{"q":"Do you have any new services or products your plan to launch?","type":"radio","opts":[["Yes",5.0],["No",0.0],["N/A or Unsure",0.5]],"score":true},{"q":"Do you have a launch plan of action and timeline for launching new products or services?","type":"radio","opts":[["Yes",5.0],["Partially",3.0],["No",0.0],["N/A or Unsure",0.5]],"score":true},{"q":"Do you track how many leads or inquiries you receive each month?","type":"radio","opts":[["Yes",5.0],["Partially",3.0],["No",0.0],["Unsure",0.5]],"score":true},{"q":"Roughly what percentage of your leads or inquiries become paying customers?","type":"radio","opts":[["Over 50%",5.0],["25% to 50%",5.0],["10% to 25%",4.0],["Under 10%",2.0],["We do not track this",0.0]],"score":true}]},{"id":"ops","title":"Operations & Process Management","note":"How the day-to-day actually runs, who runs it, where it slows down, and who you depend on outside the business.","questions":[{"q":"Who manages most of your day to day operations?","type":"radio","opts":[["Team of Employees",5.0],["Office Manager",4.0],["Sole Management",1.0],["Other",1.0],["No One",0.0]],"score":true},{"q":"Do you delegate the majority of operational tasks to a team or take them on personally?","type":"radio","opts":[["Delegate to a Team",5.0],["Delegate to a Person",3.0],["Sole Management",1.0],["Other",1.0]],"score":true},{"q":"What is the current approval or decision-making process for key operational tasks?","type":"radio","opts":[["Management Team Approves Tasks",5.0],["Other Person Approves Tasks",3.0],["Sole Owner Approval",1.0],["Other",1.0]],"score":true},{"q":"How well are your company’s core operational processes documented?","type":"radio","opts":[["Well Documented",5.0],["Documentation Needs Work",3.0],["Not Documented",1.0]],"score":true},{"q":"Are there any bottlenecks or delays in your current workflows?","type":"radio","opts":[["No Delays",5.0],["Few Delays",4.0],["Some Delays",2.0],["Frequent Delays",1.0]],"score":true},{"q":"Do you utilize any software to manage daily operations?","type":"radio","opts":[["Yes",5.0],["Not Really",3.0],["No",0.0],["Unsure",0.5],["Not Applicable",0.0]],"score":true},{"q":"What technologies or software tools are currently used to support daily operations?","type":"textarea","rows":3,"score":false},{"q":"Are you interested in learning about automating daily operations for efficiency?","type":"radio","opts":[["Yes, very interested",5.0],["Kind of Interested",4.0],["Slight Interest",2.0],["Unsure",0.5],["Not Interested",0.0]],"score":true},{"q":"How do you track and manage inventory?","type":"textarea","rows":3,"score":false},{"q":"Do you use software to schedule and manage new jobs?","type":"radio","opts":[["Yes",5.0],["Not Really",3.0],["No",0.0]],"score":true},{"q":"How dependent is your business on any single supplier or vendor?","type":"radio","opts":[["Not dependent, we use multiple sources",5.0],["Somewhat dependent",3.0],["Heavily dependent on one",1.0],["We do not rely on suppliers or vendors",5.0],["Unsure",0.5]],"score":true},{"q":"If your main supplier or vendor failed tomorrow, do you have a backup ready?","type":"radio","opts":[["Yes",5.0],["Partially",3.0],["No",0.0],["We do not rely on suppliers or vendors",5.0],["Unsure",0.5]],"score":true},{"q":"Do you review supplier or vendor pricing and performance on a regular schedule?","type":"radio","opts":[["Yes",5.0],["Partially",3.0],["No",0.0],["We do not rely on suppliers or vendors",5.0],["Unsure",0.5]],"score":true}]},{"id":"employees","title":"Employee Management","note":"Roles, onboarding, communication, workload, and retention.","questions":[{"q":"How many employees does your business have?","type":"radio","opts":[["1 to 5",3.0],["6 to 20",4.0],["21-50",5.0],["51-99",5.0],["Over 100",5.0]],"score":true},{"q":"Do your employees have defined roles and responsibilities?","type":"radio","opts":[["Yes",5.0],["Partially",3.0],["No",0.0],["Unsure",0.5]],"score":true},{"q":"Is the onboarding process for new employees well defined?","type":"radio","opts":[["Well Defined Process",5.0],["Semi Defined Process",4.0],["Undefined Process",2.0],["Unsure",0.5],["No Process",0.0]],"score":true},{"q":"How often do your teams hold meetings?","type":"radio","opts":[["Daily",5.0],["Weekly",4.0],["Monthly",2.0],["No Cadence",1.0],["No Meetings",0.0]],"score":true},{"q":"What communication method do you mostly use with your team (e-mail, texts, calls, in-person)?","type":"radio","opts":[["Email",5.0],["Text",4.0],["Calls",3.0],["In-Person",3.0],["Other",1.0]],"score":true},{"q":"Do you use software to manage employee schedules and workloads?","type":"radio","opts":[["Yes",5.0],["Partially",3.0],["No",0.0],["Unsure",0.5]],"score":true},{"q":"Does employee time off, sick days, or other absences affect productivity?","type":"radio","opts":[["Yes",5.0],["Partially",3.0],["No",0.0],["Unsure",0.5]],"score":true},{"q":"Do you have a high employee turnover rate?","type":"radio","opts":[["Yes",5.0],["Partially",3.0],["No",0.0],["Unsure",0.5]],"score":true},{"q":"Do you offer employee training or coaching?","type":"radio","opts":[["Yes",5.0],["Partially",3.0],["No",0.0],["Unsure",0.5]],"score":true},{"q":"Does the company recognize and reward high-performing employees?","type":"radio","opts":[["Yes",5.0],["Partially",3.0],["No",0.0],["Unsure",0.5]],"score":true},{"q":"Are there any recurring challenges or obstacles that employees face in their day-to-day tasks?","type":"textarea","rows":3,"score":false},{"q":"Do employees have a defined path for career and professional growth within the company?","type":"radio","opts":[["Yes",5.0],["Partially",3.0],["No",0.0],["Unsure",0.5]],"score":true},{"q":"Do employees feel their workload is manageable, or are there issues with task overload?","type":"radio","opts":[["Yes",5.0],["Partially",3.0],["No",0.0],["Unsure",0.5]],"score":true},{"q":"Do you plan to hire new employees in the near future?","type":"radio","opts":[["Yes",5.0],["No",0.0],["Unsure",0.5]],"score":true},{"q":"Do you have enough resources to meet current customer demand?","type":"radio","opts":[["Yes",5.0],["No",0.0],["Unsure",0.5]],"score":true}]},{"id":"technology","title":"Technology","note":"Your software stack, collaboration tools, and data security.","questions":[{"q":"What types of software are currently being used for your business?","type":"checkbox","opts":[["Accounting Software",5.0],["Scheduling Software",5.0],["Project Management Software",5.0],["Customer Relationship Software",5.0],["Other",2.0],["None",0.0],["Unsure",0.5]],"score":true},{"q":"Are employees properly training on each software used?","type":"radio","opts":[["Yes",5.0],["Partially",3.0],["No",0.0],["Unsure",0.5],["Not Applicable",0.0]],"score":true},{"q":"Do you have a dedicated IT team or outsourced IT support?","type":"radio","opts":[["Yes",5.0],["Partially",3.0],["No",0.0],["Unsure",0.5],["Not Applicable",0.0]],"score":true},{"q":"Do you track and manage software licenses and subscriptions?","type":"radio","opts":[["Yes",5.0],["Partially",3.0],["No",0.0],["Unsure",0.5],["Not Applicable",0.0]],"score":true},{"q":"Do employees feel the technology they use helps or hinders their daily tasks?","type":"radio","opts":[["Yes",5.0],["Partially",3.0],["No",0.0],["Unsure",0.5],["Not Applicable",0.0]],"score":true},{"q":"Are there any manual processes that could be automated using available technology?","type":"radio","opts":[["Yes",5.0],["Partially",3.0],["No",0.0],["Unsure",0.5],["Not Applicable",0.0]],"score":true},{"q":"Are employees using collaboration tools to work together?","type":"checkbox","opts":[["Slack",5.0],["MS Teams",5.0],["Google Workspaces",4.0],["Other",3.0],["No",0.0],["Unsure",0.5]],"score":true},{"q":"Is there a document management system in place for sharing important company information?","type":"radio","opts":[["Yes",5.0],["Partially",3.0],["No",0.0],["Unsure",0.5],["Not Applicable",0.0]],"score":true},{"q":"Do you use any video conferencing software for remote employees?","type":"radio","opts":[["Yes",5.0],["Partially",3.0],["No",0.0],["Unsure",0.5],["Not Applicable",0.0]],"score":true},{"q":"Are communication tools mobile-friendly and accessible to employees on the go?","type":"radio","opts":[["Yes",5.0],["Partially",3.0],["No",0.0],["Unsure",0.5],["Not Applicable",0.0]],"score":true},{"q":"Are systems are in place to store, access, and analyze business data?","type":"radio","opts":[["Yes",5.0],["Partially",3.0],["No",0.0],["Unsure",0.5],["Not Applicable",0.0]],"score":true},{"q":"Are measures are in place to prevent data breaches or loss?","type":"radio","opts":[["Yes",5.0],["Partially",3.0],["No",0.0],["Unsure",0.5],["Not Applicable",0.0]],"score":true},{"q":"Do you regularly back up data, and is there a disaster recovery plan in place?","type":"radio","opts":[["Yes",5.0],["Partially",3.0],["No",0.0],["Unsure",0.5],["Not Applicable",0.0]],"score":true},{"q":"Do you have plans in place to ensure data privacy and compliance with regulations such as GDPR?","type":"radio","opts":[["Yes",5.0],["Partially",3.0],["No",0.0],["Unsure",0.5],["Not Applicable",0.0]],"score":true},{"q":"Is sensitive information encrypted when transmitted or stored within your systems?","type":"radio","opts":[["Yes",5.0],["Partially",3.0],["No",0.0],["Unsure",0.5],["Not Applicable",0.0]],"score":true},{"q":"Do you track and monitor how employees use company data and technology tools to ensure compliance?","type":"radio","opts":[["Yes",5.0],["Partially",3.0],["No",0.0],["Unsure",0.5],["Not Applicable",0.0]],"score":true},{"q":"How do you track project progress and deadlines?","type":"textarea","rows":3,"score":false},{"q":"Are project management tools being used?","type":"radio","opts":[["Yes",5.0],["Partially",3.0],["No",0.0],["Unsure",0.5],["Not Applicable",0.0]],"score":true},{"q":"Is there a customer relationship management (CRM) system in place to manage client interactions and sales pipelines?","type":"radio","opts":[["Yes",5.0],["Partially",3.0],["No",0.0],["Unsure",0.5],["Not Applicable",0.0]],"score":true},{"q":"Do you use to tools or software to monitor and report on business performance metrics?","type":"radio","opts":[["Yes",5.0],["Partially",3.0],["No",0.0],["Unsure",0.5],["Not Applicable",0.0]],"score":true},{"q":"Do you use software to track inventory?","type":"radio","opts":[["Yes",5.0],["Partially",3.0],["No",0.0],["Unsure",0.5],["Not Applicable",0.0]],"score":true},{"q":"Do you use any artificial intelligence (AI) or machine learning tools to optimize business processes?","type":"radio","opts":[["Yes",5.0],["Partially",3.0],["No",0.0],["Unsure",0.5],["Not Applicable",0.0]],"score":true}]},{"id":"ai","title":"AI & Automation Readiness","note":"This section decides what I actually recommend. There is no point suggesting something your team will not adopt or your budget will not cover, so please answer realistically rather than aspirationally.","questions":[{"q":"If you could wave a wand and automate any three tasks in your business, which would they be?","type":"textarea","rows":4,"score":false,"hint":"Don't worry about whether it's technically possible. Tell me what you wish would just happen without you touching it."},{"q":"What concerns or hesitations do you have about AI and automation?","type":"checkbox","score":false,"hint":"There are no wrong answers here, and this genuinely changes what I recommend.","opts":[["Accuracy and reliability",0],["Cost",0],["Data privacy and security",0],["Losing the personal touch with customers",0],["My team resisting it",0],["Not knowing where to start",0],["Tried before and it didn't work",0],["Time it takes to set up",0],["No real concerns",0]]},{"q":"Have you tried automating anything before? What happened?","type":"textarea","rows":3,"score":false,"hint":"Including what failed. That saves me from recommending something you've already burned money on."},{"q":"What is a realistic monthly budget for new tools or automation?","type":"radio","score":true,"opts":[["Over $2,000 per month",5.0],["$750 to $2,000 per month",5.0],["$300 to $750 per month",4.0],["$100 to $300 per month",3.0],["Under $100 per month",1.0],["Depends entirely on the return",3.0],["Prefer not to say",0.5]]},{"q":"How comfortable is your team with learning new software?","type":"radio","score":true,"opts":[["Very comfortable, they pick things up fast",5.0],["Mixed, some are and some are not",3.0],["Not comfortable, new tools tend to get abandoned",1.0],["It is just me",3.0],["Unsure",0.5]]},{"q":"Who would own and maintain a new system once it is set up?","type":"radio","score":true,"hint":"If the answer is \"me, and I don't have time,\" say so. That is a real constraint I need to design around, not a problem.","opts":[["A dedicated employee or team",5.0],["An external vendor or contractor",4.0],["An employee alongside their other duties",3.0],["The owner",1.0],["No one identified yet",0.0],["Unsure",0.5]]},{"q":"How quickly would you want to act on the recommendations?","type":"radio","score":true,"opts":[["Immediately, within a week or two",5.0],["Within a month",4.0],["Next quarter",3.0],["Depends on what you find",2.0],["Just exploring for now",1.0]]}]},{"id":"customers","title":"Customer Relationships & Outreach","note":"How you win, keep, and win back customers after the first sale.","questions":[{"q":"Do you have a dedicated person to handle customer relationships?","type":"radio","opts":[["Yes",2.0],["No",0.0]],"score":true},{"q":"Does your company have a marketing and advertising department?","type":"radio","opts":[["Yes",2.0],["No",0.0]],"score":true},{"q":"How quickly do you typically respond to a new customer inquiry?","type":"radio","opts":[["Within an hour",5.0],["Same day",4.0],["Next business day",3.0],["2 to 3 days",1.0],["Longer or inconsistent",0.0]],"score":true},{"q":"Do you have a defined onboarding process for new customers?","type":"radio","opts":[["Yes",5.0],["Partially",3.0],["No",0.0],["Unsure",0.5]],"score":true},{"q":"Do you follow up with leads who did not purchase?","type":"radio","opts":[["Yes, automatically",5.0],["Yes, manually",3.0],["No",0.0],["Unsure",0.5]],"score":true},{"q":"Do you request reviews or testimonials from customers?","type":"radio","opts":[["Yes, automatically",5.0],["Yes, manually",3.0],["No",0.0],["Unsure",0.5]],"score":true},{"q":"Do you have a process for winning back past or inactive customers?","type":"radio","opts":[["Yes",5.0],["Partially",3.0],["No",0.0],["Unsure",0.5]],"score":true},{"q":"Do you collect and act on customer feedback?","type":"radio","opts":[["Yes",5.0],["Partially",3.0],["No",0.0],["Unsure",0.5]],"score":true},{"q":"Do you track customer retention or repeat purchase rate?","type":"radio","opts":[["Yes",5.0],["Partially",3.0],["No",0.0],["Unsure",0.5]],"score":true},{"q":"Do you have a loyalty, referral, or rewards program?","type":"radio","opts":[["Yes",5.0],["Partially",3.0],["No",0.0],["Unsure",0.5]],"score":true}]},{"id":"finance","title":"Financial Management","note":"Cash flow, bookkeeping, margins, and the numbers you watch.","questions":[{"q":"Do you have any concerns about cash flow or financing needs?","type":"radio","opts":[["Yes",1.0],["No",5.0],["Unsure",0.5]],"score":true},{"q":"Do you use accounting software to manage your books?","type":"radio","opts":[["Yes",5.0],["Partially",3.0],["No",0.0],["Unsure",0.5]],"score":true},{"q":"How often do you review a profit and loss statement?","type":"radio","opts":[["Weekly",5.0],["Monthly",4.0],["Quarterly",3.0],["Yearly",1.0],["Never",0.0]],"score":true},{"q":"Do you know your profit margin on each product or service you sell?","type":"radio","opts":[["Yes",5.0],["Partially",3.0],["No",0.0],["Unsure",0.5]],"score":true},{"q":"Do you have a documented budget or financial forecast for the year?","type":"radio","opts":[["Yes",5.0],["Partially",3.0],["No",0.0],["Unsure",0.5]],"score":true},{"q":"Is your invoicing process automated?","type":"radio","opts":[["Yes",5.0],["Partially",3.0],["No",0.0],["Unsure",0.5]],"score":true},{"q":"How often do you have overdue or uncollected invoices?","type":"radio","opts":[["Never",5.0],["Rarely",4.0],["Sometimes",2.0],["Frequently",0.0],["Unsure",0.5]],"score":true},{"q":"Do you work with an accountant or bookkeeper?","type":"radio","opts":[["Yes",5.0],["Partially",3.0],["No",0.0],["Unsure",0.5]],"score":true},{"q":"Are your business and personal finances kept fully separate?","type":"radio","opts":[["Yes",5.0],["Partially",2.0],["No",0.0],["Unsure",0.5]],"score":true},{"q":"Do you track key financial metrics such as revenue, expenses, and margin on a report or dashboard?","type":"radio","opts":[["Yes",5.0],["Partially",3.0],["No",0.0],["Unsure",0.5]],"score":true},{"q":"Have you reviewed and adjusted your pricing in the last 12 months?","type":"radio","opts":[["Yes",5.0],["Not Really",2.0],["No",0.0],["Unsure",0.5]],"score":true},{"q":"Do you have a financial reserve or emergency fund for the business?","type":"radio","opts":[["Yes",5.0],["Partially",3.0],["No",0.0],["Unsure",0.5]],"score":true}]},{"id":"risk","title":"Risk & Compliance","note":"Insurance, licensing, contracts, and regulatory exposure. Quick to answer, and the cheapest problems to fix before they become expensive ones.","questions":[{"q":"Do you carry business insurance appropriate for your industry?","type":"radio","opts":[["Yes",5.0],["Partially",3.0],["No",0.0],["Unsure",0.5]],"score":true},{"q":"Are all required licenses, permits, and registrations current?","type":"radio","opts":[["Yes",5.0],["Partially",3.0],["No",0.0],["Unsure",0.5]],"score":true},{"q":"Do you use written contracts or written terms with your customers?","type":"radio","opts":[["Yes, always",5.0],["Sometimes",3.0],["No",0.0],["Unsure",0.5]],"score":true},{"q":"Are you confident you understand and meet the regulations that apply to your industry?","type":"radio","opts":[["Yes",5.0],["Partially",3.0],["No",0.0],["Unsure",0.5]],"score":true},{"q":"Has your business faced a legal dispute, claim, or regulatory issue in the last three years?","type":"radio","opts":[["No",5.0],["Yes, resolved",3.0],["Yes, ongoing",1.0],["Unsure",0.5]],"score":true},{"q":"Do you have a written policy covering how customer data is collected, stored, and used?","type":"radio","opts":[["Yes",5.0],["Partially",3.0],["No",0.0],["Unsure",0.5]],"score":true}]}];
+
+/* ====================================================================== */
+var qIndex = 0, allFieldIds = [], META = {}, KEYS = {};
+
+function esc(s){return String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;");}
+
+function render(){
+  var host = document.getElementById("questionnaire"), nav = document.getElementById("nav");
+  var html = "", navHtml = "";
+
+  SECTIONS.forEach(function(sec, si){
+    var letter = String.fromCharCode(65 + si);
+    navHtml += '<a href="#'+sec.id+'" id="nav_'+sec.id+'">'+esc(sec.title)+
+               '<span class="cnt">'+sec.questions.length+'</span></a>';
+    html += '<section id="'+sec.id+'">';
+    html += '<div class="sec-head"><span class="sec-num">'+letter+'</span><h2>'+esc(sec.title)+'</h2>'+
+            '<span class="sec-meta">'+sec.questions.length+' questions</span></div>';
+    html += '<p class="sec-note">'+esc(sec.note)+'</p>';
+
+    sec.questions.forEach(function(q){
+      qIndex++;
+      var fid = "q"+qIndex;
+      META[fid] = {section: sec.id, sectionTitle: sec.title, q: q.q, type: q.type,
+                   score: !!q.score, opts: q.opts || null, showIf: q.showIf || null};
+      if(q.key) KEYS[q.key] = fid;
+      html += '<div class="q" id="wrap_'+fid+'">';
+      html += '<label class="q-label" for="'+fid+'"><span class="q-num">'+qIndex+'.</span>'+esc(q.q)+'</label>';
+      if(q.hint) html += '<p class="q-hint">'+esc(q.hint)+'</p>';
+
+      if(q.type === "radio" || q.type === "checkbox"){
+        if(q.type === "checkbox") html += '<p class="q-multi">Select all that apply</p>';
+        html += '<div class="opts">';
+        q.opts.forEach(function(o, oi){
+          var oid = fid+"_"+oi;
+          html += '<label class="opt" for="'+oid+'"><input type="'+q.type+'" id="'+oid+'" name="'+fid+
+                  '" value="'+esc(o[0])+'" data-save data-group="'+fid+'" data-w="'+o[1]+'"><span>'+
+                  esc(o[0])+'</span></label>';
+        });
+        html += '</div>';
+      }
+      else if(q.type === "select"){
+        html += '<select id="'+fid+'" data-save><option value="">Select one…</option>';
+        q.opts.forEach(function(o){ html += '<option value="'+esc(o[0])+'">'+esc(o[0])+'</option>'; });
+        html += '</select>';
+      }
+      else if(q.type === "textarea"){
+        html += '<textarea id="'+fid+'" data-save rows="'+(q.rows||3)+'"></textarea>';
+      }
+      else if(q.type === "number" || q.type === "percent"){
+        html += '<div class="suffixed"><input type="number" id="'+fid+'" data-save step="any" min="0">'+
+                (q.type === "percent" ? '<span class="sfx">%</span>' : '')+'</div>';
+      }
+      else {
+        html += '<input type="'+(q.type === "tel" ? "tel" : "text")+'" id="'+fid+'" data-save>';
+      }
+      html += '</div>';
+      allFieldIds.push(fid);
+    });
+    html += '</section>';
+  });
+
+  host.innerHTML = html;
+  nav.innerHTML = navHtml;
+}
+
+/* ---------------------------------------------------------------- storage */
+var KEY = "business_analyzer_v1", store = {}, saveTimer;
+
+function loadStore(){ try{ store = JSON.parse(localStorage.getItem(KEY) || "{}"); }catch(e){ store = {}; } }
+function persist(){
+  try{ localStorage.setItem(KEY, JSON.stringify(store)); flashSaved(); }
+  catch(e){ document.getElementById("save").textContent = "Auto-save unavailable"; }
+}
+function flashSaved(){
+  var el = document.getElementById("save");
+  el.textContent = "Saved"; el.classList.add("on");
+  clearTimeout(saveTimer);
+  saveTimer = setTimeout(function(){ el.textContent = "Auto-save on"; el.classList.remove("on"); }, 1500);
+}
+function autoGrow(el){
+  if(el && el.tagName === "TEXTAREA"){ el.style.height = "auto"; el.style.height = (el.scrollHeight + 2) + "px"; }
+}
+function restore(){
+  document.querySelectorAll("[data-save]").forEach(function(el){
+    if(el.type === "checkbox" || el.type === "radio"){
+      if(store[el.id] === true){
+        el.checked = true;
+        var w = el.closest(".opt"); if(w) w.classList.add("checked");
+      }
+    } else if(store[el.id] !== undefined){
+      el.value = store[el.id]; autoGrow(el);
+    }
+  });
+  allFieldIds.forEach(markAnswered);
+}
+function bind(){
+  document.querySelectorAll("[data-save]").forEach(function(el){
+    if(el.dataset.bound) return;
+    el.dataset.bound = "1";
+    var evt = (el.type === "checkbox" || el.type === "radio" || el.tagName === "SELECT") ? "change" : "input";
+    el.addEventListener(evt, function(){
+      if(el.type === "radio"){
+        document.querySelectorAll('input[name="'+el.name+'"]').forEach(function(s){
+          store[s.id] = s.checked;
+          var w = s.closest(".opt"); if(w) w.classList.toggle("checked", s.checked);
+        });
+      } else if(el.type === "checkbox"){
+        store[el.id] = el.checked;
+        var w = el.closest(".opt"); if(w) w.classList.toggle("checked", el.checked);
+      } else {
+        store[el.id] = el.value; autoGrow(el);
+      }
+      var g = el.dataset.group || el.id;
+      markAnswered(g);
+      if(isControllerOf(g)) applyConditions();
+      persist(); updateProgress();
+    });
+  });
+}
+
+/* ------------------------------------------------------- conditional show */
+var CTRL = {}, CONDITIONAL = [], HIDDEN = {};
+
+var CTRL_IDS = {};
+function indexConditions(){
+  Object.keys(KEYS).forEach(function(k){
+    if(GROUPS[KEYS[k]]){ CTRL[k] = GROUPS[KEYS[k]]; CTRL_IDS[KEYS[k]] = 1; }
+  });
+  CONDITIONAL = allFieldIds.filter(function(f){ return !!META[f].showIf; });
+}
+function isControllerOf(fid){ return !!CTRL_IDS[fid]; }
+function visible(fid){ return !HIDDEN[fid]; }
+
+function applyConditions(){
+  CONDITIONAL.forEach(function(fid){
+    var c = META[fid].showIf, els = CTRL[c.key], on = true;
+    if(els){
+      on = false;
+      for(var i = 0; i < els.length; i++){
+        if(els[i].checked && els[i].value === c.value){ on = true; break; }
+      }
+    }
+    HIDDEN[fid] = !on;
+    var w = document.getElementById("wrap_"+fid);
+    if(w) w.classList.toggle("hidden", !on);
+  });
+}
+
+/* ---------------------------------------------------------------- progress */
+var GROUPS = {}, FIELDS = {};
+function indexFields(){
+  document.querySelectorAll("[data-group]").forEach(function(el){
+    (GROUPS[el.dataset.group] = GROUPS[el.dataset.group] || []).push(el);
+  });
+  allFieldIds.forEach(function(f){ if(!GROUPS[f]) FIELDS[f] = document.getElementById(f); });
+}
+function isAnswered(fid){
+  var g = GROUPS[fid];
+  if(g){ for(var i=0;i<g.length;i++){ if(g[i].checked) return true; } return false; }
+  var el = FIELDS[fid];
+  return !!(el && String(el.value).trim().length);
+}
+function markAnswered(fid){
+  var w = document.getElementById("wrap_"+fid);
+  if(w) w.classList.toggle("answered", isAnswered(fid));
+}
+function updateProgress(){
+  var done = 0, tot = 0, perSec = {};
+  allFieldIds.forEach(function(f){
+    if(!visible(f)) return;                     // skipped questions don't count against you
+    var s = META[f].section;
+    perSec[s] = perSec[s] || {d:0, t:0};
+    perSec[s].t++; tot++;
+    if(isAnswered(f)){ done++; perSec[s].d++; }
+  });
+  var pct = tot ? Math.round(done / tot * 100) : 0;
+  document.getElementById("bar").style.width = pct + "%";
+  document.getElementById("barlabel").textContent =
+    done + " of " + tot + " answered (" + pct + "%)";
+  SECTIONS.forEach(function(sec){
+    var a = document.getElementById("nav_"+sec.id), p = perSec[sec.id];
+    if(!a || !p) return;
+    a.classList.toggle("done", p.d === p.t);
+    a.querySelector(".cnt").textContent = p.d + "/" + p.t;
+  });
+}
+
+/* ---------------------------------------------------------------- scoring */
+function answerOf(fid){
+  var m = META[fid];
+  if(m.type === "radio" || m.type === "checkbox"){
+    var picked = [];
+    (GROUPS[fid] || []).forEach(function(el){
+      if(el.checked) picked.push({label: el.value, w: parseFloat(el.dataset.w)});
+    });
+    return picked;
+  }
+  var el = FIELDS[fid] || document.getElementById(fid);
+  return el ? String(el.value).trim() : "";
+}
+function scoreOf(fid){
+  var m = META[fid];
+  if(!m.score || !m.opts) return null;
+  if(!visible(fid)) return null;               // not applicable to this client — excluded from scoring
+  var max = 0;
+  m.opts.forEach(function(o){ if(o[1] > max) max = o[1]; });
+  var picked = answerOf(fid);
+  if(!picked.length) return {earned: 0, max: max, answered: false};
+  var earned;
+  if(m.type === "checkbox"){
+    var sum = 0;
+    picked.forEach(function(p){ sum += p.w; });
+    earned = sum / picked.length;              // average, so breadth alone can't inflate
+  } else {
+    earned = picked[0].w;
+  }
+  return {earned: earned, max: max, answered: true};
+}
+function r1(n){ return Math.round(n * 10) / 10; }
+
+/* ---------------------------------------------------------------- export */
+function buildText(){
+  var L = [], n = 0, gEarn = 0, gMax = 0, gAns = 0, gTot = 0;
+  var secLines = [], scoreLines = [];
+
+  SECTIONS.forEach(function(sec){
+    var sEarn = 0, sMax = 0, sAns = 0, sTot = 0;
+    secLines.push("", "-".repeat(66), sec.title.toUpperCase(), "-".repeat(66));
+    sec.questions.forEach(function(q){
+      n++;
+      var fid = "q"+n, m = META[fid];
+      if(!visible(fid)){
+        secLines.push("", n + ". " + m.q, "   [not applicable — skipped, not scored]");
+        return;
+      }
+      var a = answerOf(fid), sc = scoreOf(fid), txt;
+      if(m.type === "radio" || m.type === "checkbox"){
+        txt = a.length ? a.map(function(p){ return p.label; }).join(", ") : "";
+      } else { txt = a; }
+      secLines.push("");
+      secLines.push(n + ". " + m.q);
+      secLines.push("   " + (txt ? txt : "[ no answer given ]"));
+      if(sc){
+        sTot++; sMax += sc.max;
+        if(sc.answered){ sAns++; sEarn += sc.earned; }
+        secLines.push("   [points: " + r1(sc.earned) + " / " + sc.max + "]");
+      }
+    });
+    var pct = sMax ? Math.round(sEarn / sMax * 100) : 0;
+    if(sTot){
+      scoreLines.push("  " + pad(sec.title, 36) + pad(r1(sEarn) + " / " + sMax, 14) +
+                      pad(pct + "%", 7) + sAns + "/" + sTot + " answered");
+      gEarn += sEarn; gMax += sMax; gAns += sAns; gTot += sTot;
+    } else {
+      scoreLines.push("  " + pad(sec.title, 36) + "not scored");
+    }
+  });
+
+  var gPct = gMax ? Math.round(gEarn / gMax * 100) : 0;
+  L.push("BUSINESS ANALYZER — CLIENT RESPONSES");
+  L.push("=".repeat(66));
+  L.push("Name:      " + (keyVal("name")     || "—"));
+  L.push("Business:  " + (keyVal("business") || "—"));
+  L.push("Email:     " + (keyVal("email")    || "—"));
+  L.push("Phone:     " + (keyVal("phone")    || "—"));
+  L.push("Industry:  " + (keyVal("industry") || "—"));
+  L.push("Exported:  " + new Date().toLocaleString());
+  L.push("");
+  L.push("SCORE SUMMARY  (internal — not shown to the client)");
+  L.push("-".repeat(66));
+  L.push("  " + pad("SECTION", 36) + pad("POINTS", 14) + pad("PCT", 7) + "COMPLETION");
+  L = L.concat(scoreLines);
+  L.push("-".repeat(66));
+  L.push("  " + pad("OVERALL", 36) + pad(r1(gEarn) + " / " + gMax, 14) +
+         pad(gPct + "%", 7) + gAns + "/" + gTot + " answered");
+  L.push("");
+  L.push("Checkbox questions are scored as the average weight of the options selected,");
+  L.push("so selecting more boxes does not by itself raise the score.");
+  L = L.concat(secLines);
+  L.push("");
+  L.push("=".repeat(66));
+  L.push("End of responses");
+  return L.join("\n");
+}
+function pad(s, n){ s = String(s); while(s.length < n) s += " "; return s; }
+function val(id){ var e = document.getElementById(id); return e ? String(e.value).trim() : ""; }
+function keyVal(k){ return KEYS[k] ? val(KEYS[k]) : ""; }
+
+function safeName(){
+  var b = keyVal("business") || keyVal("name") || "Client";
+  return b.replace(/[^a-z0-9]+/gi, "-").replace(/^-|-$/g, "") || "Client";
+}
+function downloadAnswers(){
+  var blob = new Blob([buildText()], {type:"text/plain;charset=utf-8"});
+  var a = document.createElement("a");
+  a.href = URL.createObjectURL(blob);
+  a.download = "Business-Analyzer-" + safeName() + ".txt";
+  document.body.appendChild(a); a.click(); document.body.removeChild(a);
+  setTimeout(function(){ URL.revokeObjectURL(a.href); }, 1000);
+  toast("Downloaded — attach this file to your email");
+}
+function copyAnswers(){
+  var t = buildText();
+  if(navigator.clipboard && navigator.clipboard.writeText){
+    navigator.clipboard.writeText(t).then(function(){ toast("Copied — paste into an email"); },
+      function(){ fallbackCopy(t); });
+  } else fallbackCopy(t);
+}
+function fallbackCopy(t){
+  var ta = document.createElement("textarea");
+  ta.value = t; ta.style.position = "fixed"; ta.style.opacity = "0";
+  document.body.appendChild(ta); ta.select();
+  try{ document.execCommand("copy"); toast("Copied — paste into an email"); }
+  catch(e){ toast("Copy failed — use Download instead"); }
+  document.body.removeChild(ta);
+}
+function emailAnswers(){
+  downloadAnswers();
+  var subj = "Business Analyzer — " + safeName();
+  var body = "Hi,\n\nMy completed Business Analyzer questionnaire is attached (it downloaded to my computer " +
+             "as a .txt file — please attach it before sending).\n\nThanks,\n" + keyVal("name");
+  setTimeout(function(){
+    window.location.href = "mailto:" + encodeURIComponent(CONSULTANT_EMAIL) +
+      "?subject=" + encodeURIComponent(subj) + "&body=" + encodeURIComponent(body);
+  }, 700);
+}
+function clearAll(){
+  if(!confirm("This will erase every answer you've entered. This cannot be undone. Continue?")) return;
+  try{ localStorage.removeItem(KEY); }catch(e){}
+  store = {}; location.reload();
+}
+function toast(msg){
+  var t = document.getElementById("toast");
+  t.textContent = msg; t.classList.add("show");
+  setTimeout(function(){ t.classList.remove("show"); }, 2600);
+}
+
+/* ---------------------------------------------------------------- init */
+loadStore(); render(); bind(); indexFields(); indexConditions(); restore(); applyConditions(); updateProgress();
+
+window.addEventListener("scroll", function(){
+  document.getElementById("totop").classList.toggle("show", window.scrollY > 700);
+});
+window.addEventListener("beforeprint", function(){
+  document.querySelectorAll("textarea").forEach(autoGrow);
+});
+window.addEventListener("load", function(){
+  document.querySelectorAll("textarea").forEach(autoGrow);
+});
+</script>
+</body>
+</html>

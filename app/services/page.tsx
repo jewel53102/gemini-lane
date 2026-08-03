@@ -132,6 +132,15 @@ export default function ServicesPage() {
             </p>
           </div>
         </div>
+
+        <div className="dashboard-outcome audit-timeline-note">
+          <p>
+            <strong>Not sure which tier fits?</strong> Start with the{" "}
+            <Link href="/full-business-audit">Full Business Audit</Link> — a
+            $2,000 diagnostic across ten areas of your business that tells you
+            exactly what to fix first, before you commit to an engagement.
+          </p>
+        </div>
       </section>
 
       {/* WHAT THIS LOOKS LIKE */}

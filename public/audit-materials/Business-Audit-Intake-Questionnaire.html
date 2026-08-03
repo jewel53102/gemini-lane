@@ -1,0 +1,709 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Business Audit — Intake Questionnaire</title>
+<style>
+:root{
+  --bg:#0a0d14;
+  --panel:#111621;
+  --panel-2:#161d2b;
+  --line:#243044;
+  --line-soft:#1b2434;
+  --text:#e8edf6;
+  --muted:#8fa0bd;
+  --accent:#4de3c1;
+  --accent-2:#7aa2ff;
+  --warn:#ffcc66;
+  --radius:14px;
+}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0}
+body{
+  background:var(--bg);
+  color:var(--text);
+  font:16px/1.65 -apple-system,BlinkMacSystemFont,"Segoe UI",Inter,Roboto,Helvetica,Arial,sans-serif;
+  -webkit-font-smoothing:antialiased;
+}
+a{color:var(--accent)}
+
+/* ---------- Sticky bar ---------- */
+.topbar{
+  position:sticky;top:0;z-index:50;
+  background:rgba(10,13,20,.92);
+  backdrop-filter:blur(10px);
+  border-bottom:1px solid var(--line);
+}
+.topbar-inner{
+  max-width:1000px;margin:0 auto;padding:10px 22px;
+  display:flex;align-items:center;gap:16px;flex-wrap:wrap;
+}
+.brandmark{font-weight:700;letter-spacing:.14em;font-size:11px;text-transform:uppercase;color:var(--accent)}
+.progress-wrap{flex:1;min-width:180px}
+.progress-track{height:7px;background:var(--line-soft);border-radius:99px;overflow:hidden}
+.progress-fill{height:100%;width:0%;background:linear-gradient(90deg,var(--accent),var(--accent-2));transition:width .3s ease}
+.progress-label{font-size:11px;color:var(--muted);margin-top:4px;letter-spacing:.03em}
+.savestate{font-size:11px;color:var(--muted);white-space:nowrap}
+.savestate.on{color:var(--accent)}
+
+/* ---------- Layout ---------- */
+.wrap{max-width:1000px;margin:0 auto;padding:0 22px 120px}
+.hero{padding:64px 0 40px;border-bottom:1px solid var(--line)}
+.eyebrow{font-size:11px;letter-spacing:.22em;text-transform:uppercase;color:var(--accent);font-weight:700;margin-bottom:16px}
+h1{font-size:clamp(30px,5vw,48px);line-height:1.1;margin:0 0 18px;letter-spacing:-.02em}
+.lede{font-size:18px;color:var(--muted);max-width:62ch;margin:0}
+
+/* ---------- Nav ---------- */
+.secnav{display:flex;flex-wrap:wrap;gap:8px;margin:34px 0 8px;position:sticky;top:58px;z-index:40;
+  background:rgba(10,13,20,.92);backdrop-filter:blur(10px);padding:10px 0}
+.secnav a{
+  font-size:12px;text-decoration:none;color:var(--muted);
+  border:1px solid var(--line);border-radius:99px;padding:6px 13px;transition:.18s;
+}
+.secnav a:hover{color:var(--text);border-color:var(--accent);background:var(--panel)}
+
+/* ---------- Sections ---------- */
+section{padding:52px 0;border-bottom:1px solid var(--line-soft)}
+.sec-head{display:flex;align-items:baseline;gap:14px;margin-bottom:8px;flex-wrap:wrap}
+.sec-num{
+  font-size:12px;font-weight:800;letter-spacing:.1em;color:var(--bg);
+  background:var(--accent);border-radius:6px;padding:3px 9px;
+}
+h2{font-size:clamp(22px,3.2vw,30px);margin:0;letter-spacing:-.01em}
+.sec-note{color:var(--muted);font-size:15px;margin:10px 0 30px;max-width:70ch}
+
+/* ---------- Questions ---------- */
+.q{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);padding:20px 22px;margin-bottom:16px}
+.q:focus-within{border-color:var(--accent-2)}
+.q-label{display:block;font-weight:620;font-size:16px;margin-bottom:6px}
+.q-num{color:var(--accent);font-weight:800;margin-right:9px;font-variant-numeric:tabular-nums}
+.q-hint{color:var(--muted);font-size:13.5px;margin:0 0 13px;line-height:1.55}
+textarea,input[type=text],input[type=email],input[type=date],select{
+  width:100%;background:var(--panel-2);color:var(--text);
+  border:1px solid var(--line);border-radius:9px;padding:11px 13px;
+  font:inherit;font-size:15px;resize:vertical;
+}
+textarea:focus,input:focus,select:focus{outline:none;border-color:var(--accent)}
+textarea::placeholder,input::placeholder{color:#5b6c88}
+.opts{display:flex;flex-wrap:wrap;gap:9px}
+.opt{
+  display:inline-flex;align-items:center;gap:8px;cursor:pointer;
+  border:1px solid var(--line);background:var(--panel-2);border-radius:99px;
+  padding:7px 14px;font-size:14px;transition:.15s;
+}
+.opt:hover{border-color:var(--accent-2)}
+.opt input{accent-color:var(--accent);margin:0}
+.opt.checked{border-color:var(--accent);background:rgba(77,227,193,.09)}
+
+/* ---------- Tables ---------- */
+.tbl{width:100%;border-collapse:collapse;margin-bottom:10px}
+.tbl th{
+  text-align:left;font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;
+  color:var(--muted);font-weight:700;padding:0 8px 8px 0;
+}
+.tbl td{padding:0 8px 8px 0;vertical-align:top}
+.tbl input{font-size:14px;padding:9px 11px}
+.btn-row{display:flex;gap:10px;flex-wrap:wrap}
+.mini{
+  background:var(--panel-2);border:1px solid var(--line);color:var(--muted);
+  border-radius:8px;padding:7px 13px;font:inherit;font-size:13px;cursor:pointer;transition:.15s;
+}
+.mini:hover{color:var(--text);border-color:var(--accent)}
+
+/* ---------- Agreement ---------- */
+.panelbox{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);padding:30px 32px}
+.terms-box{
+  background:var(--panel-2);border:1px solid var(--accent);border-radius:12px;
+  padding:20px 22px;margin:26px 0 0;
+}
+.terms-box .row{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.terms-box label{display:block;font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-bottom:6px}
+
+/* ---------- Callouts ---------- */
+.callout{
+  border-left:3px solid var(--accent);background:var(--panel);
+  border-radius:0 12px 12px 0;padding:16px 20px;margin:22px 0;
+  font-size:14.5px;color:#c6d2e6;
+}
+.callout strong{color:var(--text)}
+.privacy{border-left:3px solid var(--accent-2);background:var(--panel);border-radius:0 12px 12px 0;
+  padding:14px 18px;margin:16px 0 0;font-size:13.5px;color:#a8b6cd}
+.privacy strong{color:var(--text)}
+
+/* ---------- Action bar ---------- */
+.actionbar{
+  position:fixed;bottom:0;left:0;right:0;z-index:60;
+  background:rgba(10,13,20,.96);backdrop-filter:blur(12px);
+  border-top:1px solid var(--line);padding:12px 22px;
+}
+.actionbar-inner{max-width:1000px;margin:0 auto;display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+.btn{
+  border:0;border-radius:10px;padding:11px 18px;font:inherit;font-weight:650;font-size:14px;
+  cursor:pointer;transition:.15s;
+}
+.btn-primary{background:var(--accent);color:#06231d}
+.btn-primary:hover{filter:brightness(1.1)}
+.btn-ghost{background:transparent;color:var(--text);border:1px solid var(--line)}
+.btn-ghost:hover{border-color:var(--accent);color:var(--accent)}
+.btn-danger{background:transparent;color:#ff8b8b;border:1px solid #3d2230;margin-left:auto}
+.btn-danger:hover{border-color:#ff8b8b}
+
+.toast{
+  position:fixed;bottom:78px;left:50%;transform:translateX(-50%) translateY(14px);
+  background:var(--accent);color:#06231d;font-weight:650;font-size:14px;
+  padding:11px 20px;border-radius:10px;opacity:0;pointer-events:none;transition:.25s;z-index:70;
+}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+
+.footnote{color:var(--muted);font-size:13px;margin-top:26px;text-align:center}
+
+/* ---------- Print ---------- */
+@media print{
+  :root{--bg:#fff;--panel:#fff;--panel-2:#fff;--line:#c9d0da;--line-soft:#e4e8ee;
+        --text:#111;--muted:#555;--accent:#0a7d68;--accent-2:#2a4f9e;--warn:#8a6d00}
+  body{background:#fff;color:#111;font-size:11.5pt}
+  .topbar,.secnav,.actionbar,.toast,.btn-row,.mini,.no-print{display:none!important}
+  .wrap{max-width:100%;padding:0}
+  .hero{padding:0 0 20px;page-break-after:avoid}
+  section{padding:22px 0;page-break-inside:auto;border-bottom:1px solid #e4e8ee}
+  .q{border:1px solid #d6dbe3;padding:11px 13px;margin-bottom:9px;page-break-inside:avoid;background:#fff}
+  .q-hint{font-size:9.5pt}
+  textarea,input,select{border:1px solid #c9d0da;background:#fff;color:#111;font-size:10.5pt}
+  textarea{min-height:auto!important;height:auto!important;overflow:visible!important}
+  .panelbox{border:1px solid #c9d0da;padding:18px;background:#fff}
+  .sec-num{background:#0a7d68;color:#fff;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  .sec-head{page-break-after:avoid}
+  .opt{border:1px solid #c9d0da;background:#fff}
+  .callout{border-left:3px solid #0a7d68;background:#f6f8fa}
+  .privacy{border-left:3px solid #2a4f9e;background:#f6f8fa;color:#333;font-size:9.5pt}
+  a{color:#2a4f9e}
+  @page{margin:16mm 14mm}
+}
+@media (max-width:640px){
+  .terms-box .row{grid-template-columns:1fr}
+  .agreement{padding:22px 18px}
+  .btn-danger{margin-left:0}
+}
+</style>
+</head>
+<body>
+
+<div class="topbar no-print">
+  <div class="topbar-inner">
+    <span class="brandmark">Business Audit Intake</span>
+    <div class="progress-wrap">
+      <div class="progress-track"><div class="progress-fill" id="bar"></div></div>
+      <div class="progress-label" id="barlabel">0 of 0 answered</div>
+    </div>
+    <span class="savestate" id="save">Auto-save on</span>
+  </div>
+</div>
+
+<div class="wrap">
+
+  <header class="hero">
+    <div class="eyebrow">Intake Questionnaire</div>
+    <h1>Comprehensive Business Audit</h1>
+    <p class="lede">This questionnaire is the single most important thing you will do in this engagement — the
+      depth of your answers directly determines the depth of what I can find. Be honest, be specific, and don't
+      clean it up for me. Messy answers are more useful than tidy ones.</p>
+
+    <div class="callout" style="margin-top:30px">
+      <strong>How to use this file.</strong> Type directly into it. Everything you enter is saved in this browser
+      automatically, so you can close it and come back. When you're finished, use the buttons at the bottom to
+      save a PDF, download your answers, or email them to me.
+      <br><br>
+      <strong>One rule:</strong> if you don't know an answer, write <em>"don't know"</em> or <em>"we don't track this."</em>
+      That is real, useful data — often the most useful data in the whole packet. Please don't leave it blank and please don't guess.
+    </div>
+
+    <div class="privacy">
+      <strong>Your answers stay between us.</strong> Everything you write here is confidential and covered by the
+      confidentiality clause of your service agreement. It is used only to produce your audit, is never sold or
+      shared, and you will not be identified by name in any case study or marketing material without your written
+      consent. Nothing is transmitted anywhere until you choose to send it — this file has no internet connection
+      of its own.
+      <br><br>
+      <strong>One thing to know about saving:</strong> your progress is stored in this browser on this device
+      only. If you start on your laptop, finish on your laptop — opening the file on your phone or in a different
+      browser will show a blank form. Clearing your browsing data will also erase your answers. If you need to
+      switch devices, use <em>Download My Answers</em> first so you have a copy.
+    </div>
+  </header>
+
+  <nav class="secnav no-print" id="nav"></nav>
+
+  <!-- ============ YOUR DETAILS ============ -->
+  <section id="details">
+    <div class="sec-head"><span class="sec-num">START</span><h2>Your Details</h2></div>
+    <p class="sec-note">So I know whose answers these are when they arrive.</p>
+    <div class="panelbox">
+      <div class="terms-box" style="margin:0">
+        <div class="row">
+          <div><label>Your name</label><input type="text" id="sig_name" data-save></div>
+          <div><label>Business name</label><input type="text" id="sig_biz" data-save></div>
+          <div><label>Email</label><input type="email" id="sig_email" data-save></div>
+          <div><label>Phone</label><input type="text" id="sig_phone" data-save></div>
+        </div>
+      </div>
+      <p style="margin:18px 0 0;font-size:13.5px;color:var(--muted)">
+        Your signed service agreement is a separate document. If you haven't received it yet, let me know and
+        I'll send it over.
+      </p>
+    </div>
+  </section>
+
+  <!-- ============ QUESTIONNAIRE (rendered by script) ============ -->
+  <div id="questionnaire"></div>
+
+  <p class="footnote no-print">Thank you for taking the time to do this properly. It makes the difference between a
+    generic report and one you can actually act on Monday morning.</p>
+</div>
+
+<div class="actionbar no-print">
+  <div class="actionbar-inner">
+    <button class="btn btn-primary" onclick="window.print()">Save as PDF / Print</button>
+    <button class="btn btn-ghost" onclick="downloadAnswers()">Download My Answers</button>
+    <button class="btn btn-ghost" onclick="emailAnswers()">Email My Answers</button>
+    <button class="btn btn-ghost" onclick="copyAnswers()">Copy to Clipboard</button>
+    <button class="btn btn-danger" onclick="clearAll()">Clear Form</button>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+/* =========================================================================
+   CONFIG — replace this email with yours so the "Email My Answers"
+   button pre-addresses the message to you.
+   ========================================================================= */
+var CONSULTANT_EMAIL = "ruby.groves@gemini-lane.com";
+
+/* =========================================================================
+   QUESTIONNAIRE CONTENT
+   ========================================================================= */
+var SECTIONS = [
+{
+  id:"snapshot", title:"Business Snapshot & Goals",
+  note:"Orientation. This tells me what kind of business I'm looking at and what winning actually looks like to you — so the recommendations are aimed at your goals, not generic best practice.",
+  questions:[
+    {q:"Business basics.", hint:"Business name, website, the industry you'd put yourself in, years in operation, number of locations, and where you're based.", type:"textarea", rows:3},
+    {q:"In plain language, what does your business do, for whom — and who is your best customer?", hint:"Write it like you're explaining it to a friend, not like your website. For \"best customer,\" don't give me your target market on paper — describe the actual customers you wish you had more of, and what they have in common.", type:"textarea", rows:5},
+    {q:"What are your revenue streams, and roughly what percentage does each contribute?", hint:"List every way money comes in — services, products, retainers, subscriptions, referrals, affiliate income. Rough percentages are fine.", type:"textarea", rows:3},
+    {q:"What are your top three goals for the next 12 months?", hint:"Be as specific as you can. \"Grow\" is less useful than \"get to $30k months without working weekends.\" Include any goals that aren't about money.", type:"textarea", rows:4},
+    {q:"If you could fix exactly one thing tomorrow, what would it be — and what has stopped you from fixing it already?", hint:"The second half of this question is usually the more revealing one. Money, time, not knowing how, or something else?", type:"textarea", rows:4}
+  ]
+},
+{
+  id:"ops", title:"Operations & Core Processes",
+  note:"This is where most recoverable time hides. I'm looking for the steps that are undocumented, duplicated, or dependent on one person remembering to do them.",
+  questions:[
+    {q:"Walk me through what happens from the moment someone becomes a customer to the moment their order or project is finished.", hint:"List it as numbered steps. Include the boring parts — the emails, the approvals, the waiting, the invoices, the follow-ups. The more steps you list, the more I can find. Aim for at least 8–10.", type:"textarea", rows:9},
+    {q:"Of those steps, which are written down somewhere as an actual documented process — and which live only in someone's head?", hint:"Be honest. \"None of it is written down\" is an extremely common and very useful answer.", type:"textarea", rows:4},
+    {q:"List the tasks you or your team repeat every single day or week, with a rough estimate of time spent on each.", hint:"Example: \"Copy order details from email into spreadsheet — 20 min/day.\" This is the single highest-value question in the packet for finding automation opportunities. Please give me at least 8 items, even the small ones.", type:"textarea", rows:9},
+    {q:"Where do things most often break, get delayed, or fall through the cracks?", hint:"Think about the last three times something went wrong for a customer. What was the actual root cause each time — not the symptom?", type:"textarea", rows:4},
+    {q:"How many separate places does the same piece of information get typed in?", hint:"Trace one customer's name and email through your whole system. It might get entered into your inbox, a CRM, an invoice, a spreadsheet, a shipping label, and a calendar. Count the stops.", type:"textarea", rows:4},
+    {q:"What do you personally spend the most time on that you know you shouldn't be doing — and roughly how does your week split between admin and revenue-generating work?", hint:"The things only you do because it's faster than explaining, or because you never got around to handing them off. A rough split is fine: \"55 hours, probably 30 of it admin.\"", type:"textarea", rows:4},
+    {q:"If you disappeared for two weeks with no phone, what would stop?", hint:"This tells me exactly where the business depends on you specifically. Be blunt.", type:"textarea", rows:3},
+    {q:"Who or what outside your business do you depend on to deliver?", hint:"Suppliers, manufacturers, subcontractors, freelancers, a single software platform, one big referral partner. For each, tell me what happens if they disappear tomorrow and whether you have a backup. If you don't rely on anyone outside the business, say so.", type:"textarea", rows:5}
+  ]
+},
+{
+  id:"tech", title:"Technology, Tools & Data",
+  note:"I'm mapping your stack to find what you're paying for twice, what isn't talking to anything else, and where data is trapped somewhere nothing can reach.",
+  questions:[
+    {q:"List every software, app, or subscription you pay for.", hint:"Include the small ones and the ones you forgot you're paying for — check your bank or card statement if that's easier. This one is genuinely worth doing properly; duplicate and unused subscriptions turn up almost every time.", type:"table",
+      columns:["Tool / software","What it's used for","Monthly cost","Who uses it"], rows:8},
+    {q:"Which of your tools are actually connected to each other, and which are islands? Which ones do you or your team avoid or find frustrating?", hint:"For example: \"Shopify talks to my email tool, but nothing talks to my accounting software, and nobody uses the CRM because it's confusing.\" Paying for something nobody uses is fixable, and the reason people avoid it usually points at a bigger problem.", type:"textarea", rows:5},
+    {q:"Where does your customer or client information actually live?", hint:"The real answer, not the intended one. CRM, spreadsheet, inbox, phone contacts, a notebook — or several of these at once, slightly out of sync?", type:"textarea", rows:3},
+    {q:"How do you currently handle each of these: scheduling, quotes or proposals, contracts, invoicing, and payments?", hint:"Name the tool or describe the manual process for each one. Note anywhere you're still using paper, text messages, or memory to run something important.", type:"textarea", rows:5},
+    {q:"Do you have any automations or integrations set up already? Describe them — including any that broke and never got fixed.", hint:"Zapier, Make, native integrations, email autoresponders, scheduled reports, anything. \"None\" is a perfectly fine answer.", type:"textarea", rows:4},
+    {q:"How do you handle data backup, password sharing, and removing access when someone leaves?", hint:"This is a risk question. Most businesses your size have a real vulnerability here and have never looked at it directly.", type:"textarea", rows:3}
+  ]
+},
+{
+  id:"journey", title:"Customer Journey, Delivery & Retention",
+  note:"Response speed, onboarding, and follow-up are where small businesses lose the most revenue quietly. This section maps the whole arc from first contact to repeat customer.",
+  questions:[
+    {q:"When a brand-new lead contacts you, what is the very first thing that happens — and who does it?", hint:"Include what happens outside business hours, on weekends, and when you're already with a customer.", type:"textarea", rows:4},
+    {q:"How long does it typically take you to respond to a new inquiry?", type:"radio", options:["Within minutes","Within an hour","Same day","Next business day","2–3 days","It varies — sometimes we miss them entirely"]},
+    {q:"Describe your onboarding process for a new customer or client.", hint:"What do they receive, in what order, and how much of it is you manually sending things one at a time?", type:"textarea", rows:5},
+    {q:"What questions do customers ask you over and over?", hint:"List the actual questions, in their words. Repeated questions are the clearest signal of where a better FAQ, a rewritten page, or an AI assistant would immediately buy back your time.", type:"textarea", rows:5},
+    {q:"What do customers complain about most, and what do they compliment most?", hint:"Both matter. The compliments tell me what to protect while changing everything else.", type:"textarea", rows:4},
+    {q:"What happens after a project or order is finished?", hint:"Do you ask for a review, a referral, or repeat business — and is that automatic or does someone have to remember? Also: roughly what percentage of your business comes from repeat customers, and how do you collect feedback?", type:"textarea", rows:5}
+  ]
+},
+{
+  id:"marketing", title:"Marketing, Advertising & Lead Flow",
+  note:"I want to see where customers really come from, what you're spending, and whether you can tell the difference between those two things. Guessing is common here — just say so where it applies.",
+  questions:[
+    {q:"Which channels bring you customers? Rank them by volume — then tell me which one produces your best customers.", hint:"Referrals, word of mouth, Google, social, paid ads, email, walk-ins, marketplaces, partnerships. \"Best\" means highest value, easiest to work with, most likely to return. Your highest-volume channel and your best-customer channel are often different, and that gap is usually worth real money.", type:"textarea", rows:5},
+    {q:"Break down your marketing and advertising spend.", hint:"Include ad platforms, agencies, freelancers, software, sponsorships, and print. If you don't know the return on something, write \"unknown\" — that's an important finding, not a failure.", type:"table",
+      columns:["Channel / platform","Monthly spend","Who manages it","Results / return (or \"unknown\")"], rows:6},
+    {q:"How do you know where a lead came from?", hint:"Do you ask them, track it in a tool, use call tracking or UTM links — or mostly guess? If different people record it differently, say so.", type:"textarea", rows:3},
+    {q:"What happens to a lead who's interested but doesn't buy right away?", hint:"Describe the real follow-up: how many times, over how long, by what method, and whether it's automated or someone has to remember. If nothing happens, say that plainly — it's one of the most common and most fixable revenue leaks I find.", type:"textarea", rows:5},
+    {q:"Do you have an email or SMS list? If so: how big, how often do you send, and what happens when you do?", hint:"Include open rates or sales generated if you have them. If you have a list you never email, that's worth saying.", type:"textarea", rows:4},
+    {q:"What content do you produce, who makes it, and how much time does it take?", hint:"Social posts, blogs, video, newsletters, photography. Include how you decide what to make, and whether it actually happens consistently or in bursts when you have time.", type:"textarea", rows:4},
+    {q:"What is your website supposed to do, and is it doing it?", hint:"Brochure, lead generator, booking engine, e-commerce store? Who built it, when was it last updated, and do you know how many visitors it gets or what they do there?", type:"textarea", rows:4},
+    {q:"Roughly what percentage of your leads or inquiries turn into paying customers — and do you track it?", hint:"This is the number that tells me whether your problem is getting attention or converting it. If you don't track it, estimate and say it's an estimate. \"No idea\" is also a real answer.", type:"textarea", rows:3},
+    {q:"Name your two or three closest competitors. What do they do better than you — and what do you do better than them?", hint:"The first half is the harder and more useful half. Include links if you have them.", type:"textarea", rows:4}
+  ]
+},
+{
+  id:"finance", title:"Financial Health & Pricing",
+  note:"High-level only — I'm not doing your books. I need enough to size opportunities correctly and know what a realistic investment looks like for you. Ranges are completely fine.",
+  questions:[
+    {q:"What's your approximate annual revenue?", type:"radio", options:["Under $100k","$100k–$250k","$250k–$500k","$500k–$1M","$1M–$5M","Over $5M","Prefer not to say"]},
+    {q:"How did you set your prices, when did you last raise them, and roughly what's your profit margin?", hint:"Did you calculate your prices, copy a competitor, or pick a number that felt right? Most people picked a number — that's fine, just say so. For margin, tell me whether you know it confidently or it's a guess.", type:"textarea", rows:4},
+    {q:"How do you handle invoicing, collecting payment, and chasing late payments?", hint:"Include roughly how much time this takes each month, and whether you regularly have money sitting uncollected.", type:"textarea", rows:4},
+    {q:"Which numbers do you look at regularly, how often, and where do you look at them? Do you know what it costs you to get a customer and what one is worth over time?", hint:"If the answer is \"I check my bank balance\" and \"no,\" say exactly that. It's a very common answer and establishing those two numbers is often one of my first recommendations. Also flag any part of the business where you suspect you're losing money but haven't confirmed it.", type:"textarea", rows:5},
+    {q:"What licenses, permits, insurance, and regulations apply to your business — and is everything current?", hint:"Business licenses, trade or professional licensing, permits, liability and workers' comp insurance, industry-specific rules, data privacy obligations. Flag anything expired, uncertain, or that you've been meaning to sort out. This is often the cheapest risk to fix and the most expensive to ignore.", type:"textarea", rows:5}
+  ]
+},
+{
+  id:"team", title:"Team, Roles & Capacity",
+  note:"Even a team of one has a capacity problem. This section finds where responsibility is unclear, where knowledge is trapped, and where your next hire actually belongs.",
+  questions:[
+    {q:"List everyone who works in the business, including yourself and any contractors.", type:"table",
+      columns:["Name / role","Employee, contractor, or family","Hours per week","Main responsibilities"], rows:6},
+    {q:"Is it clear who owns what — or does everyone do a bit of everything?", hint:"Give me a specific example of something that fell through the cracks because it wasn't clearly anyone's job.", type:"textarea", rows:4},
+    {q:"How does your team communicate, assign work, and train someone new?", hint:"Text, email, group chat, project tool, verbally in passing? What happens to a request made verbally? For training — is there documentation, or does someone shadow you, and how long until a new person is actually useful?", type:"textarea", rows:5},
+    {q:"Where is knowledge stuck in one person's head, and what role would you hire for first if budget weren't a constraint?", hint:"If that person quit tomorrow, what would you lose? And why is that first hire the one you'd make?", type:"textarea", rows:4}
+  ]
+},
+{
+  id:"ai", title:"AI, Automation & Readiness",
+  note:"This section tells me what to actually recommend. There's no point suggesting something your team won't adopt or your budget won't cover, so please be realistic here rather than aspirational.",
+  questions:[
+    {q:"Have you tried any AI tools in your business? Which ones, and how did it go?", hint:"ChatGPT, Claude, Copilot, or AI features inside tools you already use. Include what didn't work and what you gave up on — that's just as useful as what worked.", type:"textarea", rows:4},
+    {q:"What concerns or hesitations do you have about AI and automation?", hint:"Accuracy, cost, privacy, losing the personal touch, your team resisting it, not knowing where to start, having been burned before. There are no wrong answers, and this genuinely shapes what I recommend.", type:"textarea", rows:4},
+    {q:"If you could wave a wand and automate any three tasks, which three?", hint:"Don't worry about whether it's technically possible. Tell me what you wish would just happen without you touching it.", type:"textarea", rows:4},
+    {q:"How comfortable is your team with learning new software — and who would own and maintain a new system once it's set up?", hint:"If the answer is \"me, and I don't have time,\" that's a real constraint I need to design around, not a problem. Say it plainly.", type:"textarea", rows:4},
+    {q:"What's a realistic monthly budget for new tools or automation?", type:"radio", options:["Under $100/mo","$100–$300/mo","$300–$750/mo","$750–$2,000/mo","Over $2,000/mo","Depends entirely on the return","Prefer not to say"]}
+  ]
+},
+{
+  id:"final", title:"Final Context",
+  note:"Last four. These consistently surface things the structured questions miss.",
+  questions:[
+    {q:"What have you already tried to fix that didn't work?", hint:"Save me from recommending something you've already burned time or money on. Tell me what you tried, what happened, and why you think it failed.", type:"textarea", rows:4},
+    {q:"Is there anything happening in the business right now that I should know about — and how quickly do you want to move on the recommendations?", hint:"A pending hire, a move, a big client leaving, a seasonal rush, a partnership, a health issue, a rebrand, planning to sell. Context changes recommendations. For pace: next week, next month, next quarter, or just exploring?", type:"textarea", rows:5},
+    {q:"Finish this sentence: \"This audit will have been worth $1,600 if ______.\"", hint:"This is how I'll know whether I hit the mark. Be specific and be demanding.", type:"textarea", rows:3},
+    {q:"Which supporting materials can you send along with this questionnaire?", hint:"None of these are required, but each one meaningfully sharpens the audit. Check whatever you can provide and I'll follow up about how to send them securely.", type:"checkbox", options:["Screen recording of me doing a routine task","Last 3 months of ad account reports or screenshots","Profit & loss statement or financial summary","Export of my software subscriptions and costs","Any existing SOPs or process documents","Website analytics access (read-only)","CRM or customer list export","Org chart or team structure","Sample customer emails or support threads","Nothing right now"]}
+  ]
+}
+];
+
+/* =========================================================================
+   RENDER
+   ========================================================================= */
+var qIndex = 0;
+var allFieldIds = [];
+
+function esc(s){return String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");}
+
+function render(){
+  var host = document.getElementById("questionnaire");
+  var nav  = document.getElementById("nav");
+  var html = "";
+  var navHtml = '<a href="#details">Your Details</a>';
+
+  SECTIONS.forEach(function(sec, si){
+    navHtml += '<a href="#'+sec.id+'">'+esc(sec.title)+'</a>';
+    html += '<section id="'+sec.id+'">';
+    html += '<div class="sec-head"><span class="sec-num">'+String.fromCharCode(65+si)+'</span><h2>'+esc(sec.title)+'</h2></div>';
+    html += '<p class="sec-note">'+esc(sec.note)+'</p>';
+
+    sec.questions.forEach(function(q){
+      qIndex++;
+      var fid = "q"+qIndex;
+      html += '<div class="q">';
+      html += '<label class="q-label" for="'+fid+'"><span class="q-num">'+qIndex+'.</span>'+esc(q.q)+'</label>';
+      if(q.hint) html += '<p class="q-hint">'+esc(q.hint)+'</p>';
+
+      if(q.type === "textarea"){
+        allFieldIds.push(fid);
+        html += '<textarea id="'+fid+'" data-save rows="'+(q.rows||3)+'"></textarea>';
+      }
+      else if(q.type === "radio"){
+        html += '<div class="opts">';
+        q.options.forEach(function(o,oi){
+          var oid = fid+"_"+oi;
+          html += '<label class="opt" for="'+oid+'"><input type="radio" id="'+oid+'" name="'+fid+'" value="'+esc(o)+'" data-save data-group="'+fid+'"><span>'+esc(o)+'</span></label>';
+        });
+        html += '</div>';
+        allFieldIds.push(fid);
+      }
+      else if(q.type === "checkbox"){
+        html += '<div class="opts">';
+        q.options.forEach(function(o,oi){
+          var oid = fid+"_"+oi;
+          html += '<label class="opt" for="'+oid+'"><input type="checkbox" id="'+oid+'" name="'+fid+'" value="'+esc(o)+'" data-save data-group="'+fid+'"><span>'+esc(o)+'</span></label>';
+        });
+        html += '</div>';
+        allFieldIds.push(fid);
+      }
+      else if(q.type === "table"){
+        html += '<table class="tbl" id="tbl_'+fid+'"><thead><tr>';
+        q.columns.forEach(function(c){ html += '<th>'+esc(c)+'</th>'; });
+        html += '</tr></thead><tbody>';
+        for(var r=0;r<(q.rows||5);r++){
+          html += '<tr>';
+          q.columns.forEach(function(c,ci){
+            html += '<td><input type="text" id="'+fid+'_r'+r+'_c'+ci+'" data-save></td>';
+          });
+          html += '</tr>';
+        }
+        html += '</tbody></table>';
+        html += '<div class="btn-row no-print"><button type="button" class="mini" onclick="addRow(\''+fid+'\','+q.columns.length+')">+ Add row</button></div>';
+        allFieldIds.push(fid);
+      }
+      html += '</div>';
+    });
+    html += '</section>';
+  });
+
+  host.innerHTML = html;
+  nav.innerHTML = navHtml;
+}
+
+function addRow(fid, cols){
+  var tbody = document.querySelector('#tbl_'+fid+' tbody');
+  var r = tbody.rows.length;
+  var tr = tbody.insertRow();
+  for(var c=0;c<cols;c++){
+    var td = tr.insertCell();
+    td.innerHTML = '<input type="text" id="'+fid+'_r'+r+'_c'+c+'" data-save>';
+  }
+  bind();
+}
+
+/* =========================================================================
+   AUTO-SAVE
+   ========================================================================= */
+var KEY = "business_audit_intake_v1";
+var store = {};
+
+function loadStore(){
+  try{ store = JSON.parse(localStorage.getItem(KEY) || "{}"); }catch(e){ store = {}; }
+}
+function persist(){
+  try{
+    localStorage.setItem(KEY, JSON.stringify(store));
+    flashSaved();
+  }catch(e){
+    document.getElementById("save").textContent = "Auto-save unavailable";
+  }
+}
+var saveTimer;
+function flashSaved(){
+  var el = document.getElementById("save");
+  el.textContent = "Saved"; el.classList.add("on");
+  clearTimeout(saveTimer);
+  saveTimer = setTimeout(function(){ el.textContent = "Auto-save on"; el.classList.remove("on"); }, 1600);
+}
+
+function restore(){
+  document.querySelectorAll("[data-save]").forEach(function(el){
+    var k = el.id;
+    if(el.type === "checkbox" || el.type === "radio"){
+      if(store[k] === true){ el.checked = true; el.closest(".opt") && el.closest(".opt").classList.add("checked"); }
+    } else if(store[k] !== undefined){
+      el.value = store[k];
+      autoGrow(el);
+    }
+  });
+}
+
+function autoGrow(el){
+  if(el.tagName === "TEXTAREA"){
+    el.style.height = "auto";
+    el.style.height = (el.scrollHeight + 2) + "px";
+  }
+}
+
+function bind(){
+  document.querySelectorAll("[data-save]").forEach(function(el){
+    if(el.dataset.bound) return;
+    el.dataset.bound = "1";
+    var evt = (el.type === "checkbox" || el.type === "radio" || el.tagName === "SELECT") ? "change" : "input";
+    el.addEventListener(evt, function(){
+      if(el.type === "checkbox" || el.type === "radio"){
+        if(el.type === "radio"){
+          document.querySelectorAll('input[name="'+el.name+'"]').forEach(function(sib){
+            store[sib.id] = sib.checked;
+            sib.closest(".opt") && sib.closest(".opt").classList.toggle("checked", sib.checked);
+          });
+        } else {
+          store[el.id] = el.checked;
+          el.closest(".opt") && el.closest(".opt").classList.toggle("checked", el.checked);
+        }
+      } else {
+        store[el.id] = el.value;
+        autoGrow(el);
+      }
+      persist();
+      updateProgress();
+    });
+  });
+}
+
+/* =========================================================================
+   PROGRESS
+   ========================================================================= */
+function isAnswered(fid){
+  var el = document.getElementById(fid);
+  if(el && (el.tagName === "TEXTAREA" || el.tagName === "INPUT")){
+    return el.value.trim().length > 0;
+  }
+  var grouped = document.querySelectorAll('[data-group="'+fid+'"]');
+  if(grouped.length){
+    for(var i=0;i<grouped.length;i++){ if(grouped[i].checked) return true; }
+    return false;
+  }
+  var tbl = document.getElementById("tbl_"+fid);
+  if(tbl){
+    var ins = tbl.querySelectorAll("input");
+    for(var j=0;j<ins.length;j++){ if(ins[j].value.trim()) return true; }
+  }
+  return false;
+}
+function updateProgress(){
+  var done = 0;
+  allFieldIds.forEach(function(f){ if(isAnswered(f)) done++; });
+  var pct = allFieldIds.length ? Math.round(done/allFieldIds.length*100) : 0;
+  document.getElementById("bar").style.width = pct + "%";
+  document.getElementById("barlabel").textContent = done + " of " + allFieldIds.length + " answered (" + pct + "%)";
+}
+
+/* =========================================================================
+   EXPORT
+   ========================================================================= */
+function buildText(){
+  var L = [];
+  var name = (document.getElementById("sig_biz").value || document.getElementById("sig_name").value || "Client");
+  L.push("BUSINESS AUDIT — INTAKE RESPONSES");
+  L.push("=".repeat(60));
+  L.push("Business:  " + (document.getElementById("sig_biz").value || "—"));
+  L.push("Contact:   " + (document.getElementById("sig_name").value || "—"));
+  L.push("Email:     " + (document.getElementById("sig_email").value || "—"));
+  L.push("Phone:     " + (document.getElementById("sig_phone").value || "—"));
+  L.push("Exported:  " + new Date().toLocaleString());
+  L.push("");
+
+  var n = 0;
+  SECTIONS.forEach(function(sec){
+    L.push("");
+    L.push("-".repeat(60));
+    L.push(sec.title.toUpperCase());
+    L.push("-".repeat(60));
+    sec.questions.forEach(function(q){
+      n++;
+      var fid = "q"+n;
+      L.push("");
+      L.push(n + ". " + q.q);
+      var ans = "";
+      if(q.type === "textarea"){
+        ans = (document.getElementById(fid) || {}).value || "";
+      } else if(q.type === "radio" || q.type === "checkbox"){
+        var picked = [];
+        document.querySelectorAll('[data-group="'+fid+'"]').forEach(function(el){
+          if(el.checked) picked.push(el.value);
+        });
+        ans = picked.join(", ");
+      } else if(q.type === "table"){
+        var tbl = document.getElementById("tbl_"+fid);
+        var lines = [];
+        if(tbl){
+          Array.prototype.forEach.call(tbl.tBodies[0].rows, function(row){
+            var cells = Array.prototype.map.call(row.querySelectorAll("input"), function(i){ return i.value.trim(); });
+            if(cells.some(function(c){ return c; })){
+              lines.push("   " + q.columns.map(function(c,ci){ return c + ": " + (cells[ci] || "—"); }).join(" | "));
+            }
+          });
+        }
+        ans = lines.length ? "\n" + lines.join("\n") : "";
+      }
+      L.push("   " + (ans.trim() ? ans.trim() : "[ no answer given ]"));
+    });
+  });
+  L.push("");
+  L.push("=".repeat(60));
+  L.push("End of responses — " + name);
+  return L.join("\n");
+}
+
+function safeName(){
+  var b = (document.getElementById("sig_biz").value || document.getElementById("sig_name").value || "Client");
+  return b.replace(/[^a-z0-9]+/gi,"-").replace(/^-|-$/g,"") || "Client";
+}
+
+function downloadAnswers(){
+  var blob = new Blob([buildText()], {type:"text/plain;charset=utf-8"});
+  var a = document.createElement("a");
+  a.href = URL.createObjectURL(blob);
+  a.download = "Business-Audit-Intake-" + safeName() + ".txt";
+  document.body.appendChild(a); a.click(); document.body.removeChild(a);
+  setTimeout(function(){ URL.revokeObjectURL(a.href); }, 1000);
+  toast("Downloaded — attach this file to your email");
+}
+
+function copyAnswers(){
+  var txt = buildText();
+  if(navigator.clipboard && navigator.clipboard.writeText){
+    navigator.clipboard.writeText(txt).then(function(){ toast("Copied — paste into an email"); },
+      function(){ fallbackCopy(txt); });
+  } else { fallbackCopy(txt); }
+}
+function fallbackCopy(txt){
+  var ta = document.createElement("textarea");
+  ta.value = txt; ta.style.position="fixed"; ta.style.opacity="0";
+  document.body.appendChild(ta); ta.select();
+  try{ document.execCommand("copy"); toast("Copied — paste into an email"); }
+  catch(e){ toast("Copy failed — use Download instead"); }
+  document.body.removeChild(ta);
+}
+
+function emailAnswers(){
+  downloadAnswers();
+  var subj = "Business Audit Intake — " + safeName();
+  var body = "Hi,\n\nMy completed business audit intake is attached (it downloaded to my computer as a .txt file — please attach it before sending).\n\nThanks,\n" +
+             (document.getElementById("sig_name").value || "");
+  setTimeout(function(){
+    window.location.href = "mailto:" + encodeURIComponent(CONSULTANT_EMAIL) +
+      "?subject=" + encodeURIComponent(subj) + "&body=" + encodeURIComponent(body);
+  }, 700);
+}
+
+function clearAll(){
+  if(!confirm("This will erase every answer you've entered. This cannot be undone. Continue?")) return;
+  try{ localStorage.removeItem(KEY); }catch(e){}
+  store = {};
+  location.reload();
+}
+
+function toast(msg){
+  var t = document.getElementById("toast");
+  t.textContent = msg; t.classList.add("show");
+  setTimeout(function(){ t.classList.remove("show"); }, 2600);
+}
+
+/* =========================================================================
+   INIT
+   ========================================================================= */
+loadStore();
+render();
+bind();
+restore();
+updateProgress();
+
+window.addEventListener("beforeprint", function(){
+  document.querySelectorAll("textarea").forEach(autoGrow);
+});
+window.addEventListener("load", function(){
+  document.querySelectorAll("textarea").forEach(autoGrow);
+});
+</script>
+</body>
+</html>
