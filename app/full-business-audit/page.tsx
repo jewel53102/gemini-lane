@@ -181,6 +181,19 @@ const faqs = [
   },
 ];
 
+const auditFaqSchema = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  mainEntity: faqs.map((faq) => ({
+    "@type": "Question",
+    name: faq.q,
+    acceptedAnswer: {
+      "@type": "Answer",
+      text: faq.a,
+    },
+  })),
+};
+
 const auditSchema = {
   "@context": "https://schema.org",
   "@type": "Service",
@@ -218,6 +231,10 @@ export default function FullBusinessAuditPage() {
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(auditSchema) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(auditFaqSchema) }}
       />
 
       <section className="gl-hero">

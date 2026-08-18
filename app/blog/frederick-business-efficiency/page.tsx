@@ -54,6 +54,14 @@ export default function BlogPost() {
             <Link href="/services">building better systems</Link>.
           </p>
 
+          <p>
+            If you don't know exactly where those hours are going, the{" "}
+            <Link href="/full-business-audit">Full Business Audit</Link> is
+            built to answer that — a written, prioritized breakdown of where
+            your time and money are actually leaking, across ten areas of the
+            business.
+          </p>
+
           <h2>What fixes this</h2>
 
           <p>The solution is not more effort — it's better structure:</p>
@@ -82,6 +90,11 @@ export default function BlogPost() {
           <div className="related-links">
             <p className="eyebrow">Related reading</p>
             <ul>
+              <li>
+                <Link href="/full-business-audit">
+                  Full Business Audit — Find Where You're Losing Time and Money &rarr;
+                </Link>
+              </li>
               <li>
                 <Link href="/blog/how-to-automate-your-small-business">
                   How to Automate Your Small Business in Frederick, MD &rarr;

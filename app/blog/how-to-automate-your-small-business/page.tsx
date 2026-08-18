@@ -84,9 +84,22 @@ export default function BlogPost() {
             that depends on you personally.
           </p>
 
+          <p>
+            Not sure which tasks are actually costing you the most? The{" "}
+            <Link href="/full-business-audit">Full Business Audit</Link> maps
+            every part of the business — not just the obvious automation
+            candidates — and hands you a prioritized list of what to fix
+            first.
+          </p>
+
           <div className="related-links">
             <p className="eyebrow">Related reading</p>
             <ul>
+              <li>
+                <Link href="/full-business-audit">
+                  Full Business Audit — Find Where You're Losing Time and Money &rarr;
+                </Link>
+              </li>
               <li>
                 <Link href="/blog/frederick-business-efficiency">
                   Why Small Businesses in Frederick Are Losing 10–20 Hours Per Week &rarr;

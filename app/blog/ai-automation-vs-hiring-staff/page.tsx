@@ -95,9 +95,22 @@ export default function BlogPost() {
             before comparing it to a new hire's salary.
           </p>
 
+          <p>
+            Still not sure which one actually fixes your bottleneck? The{" "}
+            <Link href="/full-business-audit">Full Business Audit</Link>{" "}
+            scores your operations, team, and tools across ten areas, so the
+            hire-vs-automate-vs-outsource decision is based on what's actually
+            happening in your business, not a guess.
+          </p>
+
           <div className="related-links">
             <p className="eyebrow">Related reading</p>
             <ul>
+              <li>
+                <Link href="/full-business-audit">
+                  Full Business Audit — Find Where You're Losing Time and Money &rarr;
+                </Link>
+              </li>
               <li>
                 <Link href="/blog/ai-automation-cost-roi-frederick-md">
                   How Much Does AI Automation Cost for a Small Business? &rarr;

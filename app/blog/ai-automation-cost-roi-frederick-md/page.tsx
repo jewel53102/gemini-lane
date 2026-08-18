@@ -113,9 +113,23 @@ export default function BlogPost() {
             what the free business analysis is for.
           </p>
 
+          <p>
+            If you want the full picture before spending anything — not just
+            automation, but operations, tools, marketing, and finances scored
+            across the board — that's what the{" "}
+            <Link href="/full-business-audit">Full Business Audit</Link> is
+            built for. It tells you exactly what to fix first, with or without
+            automation.
+          </p>
+
           <div className="related-links">
             <p className="eyebrow">Related reading</p>
             <ul>
+              <li>
+                <Link href="/full-business-audit">
+                  Full Business Audit — Find Where You're Losing Time and Money &rarr;
+                </Link>
+              </li>
               <li>
                 <Link href="/blog/how-to-automate-your-small-business">
                   How to Automate Your Small Business in Frederick, MD &rarr;
