@@ -8,6 +8,48 @@ export const metadata = {
 
 const posts = [
   {
+    title: "AI Automation vs. Hiring More Staff: What's Right for Your Business?",
+    description:
+      "Weighing automation against hiring or outsourcing? Here's how to decide which one actually fixes the bottleneck.",
+    category: "Decision Guide",
+    href: "/blog/ai-automation-vs-hiring-staff",
+  },
+  {
+    title: "AI Automation & Business Consulting Across Frederick County, MD",
+    description:
+      "Automation and workflow consulting for small businesses in Urbana, Walkersville, Middletown, New Market, and beyond.",
+    category: "Frederick County",
+    href: "/blog/ai-automation-frederick-county-towns",
+  },
+  {
+    title: "How Much Does AI Automation Cost for a Small Business in Frederick, MD?",
+    description:
+      "A breakdown of what AI automation and workflow consulting actually costs, and how to think about the ROI.",
+    category: "Cost & ROI",
+    href: "/blog/ai-automation-cost-roi-frederick-md",
+  },
+  {
+    title: "AI Automation for Contractors & Home Service Businesses in Frederick, MD",
+    description:
+      "How contractors and home service businesses track jobs, follow up faster, and stop running the business from a spreadsheet.",
+    category: "Home Services",
+    href: "/blog/ai-automation-for-contractors-frederick-md",
+  },
+  {
+    title: "AI Automation for Consultants & Professional Services Firms in Frederick, MD",
+    description:
+      "How consulting and professional services firms stop losing leads to slow follow-up and keep their pipeline moving.",
+    category: "Professional Services",
+    href: "/blog/ai-automation-for-consultants-frederick-md",
+  },
+  {
+    title: "Workflow Automation for Creative Agencies in Frederick, MD",
+    description:
+      "How small creative and marketing agencies use workflow systems and SOPs to get the business out of the owner's head.",
+    category: "Creative Agencies",
+    href: "/blog/workflow-automation-for-creative-agencies-frederick-md",
+  },
+  {
     title: "How to Automate Your Small Business in Frederick, MD",
     description:
       "Learn how local business owners can reduce repetitive tasks, automate follow-up, and save time with better systems.",
