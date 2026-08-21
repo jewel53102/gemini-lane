@@ -1,0 +1,538 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Adult Intake Form — OptiMind Educational Strategies</title>
+<style>
+:root{
+  --bg:#0a0d14; --panel:#111621; --panel-2:#161d2b; --line:#243044; --line-soft:#1b2434;
+  --text:#e8edf6; --muted:#8fa0bd; --accent:#4de3c1; --accent-2:#7aa2ff; --warn:#ffcc66; --danger:#ff8b8b; --radius:14px;
+}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0}
+body{background:var(--bg);color:var(--text);
+  font:16px/1.65 -apple-system,BlinkMacSystemFont,"Segoe UI",Inter,Roboto,Helvetica,Arial,sans-serif;
+  -webkit-font-smoothing:antialiased}
+a{color:var(--accent)}
+
+.topbar{position:sticky;top:0;z-index:50;background:rgba(10,13,20,.92);backdrop-filter:blur(10px);
+  border-bottom:1px solid var(--line)}
+.topbar-inner{max-width:1000px;margin:0 auto;padding:10px 22px;display:flex;align-items:center;gap:16px;flex-wrap:wrap}
+.brandmark{font-weight:700;letter-spacing:.14em;font-size:11px;text-transform:uppercase;color:var(--accent)}
+.progress-wrap{flex:1;min-width:180px}
+.progress-track{height:7px;background:var(--line-soft);border-radius:99px;overflow:hidden}
+.progress-fill{height:100%;width:0%;background:linear-gradient(90deg,var(--accent),var(--accent-2));transition:width .3s ease}
+.progress-label{font-size:11px;color:var(--muted);margin-top:4px;letter-spacing:.03em}
+.savestate{font-size:11px;color:var(--muted);white-space:nowrap}
+.savestate.on{color:var(--accent)}
+
+.wrap{max-width:1000px;margin:0 auto;padding:0 22px 120px}
+.hero{padding:64px 0 40px;border-bottom:1px solid var(--line)}
+.eyebrow{font-size:11px;letter-spacing:.22em;text-transform:uppercase;color:var(--accent);font-weight:700;margin-bottom:16px}
+h1{font-size:clamp(30px,5vw,48px);line-height:1.1;margin:0 0 18px;letter-spacing:-.02em}
+.lede{font-size:18px;color:var(--muted);max-width:64ch;margin:0}
+
+.secnav{display:flex;flex-wrap:wrap;gap:8px;margin:34px 0 8px;position:sticky;top:58px;z-index:40;
+  background:rgba(10,13,20,.92);backdrop-filter:blur(10px);padding:10px 0}
+.secnav a{font-size:12px;text-decoration:none;color:var(--muted);border:1px solid var(--line);
+  border-radius:99px;padding:6px 13px;transition:.18s;white-space:nowrap}
+.secnav a:hover{color:var(--text);border-color:var(--accent);background:var(--panel)}
+.secnav a .cnt{color:#5b6c88;margin-left:6px;font-variant-numeric:tabular-nums}
+.secnav a.done{border-color:var(--accent);color:var(--accent)}
+
+section{padding:52px 0;border-bottom:1px solid var(--line-soft)}
+.sec-head{display:flex;align-items:baseline;gap:14px;margin-bottom:8px;flex-wrap:wrap}
+.sec-num{font-size:12px;font-weight:800;letter-spacing:.1em;color:var(--bg);background:var(--accent);
+  border-radius:6px;padding:3px 9px}
+h2{font-size:clamp(22px,3.2vw,30px);margin:0;letter-spacing:-.01em}
+.sec-note{color:var(--muted);font-size:15px;margin:10px 0 30px;max-width:72ch}
+.sec-meta{font-size:11px;color:#5b6c88;letter-spacing:.06em;text-transform:uppercase;margin-left:auto}
+
+.q{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);padding:18px 20px;margin-bottom:14px}
+.q:focus-within{border-color:var(--accent-2)}
+.q.answered{border-left:3px solid var(--accent)}
+.q-label{display:block;font-weight:620;font-size:15.5px;margin-bottom:6px;line-height:1.5}
+.q-num{color:var(--accent);font-weight:800;margin-right:9px;font-variant-numeric:tabular-nums}
+.q-hint{color:var(--muted);font-size:13.5px;margin:0 0 12px;line-height:1.55}
+textarea,input[type=text],input[type=email],input[type=tel]{
+  width:100%;background:var(--panel-2);color:var(--text);border:1px solid var(--line);
+  border-radius:9px;padding:11px 13px;font:inherit;font-size:15px;resize:vertical}
+textarea:focus,input:focus{outline:none;border-color:var(--accent)}
+textarea::placeholder,input::placeholder{color:#5b6c88}
+
+.opts{display:flex;flex-wrap:wrap;gap:9px}
+.opt{display:inline-flex;align-items:center;gap:8px;cursor:pointer;border:1px solid var(--line);
+  background:var(--panel-2);border-radius:99px;padding:7px 14px;font-size:14px;transition:.15s}
+.opt:hover{border-color:var(--accent-2)}
+.opt input{accent-color:var(--accent);margin:0}
+.opt.checked{border-color:var(--accent);background:rgba(77,227,193,.09)}
+
+.callout{border-left:3px solid var(--accent);background:var(--panel);border-radius:0 12px 12px 0;
+  padding:16px 20px;margin:22px 0;font-size:14.5px;color:#c6d2e6}
+.callout strong{color:var(--text)}
+.privacy{border-left:3px solid var(--accent-2);background:var(--panel);border-radius:0 12px 12px 0;
+  padding:14px 18px;margin:16px 0 0;font-size:13.5px;color:#a8b6cd}
+.privacy strong{color:var(--text)}
+
+.actionbar{position:fixed;bottom:0;left:0;right:0;z-index:60;background:rgba(10,13,20,.96);
+  backdrop-filter:blur(12px);border-top:1px solid var(--line);padding:12px 22px}
+.actionbar-inner{max-width:1000px;margin:0 auto;display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+.btn{border:0;border-radius:10px;padding:11px 18px;font:inherit;font-weight:650;font-size:14px;cursor:pointer;transition:.15s}
+.btn-primary{background:var(--accent);color:#06231d}
+.btn-primary:hover{filter:brightness(1.1)}
+.btn-ghost{background:transparent;color:var(--text);border:1px solid var(--line)}
+.btn-ghost:hover{border-color:var(--accent);color:var(--accent)}
+.btn-danger{background:transparent;color:#ff8b8b;border:1px solid #3d2230;margin-left:auto}
+.btn-danger:hover{border-color:#ff8b8b}
+
+.toast{position:fixed;bottom:78px;left:50%;transform:translateX(-50%) translateY(14px);background:var(--accent);
+  color:#06231d;font-weight:650;font-size:14px;padding:11px 20px;border-radius:10px;opacity:0;
+  pointer-events:none;transition:.25s;z-index:70}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+.footnote{color:var(--muted);font-size:13px;margin-top:26px;text-align:center}
+.totop{position:fixed;right:22px;bottom:76px;z-index:55;background:var(--panel);border:1px solid var(--line);
+  color:var(--muted);border-radius:9px;padding:8px 12px;font-size:12px;cursor:pointer;opacity:0;
+  pointer-events:none;transition:.2s}
+.totop.show{opacity:1;pointer-events:auto}
+.totop:hover{color:var(--accent);border-color:var(--accent)}
+
+@media print{
+  :root{--bg:#fff;--panel:#fff;--panel-2:#fff;--line:#c9d0da;--line-soft:#e4e8ee;
+        --text:#111;--muted:#555;--accent:#0a7d68;--accent-2:#2a4f9e}
+  body{background:#fff;color:#111;font-size:11pt}
+  .topbar,.secnav,.actionbar,.toast,.totop,.no-print{display:none!important}
+  .wrap{max-width:100%;padding:0}
+  .hero{padding:0 0 16px;page-break-after:avoid}
+  section{padding:18px 0;border-bottom:1px solid #e4e8ee}
+  .sec-head{page-break-after:avoid}
+  .q{border:1px solid #d6dbe3;border-left:1px solid #d6dbe3;padding:9px 11px;margin-bottom:7px;
+     page-break-inside:avoid;background:#fff}
+  .q-hint{font-size:9pt}
+  textarea,input{border:1px solid #c9d0da;background:#fff;color:#111;font-size:10pt}
+  textarea{height:auto!important;overflow:visible!important}
+  .opt{border:1px solid #c9d0da;background:#fff;font-size:9.5pt;padding:4px 9px}
+  .sec-num{background:#0a7d68;color:#fff;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  .callout{border-left:3px solid #0a7d68;background:#f6f8fa}
+  @page{margin:14mm 12mm}
+}
+@media (max-width:640px){.btn-danger{margin-left:0}}
+</style>
+</head>
+<body>
+
+<div class="topbar no-print">
+  <div class="topbar-inner">
+    <span class="brandmark">OptiMind — New Client Intake</span>
+    <div class="progress-wrap">
+      <div class="progress-track"><div class="progress-fill" id="bar"></div></div>
+      <div class="progress-label" id="barlabel">0 answered</div>
+    </div>
+    <span class="savestate" id="save">Auto-save on</span>
+  </div>
+</div>
+
+<div class="wrap">
+  <header class="hero">
+    <div class="eyebrow">Adult Client · Intake Form</div>
+    <h1>Adult Intake Form</h1>
+    <p class="lede">Full intake for a new adult client. Most of this can be filled in live during the intake
+      session — some questions are conversational prompts meant to be talked through, not answered in one line.</p>
+
+    <div class="callout" style="margin-top:30px">
+      <strong>How to use this file.</strong> Fill it in directly in the page. Everything saves automatically in
+      this browser, so you can close it and pick up where you left off. Use the section links to jump around.
+      When it's complete, use the buttons at the bottom to save a PDF, download the answers, or email them.
+      <br><br>
+      <strong>Payment collection isn't handled here.</strong> That will run through Stripe once it's connected;
+      this form intentionally has no card fields.
+    </div>
+
+    <div class="privacy no-print">
+      <strong>One thing to know about saving:</strong> progress is stored in this browser on this device only.
+      Switching devices or clearing browser data will lose it — use <em>Download</em> first if you need a copy.
+    </div>
+  </header>
+
+  <nav class="secnav no-print" id="nav"></nav>
+  <div id="questionnaire"></div>
+
+  <p class="footnote no-print">End of form.</p>
+</div>
+
+<button class="totop no-print" id="totop" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑ Top</button>
+
+<div class="actionbar no-print">
+  <div class="actionbar-inner">
+    <button class="btn btn-primary" onclick="window.print()">Save as PDF / Print</button>
+    <button class="btn btn-ghost" onclick="downloadAnswers()">Download Answers</button>
+    <button class="btn btn-ghost" onclick="emailAnswers()">Email Answers</button>
+    <button class="btn btn-ghost" onclick="copyAnswers()">Copy to Clipboard</button>
+    <button class="btn btn-danger" onclick="clearAll()">Clear Form</button>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+/* ======================================================================
+   CONFIG
+   ====================================================================== */
+var STAFF_EMAIL = "ruby.groves@gemini-lane.com";
+
+var SECTIONS = [
+  {
+    id: "contact", title: "Basic Contact Information",
+    note: "Client record basics.",
+    questions: [
+      { q: "Name", type: "text" },
+      { q: "Age", type: "text" },
+      { q: "Date of Birth", type: "text" },
+      { q: "Home Address", type: "textarea", rows: 2 },
+      { q: "Email", type: "email" },
+      { q: "Phone", type: "tel" },
+      { q: "Job", type: "text" },
+      { q: "Schedule", type: "textarea", rows: 2, hint: "Typical work schedule / availability." },
+      { q: "Location", type: "text" }
+    ]
+  },
+  {
+    id: "referral", title: "Intake & Referral Information",
+    note: "How the client found their way to us, and what they're hoping to get out of it.",
+    questions: [
+      { q: "Referred by", type: "text" },
+      { q: "Top EF Goal #1", type: "text", hint: "What are the client's top 3 executive-function goals?" },
+      { q: "Top EF Goal #2", type: "text" },
+      { q: "Top EF Goal #3", type: "text" },
+      { q: "Days and Times That Work Best for Sessions", type: "textarea", rows: 2 }
+    ]
+  },
+  {
+    id: "diagnosis", title: "Educational Diagnosis",
+    note: "Diagnostic history and family background.",
+    questions: [
+      { q: "Educational Diagnosis", type: "textarea", rows: 3 },
+      { q: "Most Recent Neuropsych / Psycho-Ed — Date", type: "text" },
+      { q: "Most Recent Neuropsych / Psycho-Ed — Group", type: "text" },
+      { q: "Most Recent Neuropsych / Psycho-Ed — Name of Diagnostician", type: "text" },
+      { q: "Most Recent Neuropsych / Psycho-Ed — Email", type: "email" },
+      { q: "Most Recent Neuropsych / Psycho-Ed — Phone", type: "tel" },
+      { q: "Age / Grade When First Diagnosed", type: "text" },
+      { q: "How well do you understand your educational diagnosis?", type: "radio", opts: [
+          "Little to no knowledge",
+          "Basic knowledge — definition and what their medication does",
+          "Fairly well — read books, talked with doctor",
+          "Very well — read literature, attend information sessions"
+        ] },
+      { q: "Family History of Educational Challenges / Diagnoses — Parents", type: "text" },
+      { q: "Family History — Siblings", type: "text" },
+      { q: "Family History — Paternal Grandparents", type: "text" },
+      { q: "Family History — Paternal Uncles / Aunts", type: "text" },
+      { q: "Family History — Maternal Grandparents", type: "text" },
+      { q: "Family History — Maternal Uncles / Aunts", type: "text" },
+      { q: "Family History — First Cousins", type: "text" },
+      { q: "Sibling — Name", type: "text" },
+      { q: "Sibling — Age", type: "text" },
+      { q: "Sibling — Relationship to Client", type: "text" },
+      { q: "Sibling — Relationship with Client", type: "textarea", rows: 2 }
+    ]
+  },
+  {
+    id: "medical", title: "Medical Information",
+    note: "Medications and outside providers.",
+    questions: [
+      { q: "Medication 1 — Name", type: "text" },
+      { q: "Medication 1 — Dosage", type: "text" },
+      { q: "Medication 1 — Time of Day Taken", type: "text" },
+      { q: "Medication 1 — Prescribing Physician", type: "text" },
+      { q: "Medication 1 — Side Effects", type: "textarea", rows: 2 },
+      { q: "Medication 2 — Name", type: "text" },
+      { q: "Medication 2 — Dosage", type: "text" },
+      { q: "Medication 2 — Time of Day Taken", type: "text" },
+      { q: "Medication 2 — Prescribing Physician", type: "text" },
+      { q: "Medication 2 — Side Effects", type: "textarea", rows: 2 },
+      { q: "General Practitioner — Name", type: "text" },
+      { q: "General Practitioner — Website", type: "text" },
+      { q: "Mental Healthcare Provider — Name", type: "text" },
+      { q: "Mental Healthcare Provider — Email", type: "email" },
+      { q: "Mental Healthcare Provider — Phone", type: "tel" },
+      { q: "Mental Healthcare Provider — Regularity of Meetings", type: "text" },
+      { q: "Psychiatrist — Name", type: "text" },
+      { q: "Psychiatrist — Website", type: "text" },
+      { q: "Psychiatrist — Phone", type: "tel" }
+    ]
+  },
+  {
+    id: "other", title: "Other Information",
+    note: "Open-ended, conversational prompts — talk through these rather than expecting one-line answers.",
+    questions: [
+      { q: "Hobbies and Time Spent on Them", type: "textarea", rows: 2 },
+      { q: "What is your social life like?", type: "textarea", rows: 2 },
+      { q: "What is your favorite thing about yourself?", type: "textarea", rows: 2 },
+      { q: "Areas of Strength", type: "textarea", rows: 2 },
+      { q: "What approaches have you taken in the past to address your diagnosis?", type: "textarea", rows: 2 },
+      { q: "Have you had any concerns about any self-harm, past or present?", type: "textarea", rows: 2,
+        hint: "Flag for clinical follow-up regardless of answer." },
+      { q: "What is something you have done that you are proud of?", type: "textarea", rows: 2 },
+      { q: "What do you think motivates you?", type: "textarea", rows: 2 },
+      { q: "What is the best compliment you have ever received?", type: "textarea", rows: 2 },
+      { q: "What do you wish your brain could do better?", type: "textarea", rows: 2 },
+      { q: "When do you feel the most confident?", type: "textarea", rows: 2 },
+      { q: "What is something you wish you could unlearn?", type: "textarea", rows: 2 },
+      { q: "What app can you not live without?", type: "text" },
+      { q: "Who lives with you? What is your relationship like with them? Describe in three words.", type: "textarea", rows: 2 },
+      { q: "Do you have any pets or people depending on you?", type: "textarea", rows: 2 },
+      { q: "Morning routine on a work day", type: "textarea", rows: 3,
+        hint: "From wake-up to leaving for work. Does the routine differ on off days?" },
+      { q: "Evening routine", type: "textarea", rows: 3,
+        hint: "From heading up to bed to around the time you doze off — reading, screens before bed, etc." }
+    ]
+  },
+  {
+    id: "clinician", title: "Clinician Notes",
+    note: "For staff use during or after the intake session — not filled out by the client.",
+    questions: [
+      { q: "Other Information Shared", type: "textarea", rows: 3 },
+      { q: "Observations During Intake", type: "textarea", rows: 3 }
+    ]
+  }
+];
+
+/* ======================================================================
+   RENDER
+   ====================================================================== */
+var qIndex = 0, allFieldIds = [], META = {};
+
+function esc(s){return String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;");}
+
+function render(){
+  var host = document.getElementById("questionnaire"), nav = document.getElementById("nav");
+  var html = "", navHtml = "";
+
+  SECTIONS.forEach(function(sec, si){
+    var letter = String.fromCharCode(65 + si);
+    navHtml += '<a href="#'+sec.id+'" id="nav_'+sec.id+'">'+esc(sec.title)+
+               '<span class="cnt">'+sec.questions.length+'</span></a>';
+    html += '<section id="'+sec.id+'">';
+    html += '<div class="sec-head"><span class="sec-num">'+letter+'</span><h2>'+esc(sec.title)+'</h2>'+
+            '<span class="sec-meta">'+sec.questions.length+' fields</span></div>';
+    html += '<p class="sec-note">'+esc(sec.note)+'</p>';
+
+    sec.questions.forEach(function(q){
+      qIndex++;
+      var fid = "q"+qIndex;
+      META[fid] = {section: sec.id, q: q.q, type: q.type};
+      html += '<div class="q" id="wrap_'+fid+'">';
+      html += '<label class="q-label" for="'+fid+'"><span class="q-num">'+qIndex+'.</span>'+esc(q.q)+'</label>';
+      if(q.hint) html += '<p class="q-hint">'+esc(q.hint)+'</p>';
+
+      if(q.type === "radio"){
+        html += '<div class="opts">';
+        q.opts.forEach(function(o, oi){
+          var oid = fid+"_"+oi;
+          html += '<label class="opt" for="'+oid+'"><input type="radio" id="'+oid+'" name="'+fid+
+                  '" value="'+esc(o)+'" data-save data-group="'+fid+'"><span>'+esc(o)+'</span></label>';
+        });
+        html += '</div>';
+      }
+      else if(q.type === "textarea"){
+        html += '<textarea id="'+fid+'" data-save rows="'+(q.rows||3)+'"></textarea>';
+      }
+      else {
+        html += '<input type="'+(q.type === "email" ? "email" : q.type === "tel" ? "tel" : "text")+'" id="'+fid+'" data-save>';
+      }
+      html += '</div>';
+      allFieldIds.push(fid);
+    });
+    html += '</section>';
+  });
+
+  host.innerHTML = html;
+  nav.innerHTML = navHtml;
+}
+
+/* ---------------------------------------------------------------- storage */
+var KEY = "optimind_adult_intake_v1", store = {}, saveTimer;
+
+function loadStore(){ try{ store = JSON.parse(localStorage.getItem(KEY) || "{}"); }catch(e){ store = {}; } }
+function persist(){
+  try{ localStorage.setItem(KEY, JSON.stringify(store)); flashSaved(); }
+  catch(e){ document.getElementById("save").textContent = "Auto-save unavailable"; }
+}
+function flashSaved(){
+  var el = document.getElementById("save");
+  el.textContent = "Saved"; el.classList.add("on");
+  clearTimeout(saveTimer);
+  saveTimer = setTimeout(function(){ el.textContent = "Auto-save on"; el.classList.remove("on"); }, 1500);
+}
+function autoGrow(el){
+  if(el && el.tagName === "TEXTAREA"){ el.style.height = "auto"; el.style.height = (el.scrollHeight + 2) + "px"; }
+}
+function restore(){
+  document.querySelectorAll("[data-save]").forEach(function(el){
+    if(el.type === "radio"){
+      if(store[el.id] === true){
+        el.checked = true;
+        var w = el.closest(".opt"); if(w) w.classList.add("checked");
+      }
+    } else if(store[el.id] !== undefined){
+      el.value = store[el.id]; autoGrow(el);
+    }
+  });
+  allFieldIds.forEach(markAnswered);
+}
+function bind(){
+  document.querySelectorAll("[data-save]").forEach(function(el){
+    if(el.dataset.bound) return;
+    el.dataset.bound = "1";
+    var evt = (el.type === "radio") ? "change" : "input";
+    el.addEventListener(evt, function(){
+      if(el.type === "radio"){
+        document.querySelectorAll('input[name="'+el.name+'"]').forEach(function(s){
+          store[s.id] = s.checked;
+          var w = s.closest(".opt"); if(w) w.classList.toggle("checked", s.checked);
+        });
+      } else {
+        store[el.id] = el.value; autoGrow(el);
+      }
+      var g = el.dataset.group || el.id;
+      markAnswered(g);
+      persist(); updateProgress();
+    });
+  });
+}
+
+/* ---------------------------------------------------------------- progress */
+var GROUPS = {}, FIELDS = {};
+function indexFields(){
+  document.querySelectorAll("[data-group]").forEach(function(el){
+    (GROUPS[el.dataset.group] = GROUPS[el.dataset.group] || []).push(el);
+  });
+  allFieldIds.forEach(function(f){ if(!GROUPS[f]) FIELDS[f] = document.getElementById(f); });
+}
+function isAnswered(fid){
+  var g = GROUPS[fid];
+  if(g){ for(var i=0;i<g.length;i++){ if(g[i].checked) return true; } return false; }
+  var el = FIELDS[fid];
+  return !!(el && String(el.value).trim().length);
+}
+function markAnswered(fid){
+  var w = document.getElementById("wrap_"+fid);
+  if(w) w.classList.toggle("answered", isAnswered(fid));
+}
+function updateProgress(){
+  var done = 0, tot = allFieldIds.length, perSec = {};
+  allFieldIds.forEach(function(f){
+    var s = META[f].section;
+    perSec[s] = perSec[s] || {d:0, t:0};
+    perSec[s].t++;
+    if(isAnswered(f)){ done++; perSec[s].d++; }
+  });
+  var pct = tot ? Math.round(done / tot * 100) : 0;
+  document.getElementById("bar").style.width = pct + "%";
+  document.getElementById("barlabel").textContent = done + " of " + tot + " fields filled (" + pct + "%)";
+  SECTIONS.forEach(function(sec){
+    var a = document.getElementById("nav_"+sec.id), p = perSec[sec.id];
+    if(!a || !p) return;
+    a.classList.toggle("done", p.d === p.t);
+    a.querySelector(".cnt").textContent = p.d + "/" + p.t;
+  });
+}
+
+/* ---------------------------------------------------------------- export */
+function answerOf(fid){
+  var m = META[fid];
+  if(m.type === "radio"){
+    var picked = "";
+    (GROUPS[fid] || []).forEach(function(el){ if(el.checked) picked = el.value; });
+    return picked;
+  }
+  var el = FIELDS[fid] || document.getElementById(fid);
+  return el ? String(el.value).trim() : "";
+}
+function buildText(){
+  var L = [], n = 0;
+  L.push("ADULT INTAKE FORM — OptiMind Educational Strategies");
+  L.push("=".repeat(66));
+  L.push("Name:      " + (val("q1") || "—"));
+  L.push("Email:     " + (val("q5") || "—"));
+  L.push("Phone:     " + (val("q6") || "—"));
+  L.push("Exported:  " + new Date().toLocaleString());
+  SECTIONS.forEach(function(sec){
+    L.push("", "-".repeat(66), sec.title.toUpperCase(), "-".repeat(66));
+    sec.questions.forEach(function(q){
+      n++;
+      var fid = "q"+n, m = META[fid];
+      var txt = answerOf(fid);
+      L.push("", n + ". " + m.q, "   " + (txt ? txt : "[ no answer given ]"));
+    });
+  });
+  L.push("", "=".repeat(66), "End of form");
+  return L.join("\n");
+}
+function val(id){ var e = document.getElementById(id); return e ? String(e.value).trim() : ""; }
+
+function safeName(){
+  var b = val("q1") || "Client";
+  return b.replace(/[^a-z0-9]+/gi, "-").replace(/^-|-$/g, "") || "Client";
+}
+function downloadAnswers(){
+  var blob = new Blob([buildText()], {type:"text/plain;charset=utf-8"});
+  var a = document.createElement("a");
+  a.href = URL.createObjectURL(blob);
+  a.download = "Adult-Intake-" + safeName() + ".txt";
+  document.body.appendChild(a); a.click(); document.body.removeChild(a);
+  setTimeout(function(){ URL.revokeObjectURL(a.href); }, 1000);
+  toast("Downloaded");
+}
+function copyAnswers(){
+  var t = buildText();
+  if(navigator.clipboard && navigator.clipboard.writeText){
+    navigator.clipboard.writeText(t).then(function(){ toast("Copied — paste into an email"); },
+      function(){ fallbackCopy(t); });
+  } else fallbackCopy(t);
+}
+function fallbackCopy(t){
+  var ta = document.createElement("textarea");
+  ta.value = t; ta.style.position = "fixed"; ta.style.opacity = "0";
+  document.body.appendChild(ta); ta.select();
+  try{ document.execCommand("copy"); toast("Copied — paste into an email"); }
+  catch(e){ toast("Copy failed — use Download instead"); }
+  document.body.removeChild(ta);
+}
+function emailAnswers(){
+  downloadAnswers();
+  var subj = "Adult Intake — " + safeName();
+  var body = "Hi,\n\nThe completed Adult Intake form is attached (it downloaded as a .txt file — please " +
+             "attach it before sending).\n\nThanks,\n" + val("q1");
+  setTimeout(function(){
+    window.location.href = "mailto:" + encodeURIComponent(STAFF_EMAIL) +
+      "?subject=" + encodeURIComponent(subj) + "&body=" + encodeURIComponent(body);
+  }, 700);
+}
+function clearAll(){
+  if(!confirm("This will erase every saved answer. This cannot be undone. Continue?")) return;
+  try{ localStorage.removeItem(KEY); }catch(e){}
+  store = {}; location.reload();
+}
+function toast(msg){
+  var t = document.getElementById("toast");
+  t.textContent = msg; t.classList.add("show");
+  setTimeout(function(){ t.classList.remove("show"); }, 2600);
+}
+
+/* ---------------------------------------------------------------- init */
+loadStore(); render(); bind(); indexFields(); restore(); updateProgress();
+
+window.addEventListener("scroll", function(){
+  document.getElementById("totop").classList.toggle("show", window.scrollY > 700);
+});
+window.addEventListener("beforeprint", function(){
+  document.querySelectorAll("textarea").forEach(autoGrow);
+});
+window.addEventListener("load", function(){
+  document.querySelectorAll("textarea").forEach(autoGrow);
+});
+</script>
+</body>
+</html>

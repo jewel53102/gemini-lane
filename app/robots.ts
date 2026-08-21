@@ -14,6 +14,7 @@ export default function robots(): MetadataRoute.Robots {
           "/api/",
           "/free-business-analysis/results",
           "/downloads/",
+          "/portal-86c7a4a1ee2f/",
         ],
       },
     ],

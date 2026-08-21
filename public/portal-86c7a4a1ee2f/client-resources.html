@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>OptiMind Dashboard — Client Resources</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<div id="sidebar-mount"></div>
+
+<main class="main">
+  <div class="topbar">
+    <div class="topbar-left">
+      <span class="topbar-title" id="topbar-title">Client Resources</span>
+    </div>
+    <span class="topbar-date" id="topbar-date"></span>
+  </div>
+
+  <div class="content">
+
+    <div class="ph">
+      <div>
+        <div class="ph-title">Client Resources</div>
+        <div class="ph-sub">Intake paperwork for new clients, and session documents for clients already through intake — grouped by client type. These will eventually link out to the working copies on Google Drive.</div>
+      </div>
+    </div>
+
+    <div class="tabs" id="cr-tabs">
+      <button class="tab active" data-tab="intake">Intake</button>
+      <button class="tab" data-tab="session">Session Documents</button>
+      <button class="tab" data-tab="clients">Clients</button>
+    </div>
+
+    <div class="tp active" id="tp-intake">
+      <div class="doccat-sec">
+        <div class="card">
+          <div class="card-hd">
+            <span class="card-title">All Documents</span>
+            <span class="doccat-count" id="intake-all-count"></span>
+          </div>
+          <div class="card-body" id="intake-all-list"></div>
+        </div>
+      </div>
+
+      <div class="sec-hd" style="margin-top:28px">By Client Type</div>
+      <div id="intake-doc-cats"></div>
+    </div>
+
+    <div class="tp" id="tp-session">
+      <div class="doccat-sec">
+        <div class="card">
+          <div class="card-hd">
+            <span class="card-title">All Documents</span>
+            <span class="doccat-count" id="session-all-count"></span>
+          </div>
+          <div class="card-body" id="session-all-list"></div>
+        </div>
+      </div>
+
+      <div class="sec-hd" style="margin-top:28px">By Client Type</div>
+      <div id="session-doc-cats"></div>
+    </div>
+
+    <div class="tp" id="tp-clients">
+      <div class="doccat-sec">
+        <div class="card">
+          <div class="card-hd">
+            <span class="card-title">Add Client</span>
+          </div>
+          <div class="card-body">
+            <div style="display:flex;gap:10px;flex-wrap:wrap;align-items:flex-end">
+              <div>
+                <label style="font-size:11px;color:var(--text-3);display:block;margin-bottom:4px">Client Name</label>
+                <input id="new-client-name" type="text" class="fsel" style="min-width:220px;cursor:text" placeholder="e.g. Jane Doe">
+              </div>
+              <div>
+                <label style="font-size:11px;color:var(--text-3);display:block;margin-bottom:4px">Client Type</label>
+                <select id="new-client-type" class="fsel">
+                  <option value="school-age">Middle & High School</option>
+                  <option value="college">College</option>
+                  <option value="adult">Adult</option>
+                </select>
+              </div>
+              <button class="btn btn-primary btn-sm" onclick="addClient()">Add Client</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="doccat-sec">
+        <div class="card">
+          <div class="card-hd">
+            <span class="card-title">Clients</span>
+            <span class="doccat-count" id="client-count"></span>
+          </div>
+          <div class="card-body" id="client-list"></div>
+        </div>
+      </div>
+
+      <div class="doccat-sec" id="client-detail-wrap" style="display:none">
+        <div class="card">
+          <div class="card-hd">
+            <span class="card-title" id="client-detail-title"></span>
+            <button class="btn btn-ghost btn-sm" onclick="closeClientDetail()">Close ✕</button>
+          </div>
+          <div class="card-body">
+            <div class="sec-hd">Intake</div>
+            <div id="client-intake-checklist" style="margin-bottom:20px"></div>
+            <div class="sec-hd">Document/Reports Collection</div>
+            <div id="client-collection-checklist" style="margin-bottom:20px"></div>
+            <div class="sec-hd">Session Documents</div>
+            <div id="client-session-checklist"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</main>
+
+<script src="js/data.js"></script>
+<script src="js/app.js"></script>
+<script>
+  mountSidebar("clientresources");
+  initChrome("clientresources", "Client Resources");
+
+  document.getElementById("cr-tabs").addEventListener("click", function (e) {
+    const btn = e.target.closest(".tab");
+    if (!btn) return;
+    document.querySelectorAll("#cr-tabs .tab").forEach(function (t) { t.classList.remove("active"); });
+    btn.classList.add("active");
+    document.querySelectorAll(".tp").forEach(function (p) { p.classList.remove("active"); });
+    document.getElementById("tp-" + btn.dataset.tab).classList.add("active");
+  });
+
+  function docTitle(d) {
+    return d.link
+      ? '<a href="' + d.link + '" target="_blank" rel="noopener">' + d.title + ' ↗</a>'
+      : d.title;
+  }
+
+  function renderAllDocs(groups, listId, countId) {
+    const all = [];
+    groups.forEach(function (cat) {
+      cat.docs.forEach(function (d) { all.push({ title: d.title, desc: d.desc, link: d.link, cat: cat.title }); });
+    });
+
+    document.getElementById(countId).textContent = all.length + ' document' + (all.length === 1 ? '' : 's');
+
+    document.getElementById(listId).innerHTML = all.length
+      ? '<ul class="doc-list">' + all.map(function (d, dIdx) {
+          return '' +
+            '<li class="doc-item">' +
+            '  <span class="doc-num">' + (dIdx + 1) + '.</span>' +
+            '  <div style="flex:1">' +
+            '    <div class="doc-title">' + docTitle(d) + '</div>' +
+            (d.desc ? '    <div class="doc-desc">' + d.desc + '</div>' : '') +
+            '  </div>' +
+            '  <span class="badge b-gray">' + d.cat + '</span>' +
+            '</li>';
+        }).join("") + '</ul>'
+      : '<div class="empty"><div class="empty-ico">🗂️</div><div class="empty-txt">No documents added yet.</div></div>';
+  }
+
+  function renderDocGroup(groups, containerId) {
+    const wrap = document.getElementById(containerId);
+    wrap.innerHTML = groups.map(function (cat) {
+      const rows = cat.docs.length
+        ? '<ul class="doc-list">' + cat.docs.map(function (d, dIdx) {
+            return '' +
+              '<li class="doc-item">' +
+              '  <span class="doc-num">' + (dIdx + 1) + '.</span>' +
+              '  <div>' +
+              '    <div class="doc-title">' + docTitle(d) + '</div>' +
+              (d.desc ? '    <div class="doc-desc">' + d.desc + '</div>' : '') +
+              '  </div>' +
+              '</li>';
+          }).join("") + '</ul>'
+        : '<div class="empty"><div class="empty-ico">🗂️</div><div class="empty-txt">No documents added yet.</div></div>';
+
+      return '' +
+        '<div class="doccat-sec">' +
+        '  <div class="card">' +
+        '    <div class="card-hd">' +
+        '      <span class="card-title">' + cat.title + '</span>' +
+        '      <span class="doccat-count">' + cat.docs.length + ' document' + (cat.docs.length === 1 ? '' : 's') + '</span>' +
+        '    </div>' +
+        '    <div class="card-body">' + rows + '</div>' +
+        '  </div>' +
+        '</div>';
+    }).join("");
+  }
+
+  renderAllDocs(NEW_CLIENT_DOCS, "intake-all-list", "intake-all-count");
+  renderDocGroup(NEW_CLIENT_DOCS, "intake-doc-cats");
+
+  renderAllDocs(ESTABLISHED_CLIENT_DOCS, "session-all-list", "session-all-count");
+  renderDocGroup(ESTABLISHED_CLIENT_DOCS, "session-doc-cats");
+
+  /* ---------- Per-Client Checklists ---------- */
+  const LS_CLIENTS = "optimind_dash_clients";
+  const LS_CLIENT_DOCS = "optimind_dash_clientdocs";
+  let currentClientId = null;
+
+  function loadClients() {
+    try {
+      const parsed = JSON.parse(localStorage.getItem(LS_CLIENTS) || "[]");
+      return Array.isArray(parsed) ? parsed : [];
+    } catch (e) { return []; }
+  }
+  function saveClients(list) { localStorage.setItem(LS_CLIENTS, JSON.stringify(list)); }
+  function getClientDocs(clientId) { return loadJSON(LS_CLIENT_DOCS)[clientId] || {}; }
+  function setClientDoc(clientId, docKey, val) {
+    const store = loadJSON(LS_CLIENT_DOCS);
+    if (!store[clientId]) store[clientId] = {};
+    store[clientId][docKey] = val;
+    saveJSON(LS_CLIENT_DOCS, store);
+  }
+
+  function typeLabel(t) { return t === "school-age" ? "Middle & High School" : t === "college" ? "College" : "Adult"; }
+
+  function intakeDocsForType(type) {
+    const all = NEW_CLIENT_DOCS.find(function (c) { return c.key === "all-types"; });
+    const typeCat = NEW_CLIENT_DOCS.find(function (c) { return c.key === type; });
+    return (all ? all.docs : []).concat(typeCat ? typeCat.docs : []);
+  }
+  function sessionDocsForType(type) {
+    const typeCat = ESTABLISHED_CLIENT_DOCS.find(function (c) { return c.key === type; });
+    return typeCat ? typeCat.docs : [];
+  }
+  function collectionDocsForType(type) {
+    return DOCUMENT_COLLECTION_ITEMS;
+  }
+
+  function progressFor(clientId, docs, prefix) {
+    const store = getClientDocs(clientId);
+    let done = 0;
+    docs.forEach(function (d) { if (store[prefix + "::" + d.title]) done++; });
+    return { done: done, total: docs.length };
+  }
+
+  function addClient() {
+    const nameEl = document.getElementById("new-client-name");
+    const typeEl = document.getElementById("new-client-type");
+    const name = nameEl.value.trim();
+    if (!name) { toast("Enter a client name first"); return; }
+    const clients = loadClients();
+    const id = "c" + Date.now().toString(36) + Math.random().toString(36).slice(2, 6);
+    clients.push({ id: id, name: name, type: typeEl.value, added: new Date().toISOString().slice(0, 10) });
+    saveClients(clients);
+    nameEl.value = "";
+    renderClientList();
+    toast("Client added");
+  }
+
+  function removeClient(id) {
+    if (!confirm("Remove this client and their checklist progress? This can't be undone.")) return;
+    saveClients(loadClients().filter(function (c) { return c.id !== id; }));
+    const store = loadJSON(LS_CLIENT_DOCS);
+    delete store[id];
+    saveJSON(LS_CLIENT_DOCS, store);
+    if (currentClientId === id) closeClientDetail();
+    renderClientList();
+    toast("Client removed");
+  }
+
+  function renderClientList() {
+    const clients = loadClients();
+    document.getElementById("client-count").textContent = clients.length + ' client' + (clients.length === 1 ? '' : 's');
+    document.getElementById("client-list").innerHTML = clients.length
+      ? '<ul class="doc-list">' + clients.map(function (c) {
+          const intake = progressFor(c.id, intakeDocsForType(c.type), "intake");
+          const collection = progressFor(c.id, collectionDocsForType(c.type), "collection");
+          const session = progressFor(c.id, sessionDocsForType(c.type), "session");
+          return '' +
+            '<li class="doc-item" style="cursor:pointer" onclick="openClient(\'' + c.id + '\')">' +
+            '  <div style="flex:1">' +
+            '    <div class="doc-title">' + c.name + '</div>' +
+            '    <div class="doc-desc">' + typeLabel(c.type) + ' · Intake ' + intake.done + '/' + intake.total + ' · Docs/Reports ' + collection.done + '/' + collection.total + ' · Session Docs ' + session.done + '/' + session.total + '</div>' +
+            '  </div>' +
+            '  <span class="badge b-gray">View</span>' +
+            '  <button class="btn btn-ghost btn-sm" style="margin-left:8px" onclick="event.stopPropagation(); removeClient(\'' + c.id + '\')">Remove</button>' +
+            '</li>';
+        }).join("") + '</ul>'
+      : '<div class="empty"><div class="empty-ico">🗂️</div><div class="empty-txt">No clients added yet.</div></div>';
+  }
+
+  function openClient(id) {
+    currentClientId = id;
+    const c = loadClients().find(function (x) { return x.id === id; });
+    if (!c) return;
+    document.getElementById("client-detail-title").textContent = c.name + " — " + typeLabel(c.type);
+    document.getElementById("client-detail-wrap").style.display = "";
+    renderClientChecklist(c, "intake", intakeDocsForType(c.type), "client-intake-checklist");
+    renderClientChecklist(c, "collection", collectionDocsForType(c.type), "client-collection-checklist");
+    renderClientChecklist(c, "session", sessionDocsForType(c.type), "client-session-checklist");
+    document.getElementById("client-detail-wrap").scrollIntoView({ behavior: "smooth", block: "start" });
+  }
+
+  function closeClientDetail() {
+    currentClientId = null;
+    document.getElementById("client-detail-wrap").style.display = "none";
+  }
+
+  function renderClientChecklist(client, prefix, docs, containerId) {
+    const wrap = document.getElementById(containerId);
+    if (!docs.length) {
+      wrap.innerHTML = '<div class="empty"><div class="empty-ico">🗂️</div><div class="empty-txt">No documents in this category yet.</div></div>';
+      return;
+    }
+    const store = getClientDocs(client.id);
+    wrap.innerHTML = docs.map(function (d) {
+      const key = prefix + "::" + d.title;
+      const checked = !!store[key];
+      return '' +
+        '<label class="chk-row' + (checked ? ' done' : '') + '" data-key="' + key + '">' +
+        '  <input type="checkbox"' + (checked ? ' checked' : '') + '>' +
+        '  <div><span>' + d.title + (d.link ? ' <a class="chk-link" href="' + d.link + '" target="_blank" rel="noopener" onclick="event.stopPropagation()">↗</a>' : '') + '</span></div>' +
+        '</label>';
+    }).join("");
+
+    wrap.querySelectorAll('input[type="checkbox"]').forEach(function (cb) {
+      cb.addEventListener("change", function () {
+        const row = cb.closest(".chk-row");
+        setClientDoc(client.id, row.dataset.key, cb.checked);
+        renderClientChecklist(client, prefix, docs, containerId);
+        renderClientList();
+      });
+    });
+  }
+
+  renderClientList();
+</script>
+</body>
+</html>

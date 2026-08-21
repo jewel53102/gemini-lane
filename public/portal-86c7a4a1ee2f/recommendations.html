@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>OptiMind Dashboard — Audit Recommendations</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<div id="sidebar-mount"></div>
+
+<main class="main">
+  <div class="topbar">
+    <div class="topbar-left">
+      <span class="topbar-title" id="topbar-title">Audit Recommendations</span>
+    </div>
+    <span class="topbar-date" id="topbar-date"></span>
+  </div>
+
+  <div class="content">
+
+    <div class="ph">
+      <div>
+        <div class="ph-title">All 21 Recommendations</div>
+        <div class="ph-sub">Status tracking only — full detail (Today / Do this / Why it matters / Watch for) lives in the audit roadmap document under each Recommendation number.</div>
+      </div>
+    </div>
+
+    <div class="card mb-20">
+      <div class="card-body">
+        <div class="progress-track"><div class="progress-fill" id="rec-progress-fill" style="width:0%"></div></div>
+        <div class="progress-label" id="rec-progress-label"></div>
+      </div>
+    </div>
+
+    <div class="tabs" id="rec-tabs">
+      <button class="tab active" data-filter="all">All</button>
+      <button class="tab" data-filter="planned">Planned</button>
+      <button class="tab" data-filter="progress">In Progress</button>
+      <button class="tab" data-filter="complete">Complete</button>
+      <button class="tab" data-filter="blocked">Blocked</button>
+    </div>
+
+    <div class="card">
+      <div class="card-body" id="rec-list"></div>
+    </div>
+
+  </div>
+</main>
+
+<div class="toast" id="toast"></div>
+<script src="js/data.js"></script>
+<script src="js/app.js"></script>
+<script>
+  mountSidebar("recommendations");
+  initChrome("recommendations", "Audit Recommendations");
+
+  const impactBadge = { "Highest": "b-purple", "High": "b-green", "High if it works": "b-green", "Medium–High": "b-teal", "Medium": "b-blue", "Risk reduction": "b-orange", "Strategic": "b-purple" };
+
+  let currentFilter = "all";
+
+  function renderRecs() {
+    const list = document.getElementById("rec-list");
+    const rows = RECOMMENDATIONS.filter(function (r) {
+      if (currentFilter === "all") return true;
+      return getRecStatus(r.n) === currentFilter;
+    });
+
+    if (!rows.length) {
+      list.innerHTML = '<div class="empty"><div class="empty-ico">📋</div><div class="empty-txt">Nothing in this view yet.</div></div>';
+      return;
+    }
+
+    list.innerHTML = rows.map(function (r) {
+      const status = getRecStatus(r.n);
+      const badgeClass = impactBadge[r.impact] || "b-gray";
+      return '' +
+        '<div class="rec-row">' +
+        '  <div class="rec-num-badge">' + r.n + '</div>' +
+        '  <div style="flex:1">' +
+        '    <div class="rec-title' + (status === "complete" ? " done" : "") + '">' + r.title + '</div>' +
+        (r.note ? '    <div class="muted mt-8" style="font-size:12.5px">' + r.note + '</div>' : '') +
+        '    <div class="rec-meta-row">' +
+        '      <span class="badge b-gray">Effort · ' + r.effort + '</span>' +
+        '      <span class="badge ' + badgeClass + '">Impact · ' + r.impact + '</span>' +
+        '      <span class="rec-when">' + r.when + '</span>' +
+        '    </div>' +
+        '  </div>' +
+        '  <select class="fsel" data-recstatus="' + r.n + '" style="width:140px">' +
+        '    <option value="planned"' + (status === "planned" ? " selected" : "") + '>Planned</option>' +
+        '    <option value="progress"' + (status === "progress" ? " selected" : "") + '>In Progress</option>' +
+        '    <option value="complete"' + (status === "complete" ? " selected" : "") + '>Complete</option>' +
+        '    <option value="blocked"' + (status === "blocked" ? " selected" : "") + '>Blocked</option>' +
+        '  </select>' +
+        '</div>';
+    }).join("");
+
+    list.querySelectorAll("[data-recstatus]").forEach(function (el) {
+      el.addEventListener("change", function () {
+        setRecStatus(el.dataset.recstatus, el.value);
+        toast("Status updated");
+        renderRecs();
+        updateRecProgress();
+      });
+    });
+  }
+
+  function updateRecProgress() {
+    const stats = computeStats();
+    const pct = Math.round(stats.recsComplete / stats.recsTotal * 100);
+    document.getElementById("rec-progress-fill").style.width = pct + "%";
+    document.getElementById("rec-progress-label").textContent = stats.recsComplete + " of " + stats.recsTotal + " recommendations complete (" + pct + "%)";
+  }
+
+  document.getElementById("rec-tabs").addEventListener("click", function (e) {
+    const btn = e.target.closest(".tab");
+    if (!btn) return;
+    document.querySelectorAll("#rec-tabs .tab").forEach(function (t) { t.classList.remove("active"); });
+    btn.classList.add("active");
+    currentFilter = btn.dataset.filter;
+    renderRecs();
+  });
+
+  renderRecs();
+  updateRecProgress();
+</script>
+</body>
+</html>

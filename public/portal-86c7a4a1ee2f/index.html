@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>OptiMind Dashboard — Overview</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<div id="sidebar-mount"></div>
+
+<main class="main">
+  <div class="topbar">
+    <div class="topbar-left">
+      <span class="topbar-title" id="topbar-title">Overview</span>
+    </div>
+    <span class="topbar-date" id="topbar-date"></span>
+  </div>
+
+  <div class="content">
+
+    <div class="ph">
+      <div>
+        <div class="ph-title">OptiMind Educational Strategies</div>
+        <div class="ph-sub">Sarah Ritter, Founder — engagement roadmap, Aug 12, 2026 – Jan 26, 2027. Prepared by Ruby Groves, Gemini Lane.</div>
+      </div>
+    </div>
+
+    <div class="stats-row">
+      <div class="stat">
+        <div class="stat-ico" style="background:#dbeafe">📅</div>
+        <div><div class="stat-val" id="s-current">—</div><div class="stat-lbl">Current Sprint</div></div>
+      </div>
+      <div class="stat">
+        <div class="stat-ico" style="background:#d1fae5">✅</div>
+        <div><div class="stat-val" id="s-complete">0 / 0</div><div class="stat-lbl">Items Complete</div></div>
+      </div>
+      <div class="stat">
+        <div class="stat-ico" style="background:#fef3c7">⏳</div>
+        <div><div class="stat-val" id="s-progress">0</div><div class="stat-lbl">In Progress</div></div>
+      </div>
+      <div class="stat">
+        <div class="stat-ico" style="background:#ede9fe">💰</div>
+        <div><div class="stat-val" id="s-cost">$0</div><div class="stat-lbl">Total Sprint Cost</div></div>
+      </div>
+    </div>
+
+    <div class="card mb-20">
+      <div class="card-hd">
+        <span class="card-title">Overall Progress</span>
+        <button class="btn btn-ghost btn-sm" onclick="location.href='sprints.html'">Open Sprints →</button>
+      </div>
+      <div class="card-body">
+        <div class="progress-track"><div class="progress-fill" id="ov-progress-fill" style="width:0%"></div></div>
+        <div class="progress-label" id="ov-progress-label">0 of 0 work items complete</div>
+      </div>
+    </div>
+
+    <div class="card mb-20">
+      <div class="card-hd">
+        <span class="card-title">Currently In Progress</span>
+        <span class="doccat-count" id="in-progress-count"></span>
+      </div>
+      <div class="card-body" id="in-progress-list"></div>
+    </div>
+
+    <div class="g2 mb-20">
+      <div class="card">
+        <div class="card-hd">
+          <span class="card-title">Current Sprint</span>
+        </div>
+        <div class="card-body" id="ov-current-sprint"></div>
+      </div>
+      <div class="card">
+        <div class="card-hd">
+          <span class="card-title">Recommendations Tracked</span>
+          <button class="btn btn-ghost btn-sm" onclick="location.href='recommendations.html'">Open →</button>
+        </div>
+        <div class="card-body">
+          <div class="progress-track"><div class="progress-fill" id="ov-rec-fill" style="width:0%"></div></div>
+          <div class="progress-label" id="ov-rec-label">0 of 21 recommendations complete</div>
+          <div class="muted mt-8">Full detail for every recommendation lives in the audit roadmap document — this tracks status only.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="sec-hd">All Sprints</div>
+    <div class="g4" id="ov-sprint-grid"></div>
+
+  </div>
+</main>
+
+<div class="toast" id="toast"></div>
+<script src="js/data.js"></script>
+<script src="js/app.js"></script>
+<script>
+  mountSidebar("overview");
+  initChrome("overview", "Overview");
+
+  const stats = computeStats();
+
+  document.getElementById("s-complete").textContent = stats.completeItems + " / " + stats.totalItems;
+  document.getElementById("s-progress").textContent = stats.inProgressItems;
+  document.getElementById("s-cost").textContent = fmtMoney(stats.totalCost);
+  document.getElementById("s-current").textContent = stats.currentSprint ? ("Sprint " + stats.currentSprint.id) : (stats.currentBuffer ? "Buffer" : "—");
+
+  const pct = stats.totalItems ? Math.round((stats.completeItems / stats.totalItems) * 100) : 0;
+  document.getElementById("ov-progress-fill").style.width = pct + "%";
+  document.getElementById("ov-progress-label").textContent = stats.completeItems + " of " + stats.totalItems + " work items complete (" + pct + "%)";
+
+  const recPct = Math.round((stats.recsComplete / stats.recsTotal) * 100);
+  document.getElementById("ov-rec-fill").style.width = recPct + "%";
+  document.getElementById("ov-rec-label").textContent = stats.recsComplete + " of " + stats.recsTotal + " recommendations complete";
+
+  const csWrap = document.getElementById("ov-current-sprint");
+  if (stats.currentSprint) {
+    const s = stats.currentSprint;
+    csWrap.innerHTML =
+      '<div style="font-size:15px;font-weight:700;margin-bottom:3px">Sprint ' + s.id + ' — ' + s.theme + '</div>' +
+      '<div class="muted mb-16">' + s.dates + '</div>' +
+      '<div style="font-size:13px;color:var(--text-2);margin-bottom:14px"><strong>Big rock:</strong> ' + s.bigRock + '</div>' +
+      '<a class="btn btn-primary btn-sm" href="sprints.html#sprint-' + s.id + '">View on board →</a>';
+  } else if (stats.currentBuffer) {
+    const b = stats.currentBuffer;
+    csWrap.innerHTML =
+      '<div style="font-size:15px;font-weight:700;margin-bottom:3px">Buffer Sprint</div>' +
+      '<div class="muted mb-16">' + b.dates + '</div>' +
+      '<div style="font-size:13px;color:var(--text-2);margin-bottom:14px"><strong>Big rock:</strong> ' + b.bigRock + '</div>' +
+      '<a class="btn btn-primary btn-sm" href="sprints.html#buffer-' + b.id + '">View on board →</a>';
+  } else {
+    csWrap.innerHTML = '<div class="empty"><div class="empty-ico">🗓️</div><div class="empty-txt">Engagement hasn\'t started yet, or has finished.</div></div>';
+  }
+
+  function bufferCard(b) {
+    const isCurrent = stats.currentBuffer && stats.currentBuffer.id === b.id;
+    return '' +
+      '<div class="card" style="border-style:dashed;border-color:var(--warn)' + (isCurrent ? ";box-shadow:0 0 0 2px rgba(245,158,11,.2)" : "") + '">' +
+      '  <div class="card-body">' +
+      '    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px">' +
+      '      <span class="badge" style="background:#fef3c7;color:#92400e">Buffer</span>' +
+      (isCurrent ? '<span class="badge b-green">Now</span>' : '') +
+      '    </div>' +
+      '    <div style="font-size:13px;font-weight:700;margin-bottom:3px">' + b.bigRock + '</div>' +
+      '    <div class="muted mb-8">' + b.dates + '</div>' +
+      '    <div class="muted">Contents TBD</div>' +
+      '  </div>' +
+      '</div>';
+  }
+
+  const grid = document.getElementById("ov-sprint-grid");
+  grid.innerHTML = SPRINTS.map(function (s) {
+    let done = 0;
+    s.priorities.forEach(function (p, idx) { if (getStatus(priorityId(s.id, idx)) === "complete") done++; });
+    const isCurrent = stats.currentSprint && stats.currentSprint.id === s.id;
+    const card = '' +
+      '<div class="card" style="' + (isCurrent ? "border-color:var(--accent);box-shadow:0 0 0 2px rgba(59,130,246,.15)" : "") + '">' +
+      '  <div class="card-body">' +
+      '    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px">' +
+      '      <span class="badge b-blue">Sprint ' + s.id + '</span>' +
+      (isCurrent ? '<span class="badge b-green">Now</span>' : '') +
+      '    </div>' +
+      '    <div style="font-size:13px;font-weight:700;margin-bottom:3px">' + s.theme + '</div>' +
+      '    <div class="muted mb-8">' + s.dates + '</div>' +
+      '    <div class="progress-track"><div class="progress-fill" style="width:' + (s.priorities.length ? Math.round(done / s.priorities.length * 100) : 0) + '%"></div></div>' +
+      '    <div class="progress-label">' + done + ' of ' + s.priorities.length + ' items</div>' +
+      '  </div>' +
+      '</div>';
+    return card +
+      (s.id === "04" ? bufferCard(BUFFERS[0]) : "") +
+      (s.id === "07" ? bufferCard(BUFFERS[1]) : "");
+  }).join("");
+
+  function renderInProgress() {
+    const items = [];
+    SPRINTS.forEach(function (s) {
+      s.priorities.forEach(function (p, pIdx) {
+        const pid = priorityId(s.id, pIdx);
+        if (getStatus(pid) === "progress") items.push({ sprintId: s.id, theme: s.theme, badge: p.badge, title: p.title });
+      });
+    });
+
+    document.getElementById("in-progress-count").textContent = items.length + ' item' + (items.length === 1 ? '' : 's');
+    document.getElementById("in-progress-list").innerHTML = items.length
+      ? items.map(function (it) {
+          return '' +
+            '<div class="rec-row">' +
+            '  <div class="rec-num-badge">S' + it.sprintId + '</div>' +
+            '  <div style="flex:1">' +
+            '    <div class="rec-title">' + it.title + '</div>' +
+            '    <div class="rec-meta-row">' +
+            '      <span class="badge b-gray">' + it.badge + '</span>' +
+            '      <span class="badge b-blue">Sprint ' + it.sprintId + ' · ' + it.theme + '</span>' +
+            '    </div>' +
+            '  </div>' +
+            '  <a class="btn btn-ghost btn-sm" href="sprints.html#sprint-' + it.sprintId + '">View on board →</a>' +
+            '</div>';
+        }).join("")
+      : '<div class="empty"><div class="empty-ico">⏳</div><div class="empty-txt">Nothing marked In Progress right now.</div></div>';
+  }
+
+  renderInProgress();
+</script>
+</body>
+</html>

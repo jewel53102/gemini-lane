@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>OptiMind Dashboard — Audit Progress Tracking</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<div id="sidebar-mount"></div>
+
+<main class="main">
+  <div class="topbar">
+    <div class="topbar-left">
+      <span class="topbar-title" id="topbar-title">Audit Progress Tracking</span>
+    </div>
+    <span class="topbar-date" id="topbar-date"></span>
+  </div>
+
+  <div class="content">
+
+    <div class="ph">
+      <div>
+        <div class="ph-title">Full Business Audit — Reference</div>
+        <div class="ph-sub">Read-only condensed reference from Part One of the audit roadmap. Full prose, quotes, and reasoning live in the source document.</div>
+      </div>
+    </div>
+
+    <div class="g2 mb-20">
+      <div class="card">
+        <div class="card-hd"><span class="card-title">Score Summary</span></div>
+        <div class="card-body" id="scores"></div>
+      </div>
+      <div class="card">
+        <div class="card-hd"><span class="card-title">Overall Read</span></div>
+        <div class="card-body">
+          <p style="font-size:13px;color:var(--text-2);line-height:1.6">271 of 573 points, 47% overall. Strong everywhere that protects the business (compliance, financial hygiene, goal clarity) — weak everywhere that would give Sarah her time back (documentation, tech integration, owner dependency).</p>
+        </div>
+      </div>
+    </div>
+
+    <div id="diag-sections"></div>
+
+  </div>
+</main>
+
+<script src="js/data.js"></script>
+<script src="js/app.js"></script>
+<script>
+  mountSidebar("diagnostic");
+  initChrome("diagnostic", "Audit Progress Tracking");
+
+  const scoresWrap = document.getElementById("scores");
+  scoresWrap.innerHTML = SCORES.map(function (s) {
+    const bold = s.label === "Overall" ? "font-weight:800;color:var(--text)" : "";
+    return '' +
+      '<div style="display:flex;align-items:center;gap:10px;margin-bottom:8px">' +
+      '  <div style="width:180px;font-size:12px;' + bold + '">' + s.label + '</div>' +
+      '  <div class="progress-track" style="flex:1"><div class="progress-fill" style="width:' + s.pct + '%"></div></div>' +
+      '  <div style="width:34px;text-align:right;font-size:12px;font-weight:700;' + bold + '">' + s.pct + '%</div>' +
+      '</div>';
+  }).join("");
+
+  const secWrap = document.getElementById("diag-sections");
+  secWrap.innerHTML = DIAGNOSTIC.map(function (d) {
+    return '' +
+      '<div class="diag-sec">' +
+      '  <div class="diag-hd"><span class="diag-num">' + d.num + '</span><span class="diag-title">' + d.title + '</span></div>' +
+      '  <div class="diag-intro">' + d.intro + '</div>' +
+      d.cards.map(function (c) {
+        return '<div class="diag-card"><h5>' + c.h + '</h5><p>' + c.body + '</p></div>';
+      }).join("") +
+      '</div>';
+  }).join("");
+</script>
+</body>
+</html>

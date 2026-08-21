@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>OptiMind Dashboard — SOPs</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<div id="sidebar-mount"></div>
+
+<main class="main">
+  <div class="topbar">
+    <div class="topbar-left">
+      <span class="topbar-title" id="topbar-title">SOPs</span>
+    </div>
+    <span class="topbar-date" id="topbar-date"></span>
+  </div>
+
+  <div class="content">
+
+    <div class="ph">
+      <div>
+        <img src="sops/OptiMind-Logo-Long-Transparent.png" alt="OptiMind" style="width:240px;height:auto;margin-bottom:14px;display:block">
+        <div class="ph-title">SOPs</div>
+        <div class="ph-sub">Standard Operating Procedures for running OptiMind Educational Strategies.</div>
+      </div>
+    </div>
+
+    <div>
+      <div style="display:flex;gap:10px;flex-wrap:wrap;margin-bottom:16px">
+        <select class="fsel" id="doc-filter-review">
+          <option value="all">All review tags</option>
+          <option value="legal">Legal Review</option>
+          <option value="accounting">Accounting Review</option>
+          <option value="none">No review tag</option>
+        </select>
+      </div>
+
+      <div class="doccat-sec">
+        <div class="card">
+          <div class="card-hd">
+            <span class="card-title">Internal Only</span>
+            <span class="doccat-count" id="doc-count-internal"></span>
+          </div>
+          <div class="card-body" id="doc-list-internal"></div>
+        </div>
+      </div>
+
+      <div class="doccat-sec">
+        <div class="card">
+          <div class="card-hd">
+            <span class="card-title">New Client Agreements and Information</span>
+            <span class="doccat-count" id="doc-count-newclient"></span>
+          </div>
+          <div class="card-body" id="doc-list-newclient"></div>
+        </div>
+      </div>
+
+      <div class="doccat-sec">
+        <div class="card">
+          <div class="card-hd">
+            <span class="card-title">Employee &amp; Potential Employee Resources</span>
+            <span class="doccat-count" id="doc-count-hiring"></span>
+          </div>
+          <div class="card-body" id="doc-list-hiring"></div>
+        </div>
+      </div>
+
+      <div class="doccat-sec">
+        <div class="card">
+          <div class="card-hd">
+            <span class="card-title">Employee</span>
+            <span class="doccat-count" id="doc-count-employee"></span>
+          </div>
+          <div class="card-body" id="doc-list-employee"></div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</main>
+
+<script src="js/data.js"></script>
+<script src="js/app.js"></script>
+<script>
+  mountSidebar("sops");
+  initChrome("sops", "SOPs");
+
+  function docTitle(d) {
+    return d.link
+      ? '<a href="' + d.link + '" target="_blank" rel="noopener">' + d.title + ' ↗</a>'
+      : d.title;
+  }
+
+  const REVIEW_LABELS = { legal: "Legal Review", accounting: "Accounting Review" };
+  const REVIEW_BADGE = { legal: "b-purple", accounting: "b-orange" };
+
+  function reviewBadges(d) {
+    return (d.reviewTags || []).map(function (t) {
+      return '<span class="badge ' + REVIEW_BADGE[t] + '">' + REVIEW_LABELS[t] + '</span>';
+    }).join("");
+  }
+
+  function renderDocSection(all, category, listId, countId, emptyText) {
+    const revFilter = document.getElementById("doc-filter-review").value;
+
+    const filtered = all.filter(function (d) {
+      if (d.category !== category) return false;
+      if (revFilter === "none" && d.reviewTags.length) return false;
+      if (revFilter !== "all" && revFilter !== "none" && d.reviewTags.indexOf(revFilter) === -1) return false;
+      return true;
+    });
+
+    const totalInCategory = all.filter(function (d) { return d.category === category; }).length;
+
+    document.getElementById(countId).textContent = filtered.length + ' document' + (filtered.length === 1 ? '' : 's') + (filtered.length !== totalInCategory ? ' of ' + totalInCategory : '');
+
+    document.getElementById(listId).innerHTML = filtered.length
+      ? '<ul class="doc-list">' + filtered.map(function (d, dIdx) {
+          return '' +
+            '<li class="doc-item">' +
+            '  <span class="doc-num">' + (dIdx + 1) + '.</span>' +
+            '  <div style="flex:1">' +
+            '    <div class="doc-title">' + docTitle(d) + '</div>' +
+            (d.desc ? '    <div class="doc-desc">' + d.desc + '</div>' : '') +
+            '  </div>' +
+            '  <div style="display:flex;gap:6px;flex-wrap:wrap;justify-content:flex-end">' +
+            '    <span class="badge b-gray">' + d.cat + '</span>' +
+            reviewBadges(d) +
+            '  </div>' +
+            '</li>';
+        }).join("") + '</ul>'
+      : '<div class="empty"><div class="empty-ico">🗂️</div><div class="empty-txt">' + (totalInCategory ? "No documents match this filter." : emptyText) + '</div></div>';
+  }
+
+  function renderTaggedDocs(sources, emptyText) {
+    const all = [];
+    sources.forEach(function (s) {
+      s.docs.forEach(function (d) {
+        all.push({ title: d.title, desc: d.desc, link: d.link, cat: s.label, category: d.category, reviewTags: d.reviewTags || [] });
+      });
+    });
+
+    function render() {
+      renderDocSection(all, "internal", "doc-list-internal", "doc-count-internal", emptyText);
+      renderDocSection(all, "newclient", "doc-list-newclient", "doc-count-newclient", emptyText);
+      renderDocSection(all, "hiring", "doc-list-hiring", "doc-count-hiring", emptyText);
+      renderDocSection(all, "employee", "doc-list-employee", "doc-count-employee", emptyText);
+    }
+
+    document.getElementById("doc-filter-review").addEventListener("change", render);
+    render();
+  }
+
+  renderTaggedDocs(
+    [{ label: "SOP", docs: SOP_DOCS }, { label: "Onboarding", docs: EMPLOYEE_ONBOARDING_DOCS }],
+    "No documents added yet."
+  );
+</script>
+</body>
+</html>

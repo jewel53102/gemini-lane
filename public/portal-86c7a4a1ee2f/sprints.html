@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>OptiMind Dashboard — Sprints</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<div id="sidebar-mount"></div>
+
+<main class="main">
+  <div class="topbar">
+    <div class="topbar-left">
+      <span class="topbar-title" id="topbar-title">Sprints</span>
+    </div>
+    <span class="topbar-date" id="topbar-date"></span>
+  </div>
+
+  <div class="content">
+
+    <div class="ph">
+      <div>
+        <div class="ph-title">Sprint Board</div>
+        <div class="ph-sub">Ten two-week sprints plus two buffer sprints, Aug 12, 2026 – Jan 26, 2027. Set a status per item and check off done-when steps as they're completed — everything saves automatically in this browser.</div>
+      </div>
+    </div>
+
+    <div class="card mb-20">
+      <div class="card-body">
+        <div class="progress-track"><div class="progress-fill" id="board-progress-fill" style="width:0%"></div></div>
+        <div class="progress-label" id="board-progress-label"></div>
+      </div>
+    </div>
+
+    <div class="card mb-20">
+      <div class="card-hd">
+        <span class="card-title">Currently In Progress</span>
+        <span class="doccat-count" id="in-progress-count"></span>
+      </div>
+      <div class="card-body" id="in-progress-list"></div>
+    </div>
+
+    <div class="kanban" id="board"></div>
+
+  </div>
+</main>
+
+<div class="toast" id="toast"></div>
+<script src="js/data.js"></script>
+<script src="js/app.js"></script>
+<script>
+  mountSidebar("sprints");
+  initChrome("sprints", "Sprints");
+
+  function renderBufferColumn(b) {
+    return '' +
+      '<div class="kcol buffer" id="buffer-' + b.id + '">' +
+      '  <div class="kcol-hd">' +
+      '    <div class="kcol-badge-row"><span class="kcol-num buffer-num">BUFFER</span><span class="kcol-dates">' + b.dates.replace(", 2026", "").replace(", 2027", "") + '</span></div>' +
+      '    <div class="kcol-theme">Buffer</div>' +
+      '    <div class="kcol-meta">' +
+      '      <div><b>Big rock</b>' + b.bigRock + '</div>' +
+      '      <div><b>Cost</b>' + fmtMoney(b.cost) + '</div>' +
+      '      <div><b>Meetings</b>' + b.meetings + '</div>' +
+      '    </div>' +
+      '  </div>' +
+      '  <div class="kcol-body"><p class="kcol-buffer-note"><strong>Contents: TBD.</strong> ' + b.note + '</p></div>' +
+      '</div>';
+  }
+
+  function renderBoard() {
+    const board = document.getElementById("board");
+    board.innerHTML = SPRINTS.map(function (s) {
+      let doneCount = 0;
+      const cards = s.priorities.map(function (p, pIdx) {
+        const pid = priorityId(s.id, pIdx);
+        const status = getStatus(pid);
+        if (status === "complete") doneCount++;
+        const checksHTML = (p.doneWhen || []).map(function (text, cIdx) {
+          const cid = checkId(s.id, pIdx, cIdx);
+          const checked = getCheck(cid);
+          return '' +
+            '<label class="kchk-row' + (checked ? ' done' : '') + '">' +
+            '  <input type="checkbox" data-check="' + cid + '" ' + (checked ? "checked" : "") + '>' +
+            '  <span>' + text + '</span>' +
+            '</label>';
+        }).join("");
+        const stepsDone = (p.doneWhen || []).filter(function (_, cIdx) { return getCheck(checkId(s.id, pIdx, cIdx)); }).length;
+        return '' +
+          '<div class="kcard ' + STATUS_CLASS[status] + '" data-pid="' + pid + '">' +
+          '  <div class="kcard-top"><span class="kcard-badge">' + p.badge + '</span><span class="kcard-tag">' + p.tag + '</span></div>' +
+          '  <h4 class="' + (status === "complete" ? "done" : "") + '">' + p.title + '</h4>' +
+          '  <p>' + p.desc + '</p>' +
+          '  <select class="fsel kcard-status" data-status="' + pid + '">' +
+          '    <option value="planned"' + (status === "planned" ? " selected" : "") + '>Planned</option>' +
+          '    <option value="progress"' + (status === "progress" ? " selected" : "") + '>In Progress</option>' +
+          '    <option value="complete"' + (status === "complete" ? " selected" : "") + '>Complete</option>' +
+          '    <option value="blocked"' + (status === "blocked" ? " selected" : "") + '>Blocked</option>' +
+          '  </select>' +
+          '  <span class="kcard-toggle" data-toggle="' + pid + '">' + stepsDone + ' / ' + (p.doneWhen || []).length + ' steps ▾</span>' +
+          '  <div class="kcard-checks" id="checks-' + pid + '">' + checksHTML + '</div>' +
+          '</div>';
+      }).join("");
+
+      const pct = s.priorities.length ? Math.round(doneCount / s.priorities.length * 100) : 0;
+
+      return '' +
+        '<div class="kcol" id="sprint-' + s.id + '">' +
+        '  <div class="kcol-hd">' +
+        '    <div class="kcol-badge-row"><span class="kcol-num">SPRINT ' + s.id + '</span><span class="kcol-dates">' + s.dates.replace(", 2026", "") + '</span></div>' +
+        '    <div class="kcol-theme">' + s.theme + '</div>' +
+        '    <div class="kcol-meta">' +
+        '      <div><b>Big rock</b>' + s.bigRock + '</div>' +
+        '      <div><b>Cost</b>' + fmtMoney(s.cost) + '</div>' +
+        '      <div><b>Meetings</b>' + s.meetings + '</div>' +
+        '    </div>' +
+        '  </div>' +
+        '  <div class="kcol-progress">' +
+        '    <div class="progress-track"><div class="progress-fill" style="width:' + pct + '%"></div></div>' +
+        '    <div class="progress-label">' + doneCount + ' / ' + s.priorities.length + ' complete</div>' +
+        '  </div>' +
+        '  <div class="kcol-body">' + cards + '</div>' +
+        '</div>' +
+        (s.id === "04" ? renderBufferColumn(BUFFERS[0]) : "") +
+        (s.id === "07" ? renderBufferColumn(BUFFERS[1]) : "");
+    }).join("");
+
+    // bind status selects
+    board.querySelectorAll("[data-status]").forEach(function (el) {
+      el.addEventListener("change", function () {
+        setStatus(el.dataset.status, el.value);
+        toast("Status updated");
+        renderBoard();
+        updateBoardProgress();
+        renderInProgress();
+      });
+    });
+    // bind checkboxes
+    board.querySelectorAll("[data-check]").forEach(function (el) {
+      el.addEventListener("change", function () {
+        setCheck(el.dataset.check, el.checked);
+        const row = el.closest(".kchk-row");
+        row.classList.toggle("done", el.checked);
+        const pid = el.dataset.check.split("-c")[0];
+        const card = board.querySelector('[data-pid="' + pid + '"]');
+        const totalChecks = card.querySelectorAll("[data-check]").length;
+        const doneChecksCount = card.querySelectorAll("[data-check]:checked").length;
+        card.querySelector(".kcard-toggle").textContent = doneChecksCount + " / " + totalChecks + " steps " + (card.querySelector(".kcard-checks").classList.contains("open") ? "▴" : "▾");
+      });
+    });
+    // bind toggles
+    board.querySelectorAll("[data-toggle]").forEach(function (el) {
+      el.addEventListener("click", function () {
+        const pid = el.dataset.toggle;
+        const panel = document.getElementById("checks-" + pid);
+        panel.classList.toggle("open");
+        el.textContent = el.textContent.replace(/[▾▴]/, panel.classList.contains("open") ? "▴" : "▾");
+      });
+    });
+  }
+
+  function renderInProgress() {
+    const items = [];
+    SPRINTS.forEach(function (s) {
+      s.priorities.forEach(function (p, pIdx) {
+        const pid = priorityId(s.id, pIdx);
+        if (getStatus(pid) === "progress") items.push({ sprintId: s.id, theme: s.theme, badge: p.badge, title: p.title, pid: pid });
+      });
+    });
+
+    document.getElementById("in-progress-count").textContent = items.length + ' item' + (items.length === 1 ? '' : 's');
+    document.getElementById("in-progress-list").innerHTML = items.length
+      ? items.map(function (it) {
+          return '' +
+            '<div class="rec-row">' +
+            '  <div class="rec-num-badge">S' + it.sprintId + '</div>' +
+            '  <div style="flex:1">' +
+            '    <div class="rec-title">' + it.title + '</div>' +
+            '    <div class="rec-meta-row">' +
+            '      <span class="badge b-gray">' + it.badge + '</span>' +
+            '      <span class="badge b-blue">Sprint ' + it.sprintId + ' · ' + it.theme + '</span>' +
+            '    </div>' +
+            '  </div>' +
+            '  <a class="btn btn-ghost btn-sm" href="#sprint-' + it.sprintId + '" data-jump="1">View on board →</a>' +
+            '</div>';
+        }).join("")
+      : '<div class="empty"><div class="empty-ico">⏳</div><div class="empty-txt">Nothing marked In Progress right now.</div></div>';
+
+    document.getElementById("in-progress-list").querySelectorAll("[data-jump]").forEach(function (el) {
+      el.addEventListener("click", function (e) {
+        e.preventDefault();
+        const target = document.querySelector(el.getAttribute("href"));
+        if (target) target.scrollIntoView({ behavior: "smooth", inline: "start" });
+      });
+    });
+  }
+
+  function updateBoardProgress() {
+    const stats = computeStats();
+    const pct = stats.totalItems ? Math.round(stats.completeItems / stats.totalItems * 100) : 0;
+    document.getElementById("board-progress-fill").style.width = pct + "%";
+    document.getElementById("board-progress-label").textContent = stats.completeItems + " of " + stats.totalItems + " work items complete across all " + SPRINTS.length + " sprints (" + pct + "%)" + (stats.currentBuffer ? " — currently in Buffer" : "");
+  }
+
+  renderBoard();
+  updateBoardProgress();
+  renderInProgress();
+
+  if (location.hash) {
+    setTimeout(function () {
+      const target = document.querySelector(location.hash);
+      if (target) target.scrollIntoView({ behavior: "smooth", inline: "start" });
+    }, 50);
+  }
+</script>
+</body>
+</html>
