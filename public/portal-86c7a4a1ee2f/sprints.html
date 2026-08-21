@@ -35,14 +35,6 @@
       </div>
     </div>
 
-    <div class="card mb-20">
-      <div class="card-hd">
-        <span class="card-title">Currently In Progress</span>
-        <span class="doccat-count" id="in-progress-count"></span>
-      </div>
-      <div class="card-body" id="in-progress-list"></div>
-    </div>
-
     <div class="kanban" id="board"></div>
 
   </div>
@@ -135,7 +127,6 @@
         toast("Status updated");
         renderBoard();
         updateBoardProgress();
-        renderInProgress();
       });
     });
     // bind checkboxes
@@ -162,42 +153,6 @@
     });
   }
 
-  function renderInProgress() {
-    const items = [];
-    SPRINTS.forEach(function (s) {
-      s.priorities.forEach(function (p, pIdx) {
-        const pid = priorityId(s.id, pIdx);
-        if (getStatus(pid) === "progress") items.push({ sprintId: s.id, theme: s.theme, badge: p.badge, title: p.title, pid: pid });
-      });
-    });
-
-    document.getElementById("in-progress-count").textContent = items.length + ' item' + (items.length === 1 ? '' : 's');
-    document.getElementById("in-progress-list").innerHTML = items.length
-      ? items.map(function (it) {
-          return '' +
-            '<div class="rec-row">' +
-            '  <div class="rec-num-badge">S' + it.sprintId + '</div>' +
-            '  <div style="flex:1">' +
-            '    <div class="rec-title">' + it.title + '</div>' +
-            '    <div class="rec-meta-row">' +
-            '      <span class="badge b-gray">' + it.badge + '</span>' +
-            '      <span class="badge b-blue">Sprint ' + it.sprintId + ' · ' + it.theme + '</span>' +
-            '    </div>' +
-            '  </div>' +
-            '  <a class="btn btn-ghost btn-sm" href="#sprint-' + it.sprintId + '" data-jump="1">View on board →</a>' +
-            '</div>';
-        }).join("")
-      : '<div class="empty"><div class="empty-ico">⏳</div><div class="empty-txt">Nothing marked In Progress right now.</div></div>';
-
-    document.getElementById("in-progress-list").querySelectorAll("[data-jump]").forEach(function (el) {
-      el.addEventListener("click", function (e) {
-        e.preventDefault();
-        const target = document.querySelector(el.getAttribute("href"));
-        if (target) target.scrollIntoView({ behavior: "smooth", inline: "start" });
-      });
-    });
-  }
-
   function updateBoardProgress() {
     const stats = computeStats();
     const pct = stats.totalItems ? Math.round(stats.completeItems / stats.totalItems * 100) : 0;
@@ -207,7 +162,6 @@
 
   renderBoard();
   updateBoardProgress();
-  renderInProgress();
 
   if (location.hash) {
     setTimeout(function () {
