@@ -1,553 +1,86 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>OptiMind Screening Protocol</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Screening Protocol — OptiMind Educational Strategies</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <style>
-  :root{
-    --emerald-50:#ecfdf5; --emerald-100:#d1fae5; --emerald-300:#6ee7b7; --emerald-400:#34d399;
-    --emerald-500:#10b981; --emerald-600:#059669; --emerald-700:#047857;
-    --slate-50:#f8fafc; --slate-100:#f1f5f9; --slate-200:#e2e8f0; --slate-300:#cbd5e1; --slate-400:#94a3b8;
-    --slate-500:#64748b; --slate-600:#475569; --slate-700:#334155; --slate-800:#1e293b; --slate-900:#0f172a;
-    --amber-100:#fef3c7; --amber-600:#d97706; --amber-700:#92400e;
-    --rose-100:#ffe4e6; --rose-600:#e11d48; --rose-700:#be123c;
-    --blue-100:#dbeafe; --blue-600:#2563eb; --blue-700:#1d4ed8;
-
-    --page:var(--slate-50); --surface:#fff; --surface-2:var(--slate-50);
-    --ink:var(--slate-800); --ink-strong:var(--slate-900); --ink-soft:var(--slate-600); --ink-faint:var(--slate-400);
-    --rule:var(--slate-200); --rule-soft:var(--slate-100);
-    --accent:var(--emerald-600); --accent-ink:var(--emerald-700); --accent-wash:var(--emerald-100);
-    --doc-paper:#fffdf7; --doc-rule:#e7e2d4;
-    --shadow:0 1px 2px rgba(15,23,42,.05);
+  :root {
+    --accent: #3b82f6; --text: #0f172a; --text-2: #4b5563; --text-3: #9ca3af;
+    --border: #e4e9f0; --bg: #f7f9fc; --warn: #f59e0b; --warn-bg: #fffbeb;
   }
-  @media (prefers-color-scheme:dark){
-    :root:not([data-theme="light"]){
-      --page:#0b1220; --surface:#121b2c; --surface-2:#0f1726;
-      --ink:#dbe3ee; --ink-strong:#f1f5f9; --ink-soft:#a8b6c8; --ink-faint:#7c8ca1;
-      --rule:#22304a; --rule-soft:#1a2437;
-      --accent:var(--emerald-400); --accent-ink:var(--emerald-300); --accent-wash:#0d3b2e;
-      --amber-100:#3d2f0c; --amber-700:#fcd34d;
-      --rose-100:#3d1520; --rose-700:#fda4af;
-      --blue-100:#12294d; --blue-700:#93c5fd;
-      --doc-paper:#161f31; --doc-rule:#2b3a54;
-      --shadow:0 1px 2px rgba(0,0,0,.4);
-    }
-  }
-  :root[data-theme="dark"]{
-      --page:#0b1220; --surface:#121b2c; --surface-2:#0f1726;
-      --ink:#dbe3ee; --ink-strong:#f1f5f9; --ink-soft:#a8b6c8; --ink-faint:#7c8ca1;
-      --rule:#22304a; --rule-soft:#1a2437;
-      --accent:var(--emerald-400); --accent-ink:var(--emerald-300); --accent-wash:#0d3b2e;
-      --amber-100:#3d2f0c; --amber-700:#fcd34d;
-      --rose-100:#3d1520; --rose-700:#fda4af;
-      --blue-100:#12294d; --blue-700:#93c5fd;
-      --doc-paper:#161f31; --doc-rule:#2b3a54;
-      --shadow:0 1px 2px rgba(0,0,0,.4);
-  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text); font-size: 14.5px; line-height: 1.6; padding: 40px 20px; }
+  .doc { max-width: 760px; margin: 0 auto; background: #fff; border: 1px solid var(--border); border-radius: 14px; padding: 44px 52px; box-shadow: 0 1px 3px rgba(0,0,0,.06); }
+  .badge { display: inline-flex; align-items: center; padding: 3px 11px; border-radius: 100px; font-size: 10.5px; font-weight: 700; text-transform: uppercase; letter-spacing: .5px; background: #fef3c7; color: #92400e; margin-bottom: 14px; }
+  h1 { font-size: 25px; font-weight: 700; letter-spacing: -.3px; margin-bottom: 4px; }
+  .subtitle { font-size: 13.5px; color: var(--text-2); margin-bottom: 18px; }
+  .meta { display: flex; flex-wrap: wrap; gap: 18px; font-size: 12px; color: var(--text-3); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); padding: 12px 0; margin-bottom: 30px; }
+  .meta b { color: var(--text-2); font-weight: 600; }
+  h2 { font-size: 15.5px; font-weight: 700; margin: 30px 0 10px; color: var(--text); }
+  h2:first-of-type { margin-top: 0; }
+  p { color: var(--text-2); margin-bottom: 10px; }
+  ol, ul { margin: 0 0 6px 20px; color: var(--text-2); }
+  li { margin-bottom: 9px; }
+  .tbd { color: #b45309; font-weight: 600; background: #fef3c7; padding: 1px 6px; border-radius: 5px; font-size: 12.5px; white-space: nowrap; }
+  .callout { background: var(--warn-bg); border: 1px solid #fde68a; border-left: 3px solid var(--warn); border-radius: 10px; padding: 18px 20px; margin-top: 36px; }
+  .callout h2 { margin-top: 0; color: #92400e; }
+  .callout p { color: #78350f; margin-bottom: 0; }
+  .foot { margin-top: 36px; padding-top: 16px; border-top: 1px solid var(--border); font-size: 11.5px; color: var(--text-3); }
+  a { color: var(--accent); }
 
-  *{box-sizing:border-box}
-  html,body{margin:0;padding:0}
-  body{
-    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
-    color:var(--ink);background:var(--page);line-height:1.6;
-  }
-  .wrap{max-width:840px;margin:0 auto;padding:0 28px}
+  table { width: 100%; border-collapse: collapse; margin-top: 8px; font-size: 13px; }
+  th, td { text-align: left; padding: 9px 10px; border-bottom: 1px solid var(--border); vertical-align: top; }
+  th { font-size: 10.5px; text-transform: uppercase; letter-spacing: .4px; color: var(--text-3); font-weight: 700; }
+  td { color: var(--text-2); }
+  td.k { color: var(--text); font-weight: 600; white-space: nowrap; }
 
-  header.cover{background:linear-gradient(160deg,var(--slate-900),var(--slate-800));color:#fff;padding:46px 0 34px}
-  header.cover .eyebrow{color:var(--emerald-400);font-size:11px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;margin:0 0 10px}
-  header.cover h1{font-size:2rem;line-height:1.12;margin:0 0 12px;letter-spacing:-0.02em;text-wrap:balance}
-  header.cover .sub{color:var(--slate-300);font-size:14.5px;max-width:64ch;margin:0}
-  .cover-meta{display:flex;flex-wrap:wrap;gap:26px;margin:22px 0 0;padding:0}
-  .cover-meta div{margin:0}
-  .cover-meta dt{color:var(--slate-400);font-size:9.5px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;margin:0 0 3px}
-  .cover-meta dd{margin:0;color:#fff;font-size:13.5px;font-weight:600}
-
-  main{padding:30px 0 10px}
-  .toc{background:var(--surface);border:1px solid var(--rule);border-radius:14px;padding:18px 20px;margin-bottom:30px;box-shadow:var(--shadow)}
-  .toc h4{margin:0 0 10px;font-size:10.5px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-faint)}
-  .toc ol{margin:0;padding-left:20px;columns:2;column-gap:28px;font-size:13px}
-  .toc li{margin-bottom:5px;break-inside:avoid}
-  .toc a{color:var(--ink-soft);text-decoration:none}
-  .toc a:hover,.toc a:focus-visible{color:var(--accent-ink);text-decoration:underline}
-
-  section{margin-bottom:38px}
-  .section-title{display:flex;align-items:baseline;gap:12px;font-size:1.35rem;letter-spacing:-0.015em;color:var(--ink-strong);margin:0 0 6px;text-wrap:balance}
-  .section-title .num{font-size:11px;font-weight:800;letter-spacing:.08em;color:var(--accent);background:var(--accent-wash);padding:4px 9px;border-radius:999px;flex:none;position:relative;top:-3px}
-  .section-intro{color:var(--ink-soft);font-size:14px;margin:0 0 18px;max-width:66ch}
-
-  .card{background:var(--surface);border:1px solid var(--rule);border-radius:14px;padding:18px 20px;margin-bottom:14px;box-shadow:var(--shadow)}
-  .card h3{margin:0 0 8px;font-size:15.5px;color:var(--ink-strong);letter-spacing:-0.01em}
-  .card p{margin:0 0 10px;font-size:14px;color:var(--ink-soft)}
-  .card p:last-child{margin-bottom:0}
-  .card strong{color:var(--ink-strong)}
-  .grid2{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:14px;margin-bottom:14px}
-  .grid2 .card{margin-bottom:0}
-
-  .tag{display:inline-block;font-size:9.5px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;padding:3px 8px;border-radius:999px;margin-bottom:8px;background:var(--slate-100);color:var(--slate-600)}
-  .tag.now{background:var(--accent-wash);color:var(--accent-ink)}
-  .tag.watch{background:var(--amber-100);color:var(--amber-700)}
-  .tag.stop{background:var(--rose-100);color:var(--rose-700)}
-  .tag.note{background:var(--blue-100);color:var(--blue-700)}
-
-  ul.clean{margin:0 0 10px;padding-left:19px;font-size:14px;color:var(--ink-soft)}
-  ul.clean li{margin-bottom:6px}
-  ul.clean strong{color:var(--ink-strong)}
-
-  .steps{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:12px;counter-reset:step}
-  .steps > li{background:var(--surface);border:1px solid var(--rule);border-left:4px solid var(--accent);border-radius:12px;padding:15px 18px 15px 16px;box-shadow:var(--shadow)}
-  .steps > li.branch{border-left-color:var(--amber-600)}
-  .steps > li.stopper{border-left-color:var(--rose-600)}
-  .step-head{display:flex;align-items:baseline;gap:10px;margin-bottom:6px;flex-wrap:wrap}
-  .step-num{counter-increment:step;font-size:10.5px;font-weight:800;color:var(--ink-faint);letter-spacing:.08em;font-variant-numeric:tabular-nums}
-  .step-num::before{content:"STEP " counter(step,decimal-leading-zero)}
-  .step-when{font-size:9.5px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;padding:2px 8px;border-radius:999px;background:var(--slate-100);color:var(--slate-600);margin-left:auto}
-  .steps h4{margin:0 0 6px;font-size:14.5px;color:var(--ink-strong);letter-spacing:-0.01em;flex-basis:100%}
-  .steps p{margin:0 0 8px;font-size:13.5px;color:var(--ink-soft)}
-  .steps p:last-child{margin-bottom:0}
-
-  .callout{border-radius:12px;padding:14px 16px;font-size:13.5px;margin:0 0 14px;border:1px solid}
-  .callout .lbl{display:block;font-size:9.5px;font-weight:800;letter-spacing:.09em;text-transform:uppercase;margin-bottom:5px}
-  .callout.warn{background:var(--amber-100);border-color:transparent;color:var(--amber-700)}
-  .callout.warn .lbl{color:var(--amber-700);opacity:.85}
-  .callout.stop{background:var(--rose-100);border-color:transparent;color:var(--rose-700)}
-  .callout.stop .lbl{color:var(--rose-700);opacity:.85}
-  .callout.info{background:var(--surface);border-color:var(--accent);color:var(--ink-soft)}
-  .callout.info .lbl{color:var(--accent-ink)}
-  .callout strong{color:inherit;font-weight:700}
-
-  .table-scroll{overflow-x:auto;border:1px solid var(--rule);border-radius:14px;background:var(--surface);box-shadow:var(--shadow);margin-bottom:14px}
-  table.data{border-collapse:collapse;width:100%;font-size:13px;min-width:560px}
-  table.data th{text-align:left;background:var(--surface-2);color:var(--ink-faint);font-size:10px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;padding:10px 14px;border-bottom:1px solid var(--rule)}
-  table.data td{padding:11px 14px;border-bottom:1px solid var(--rule-soft);color:var(--ink-soft);vertical-align:top}
-  table.data tr:last-child td{border-bottom:none}
-  table.data td strong{color:var(--ink-strong)}
-  .yes{color:var(--accent-ink);font-weight:700}
-  .no{color:var(--ink-faint);font-weight:700}
-
-  .doc{background:var(--doc-paper);border:1px solid var(--doc-rule);border-radius:12px;padding:22px 24px;margin:0 0 14px;
-       font-family:Georgia,"Iowan Old Style","Times New Roman",serif;font-size:14px;line-height:1.62;color:var(--ink)}
-  .doc .doc-label{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
-       font-size:9.5px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--accent-ink);margin:0 0 12px;
-       padding-bottom:10px;border-bottom:1px solid var(--doc-rule)}
-  .doc h5{font-family:Georgia,serif;text-align:center;text-transform:uppercase;letter-spacing:.06em;font-size:14px;margin:0 0 16px;color:var(--ink-strong)}
-  .doc p{margin:0 0 12px}
-  .doc p:last-child{margin-bottom:0}
-  .doc .fill{color:var(--accent-ink);font-weight:700;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;font-size:12.5px}
-  .doc .sig{margin-top:18px;padding-top:14px;border-top:1px solid var(--doc-rule);font-size:13px;color:var(--ink-soft)}
-  .doc .sig span{display:inline-block;min-width:210px;border-bottom:1px solid var(--doc-rule);margin:0 10px 10px 4px}
-  .doc ul{margin:0 0 12px;padding-left:22px}
-  .doc ul li{margin-bottom:7px}
-
-  .done-when{background:var(--surface-2);border:1px dashed var(--rule);border-radius:12px;padding:14px 18px;margin:14px 0 0}
-  .done-when .done-label{font-size:9.5px;font-weight:800;letter-spacing:.09em;text-transform:uppercase;color:var(--accent-ink);margin:0 0 8px}
-  .done-when ul{margin:0;padding-left:19px;font-size:13.5px;color:var(--ink-soft)}
-  .done-when li{margin-bottom:5px}
-
-  hr.div{border:none;border-top:1px solid var(--rule);margin:34px 0}
-
-  footer{background:var(--surface);border-top:1px solid var(--rule);margin-top:20px;padding:26px 0 34px;font-size:12.5px;color:var(--ink-faint)}
-  footer p{margin:0 0 8px;max-width:70ch}
-  footer strong{color:var(--ink-soft)}
-
-  a{color:var(--accent-ink)}
-  :focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-radius:4px}
-
-  @media (max-width:640px){
-    .wrap{padding:0 18px}
-    header.cover h1{font-size:1.55rem}
-    .toc ol{columns:1}
-    .step-when{margin-left:0}
-  }
-  @media print{
-    body{background:#fff}
-    header.cover{background:#0f172a !important;-webkit-print-color-adjust:exact;print-color-adjust:exact}
-    .card,.steps > li,.doc,.table-scroll{break-inside:avoid;box-shadow:none}
-    .page-break{break-before:page}
+  @media print {
+    body { background: #fff; padding: 0; }
+    .doc { border: none; box-shadow: none; padding: 0; max-width: 100%; }
   }
 </style>
 </head>
 <body>
 
-<header class="cover">
-  <div class="wrap">
-    <span style="display:inline-block;background:#fff;border-radius:8px;padding:14px 20px;margin-bottom:18px"><img src="data:image/png;base64,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" alt="OptiMind" style="width:200px;height:auto;display:block"></span>
-    <p class="eyebrow">Hire Package · Recommendation 4 · Sprint 01 · Confidential</p>
-    <h1>Pre-Employment Screening</h1>
-    <p class="sub">How OptiMind screens a candidate before day one — what gets checked and why, the order it happens in, the Maryland specifics, and every letter and form the sequence needs.</p>
-    <dl class="cover-meta">
-      <div><dt>Prepared for</dt><dd>Sarah Ritter, Founder</dd></div>
-      <div><dt>Business</dt><dd>OptiMind Educational Strategies</dd></div>
-      <div><dt>Prepared by</dt><dd>Ruby Groves, Gemini Lane</dd></div>
-      <div><dt>Version</dt><dd>v1 · August 2026</dd></div>
-    </dl>
+<div class="doc">
+  <img src="OptiMind-Logo-Long-Transparent.png" alt="OptiMind" style="width:240px;height:auto;margin-bottom:14px;display:block">
+  <span class="badge">Draft — Internal SOP</span>
+  <h1>Screening Protocol</h1>
+  <div class="subtitle">OptiMind Educational Strategies — prepared by Ruby Groves, Gemini Lane</div>
+  <div class="meta">
+    <div><b>Status</b> · Draft</div>
+    <div><b>Last updated</b> · Aug 21, 2026</div>
   </div>
-</header>
 
-<main>
-<div class="wrap">
+  <h2>Background Check Companies</h2>
+  <p>Any of these three work for one-off small-business hiring, no minimum volume required.</p>
+  <table>
+    <tr><th>Company</th><th>Pricing</th></tr>
+    <tr><td class="k">GoodHire</td><td>~$30 (identity, national criminal, sex offender registry) · ~$60 (adds unlimited county criminal) · ~$95 (adds state/federal criminal). Verifications priced separately.</td></tr>
+    <tr><td class="k">Checkr</td><td>Comparable small-business tiers; confirm current pricing.</td></tr>
+    <tr><td class="k">Sterling</td><td>Comparable small-business tiers; confirm current pricing.</td></tr>
+  </table>
+  <p style="margin-top:14px">Recommended: the <strong>middle tier</strong> — county-level criminal search is the part that actually matters, and a package that only offers a "national database" search is not a defensible check on its own. Budget roughly $60–$120 per hire including verifications.</p>
 
-  <nav class="toc">
-    <h4>Contents</h4>
-    <ol>
-      <li><a href="#scope">Why this scope</a></li>
-      <li><a href="#checks">What gets checked</a></li>
-      <li><a href="#sequence">The sequence</a></li>
-      <li><a href="#maryland">Maryland &amp; out-of-state</a></li>
-      <li><a href="#vendor">Choosing the vendor</a></li>
-      <li><a href="#templates">The forms and letters</a></li>
-      <li><a href="#sprint">Where this lands</a></li>
-    </ol>
-  </nav>
+  <h2>How to Conduct a Background Check</h2>
+  <ol>
+    <li>Interview the candidate first. Near the end of a promising interview, mention the role is subject to a background check before start.</li>
+    <li>Make the offer conditional, in writing, on passing the background check.</li>
+    <li>Send the disclosure form and get written authorization back — two separate documents, not combined with the offer letter or anything else.</li>
+    <li>Order the check the same day authorization comes back. While it runs, make reference calls in parallel — don't wait on the report first.</li>
+    <li>If the report is clean: confirm the start date and file the signed disclosure, authorization, and report in a restricted personnel folder (never the client-facing Drive structure).</li>
+    <li>If something surfaces: don't auto-disqualify. Weigh the nature of it, how long ago it was, and its relevance to the job. If it might change the decision, send the candidate the report plus a pre-adverse notice, wait five business days, then send a final adverse-action notice if the decision stands.</li>
+  </ol>
 
-  <!-- 01 SCOPE -->
-  <section id="scope">
-    <h2 class="section-title"><span class="num">01</span> Why this scope</h2>
-    <p class="section-intro">The screening is sized to the role, not to a generic template. Two facts about this job set it.</p>
+  <div class="callout">
+    <h2>Note</h2>
+    <p>This is a simplified working guide. The full legal templates (disclosure, authorization, pre-adverse and adverse-action letters, reference-call script) and the Maryland-specific legal analysis this was originally built from are not included here — <span class="tbd">let Ruby know if those need to come back as a separate reference document.</span></p>
+  </div>
 
-    <div class="card">
-      <p>The EF specialist will be <strong>alone on video with a minor</strong>, on a recurring weekly basis, without a parent necessarily in the room. She will also hold the most sensitive file the business keeps — <strong>neuropsychological reports, IEPs and 504 plans, and grades</strong> — for a caseload she did not originate.</p>
-      <p>That combination is what justifies screening at all, and it is also what bounds it. The checks below exist to answer two questions: is there a record that bears on unsupervised work with children, and is this person who and what she says she is. Anything that doesn't answer one of those is out.</p>
-    </div>
-
-    <div class="grid2">
-      <div class="card">
-        <span class="tag now">In scope</span>
-        <h3>Identity, criminal history, registry, credentials</h3>
-        <p>Identity and SSN trace, county-level criminal searches across the address history, the national sex offender registry, and verification of employment, education and any coaching credential claimed.</p>
-      </div>
-      <div class="card">
-        <span class="tag stop">Deliberately out</span>
-        <h3>Credit, driving, social media</h3>
-        <p><strong>Credit history</strong> — Maryland restricts its use in hiring and there is no defensible reason for it in this role. <strong>Motor vehicle records</strong> — nobody drives for OptiMind. <strong>Social media screening</strong> — high discrimination exposure, low signal, and Maryland bars asking for account credentials.</p>
-      </div>
-    </div>
-
-    <div class="callout warn">
-      <span class="lbl">Two things you cannot get, so don't spend time looking</span>
-      The <strong>FBI fingerprint-based check</strong> and the <strong>Maryland CPS child abuse and neglect registry check</strong> are both gated to licensed child care, schools, foster care and similar regulated settings. A private tutoring LLC has no statutory hook for either. Maryland CJIS does offer a "private party petition" route to <em>state-only</em> records by fingerprint, but for a virtual practice hiring outside the immediate area it is slower and narrower than a good county-level search. The commercial package plus the registry search is the realistic ceiling — and it is a reasonable one.
-    </div>
-  </section>
-
-  <hr class="div">
-
-  <!-- 02 CHECKS -->
-  <section id="checks">
-    <h2 class="section-title"><span class="num">02</span> What gets checked</h2>
-    <p class="section-intro">Order this as one package from one vendor, then run the human half yourself.</p>
-
-    <div class="table-scroll">
-      <table class="data">
-        <tr><th>Check</th><th>What it answers</th><th>Who runs it</th></tr>
-        <tr>
-          <td><strong>Identity &amp; SSN trace</strong></td>
-          <td>Confirms the name and address history that every other search runs against. Without it the criminal searches may be looking in the wrong counties under the wrong name.</td>
-          <td>Vendor</td>
-        </tr>
-        <tr>
-          <td><strong>County criminal — every county in the 7-year address history</strong></td>
-          <td>The only search that reads actual court records. This is the substantive one.</td>
-          <td>Vendor</td>
-        </tr>
-        <tr>
-          <td><strong>National criminal database</strong></td>
-          <td>A pointer, not a finding. Useful for surfacing counties outside the declared address history, which then get searched directly. Never act on a database hit alone.</td>
-          <td>Vendor</td>
-        </tr>
-        <tr>
-          <td><strong>National sex offender registry</strong></td>
-          <td>Non-negotiable for this role. Cheap, fast, and the one result that ends a hiring conversation outright.</td>
-          <td>Vendor</td>
-        </tr>
-        <tr>
-          <td><strong>Employment verification — last two positions</strong></td>
-          <td>Dates, title, and whether the claimed caseload is real. Also the natural moment to confirm the non-solicit question already sitting in the backlog.</td>
-          <td>Vendor</td>
-        </tr>
-        <tr>
-          <td><strong>Education / credential verification</strong></td>
-          <td>The degree and any EF or coaching certification claimed. For this role this is arguably higher-value than the criminal search — it is the item people actually inflate.</td>
-          <td>Vendor</td>
-        </tr>
-        <tr>
-          <td><strong>Two reference calls</strong></td>
-          <td>Judgement, documentation discipline, and conduct in unsupervised work with children. A form cannot ask these questions; a person can. Script in <a href="#tpl-e">Template E</a>.</td>
-          <td><strong>You</strong></td>
-        </tr>
-      </table>
-    </div>
-
-    <div class="callout info">
-      <span class="lbl">The one thing to insist on</span>
-      Do not accept a package whose only criminal component is a "national database" search. Database products are aggregated, incomplete, and frequently stale. <strong>County-level searches across the full address history</strong> are what a defensible check looks like, and they are the reason to buy the middle tier rather than the cheapest one.
-    </div>
-  </section>
-
-  <hr class="div">
-
-  <!-- 03 SEQUENCE -->
-  <section id="sequence">
-    <h2 class="section-title"><span class="num">03</span> The sequence</h2>
-    <p class="section-intro">Order matters here in a way it doesn't in most SOPs — the Fair Credit Reporting Act attaches specific obligations to specific moments, and doing the right thing at the wrong point is still a violation. Follow the steps as numbered.</p>
-
-    <ol class="steps">
-      <li>
-        <div class="step-head"><span class="step-num"></span><span class="step-when">Interview stage</span><h4>Interview first, screen later</h4></div>
-        <p>Do not raise criminal history on the application form or in the first conversation. Maryland's ban-the-box law formally binds employers with fifteen or more full-time employees in the state — so it does not reach OptiMind today, and businesses providing direct care to minors are exempt from it in any case. Build the habit anyway: it costs nothing now and is already correct for hires two and three.</p>
-        <p>Do mention, near the end of a promising interview, that the role is subject to a background check before start. Nobody legitimate is surprised by this in a role working with children.</p>
-      </li>
-
-      <li>
-        <div class="step-head"><span class="step-num"></span><span class="step-when">Decision made</span><h4>Make the offer conditional, in writing</h4></div>
-        <p>The offer letter states that employment is contingent on satisfactory completion of a background check and on signing the data-handling policy. Making it explicitly conditional is what lets you withdraw cleanly if something surfaces, and it is far easier than unwinding an unconditional offer.</p>
-      </li>
-
-      <li>
-        <div class="step-head"><span class="step-num"></span><span class="step-when">Same day</span><h4>Give the standalone disclosure</h4></div>
-        <p>Send <a href="#tpl-a">Template A</a> as its <strong>own document</strong> — its own page, its own file, nothing else on it. This is the single most-litigated requirement in the whole process: the disclosure must consist solely of the disclosure. Folding it into the offer letter, the application, or a block of onboarding paperwork is the classic and expensive mistake.</p>
-      </li>
-
-      <li>
-        <div class="step-head"><span class="step-num"></span><span class="step-when">Before ordering</span><h4>Collect written authorization</h4></div>
-        <p><a href="#tpl-b">Template B</a>, signed and dated, as a separate document from the disclosure. Keep identifiers — date of birth, Social Security number, full address history — out of this form and collect them through the vendor's own secure candidate portal instead. The candidate types them in; they never sit in your inbox.</p>
-      </li>
-
-      <li>
-        <div class="step-head"><span class="step-num"></span><span class="step-when">Day 0</span><h4>Order the check; start the human half in parallel</h4></div>
-        <p>Place the order the same day authorization comes back. While it runs — typically two to five business days — make the two reference calls yourself using <a href="#tpl-e">Template E</a>. Don't wait for the report; these are independent, and the reference calls are more likely to change your mind than the report is.</p>
-      </li>
-
-      <li>
-        <div class="step-head"><span class="step-num"></span><span class="step-when">Report clean</span><h4>Confirm the start date and file the paperwork</h4></div>
-        <p>Nothing further is required. Confirm the start in writing, and file the signed disclosure, authorization and report per the retention rule at the end of this section. This is the outcome in the large majority of cases — steps 7 through 9 exist for the exception.</p>
-      </li>
-
-      <li class="branch">
-        <div class="step-head"><span class="step-num"></span><span class="step-when">If something surfaces</span><h4>Assess it individually before deciding anything</h4></div>
-        <p>A record is not automatically disqualifying, and a blanket rule against hiring anyone with any record creates real discrimination exposure. Weigh three things, in writing, in three or four sentences you keep on file:</p>
-        <ul class="clean">
-          <li><strong>The nature and gravity</strong> of the offence.</li>
-          <li><strong>The time elapsed</strong> since it and since any sentence completed.</li>
-          <li><strong>The relationship to this job</strong> — unsupervised work with minors and custody of sensitive records.</li>
-        </ul>
-        <p>Something recent and directly relevant is a different matter from a decade-old, unrelated misdemeanour. Also check the report for simple error before assuming it is accurate — mismatched-identity records are common.</p>
-      </li>
-
-      <li class="branch">
-        <div class="step-head"><span class="step-num"></span><span class="step-when">Before deciding</span><h4>Send the pre-adverse action packet</h4></div>
-        <p>If the report might change your decision, the candidate gets three things <em>before</em> you decide: <a href="#tpl-c">Template C</a>, a complete copy of the report, and the current CFPB <em>Summary of Your Rights Under the Fair Credit Reporting Act</em> (your vendor supplies it — confirm it is the version mandatory since March 2024, not an older one).</p>
-      </li>
-
-      <li class="branch">
-        <div class="step-head"><span class="step-num"></span><span class="step-when">Wait</span><h4>Give a reasonable period to respond</h4></div>
-        <p>The law says "reasonable"; <strong>five business days</strong> is the widely used practice and is what this SOP adopts. The point is real — it lets the candidate correct an error or give context before the decision is final. Do not communicate a decision during this window.</p>
-      </li>
-
-      <li class="stopper">
-        <div class="step-head"><span class="step-num"></span><span class="step-when">Only after the wait</span><h4>Send the final adverse action notice</h4></div>
-        <p><a href="#tpl-d">Template D</a>. It must name the consumer reporting agency with address and phone, state that the agency did not make the decision and cannot explain it, and tell the candidate they may obtain a free copy of the report within sixty days and dispute its accuracy. Send it even if the candidate never responded to step 8.</p>
-      </li>
-    </ol>
-
-    <div class="done-when">
-      <p class="done-label">Retention and storage</p>
-      <ul>
-        <li>Background reports are personnel-confidential. They live in a <strong>separate, access-restricted folder</strong> — never in the client-facing Drive structure and never in the shared onboarding folder.</li>
-        <li>Keep the signed disclosure, signed authorization, the report, and any individualized-assessment note. Retain for the duration of employment plus three years, then destroy securely.</li>
-        <li>Reports on candidates who were <em>not</em> hired follow the same rule — they are exactly the records you would need if a decision were ever questioned.</li>
-      </ul>
-    </div>
-  </section>
-
-  <hr class="div">
-
-  <!-- 04 MARYLAND -->
-  <section id="maryland">
-    <h2 class="section-title"><span class="num">04</span> Maryland &amp; out-of-state</h2>
-    <p class="section-intro">Three jurisdictional points, one of which is easy to miss.</p>
-
-    <div class="grid2">
-      <div class="card">
-        <span class="tag note">Ban-the-box</span>
-        <h3>Doesn't bind you — follow it anyway</h3>
-        <p>Maryland's Criminal Record Screening Practices Act applies at <strong>fifteen or more full-time employees in the state</strong>, and separately exempts employers providing programs or direct care to minors. OptiMind clears it twice over. Step 1 of the sequence follows it regardless, because the habit is free and the threshold is not permanent.</p>
-      </div>
-      <div class="card">
-        <span class="tag note">Credit</span>
-        <h3>Maryland limits credit checks in hiring</h3>
-        <p>The Job Applicant Fairness Act restricts using credit history in employment decisions outside defined exceptions. Since there is no reason to run one for this role, the simplest compliance posture is simply never to order it.</p>
-      </div>
-    </div>
-
-    <div class="callout stop">
-      <span class="lbl">Confirm before you order</span>
-      <strong>If the specialist lives outside Maryland, her state's law governs the screening — not yours.</strong> For a fully virtual practice this is genuinely easy to overlook. California, New York City, Illinois, New Jersey and others add real obligations: mandatory individualized assessments, longer response windows, restrictions on how far back records may be reported, extra notices. Establish the candidate's state of residence before placing the order, and tell your vendor — a competent CRA will apply the right state rules automatically, but only if it knows where she is.
-    </div>
-  </section>
-
-  <hr class="div">
-
-  <!-- 05 VENDOR -->
-  <section id="vendor">
-    <h2 class="section-title"><span class="num">05</span> Choosing the vendor</h2>
-    <p class="section-intro">You need a Fair Credit Reporting Act–compliant consumer reporting agency. Not a people-search site, and emphatically not Google.</p>
-
-    <div class="card">
-      <h3>What to buy</h3>
-      <p>GoodHire, Checkr and Sterling all serve one-off small-business volume with no minimum. At current published pricing, GoodHire's tiers sit at roughly <strong>$30</strong> (identity, national criminal, sex offender registry), <strong>$60</strong> (adds identity verification and unlimited county criminal), and <strong>$95</strong> (adds state and federal criminal). Verifications are typically priced separately.</p>
-      <p><strong>The middle tier is the right buy for this role</strong> — county criminal is the whole point, and the jump to the top tier adds federal coverage that matters far less here. Budget roughly $60–$120 per hire including verifications. Against a role that generates billable hours from week three, this is not a number worth optimising.</p>
-    </div>
-
-    <div class="card">
-      <h3>Four questions to ask before you sign up</h3>
-      <ul class="clean">
-        <li><strong>Do you run county-level criminal searches across the full address history</strong>, or only a national database? If the answer is vague, move on.</li>
-        <li><strong>Do you provide compliant disclosure and authorization forms, and the current CFPB Summary of Rights?</strong> Most good vendors do. Use theirs if they are current — the templates here are the fallback and the reference.</li>
-        <li><strong>Do you support the adverse action workflow</strong> — pre-adverse notice, the waiting period, the final notice — from inside the platform? This is the part that is easiest to get wrong by hand.</li>
-        <li><strong>Do you apply state-specific rules automatically</strong> based on the candidate's location? Critical given the out-of-state flag above.</li>
-      </ul>
-      <div class="done-when">
-        <p class="done-label">Done when</p>
-        <ul>
-          <li>An account exists with one CRA and the four questions above are answered yes.</li>
-          <li>The vendor's own disclosure and authorization forms have been compared against Templates A and B, and one set is chosen as the standard.</li>
-          <li>The chosen package includes county criminal and the national sex offender registry.</li>
-        </ul>
-      </div>
-    </div>
-  </section>
-
-  <hr class="div">
-
-  <!-- 06 TEMPLATES -->
-  <section id="templates">
-    <h2 class="section-title"><span class="num">06</span> The forms and letters</h2>
-    <p class="section-intro">Six documents, in the order the sequence uses them. Text in <span style="color:var(--accent-ink);font-weight:700">green</span> is a field to fill in. Review with an employment attorney once before first use; after that they are reusable as-is.</p>
-
-    <div class="callout stop">
-      <span class="lbl">Read this before using Template A</span>
-      <strong>The disclosure must be its own standalone document.</strong> Print or send it on its own page, in its own file. Do not merge it with the authorization, the offer letter, the handbook acknowledgment, or anything else — including a signature line, which is why Template A has none and Template B recites receipt instead.
-    </div>
-
-    <!-- A -->
-    <div class="doc" id="tpl-a">
-      <p class="doc-label">Template A · Standalone disclosure · Give on its own page</p>
-      <h5>Disclosure Regarding Background Investigation</h5>
-      <p>OptiMind Educational Strategies, LLC ("the Company") may obtain a consumer report about you for employment purposes.</p>
-      <p>A consumer report is a background report that may contain information concerning your identity and Social Security number, criminal history, sex offender registry status, employment history, and education and professional credentials.</p>
-      <p>The report will be prepared by <span class="fill">[CRA legal name]</span>, <span class="fill">[street address]</span>, <span class="fill">[phone]</span>, <span class="fill">[website]</span>, a consumer reporting agency.</p>
-      <p>The Company may use the report in deciding whether to offer you employment. Where permitted by law and subject to any further authorization required, the Company may obtain additional reports during your employment.</p>
-    </div>
-
-    <!-- B -->
-    <div class="doc" id="tpl-b">
-      <p class="doc-label">Template B · Authorization · Separate document, signed</p>
-      <h5>Authorization to Obtain a Consumer Report</h5>
-      <p>I have received and read the separate document titled <em>Disclosure Regarding Background Investigation</em>.</p>
-      <p>I authorize OptiMind Educational Strategies, LLC and <span class="fill">[CRA legal name]</span> to obtain a consumer report about me for employment purposes, as described in that disclosure.</p>
-      <p>I understand that I will provide the identifying information required to complete the report — including my date of birth, Social Security number and address history — directly to the consumer reporting agency through its secure portal, and not on this form.</p>
-      <p>I understand that if information in the report may result in an adverse employment decision, I will be given a copy of the report and a summary of my rights under the Fair Credit Reporting Act before any final decision is made.</p>
-      <div class="sig">
-        Printed name <span></span> <br>
-        Signature <span></span> Date <span style="min-width:120px"></span>
-      </div>
-    </div>
-
-    <!-- F (email) -->
-    <div class="doc">
-      <p class="doc-label">Template F · The email that carries A and B</p>
-      <p>Subject: <strong>Background check — next step for the EF Specialist role</strong></p>
-      <p>Hi <span class="fill">[name]</span>,</p>
-      <p>Delighted you're joining us. As I mentioned, the offer is contingent on a standard background check — it's routine for anyone working one-to-one with students and holding their educational records, and it's how I protect the families we work with.</p>
-      <p>Two documents are attached: a disclosure explaining what the check covers, and an authorization form to sign and return. You'll then get a secure link from <span class="fill">[CRA name]</span> to enter your details directly — nothing sensitive comes to me by email.</p>
-      <p>It usually takes two to five business days. Any questions at all, just ask.</p>
-      <p>Best,<br>Sarah</p>
-    </div>
-
-    <!-- C -->
-    <div class="doc" id="tpl-c">
-      <p class="doc-label">Template C · Pre-adverse action · Send with the full report + CFPB Summary of Rights</p>
-      <h5>Pre-Adverse Action Notice</h5>
-      <p>Dear <span class="fill">[name]</span>,</p>
-      <p>Thank you for your interest in the EF Specialist position with OptiMind Educational Strategies, LLC.</p>
-      <p>We have received a consumer report about you, prepared at our request by <span class="fill">[CRA legal name]</span>. <strong>We are considering taking adverse action</strong> — declining to proceed with your employment — based in whole or in part on information in that report. <strong>No final decision has been made.</strong></p>
-      <p>Enclosed with this letter are:</p>
-      <ul>
-        <li>A complete copy of the consumer report we received; and</li>
-        <li>A copy of <em>A Summary of Your Rights Under the Fair Credit Reporting Act</em>.</li>
-      </ul>
-      <p>Please review the report carefully. If you believe any of the information in it is inaccurate or incomplete, you have the right to dispute it directly with <span class="fill">[CRA legal name]</span> at <span class="fill">[CRA phone]</span>. You may also contact me if there is context you would like me to consider.</p>
-      <p>We will take no further action for <strong>five business days</strong> from the date of this letter to give you the opportunity to respond.</p>
-      <p>Sincerely,<br>Sarah Ritter<br>OptiMind Educational Strategies, LLC<br><span class="fill">[phone / email]</span></p>
-    </div>
-
-    <!-- D -->
-    <div class="doc" id="tpl-d">
-      <p class="doc-label">Template D · Final adverse action · Only after the waiting period</p>
-      <h5>Notice of Adverse Action</h5>
-      <p>Dear <span class="fill">[name]</span>,</p>
-      <p>Further to my letter of <span class="fill">[date of Template C]</span>, we have decided not to proceed with your employment with OptiMind Educational Strategies, LLC. This decision was based in whole or in part on information contained in a consumer report.</p>
-      <p>The consumer reporting agency that furnished the report is:</p>
-      <p><span class="fill">[CRA legal name]</span><br><span class="fill">[street address]</span><br><span class="fill">[phone — toll-free if available]</span><br><span class="fill">[website]</span></p>
-      <p><strong>The consumer reporting agency did not make this decision and is unable to provide the specific reasons for it.</strong></p>
-      <p>You have the right to obtain a free copy of your consumer report from that agency if you request it within <strong>sixty days</strong> of receiving this notice. You also have the right to dispute directly with the agency the accuracy or completeness of any information in the report.</p>
-      <p>A copy of <em>A Summary of Your Rights Under the Fair Credit Reporting Act</em> is enclosed.</p>
-      <p>Thank you for the time you gave this process.</p>
-      <p>Sincerely,<br>Sarah Ritter<br>OptiMind Educational Strategies, LLC</p>
-    </div>
-
-    <!-- E -->
-    <div class="doc" id="tpl-e">
-      <p class="doc-label">Template E · Reference call script · You make these calls, not the vendor</p>
-      <h5>Reference Call — EF Specialist</h5>
-      <p><strong>Framing:</strong> "I'm considering <span class="fill">[name]</span> for a role coaching students one-to-one over video, mostly teenagers with executive-function challenges. She'd be working unsupervised and handling neuropsych reports and IEPs. I'd value your candour."</p>
-      <ul>
-        <li>How did you work together, and over what period?</li>
-        <li>What did her caseload actually look like — how many students, what ages, what kinds of need?</li>
-        <li>Did she work with students unsupervised? How did that go?</li>
-        <li>How was she with documentation — session notes, records, deadlines? Did anything ever have to be chased?</li>
-        <li>How did she handle a parent who was upset or a student who wasn't engaging?</li>
-        <li>Was there anything she needed close supervision on?</li>
-        <li><strong>Would you work with her again — and is there anything you'd want to know if you were in my position?</strong></li>
-      </ul>
-      <p><strong>After the call:</strong> three or four lines in the candidate file — who you spoke to, when, and what they said. The last question is where the real answer usually lives; leave a silence after it.</p>
-    </div>
-  </section>
-
-  <hr class="div">
-
-  <!-- 07 SPRINT -->
-  <section id="sprint">
-    <h2 class="section-title"><span class="num">07</span> Where this lands</h2>
-    <p class="section-intro">This sits inside the minimum viable hire package rather than beside it.</p>
-
-    <div class="card">
-      <p>Screening was not a numbered item in the v3 roadmap, and it should have been. It attaches to <strong>Recommendation 4</strong> as a seventh artefact, and it runs in parallel with three things already on the board: the <strong>one-page data-handling policy</strong> from Recommendation 5, which is the document the new hire signs against; the <strong>non-solicit question</strong> sitting in the backlog, which the employment verification call answers for free; and the <strong>role definition</strong>, which is what tells you which verifications are worth ordering.</p>
-      <p>Practically, those are one task with four outputs, and the whole thing is an afternoon plus a five-day wait — not a project.</p>
-      <div class="done-when">
-        <p class="done-label">Done when</p>
-        <ul>
-          <li>A CRA account exists and the package is configured to include county criminal and the sex offender registry.</li>
-          <li>Templates A and B — or the vendor's equivalents — have had one attorney review and are saved in the hire folder.</li>
-          <li>The candidate's state of residence is confirmed and the vendor knows it.</li>
-          <li>The offer letter language makes employment contingent on the check and on signing the data-handling policy.</li>
-          <li>A restricted personnel folder exists, separate from the client Drive structure, with the retention rule written at the top.</li>
-        </ul>
-      </div>
-    </div>
-  </section>
-
+  <div class="foot">OptiMind Educational Strategies · Internal SOP — not for client distribution.</div>
 </div>
-</main>
-
-<footer>
-  <div class="wrap">
-    <p><strong>Gemini Lane Consulting &amp; Acquisitions</strong> — Frederick, Maryland</p>
-    <p>Prepared by Ruby Groves for Sarah Ritter / OptiMind Educational Strategies. Confidential — for internal use by OptiMind Educational Strategies only.</p>
-    <p>This document is process guidance, not legal advice. The templates in Section 06 are drafting starting points and warrant one review by a Maryland employment attorney before first use — particularly the adverse-action letters, and particularly if the successful candidate resides outside Maryland. Vendor names and prices are illustrative of the right category and current as of August 2026; confirm before committing.</p>
-    <p>Sources: Fair Credit Reporting Act, 15 U.S.C. §1681 et seq.; Maryland Criminal Record Screening Practices Act (Md. Code, Lab. &amp; Empl. §5-601 et seq.) and the Maryland Department of Labor's published FAQs; Maryland Job Applicant Fairness Act; National Child Protection Act, 34 U.S.C. §40102; Maryland DPSCS criminal history record check guidance; CFPB <em>Summary of Your Rights Under the Fair Credit Reporting Act</em> (version mandatory from 20 March 2024).</p>
-  </div>
-</footer>
 
 </body>
 </html>
