@@ -24,7 +24,7 @@
     <div class="ph">
       <div>
         <div class="ph-title">OptiMind Educational Strategies</div>
-        <div class="ph-sub">Sarah Ritter, Founder — engagement roadmap, Aug 12, 2026 – Jan 26, 2027. Prepared by Ruby Groves, Gemini Lane.</div>
+        <div class="ph-sub">Sarah Ritter, Founder — engagement roadmap, Aug 12, 2026 – Feb 9, 2027. Prepared by Ruby Groves, Gemini Lane.</div>
       </div>
     </div>
 
@@ -75,13 +75,15 @@
       </div>
       <div class="card">
         <div class="card-hd">
-          <span class="card-title">Recommendations Tracked</span>
-          <button class="btn btn-ghost btn-sm" onclick="location.href='recommendations.html'">Open →</button>
+          <span class="card-title">Original Audit</span>
+          <span class="badge b-gray">Reference</span>
         </div>
         <div class="card-body">
-          <div class="progress-track"><div class="progress-fill" id="ov-rec-fill" style="width:0%"></div></div>
-          <div class="progress-label" id="ov-rec-label">0 of 21 recommendations complete</div>
-          <div class="muted mt-8">Full detail for every recommendation lives in the audit roadmap document — this tracks status only.</div>
+          <div class="muted mb-16">Prepared Aug 12, 2026. Superseded by the sprint board above — kept here for reference, to revisit and revise as we move through the engagement.</div>
+          <div style="display:flex;gap:8px;flex-wrap:wrap">
+            <a class="btn btn-ghost btn-sm" href="recommendations.html">All 21 recommendations →</a>
+            <a class="btn btn-ghost btn-sm" href="diagnostic.html">Audit progress tracking →</a>
+          </div>
         </div>
       </div>
     </div>
@@ -109,10 +111,6 @@
   const pct = stats.totalItems ? Math.round((stats.completeItems / stats.totalItems) * 100) : 0;
   document.getElementById("ov-progress-fill").style.width = pct + "%";
   document.getElementById("ov-progress-label").textContent = stats.completeItems + " of " + stats.totalItems + " work items complete (" + pct + "%)";
-
-  const recPct = Math.round((stats.recsComplete / stats.recsTotal) * 100);
-  document.getElementById("ov-rec-fill").style.width = recPct + "%";
-  document.getElementById("ov-rec-label").textContent = stats.recsComplete + " of " + stats.recsTotal + " recommendations complete";
 
   const csWrap = document.getElementById("ov-current-sprint");
   if (stats.currentSprint) {
@@ -168,8 +166,8 @@
       '  </div>' +
       '</div>';
     return card +
-      (s.id === "04" ? bufferCard(BUFFERS[0]) : "") +
-      (s.id === "07" ? bufferCard(BUFFERS[1]) : "");
+      (s.id === "05" ? bufferCard(BUFFERS[0]) : "") +
+      (s.id === "08" ? bufferCard(BUFFERS[1]) : "");
   }).join("");
 
   function renderInProgress() {

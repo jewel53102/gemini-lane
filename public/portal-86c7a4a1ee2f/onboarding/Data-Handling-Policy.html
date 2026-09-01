@@ -9,120 +9,153 @@
   :root {
     --accent: #3b82f6; --text: #0f172a; --text-2: #4b5563; --text-3: #9ca3af;
     --border: #e4e9f0; --bg: #f7f9fc; --warn: #f59e0b; --warn-bg: #fffbeb;
-    --danger: #ef4444; --danger-bg: #fef2f2;
   }
   * { box-sizing: border-box; margin: 0; padding: 0; }
   body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text); font-size: 14.5px; line-height: 1.6; padding: 40px 20px; }
-  .doc { max-width: 780px; margin: 0 auto; background: #fff; border: 1px solid var(--border); border-radius: 14px; padding: 44px 52px; box-shadow: 0 1px 3px rgba(0,0,0,.06); }
+  .doc { max-width: 760px; margin: 0 auto; background: #fff; border: 1px solid var(--border); border-radius: 14px; padding: 44px 52px; box-shadow: 0 1px 3px rgba(0,0,0,.06); }
   .badge { display: inline-flex; align-items: center; padding: 3px 11px; border-radius: 100px; font-size: 10.5px; font-weight: 700; text-transform: uppercase; letter-spacing: .5px; background: #fef3c7; color: #92400e; margin-bottom: 14px; }
-  h1 { font-size: 24px; font-weight: 700; letter-spacing: -.3px; margin-bottom: 4px; }
+  h1 { font-size: 25px; font-weight: 700; letter-spacing: -.3px; margin-bottom: 4px; }
   .subtitle { font-size: 13.5px; color: var(--text-2); margin-bottom: 18px; }
-  .meta { display: flex; flex-wrap: wrap; gap: 18px; font-size: 12px; color: var(--text-3); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); padding: 12px 0; margin-bottom: 24px; }
+  .meta { display: flex; flex-wrap: wrap; gap: 18px; font-size: 12px; color: var(--text-3); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); padding: 12px 0; margin-bottom: 30px; }
   .meta b { color: var(--text-2); font-weight: 600; }
-  h2 { font-size: 14.5px; font-weight: 700; margin: 24px 0 8px; color: var(--text); }
+  h2 { font-size: 15.5px; font-weight: 700; margin: 30px 0 10px; color: var(--text); }
   h2:first-of-type { margin-top: 0; }
   p { color: var(--text-2); margin-bottom: 10px; }
   ul { margin: 0 0 6px 20px; color: var(--text-2); }
-  li { margin-bottom: 6px; }
-  .tbd { color: #b45309; font-weight: 600; background: #fef3c7; padding: 1px 6px; border-radius: 5px; font-size: 12.5px; }
+  li { margin-bottom: 7px; }
+  .tbd { color: #b45309; font-weight: 600; background: #fef3c7; padding: 1px 6px; border-radius: 5px; font-size: 12.5px; white-space: nowrap; }
   .callout { background: var(--warn-bg); border: 1px solid #fde68a; border-left: 3px solid var(--warn); border-radius: 10px; padding: 18px 20px; margin-top: 36px; }
   .callout h2 { margin-top: 0; color: #92400e; }
   .callout ol { margin-left: 20px; color: #78350f; }
   .callout li { margin-bottom: 9px; }
-  .critical { background: var(--danger-bg); border: 1px solid #fecaca; border-left: 3px solid var(--danger); border-radius: 10px; padding: 16px 18px; margin: 18px 0; }
-  .critical b { color: #991b1b; }
-  .critical p { color: #7f1d1d; margin-bottom: 0; }
-  .clause-num { color: var(--text-3); font-weight: 700; margin-right: 6px; }
   .foot { margin-top: 36px; padding-top: 16px; border-top: 1px solid var(--border); font-size: 11.5px; color: var(--text-3); }
   a { color: var(--accent); }
-  .sig-row { display: flex; gap: 30px; margin-top: 22px; }
-  .sig { flex: 1; }
-  .sig-line { border-top: 1px solid var(--text); margin-top: 34px; padding-top: 5px; font-size: 11.5px; color: var(--text-3); }
-
-  table { width: 100%; border-collapse: collapse; margin-top: 8px; font-size: 13px; }
-  th, td { text-align: left; padding: 9px 10px; border-bottom: 1px solid var(--border); vertical-align: top; }
-  th { font-size: 10.5px; text-transform: uppercase; letter-spacing: .4px; color: var(--text-3); font-weight: 700; }
-  td { color: var(--text-2); }
-  td.k { color: var(--text); font-weight: 600; white-space: nowrap; }
-
   @media print {
     body { background: #fff; padding: 0; }
     .doc { border: none; box-shadow: none; padding: 0; max-width: 100%; }
   }
+
+  h3 { font-size: 13.5px; font-weight: 700; margin: 22px 0 8px; color: var(--text); }
+  ol.steps { margin: 0 0 10px 22px; color: var(--text-2); }
+  ol.steps li { margin-bottom: 6px; }
+  table.dt { width: 100%; border-collapse: collapse; margin: 6px 0 14px; font-size: 13.5px; }
+  table.dt td { border: 1px solid var(--border); padding: 8px 11px; vertical-align: top; color: var(--text-2); }
+  table.dt tr:first-child td { background: #f7f9fc; font-weight: 600; color: var(--text); }
+  .note { border-radius: 10px; padding: 14px 18px; margin: 16px 0; font-size: 13.5px; }
+  .note p { margin: 0; }
+  .note-red { background: #fef2f2; border: 1px solid #fecaca; border-left: 3px solid #ef4444; color: #7f1d1d; }
+  .note-amber { background: #fffbeb; border: 1px solid #fde68a; border-left: 3px solid #f59e0b; color: #78350f; }
+  .note-blue { background: #eff6ff; border: 1px solid #bfdbfe; border-left: 3px solid #2563eb; color: #1e3a5f; }
+  .mono-tree { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 12.5px; line-height: 1.75; color: var(--text-2); }
+
+  h3 { font-size: 13.5px; font-weight: 700; margin: 22px 0 8px; color: var(--text); }
+  ol.steps { margin: 0 0 10px 22px; color: var(--text-2); }
+  ol.steps li { margin-bottom: 6px; }
+  table.dt { width: 100%; border-collapse: collapse; margin: 6px 0 14px; font-size: 13.5px; }
+  table.dt td { border: 1px solid var(--border); padding: 8px 11px; vertical-align: top; color: var(--text-2); }
+  table.dt tr:first-child td { background: #f7f9fc; font-weight: 600; color: var(--text); }
+  .note { border-radius: 10px; padding: 14px 18px; margin: 16px 0; font-size: 13.5px; }
+  .note p { margin: 0; }
+  .note-red { background: #fef2f2; border: 1px solid #fecaca; border-left: 3px solid #ef4444; color: #7f1d1d; }
+  .note-amber { background: #fffbeb; border: 1px solid #fde68a; border-left: 3px solid #f59e0b; color: #78350f; }
+  .note-blue { background: #eff6ff; border: 1px solid #bfdbfe; border-left: 3px solid #2563eb; color: #1e3a5f; }
+  .tbd { white-space: normal; }
+  .mono-tree { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 12.5px; line-height: 1.75; color: var(--text-2); }
+
+  h3 { font-size: 13.5px; font-weight: 700; margin: 22px 0 8px; color: var(--text); }
+  ol.steps { margin: 0 0 10px 22px; color: var(--text-2); }
+  ol.steps li { margin-bottom: 6px; }
+  table.dt { width: 100%; border-collapse: collapse; margin: 6px 0 14px; font-size: 13.5px; }
+  table.dt td { border: 1px solid var(--border); padding: 8px 11px; vertical-align: top; color: var(--text-2); }
+  table.dt tr:first-child td { background: #f7f9fc; font-weight: 600; color: var(--text); }
+  .note { border-radius: 10px; padding: 14px 18px; margin: 16px 0; font-size: 13.5px; }
+  .note p { margin: 0; }
+  .note-red { background: #fef2f2; border: 1px solid #fecaca; border-left: 3px solid #ef4444; color: #7f1d1d; }
+  .note-amber { background: #fffbeb; border: 1px solid #fde68a; border-left: 3px solid #f59e0b; color: #78350f; }
+  .note-blue { background: #eff6ff; border: 1px solid #bfdbfe; border-left: 3px solid #2563eb; color: #1e3a5f; }
+  .tbd { white-space: normal; }
+  .mono-tree { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 12.5px; line-height: 1.75; color: var(--text-2); }
+
+  h3 { font-size: 13.5px; font-weight: 700; margin: 22px 0 8px; color: var(--text); }
+  ol.steps { margin: 0 0 10px 22px; color: var(--text-2); }
+  ol.steps li { margin-bottom: 6px; }
+  table.dt { width: 100%; border-collapse: collapse; margin: 6px 0 14px; font-size: 13.5px; }
+  table.dt td { border: 1px solid var(--border); padding: 8px 11px; vertical-align: top; color: var(--text-2); }
+  table.dt tr:first-child td { background: #f7f9fc; font-weight: 600; color: var(--text); }
+  .note { border-radius: 10px; padding: 14px 18px; margin: 16px 0; font-size: 13.5px; }
+  .note p { margin: 0; }
+  .note-red { background: #fef2f2; border: 1px solid #fecaca; border-left: 3px solid #ef4444; color: #7f1d1d; }
+  .note-amber { background: #fffbeb; border: 1px solid #fde68a; border-left: 3px solid #f59e0b; color: #78350f; }
+  .note-blue { background: #eff6ff; border: 1px solid #bfdbfe; border-left: 3px solid #2563eb; color: #1e3a5f; }
+  .tbd { white-space: normal; }
+  .mono-tree { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 12.5px; line-height: 1.75; color: var(--text-2); }
 </style>
 </head>
 <body>
 
 <div class="doc">
   <img src="data:image/png;base64,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" alt="OptiMind" style="width:240px;height:auto;margin-bottom:14px;display:block">
-  <span class="badge">Draft — For Sarah's Review</span>
+  <span class="badge">DRAFT — FOR SARAH'S REVIEW</span>
   <h1>Data-Handling Policy</h1>
-  <div class="subtitle">OptiMind Educational Strategies — prepared by Ruby Groves, Gemini Lane</div>
+  <div class="subtitle">OptiMind Educational Strategies</div>
   <div class="meta">
     <div><b>Applies to</b> · All OptiMind employees</div>
     <div><b>Status</b> · Draft</div>
-    <div><b>Last updated</b> · Aug 16, 2026</div>
+    <div><b>Last updated</b> · Aug 31, 2026</div>
   </div>
 
-  <div class="critical">
-    <p><b>Not legal advice.</b> Whether FERPA, HIPAA, or Maryland student-records law apply — and how — is still an open compliance question on the roadmap, not something settled here. This policy states current practice and known gaps; the compliance determination itself needs an education attorney's read before this is treated as final.</p>
-  </div>
-
-  <h2><span class="clause-num">1.</span>What's Held</h2>
+  <div class="note note-red"><p><strong>Not legal advice.</strong> Whether FERPA, HIPAA, or Maryland student-records law apply — and how — is still an open compliance question on the roadmap, not something settled here. This policy states current practice and known gaps; the compliance determination itself needs an education attorney's read before this is treated as final.</p></div>
+  <h2>1. What's Held</h2>
   <ul>
-    <li>Client intake forms and contact information.</li>
-    <li>Session notes, curriculum coverage records, and goal-tracker entries.</li>
-    <li>Neuropsych and psycho-educational evaluations, where provided.</li>
-    <li>IEPs, 504 plans, and other school-provided records.</li>
-    <li>Medical and mental-health information disclosed at intake (medications, providers, family history).</li>
-    <li>Billing and payment records.</li>
+  <li>Client intake forms and contact information.</li>
+  <li>Session notes, curriculum coverage records, and goal-tracker entries.</li>
+  <li>Neuropsych and psycho-educational evaluations, where provided.</li>
+  <li>IEPs, 504 plans, and other school-provided records.</li>
+  <li>Medical and mental-health information disclosed at intake (medications, providers, family history).</li>
+  <li>Billing and payment records.</li>
   </ul>
-
-  <h2><span class="clause-num">2.</span>Where It Lives</h2>
-  <table>
-    <tr><th>Data</th><th>Current location</th></tr>
-    <tr><td class="k">Client files &amp; records</td><td>Cloud storage (Drive sync) — <span class="tbd">confirm exact folder structure once decided</span></td></tr>
-    <tr><td class="k">Intake forms</td><td>New Client Intake Form (adult); legacy JotForms for other client types until replaced</td></tr>
-    <tr><td class="k">Agreements</td><td>PandaDoc</td></tr>
-    <tr><td class="k">Billing</td><td>QuickBooks, plus a separate billing spreadsheet</td></tr>
-    <tr><td class="k">Session notes</td><td class="tbd">TBD — notetaking tool not yet selected</td></tr>
-  </table>
-  <p style="margin-top:10px"><span class="tbd">Known gap:</span> everything currently lives on cloud sync with no independent, tested backup. An independent backup — confirmed by actually restoring a file — is on the roadmap but hasn't shipped yet.</p>
-
-  <h2><span class="clause-num">3.</span>Who Can Access It</h2>
+  <h2>2. Where It Lives</h2>
+  <table class="dt"><tr><td><strong>Data</strong></td><td><strong>Current location</strong></td></tr><tr><td><strong>Client files &amp; records</strong></td><td><strong>Google Drive, shared by link</strong> — the interim system of record. Moves to OptiMind's operational database/dashboard once it is built. Folder structure per the <a href="../sops/Internal-Reference-Sheet.html">Internal Reference Sheet</a>.</td></tr><tr><td><strong>Intake forms</strong></td><td>New Client Intake Form (adult); legacy JotForms for other client types until replaced</td></tr><tr><td><strong>Agreements</strong></td><td>PandaDoc</td></tr><tr><td><strong>Billing</strong></td><td>QuickBooks, plus a separate billing spreadsheet</td></tr><tr><td><strong>Session notes</strong></td><td>Zoom AI Notes — in use today; output filed to the client's Drive folder. Replacement notetaker not yet selected</td></tr></table>
+  <h3><strong>Company Email &amp; Calendar</strong></h3>
+  <p>Google Workspace. Specialist addresses follow the format firstname@optimind-es.com. All client correspondence — including the written summaries required by <a href="Employee-Handbook.html">Employee Handbook</a> Section 10 — sits in that mailbox and is part of the client record.</p>
+  <h3><strong>Backup</strong></h3>
+  <p><strong><span class="tbd">OPEN —</span> no independent, tested backup exists. </strong>Client records live in Google Drive today. Google's own redundancy is not a backup: it does not protect against an accidental deletion, a mistaken permission change, or an account compromise. Until the operational dashboard is live and its backup regime is known, this is the largest single risk in the practice's data handling.</p>
   <ul>
-    <li>Sarah Ritter — full access to all client records.</li>
-    <li>The EF Specialist — access to records for clients on their own caseload. <span class="tbd">Confirm whether access should be scoped narrower than that.</span></li>
-    <li>Bookkeeper/CPA — billing and financial records only, not client session or diagnostic records.</li>
-    <li>No other third parties have standing access.</li>
+  <li><strong><span class="tbd">[TBD]</span> </strong>How quickly and how often the Drive is backed up in the interim, and to what — a second cloud account, a local copy, or a third-party backup service.</li>
+  <li><strong><span class="tbd">[TBD]</span> </strong>Who verifies a restore actually works, and how often. A backup nobody has restored from is an assumption, not a backup.</li>
+  <li><strong><span class="tbd">[TBD]</span> </strong>Target date to have the interim backup in place, rather than waiting on the platform decision.</li>
   </ul>
-
-  <h2><span class="clause-num">4.</span>How Long It's Kept</h2>
-  <p><span class="tbd">TBD</span> — no retention or destruction schedule is set yet. As a starting point for discussion: many practices retain active client records for the duration of service plus several years after discharge, with longer minimums sometimes required for minors' educational or health records under state law. This needs to be confirmed against the applicable Maryland requirement before it's treated as policy.</p>
-
-  <h2><span class="clause-num">5.</span>Compliance Status</h2>
-  <p><span class="tbd">TBD</span> — whether HIPAA applies to this practice is still an open question on the roadmap. Which student-records obligations apply, and which remain open with an education attorney, will be recorded here once confirmed.</p>
-
-  <h2><span class="clause-num">6.</span>Incident Reporting</h2>
-  <p>Any suspected data breach, lost device, or unauthorized access must be reported to Sarah immediately upon discovery, per the Confidentiality &amp; Data-Handling Agreement.</p>
-
-  <p style="margin-top:20px">By signing below, I acknowledge that I have read this Data-Handling Policy and agree to comply with it.</p>
-
-  <div class="sig-row">
-    <div class="sig"><div class="sig-line">Employee signature &amp; date</div></div>
-    <div class="sig"><div class="sig-line">Sarah Ritter, Founder &amp; date</div></div>
-  </div>
-
-  <div class="callout">
-    <h2>Open Questions for Sarah</h2>
-    <ol>
-      <li>Has the HIPAA-applicability question been answered — and if so, what's the determination?</li>
-      <li>Which student-records / special-education record-keeping obligations apply, and which are still open with an education attorney?</li>
-      <li>What's the actual retention period for client records after discharge?</li>
-      <li>What's the target date and tool for the independent, tested backup?</li>
-      <li>Should the specialist's access be scoped narrower than "their own caseload"?</li>
-      <li>Any other third party (payroll provider, insurance broker) that needs defined access?</li>
-    </ol>
+  <h2>3. Who Can Access It</h2>
+  <ul>
+  <li>Sarah Ritter — full access to all client records.</li>
+  <li>The EF Specialist — access to records for clients on their own caseload. </li>
+  <li>Bookkeeper/CPA — billing and financial records only, not client session or diagnostic records.</li>
+  <li>No other third parties have standing access.</li>
+  </ul>
+  <h2>4. How Long It's Kept</h2>
+  <p><strong><span class="tbd">TBD</span></strong> — no retention or destruction schedule is set yet. As a starting point for discussion: many practices retain active client records for the duration of service plus several years after discharge, with longer minimums sometimes required for minors' educational or health records under state law. This needs to be confirmed against the applicable Maryland requirement before it's treated as policy.</p>
+  <h2>5. Compliance Status</h2>
+  <p><strong><span class="tbd">TBD</span></strong> — whether HIPAA applies to this practice is still an open question on the roadmap. Which student-records obligations apply, and which remain open with an education attorney, will be recorded here once confirmed.</p>
+  <h2>6. Incident Reporting</h2>
+  <p>Any suspected data breach, lost or stolen device, or unauthorised access is reported to Sarah immediately upon discovery. What follows that first call:</p>
+  <ol class="steps">
+  <li><strong>Written summary the same day, </strong>to Sarah: what happened, when it was discovered, which client records were or may have been involved, and what has been done since.</li>
+  <li><strong>Sarah contains it </strong>— revoking access, changing credentials, or recovering the device, as the situation requires.</li>
+  <li><strong>Sarah decides on notification. </strong>Whether affected clients and families are notified, and whether the insurance carrier or any regulator must be told, is Sarah's call, not the specialist's.</li>
+  <li><strong><span class="tbd">ATTORNEY REVIEW</span> — </strong>Maryland's data-breach notification obligations, and what they require of a practice this size holding records of this kind, need counsel's answer. Until then, step 3 proceeds on the assumption that notification may be required.</li>
+  </ol>
+  <p>The same written-summary discipline applies here as to safety events under Handbook Section 10: the email is the record.</p>
+  <p>By signing below, I acknowledge that I have read this Data-Handling Policy and agree to comply with it.</p>
+  <table class="dt"><tr><td></td><td></td></tr><tr><td>Employee signature &amp; date</td><td>Sarah Ritter, Founder &amp; date</td></tr></table>
+  <div class="callout"><h2>Open Questions for Sarah</h2>
+  <ul>
+  <li>Has the HIPAA-applicability question been answered — and if so, what's the determination?</li>
+  <li>Which student-records / special-education record-keeping obligations apply, and which are still open with an education attorney?</li>
+  <li>What's the actual retention period for client records after discharge?</li>
+  <li><strong>What is the interim backup for the Google Drive — tool, cadence, and target date? </strong>This cannot wait for the platform decision; client records are in Drive now with no tested backup.</li>
+  <li>Should the specialist's access be scoped narrower than "their own caseload"?</li>
+  <li>Any other third party (payroll provider, insurance broker) that needs defined access?</li>
+  </ul>
   </div>
 
   <div class="foot">OptiMind Educational Strategies · Internal draft — not legal advice, not final until compliance questions are resolved.</div>

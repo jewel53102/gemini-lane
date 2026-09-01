@@ -50,7 +50,7 @@ function setRecStatus(n, status) {
 }
 
 /* ---------- Backup / Restore ---------- */
-const BACKUP_KEYS = [LS_STATUS, LS_CHECKS, LS_RECS, "optimind_dash_sopchecks", "optimind_dash_onboardchecks", "optimind_dash_clients", "optimind_dash_clientdocs"];
+const BACKUP_KEYS = [LS_STATUS, LS_CHECKS, LS_RECS, "optimind_dash_sopchecks", "optimind_dash_onboardchecks", "optimind_dash_clients", "optimind_dash_clientdocs", "optimind_dash_docmeta"];
 
 function backupData() {
   const payload = { app: "optimind-dashboard", version: 1, exportedAt: new Date().toISOString(), data: {} };
@@ -195,8 +195,6 @@ function sidebarHTML(active) {
     '    <div class="sb-label">Command</div>' +
     item("overview", "index.html", "Overview", ico.overview) +
     item("sprints", "sprints.html", "Sprints", ico.sprints) +
-    item("recommendations", "recommendations.html", "Audit Recommendations", ico.recommendations) +
-    item("diagnostic", "diagnostic.html", "Audit Progress Tracking", ico.diagnostic) +
     item("sops", "sops.html", "SOPs", ico.sops) +
     item("clientresources", "client-resources.html", "Client Resources", ico.clientresources) +
     '  </nav>' +

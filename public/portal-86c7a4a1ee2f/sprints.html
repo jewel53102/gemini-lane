@@ -24,7 +24,7 @@
     <div class="ph">
       <div>
         <div class="ph-title">Sprint Board</div>
-        <div class="ph-sub">Ten two-week sprints plus two buffer sprints, Aug 12, 2026 – Jan 26, 2027. Set a status per item and check off done-when steps as they're completed — everything saves automatically in this browser.</div>
+        <div class="ph-sub">Eleven dated sprints plus two buffer sprints and a Q1 2027 sprint, Aug 12, 2026 – Feb 9, 2027. Set a status per item and check off done-when steps as they're completed — everything saves automatically in this browser.</div>
       </div>
     </div>
 
@@ -71,13 +71,19 @@
         const pid = priorityId(s.id, pIdx);
         const status = getStatus(pid);
         if (status === "complete") doneCount++;
-        const checksHTML = (p.doneWhen || []).map(function (text, cIdx) {
+        const checksHTML = (p.doneWhen || []).map(function (raw, cIdx) {
+          const item = typeof raw === "string" ? { text: raw } : raw;
           const cid = checkId(s.id, pIdx, cIdx);
           const checked = getCheck(cid);
           return '' +
             '<label class="kchk-row' + (checked ? ' done' : '') + '">' +
             '  <input type="checkbox" data-check="' + cid + '" ' + (checked ? "checked" : "") + '>' +
-            '  <span>' + text + '</span>' +
+            '  <div>' +
+            '    <span>' + item.text +
+                   (item.link ? ' <a class="chk-link" href="' + item.link + '" target="_blank" rel="noopener" onclick="event.stopPropagation()" title="Open the document">\u2197</a>' : '') +
+            '    </span>' +
+                   (item.note ? '<div class="chk-note">' + item.note + '</div>' : '') +
+            '  </div>' +
             '</label>';
         }).join("");
         const stepsDone = (p.doneWhen || []).filter(function (_, cIdx) { return getCheck(checkId(s.id, pIdx, cIdx)); }).length;
@@ -116,8 +122,8 @@
         '  </div>' +
         '  <div class="kcol-body">' + cards + '</div>' +
         '</div>' +
-        (s.id === "04" ? renderBufferColumn(BUFFERS[0]) : "") +
-        (s.id === "07" ? renderBufferColumn(BUFFERS[1]) : "");
+        (s.id === "05" ? renderBufferColumn(BUFFERS[0]) : "") +
+        (s.id === "08" ? renderBufferColumn(BUFFERS[1]) : "");
     }).join("");
 
     // bind status selects

@@ -1,0 +1,1040 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>OptiMind Open Items Register</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&family=Public+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
+<style>
+:root{
+  --ground:#EDEFEC; --surface:#FFFFFF; --surface-2:#F5F7F4;
+  --ink:#161B18; --ink-2:#4C5651; --ink-3:#7C867F;
+  --rule:#DBE0DA; --rule-2:#C6CEC5;
+  --accent:#0E5453; --accent-soft:#DCEBE8;
+  --urgent:#A33520; --urgent-soft:#F6E3DE;
+  --ochre:#8A6516; --ochre-soft:#F5EBD6;
+  --blocked:#454A79; --blocked-soft:#E3E4F2;
+  --done:#2C6B4E;
+  --shadow:0 1px 2px rgba(22,27,24,.06), 0 8px 24px -16px rgba(22,27,24,.24);
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --ground:#101412; --surface:#181E1B; --surface-2:#1F2622;
+    --ink:#E6EBE7; --ink-2:#A5B0A9; --ink-3:#78837C;
+    --rule:#2A322D; --rule-2:#3A443D;
+    --accent:#63BDB4; --accent-soft:#173330;
+    --urgent:#E08066; --urgent-soft:#37201A;
+    --ochre:#D3A854; --ochre-soft:#332813;
+    --blocked:#9AA0DC; --blocked-soft:#1D1F36;
+    --done:#6BB58E;
+    --shadow:0 1px 2px rgba(0,0,0,.4), 0 8px 24px -16px rgba(0,0,0,.7);
+  }
+}
+:root[data-theme="dark"]{
+  --ground:#101412; --surface:#181E1B; --surface-2:#1F2622;
+  --ink:#E6EBE7; --ink-2:#A5B0A9; --ink-3:#78837C;
+  --rule:#2A322D; --rule-2:#3A443D;
+  --accent:#63BDB4; --accent-soft:#173330;
+  --urgent:#E08066; --urgent-soft:#37201A;
+  --ochre:#D3A854; --ochre-soft:#332813;
+  --blocked:#9AA0DC; --blocked-soft:#1D1F36;
+  --done:#6BB58E;
+  --shadow:0 1px 2px rgba(0,0,0,.4), 0 8px 24px -16px rgba(0,0,0,.7);
+}
+
+*{box-sizing:border-box}
+body{
+  margin:0; background:var(--ground); color:var(--ink);
+  font-family:"Public Sans",-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+  font-size:15px; line-height:1.6; -webkit-font-smoothing:antialiased;
+}
+.wrap{max-width:1080px; margin:0 auto; padding:0 24px 80px}
+
+/* ---------- masthead ---------- */
+.masthead{padding:56px 0 28px; border-bottom:2px solid var(--ink)}
+.eyebrow{
+  font-family:"IBM Plex Mono",ui-monospace,monospace; font-size:11px; font-weight:500;
+  letter-spacing:.16em; text-transform:uppercase; color:var(--accent); margin:0 0 14px;
+}
+h1{
+  font-family:"Newsreader",Georgia,serif; font-weight:500; font-size:clamp(2.3rem,5.5vw,3.4rem);
+  line-height:1.05; letter-spacing:-.015em; margin:0 0 16px; text-wrap:balance;
+}
+.standfirst{
+  font-family:"Newsreader",Georgia,serif; font-size:clamp(1.05rem,2.2vw,1.28rem);
+  line-height:1.55; color:var(--ink-2); max-width:62ch; margin:0 0 26px;
+}
+.standfirst b{color:var(--ink); font-weight:600}
+.byline{
+  display:flex; flex-wrap:wrap; gap:8px 26px; padding-top:18px; border-top:1px solid var(--rule);
+  font-family:"IBM Plex Mono",monospace; font-size:11.5px; color:var(--ink-3);
+}
+.byline b{color:var(--ink-2); font-weight:500}
+
+/* ---------- tally ---------- */
+.tally{
+  display:grid; grid-template-columns:repeat(auto-fit,minmax(150px,1fr)); gap:1px;
+  background:var(--rule); border:1px solid var(--rule); margin:32px 0 0; border-radius:4px; overflow:hidden;
+}
+.tally div{background:var(--surface); padding:16px 18px}
+.tally .n{
+  font-family:"Newsreader",Georgia,serif; font-size:2.1rem; line-height:1; font-weight:500;
+  font-variant-numeric:tabular-nums; display:block; margin-bottom:6px;
+}
+.tally .l{font-family:"IBM Plex Mono",monospace; font-size:10.5px; letter-spacing:.09em; text-transform:uppercase; color:var(--ink-3)}
+.tally .n.u{color:var(--urgent)} .tally .n.a{color:var(--accent)} .tally .n.o{color:var(--ochre)} .tally .n.b{color:var(--blocked)}
+
+/* ---------- control bar ---------- */
+.controls{
+  position:sticky; top:0; z-index:20; background:var(--ground);
+  border-bottom:1px solid var(--rule); margin-top:36px;
+  padding:12px 0; display:flex; flex-wrap:wrap; align-items:center; gap:12px 10px;
+}
+.filters{display:flex; flex-wrap:wrap; gap:6px}
+.filters button{
+  font-family:"IBM Plex Mono",monospace; font-size:11px; letter-spacing:.05em; text-transform:uppercase;
+  padding:6px 11px; border-radius:3px; border:1px solid var(--rule-2); background:var(--surface);
+  color:var(--ink-2); cursor:pointer; transition:background .12s, color .12s, border-color .12s;
+}
+.filters button:hover{border-color:var(--accent); color:var(--accent)}
+.filters button[aria-pressed="true"]{background:var(--ink); border-color:var(--ink); color:var(--ground)}
+.filters button:focus-visible{outline:2px solid var(--accent); outline-offset:2px}
+.meter{margin-left:auto; display:flex; align-items:center; gap:11px; min-width:210px}
+.meter-track{flex:1; height:5px; background:var(--rule); border-radius:99px; overflow:hidden}
+.meter-fill{height:100%; width:0%; background:var(--done); transition:width .25s ease}
+.meter-label{font-family:"IBM Plex Mono",monospace; font-size:11px; color:var(--ink-3); white-space:nowrap; font-variant-numeric:tabular-nums}
+
+/* ---------- tiers ---------- */
+.tier{margin-top:46px; scroll-margin-top:70px}
+.tier-head{display:flex; align-items:baseline; gap:14px; padding-bottom:12px; border-bottom:1px solid var(--rule-2)}
+.tier-gate{
+  font-family:"IBM Plex Mono",monospace; font-size:11px; font-weight:600; letter-spacing:.06em;
+  text-transform:uppercase; padding:4px 9px; border-radius:3px; white-space:nowrap; flex:none;
+}
+.g-u{background:var(--urgent-soft); color:var(--urgent)}
+.g-a{background:var(--accent-soft); color:var(--accent)}
+.g-o{background:var(--ochre-soft); color:var(--ochre)}
+.g-b{background:var(--blocked-soft); color:var(--blocked)}
+.tier-head h2{
+  font-family:"Newsreader",Georgia,serif; font-weight:500; font-size:1.55rem; letter-spacing:-.01em;
+  margin:0; flex:1; text-wrap:balance;
+}
+.tier-count{font-family:"IBM Plex Mono",monospace; font-size:11.5px; color:var(--ink-3); white-space:nowrap; font-variant-numeric:tabular-nums}
+.tier-note{font-size:13.5px; color:var(--ink-2); margin:12px 0 0; max-width:70ch}
+
+.items{list-style:none; margin:16px 0 0; padding:0; display:flex; flex-direction:column; gap:8px}
+.item{
+  background:var(--surface); border:1px solid var(--rule); border-left:3px solid var(--rule-2);
+  border-radius:4px; padding:13px 16px; display:grid; grid-template-columns:auto 1fr; gap:0 13px;
+  box-shadow:var(--shadow); transition:opacity .15s, border-color .15s;
+}
+.item.t-u{border-left-color:var(--urgent)} .item.t-a{border-left-color:var(--accent)}
+.item.t-o{border-left-color:var(--ochre)} .item.t-b{border-left-color:var(--blocked)}
+.item.done{opacity:.42}
+.item.done:has(.landed){opacity:.78}
+.item.done .q{text-decoration:line-through; text-decoration-thickness:1px}
+.item.hide{display:none}
+.landed{font-size:12.5px; color:var(--ink-2); margin:8px 0 0; padding:7px 10px; border-radius:7px;
+  background:color-mix(in srgb, var(--done) 12%, transparent);
+  border-left:2px solid var(--done); max-width:72ch}
+.landed b{color:var(--done)}
+.item input[type=checkbox]{
+  appearance:none; width:16px; height:16px; margin:5px 0 0; border:1.5px solid var(--rule-2);
+  border-radius:3px; background:var(--surface); cursor:pointer; position:relative; flex:none;
+}
+.item input[type=checkbox]:checked{background:var(--done); border-color:var(--done)}
+.item input[type=checkbox]:checked::after{
+  content:""; position:absolute; left:4.5px; top:1px; width:4px; height:9px;
+  border:solid var(--surface); border-width:0 2px 2px 0; transform:rotate(42deg);
+}
+.item input[type=checkbox]:focus-visible{outline:2px solid var(--accent); outline-offset:2px}
+.q{font-size:14.5px; line-height:1.5; margin:0}
+.q b{font-weight:600}
+.why{font-size:13px; color:var(--ink-2); margin:5px 0 0; max-width:72ch}
+.tags{display:flex; flex-wrap:wrap; gap:5px; margin-top:9px; grid-column:2}
+.tag{
+  font-family:"IBM Plex Mono",monospace; font-size:10.5px; letter-spacing:.03em;
+  padding:2px 7px; border-radius:3px; border:1px solid var(--rule); color:var(--ink-3); background:var(--surface-2);
+}
+.tag.own{border-color:currentColor; background:transparent}
+.own-sarah{color:var(--accent)} .own-atty{color:var(--urgent)} .own-ruby{color:var(--ochre)} .own-both{color:var(--blocked)}
+
+/* ---------- answer capture ---------- */
+.answer{grid-column:2; margin-top:11px}
+.answer label{
+  display:block; font-family:"IBM Plex Mono",monospace; font-size:9.5px; letter-spacing:.1em;
+  text-transform:uppercase; color:var(--ink-3); margin-bottom:5px;
+}
+.answer textarea{
+  width:100%; min-height:52px; resize:vertical; display:block;
+  font-family:"Public Sans",-apple-system,sans-serif; font-size:13.5px; line-height:1.55;
+  color:var(--ink); background:var(--surface-2); border:1px solid var(--rule);
+  border-radius:4px; padding:9px 11px; transition:border-color .12s, background .12s;
+}
+.answer textarea::placeholder{color:var(--ink-3); opacity:.75}
+.answer textarea:hover{border-color:var(--rule-2)}
+.answer textarea:focus{
+  outline:none; border-color:var(--accent); background:var(--surface);
+  box-shadow:0 0 0 3px color-mix(in srgb, var(--accent) 16%, transparent);
+}
+.item.noted{border-left-style:solid}
+.item.noted .answer textarea{background:var(--surface); border-color:var(--rule-2)}
+.item.noted .answer label{color:var(--accent)}
+.item.done .answer textarea{opacity:.85}
+
+/* ---------- copy dialog ---------- */
+dialog#digest{
+  border:1px solid var(--rule-2); border-radius:6px; padding:0; max-width:min(760px,92vw); width:100%;
+  background:var(--surface); color:var(--ink); box-shadow:0 24px 60px -20px rgba(0,0,0,.45);
+}
+dialog#digest::backdrop{background:rgba(22,27,24,.55)}
+.dlg-hd{
+  display:flex; align-items:center; justify-content:space-between; gap:12px;
+  padding:14px 18px; border-bottom:1px solid var(--rule);
+}
+.dlg-hd h3{font-family:"Newsreader",Georgia,serif; font-weight:500; font-size:1.15rem; margin:0}
+.dlg-hd button{
+  font-family:"IBM Plex Mono",monospace; font-size:11px; text-transform:uppercase; letter-spacing:.05em;
+  padding:6px 12px; border-radius:3px; border:1px solid var(--rule-2);
+  background:var(--surface); color:var(--ink-2); cursor:pointer;
+}
+.dlg-hd button:hover{border-color:var(--accent); color:var(--accent)}
+dialog#digest textarea{
+  width:100%; height:min(56vh,440px); border:0; resize:none; display:block; padding:16px 18px;
+  font-family:"IBM Plex Mono",monospace; font-size:12px; line-height:1.65;
+  background:var(--surface); color:var(--ink); outline:none;
+}
+.toast{
+  position:fixed; left:50%; bottom:26px; transform:translateX(-50%) translateY(8px);
+  background:var(--ink); color:var(--ground); font-size:13px; padding:9px 16px; border-radius:4px;
+  opacity:0; pointer-events:none; transition:opacity .18s, transform .18s; z-index:60;
+}
+.toast.show{opacity:1; transform:translateX(-50%) translateY(0)}
+
+/* ---------- doc index ---------- */
+.index{margin-top:56px}
+.index h2{font-family:"Newsreader",Georgia,serif; font-weight:500; font-size:1.55rem; margin:0 0 6px; letter-spacing:-.01em}
+.index p.sub{font-size:13.5px; color:var(--ink-2); margin:0 0 18px; max-width:70ch}
+.tablewrap{overflow-x:auto; border:1px solid var(--rule); border-radius:4px; background:var(--surface)}
+table{width:100%; border-collapse:collapse; font-size:13.5px; min-width:560px}
+th,td{text-align:left; padding:10px 14px; border-bottom:1px solid var(--rule)}
+th{
+  font-family:"IBM Plex Mono",monospace; font-size:10.5px; letter-spacing:.08em; text-transform:uppercase;
+  color:var(--ink-3); font-weight:500; background:var(--surface-2); position:sticky; top:0;
+}
+tr:last-child td{border-bottom:none}
+td.doc{font-family:"IBM Plex Mono",monospace; font-size:12px}
+td.num{font-variant-numeric:tabular-nums; text-align:right; width:1%; white-space:nowrap}
+.pill{
+  display:inline-block; font-family:"IBM Plex Mono",monospace; font-size:10.5px; padding:2px 8px;
+  border-radius:99px; white-space:nowrap;
+}
+.pill.clean{background:var(--accent-soft); color:var(--accent)}
+.pill.open{background:var(--urgent-soft); color:var(--urgent)}
+
+/* ---------- callout ---------- */
+.callout{
+  margin-top:46px; background:var(--surface); border:1px solid var(--rule);
+  border-top:3px solid var(--ochre); border-radius:4px; padding:22px 24px; box-shadow:var(--shadow);
+}
+.callout h2{font-family:"Newsreader",Georgia,serif; font-weight:500; font-size:1.35rem; margin:0 0 4px}
+.callout p{font-size:14px; color:var(--ink-2); margin:0 0 14px; max-width:72ch}
+.callout ul{margin:0; padding-left:20px; font-size:14px; color:var(--ink-2)}
+.callout li{margin-bottom:8px}
+.callout li b{color:var(--ink); font-weight:600}
+
+footer{
+  margin-top:56px; padding-top:20px; border-top:1px solid var(--rule);
+  font-family:"IBM Plex Mono",monospace; font-size:11px; color:var(--ink-3); line-height:1.7;
+}
+
+@media (max-width:640px){
+  .wrap{padding:0 16px 60px}
+  .masthead{padding-top:36px}
+  .meter{margin-left:0; width:100%}
+  .item{padding:12px 14px}
+}
+@media (prefers-reduced-motion:reduce){*{transition:none !important}}
+</style>
+</head>
+<body>
+
+
+<div class="wrap">
+
+<header class="masthead">
+  <p class="eyebrow">OptiMind Educational Strategies · Gemini Lane · Sprint 02</p>
+  <h1>Open Items Register</h1>
+  <p class="standfirst">Every unresolved question and outstanding to-do across the SOP and onboarding documents, in one place, ordered by the date each one actually blocks. <b>Sarah hires on Sep 4 and onboards the week of Sep 8</b> — that is what sets the sequence below, not the order the documents were written in.</p>
+  <div class="byline">
+    <span><b>Prepared by</b> Ruby Groves, Gemini Lane</span>
+    <span><b>Source</b> OptiMind-Dashboard / sops + onboarding</span>
+    <span><b>Compiled</b> Aug 30, 2026</span>
+  </div>
+
+  <div class="tally">
+    <div><span class="n u">14</span><span class="l">Before the offer, Sep 4</span></div>
+    <div><span class="n a">24</span><span class="l">Before day one, Sep 8</span></div>
+    <div><span class="n o">28</span><span class="l">Before Drive publish</span></div>
+    <div><span class="n b">6</span><span class="l">Blocked on a sprint</span></div>
+    <div><span class="n">92</span><span class="l">TBD markers in the set</span></div>
+  </div>
+</header>
+
+<div class="controls">
+  <div class="filters" role="group" aria-label="Filter by owner">
+    <button data-f="all" aria-pressed="true">All</button>
+    <button data-f="sarah" aria-pressed="false">Sarah decides</button>
+    <button data-f="atty" aria-pressed="false">Attorney</button>
+    <button data-f="ruby" aria-pressed="false">Gemini Lane</button>
+    <button data-f="open" aria-pressed="false">Unresolved only</button>
+    <button data-f="noted" aria-pressed="false">Has an answer</button>
+    <button id="export" type="button" title="Collect every answer as text">Copy answers</button>
+    <button id="download" type="button" title="Save every answer as a .txt file">Download .txt</button>
+  </div>
+  <div class="meter">
+    <div class="meter-track"><div class="meter-fill" id="fill"></div></div>
+    <span class="meter-label" id="mlabel">0 / 0 resolved</span>
+  </div>
+</div>
+
+<!-- ============ TIER 1 ============ -->
+<section class="tier" id="t1">
+  <div class="tier-head">
+    <span class="tier-gate g-u">Gate · Sep 4</span>
+    <h2>Answer before the offer goes out</h2>
+    <span class="tier-count" data-count="t1"></span>
+  </div>
+  <p class="tier-note">The Offer Letter, Employment Agreement and Confidentiality Agreement are currently carrying <b>27 bracketed placeholders</b> between them. None of the three can be sent to a candidate until these are filled with real terms.</p>
+  <ul class="items">
+
+    <li class="item t-u" data-own="sarah"><input type="checkbox" data-id="a1">
+      <div><p class="q"><b>Who is the candidate?</b> Name for the Offer Letter salutation and both agreements.</p></div>
+      <div class="tags"><span class="tag">Offer Letter</span><span class="tag">Employment Agreement</span><span class="tag own own-sarah">Sarah</span></div></li>
+
+    <li class="item t-u" data-own="sarah"><input type="checkbox" data-id="a2">
+      <div><p class="q"><b>Compensation: hourly or salaried, and how much?</b></p>
+      <p class="why">Appears in three places — the Offer Letter summary table, the Offer Letter body, and Employment Agreement §3. One answer fills all three.</p></div>
+      <div class="tags"><span class="tag">Offer Letter</span><span class="tag">Employment Agreement §3</span><span class="tag own own-sarah">Sarah</span></div></li>
+
+    <li class="item t-u" data-own="sarah"><input type="checkbox" data-id="a3">
+      <div><p class="q"><b>Pay frequency</b> — weekly, biweekly, semi-monthly?</p></div>
+      <div class="tags"><span class="tag">Employment Agreement §3</span><span class="tag own own-sarah">Sarah</span></div></li>
+
+    <li class="item t-u" data-own="sarah"><input type="checkbox" data-id="a4">
+      <div><p class="q"><b>Expected schedule — days and hours.</b></p>
+      <p class="why">The Role Definition already states 9am–7pm ET Mon–Thu and 9am–4pm ET Fri. Confirm that is the contracted schedule, or the two documents will disagree the day they are both read.</p></div>
+      <div class="tags"><span class="tag">Offer Letter</span><span class="tag">Employment Agreement §3</span><span class="tag">Role Definition</span><span class="tag own own-sarah">Sarah</span></div></li>
+
+    <li class="item t-u" data-own="sarah"><input type="checkbox" data-id="a5">
+      <div><p class="q"><b>Start date.</b></p>
+      <p class="why">Sets the effective date on both agreements and anchors the caseload ramp. The plan assumes onboarding the week of Sep 8.</p></div>
+      <div class="tags"><span class="tag">Offer Letter</span><span class="tag">Employment Agreement</span><span class="tag">Confidentiality Agreement</span><span class="tag own own-sarah">Sarah</span></div></li>
+
+    <li class="item t-u" data-own="sarah"><input type="checkbox" data-id="a6">
+      <div><p class="q"><b>Acceptance deadline</b> for the candidate to sign and return.</p></div>
+      <div class="tags"><span class="tag">Offer Letter</span><span class="tag own own-sarah">Sarah</span></div></li>
+
+    <li class="item t-u" data-own="sarah"><input type="checkbox" data-id="a7">
+      <div><p class="q"><b>Confirm the job title.</b> The documents say "Executive Function (EF) Specialist" but the Offer Letter flags it as unconfirmed.</p></div>
+      <div class="tags"><span class="tag">Offer Letter</span><span class="tag own own-sarah">Sarah</span></div></li>
+
+    <li class="item t-u" data-own="sarah"><input type="checkbox" data-id="a8">
+      <div><p class="q"><b>Non-solicitation period</b> — how long after employment ends? The draft suggests 12 months as a placeholder.</p></div>
+      <div class="tags"><span class="tag">Employment Agreement §5</span><span class="tag own own-sarah">Sarah</span></div></li>
+
+    <li class="item t-u" data-own="sarah"><input type="checkbox" data-id="a9">
+      <div><p class="q"><b>Termination notice period</b> — any, or at-will with immediate-for-cause only?</p></div>
+      <div class="tags"><span class="tag">Employment Agreement §9</span><span class="tag own own-sarah">Sarah</span></div></li>
+
+    <li class="item t-u" data-own="sarah"><input type="checkbox" data-id="a10">
+      <div><p class="q"><b>Arbitration, or the courts?</b> §10 is governed by Maryland law but leaves the dispute mechanism open.</p></div>
+      <div class="tags"><span class="tag">Employment Agreement §10</span><span class="tag own own-sarah">Sarah</span></div></li>
+
+    <li class="item t-u" data-own="atty"><input type="checkbox" data-id="a11">
+      <div><p class="q"><b>The non-compete clause: include it at all?</b></p>
+      <p class="why">§6 is a placeholder that explicitly says not to rely on it as written — duration, geography and the substantive terms are all blank. The question is whether it is enforceable at this compensation level, and whether §5 non-solicitation alone is the better instrument. Do not send the agreement with this clause in its current state.</p></div>
+      <div class="tags"><span class="tag">Employment Agreement §6</span><span class="tag own own-atty">Attorney</span></div></li>
+
+    <li class="item t-u" data-own="sarah"><input type="checkbox" data-id="a12">
+      <div><p class="q"><b>Post-employment confidentiality: indefinite, or a stated number of years?</b></p></div>
+      <div class="tags"><span class="tag">Confidentiality Agreement §4</span><span class="tag own own-sarah">Sarah</span></div></li>
+
+    <li class="item t-u" data-own="sarah"><input type="checkbox" data-id="a13">
+      <div><p class="q"><b>Which systems count as "OptiMind-approved" for storing client information?</b></p>
+      <p class="why">§3 obliges the employee to store client data only in approved systems, then does not name them. Until the platform decision lands, the answer has to be the current reality — the specific Drive folders — not a forward reference.</p></div>
+      <div class="tags"><span class="tag">Confidentiality Agreement §3</span><span class="tag own own-sarah">Sarah</span></div></li>
+
+    <li class="item t-u" data-own="sarah"><input type="checkbox" data-id="a14">
+      <div><p class="q"><b>Personal devices, or company-issued only, for client-related work?</b></p>
+      <p class="why">One answer settles three documents at once: the Confidentiality Agreement, Employee Handbook §11, and the Data-Handling Policy. It is on this list because the Confidentiality Agreement is signed before day one.</p></div>
+      <div class="tags"><span class="tag">Confidentiality Agreement §3</span><span class="tag">Handbook §11</span><span class="tag">Data-Handling Policy</span><span class="tag own own-sarah">Sarah</span></div></li>
+  </ul>
+</section>
+
+<!-- ============ TIER 2 ============ -->
+<section class="tier" id="t2">
+  <div class="tier-head">
+    <span class="tier-gate g-a">Gate · Sep 8</span>
+    <h2>Answer before day one</h2>
+    <span class="tier-count" data-count="t2"></span>
+  </div>
+  <p class="tier-note">Everything the specialist relies on in week one. The first three are flagged as the highest priority in the source documents themselves — a person taking live sessions needs a safety answer before they take the first one.</p>
+  <ul class="items">
+
+    <li class="item t-a" data-own="sarah"><input type="checkbox" data-id="b1">
+      <div><p class="q"><b>What is the protocol if a client discloses a self-harm or safety concern during a session?</b></p>
+      <p class="why">Flagged as highest priority in three separate documents — Employee Reference Sheet, Internal Reference Sheet and Employee Handbook §10. The Handbook currently carries a <em>proposed</em> two-tier protocol (active intent with plan or means → don't leave the client, call 911, contact parent for a minor, call Sarah after; passive ideation → don't promise confidentiality, contact Sarah same day). It needs to be confirmed as written or corrected — not left proposed.</p>
+      <p class="landed"><b>Written in &mdash; Aug 31.</b> Handbook §10 (full protocol) · Employee Reference Sheet (quick reference) · Employee Decision List</p></div>
+      <div class="tags"><span class="tag">Handbook §10</span><span class="tag">Employee Reference Sheet</span><span class="tag">Internal Reference Sheet</span><span class="tag own own-sarah">Sarah</span></div></li>
+
+    <li class="item t-a" data-own="atty"><input type="checkbox" data-id="b2">
+      <div><p class="q"><b>Is the specialist a mandated reporter under Maryland law?</b></p>
+      <p class="why">Turns on licensure and role, and creates real legal obligations. The Handbook is explicit that this needs an attorney's answer rather than an assumption in either direction.</p>
+      <p class="landed"><b>Written in &mdash; Aug 31.</b> Handbook §10 — working position is yes; confirmation is item 7 on the Attorney Review Checklist</p></div>
+      <div class="tags"><span class="tag">Handbook §10</span><span class="tag own own-atty">Attorney</span></div></li>
+
+    <li class="item t-a" data-own="sarah"><input type="checkbox" data-id="b3">
+      <div><p class="q"><b>Has the safety protocol been reviewed by a licensed mental-health consultant — or should one be brought in before it is finalized?</b></p>
+      <p class="landed"><b>Written in &mdash; Aug 31.</b> Handbook §10 — item 8 on the Attorney Review Checklist</p></div>
+      <div class="tags"><span class="tag">Handbook §10</span><span class="tag own own-sarah">Sarah</span></div></li>
+
+    <li class="item t-a" data-own="sarah"><input type="checkbox" data-id="b4">
+      <div><p class="q"><b>The specialist's company email address.</b></p>
+      <p class="why">Named as a pre-day-one task in the Week-One Schedule, and referenced as TBD in three other documents. The Gmail auto-signature depends on it.</p>
+      <p class="landed"><b>Written in &mdash; Aug 31.</b> Handbook §11 · Week-One Schedule · both Reference Sheets · Offer Letter</p></div>
+      <div class="tags"><span class="tag">Handbook §11</span><span class="tag">Week-One Schedule</span><span class="tag">Both Reference Sheets</span><span class="tag own own-sarah">Sarah</span></div></li>
+
+    <li class="item t-a" data-own="sarah"><input type="checkbox" data-id="b5">
+      <div><p class="q"><b>The company phone line — company-issued handset, a forwarding number, or VoIP?</b></p>
+      <p class="why">The Role Definition requires the specialist to maintain phone contact with clients and families. There is currently no business line for them to do it from.</p>
+      <p class="landed"><b>Written in &mdash; Aug 31.</b> Handbook §11 — still open; item 16 on the Attorney Review Checklist. Client phone contact routes through Sarah meanwhile</p></div>
+      <div class="tags"><span class="tag">Handbook §11</span><span class="tag">Role Definition</span><span class="tag own own-sarah">Sarah</span></div></li>
+
+    <li class="item t-a" data-own="sarah"><input type="checkbox" data-id="b6">
+      <div><p class="q"><b>Where do client files and records actually live today?</b> Which specific folders, which specific tools.</p>
+      <p class="why">Asked in both Reference Sheets. The specialist needs the real answer on day one, not the answer the Zoho decision will produce in Sprint 03.</p>
+      <p class="landed"><b>Written in &mdash; Aug 31.</b> Data-Handling Policy §2 · both Reference Sheets · Confidentiality Agreement §3</p></div>
+      <div class="tags"><span class="tag">Employee Reference Sheet</span><span class="tag">Internal Reference Sheet</span><span class="tag own own-sarah">Sarah</span></div></li>
+
+    <li class="item t-a" data-own="sarah"><input type="checkbox" data-id="b7">
+      <div><p class="q"><b>Is there any current backup process for client data the specialist should know about?</b></p>
+      <p class="why">The Data-Handling Policy states plainly that everything lives on cloud sync with no independent, tested backup. If that is still true on day one, the specialist should be told, not left to assume otherwise.</p>
+      <p class="landed"><b>Written in &mdash; Aug 31.</b> Data-Handling Policy §2, new Backup section · Internal Reference Sheet — cadence and target date still unset</p></div>
+      <div class="tags"><span class="tag">Data-Handling Policy §2</span><span class="tag">Both Reference Sheets</span><span class="tag own own-sarah">Sarah</span></div></li>
+
+    <li class="item t-a" data-own="both"><input type="checkbox" data-id="b8">
+      <div><p class="q"><b>The caseload ramp curve — target billable hours for weeks 1 through 7.</b></p>
+      <p class="why">Eight rows in the Week-One Schedule table, seven of them TBD. Only week 8 (~30 hrs) is agreed. Weeks 1–2 carry mock sessions and shadowing, so they cannot be a straight line from zero.</p></div>
+      <div class="tags"><span class="tag">Week-One Schedule</span><span class="tag">Role Definition</span><span class="tag own own-both">Sarah + Ruby</span></div></li>
+
+    <li class="item t-a" data-own="sarah"><input type="checkbox" data-id="b9">
+      <div><p class="q"><b>Which clients get handed off, and in which week?</b></p>
+      <p class="why">The ramp curve is only a number until it is attached to named clients. Sarah passes off enough to hit ~30 hrs by week 8; who and when is not yet written down anywhere.</p></div>
+      <div class="tags"><span class="tag">Week-One Schedule</span><span class="tag own own-sarah">Sarah</span></div></li>
+
+    <li class="item t-a" data-own="both"><input type="checkbox" data-id="b10">
+      <div><p class="q"><b>Day 2 of week one trains on "the session notetaker" — which does not exist yet.</b></p>
+      <p class="why">Notetaking moved to Sprint 04 with the Zoho build. The Week-One Schedule and the Role Definition both need rewording to train on the <em>current</em> note process, with the AI notetaker as a later change. Left as-is, Day 2 has nothing to teach.</p>
+      <p class="landed"><b>Written in &mdash; Aug 31.</b> Week-One Schedule, Day 2 · Role Definition — train on Zoom AI Notes now, repeat at migration</p></div>
+      <div class="tags"><span class="tag">Week-One Schedule</span><span class="tag">Role Definition</span><span class="tag own own-both">Sarah + Ruby</span></div></li>
+
+    <li class="item t-a" data-own="sarah"><input type="checkbox" data-id="b11">
+      <div><p class="q"><b>Sick and safe leave: paid, or unpaid?</b></p>
+      <p class="why">The Handbook summarizes the Maryland Healthy Working Families Act but flags that thresholds and the employee-count trigger need verifying against the current rules before this is treated as policy. At one employee, unpaid may be all that is required — paying it is a choice.</p>
+      <p class="landed"><b>Written in &mdash; Aug 31.</b> Handbook §4 · Holiday, Vacation &amp; Leave Policy §5 — item 1 on the Attorney Review Checklist</p></div>
+      <div class="tags"><span class="tag">Handbook §4</span><span class="tag own own-sarah">Sarah</span></div></li>
+
+    <li class="item t-a" data-own="sarah"><input type="checkbox" data-id="b12">
+      <div><p class="q"><b>Paid vacation days per year, if any.</b> Nothing requires it; the Handbook lists it as proposed, not decided.</p>
+      <p class="landed"><b>Written in &mdash; Aug 31.</b> Handbook §4 · Holiday, Vacation &amp; Leave Policy §3 — closures set; the number of vacation days is still to decide</p></div>
+      <div class="tags"><span class="tag">Handbook §4</span><span class="tag own own-sarah">Sarah</span></div></li>
+
+    <li class="item t-a" data-own="sarah"><input type="checkbox" data-id="b13">
+      <div><p class="q"><b>Which holidays does the practice observe as paid days off?</b></p>
+      <p class="why">Worth matching to how the practice actually operates around school breaks rather than defaulting to the federal list.</p>
+      <p class="landed"><b>Written in &mdash; Aug 31.</b> Handbook §4 · Holiday, Vacation &amp; Leave Policy §2 — winter break and Thanksgiving, both paid</p></div>
+      <div class="tags"><span class="tag">Handbook §4</span><span class="tag own own-sarah">Sarah</span></div></li>
+
+    <li class="item t-a" data-own="sarah"><input type="checkbox" data-id="b14">
+      <div><p class="q"><b>How much notice for a planned absence, and who covers the caseload?</b></p>
+      <p class="why">With one specialist and one founder, coverage is not a formality — it is Sarah.</p>
+      <p class="landed"><b>Written in &mdash; Aug 31.</b> Handbook §4, Requesting Time Off · Holiday, Vacation &amp; Leave Policy §6</p></div>
+      <div class="tags"><span class="tag">Handbook §4</span><span class="tag own own-sarah">Sarah</span></div></li>
+
+    <li class="item t-a" data-own="sarah"><input type="checkbox" data-id="b15">
+      <div><p class="q"><b>Is 90 days the right probationary period, and does anything change when it ends?</b></p>
+      <p class="landed"><b>Written in &mdash; Aug 31.</b> Handbook §12 — item 2 on the Attorney Review Checklist</p></div>
+      <div class="tags"><span class="tag">Handbook §12</span><span class="tag own own-sarah">Sarah</span></div></li>
+
+    <li class="item t-a" data-own="sarah"><input type="checkbox" data-id="b16">
+      <div><p class="q"><b>Formal review cadence after probation</b> — annual, semi-annual, something else?</p>
+      <p class="landed"><b>Written in &mdash; Aug 31.</b> Handbook §12 — item 3 on the Attorney Review Checklist</p></div>
+      <div class="tags"><span class="tag">Handbook §12</span><span class="tag own own-sarah">Sarah</span></div></li>
+
+    <li class="item t-a" data-own="sarah"><input type="checkbox" data-id="b17">
+      <div><p class="q"><b>Does OptiMind support continuing education, certifications, or conference attendance?</b></p>
+      <p class="why">Not yet discussed at all. A reasonable question for a candidate to ask in week one.</p>
+      <p class="landed"><b>Written in &mdash; Aug 31.</b> Handbook §12 · Offer Letter, Professional Development — stipend amount still to confirm</p></div>
+      <div class="tags"><span class="tag">Handbook §12</span><span class="tag own own-sarah">Sarah</span></div></li>
+
+    <li class="item t-a" data-own="sarah"><input type="checkbox" data-id="b18">
+      <div><p class="q"><b>Is there a shared internal communication tool beyond email and text?</b></p>
+      <p class="landed"><b>Written in &mdash; Aug 31.</b> Handbook §6 — deferred until Zoho or the selected dashboard is implemented</p></div>
+      <div class="tags"><span class="tag">Handbook §6</span><span class="tag own own-sarah">Sarah</span></div></li>
+
+    <li class="item t-a" data-own="sarah"><input type="checkbox" data-id="b19">
+      <div><p class="q"><b>Same business day — is that the right response-time expectation for client-facing messages?</b></p>
+      <p class="landed"><b>Written in &mdash; Aug 31.</b> Handbook §6 · Employee Reference Sheet — 24 hours, and no client email on weekends</p></div>
+      <div class="tags"><span class="tag">Handbook §6</span><span class="tag own own-sarah">Sarah</span></div></li>
+
+    <li class="item t-a" data-own="both"><input type="checkbox" data-id="b20">
+      <div><p class="q"><b>Section 9 of the Handbook is a placeholder, not a procedure.</b> What are the actual in-session signals that a client needs Special Education Advocacy or College Counseling?</p>
+      <p class="why">These are two of OptiMind's three service lines. The document says so itself: treat it as a flag that the gap exists, not a process to follow. It needs a concrete set of prompts — an upcoming IEP/504 meeting, a school dispute, application-season timelines — not an instinct call.</p>
+      <p class="landed"><b>Written in &mdash; Aug 31.</b> Handbook §9, rewritten · Add-On Services — Identification &amp; Referral Process</p></div>
+      <div class="tags"><span class="tag">Handbook §9</span><span class="tag own own-both">Sarah + Ruby</span></div></li>
+
+    <li class="item t-a" data-own="sarah"><input type="checkbox" data-id="b21">
+      <div><p class="q"><b>Once a need is flagged, how does the specialist tell Sarah — the weekly one-to-one, or something faster?</b></p>
+      <p class="landed"><b>Written in &mdash; Aug 31.</b> Handbook §9 · Employee Reference Sheet — email or the weekly one-to-one; dated items by email same day</p></div>
+      <div class="tags"><span class="tag">Handbook §9</span><span class="tag own own-sarah">Sarah</span></div></li>
+
+    <li class="item t-a" data-own="sarah"><input type="checkbox" data-id="b22">
+      <div><p class="q"><b>Five authority questions on the New Hire Decision List.</b></p>
+      <p class="why">Can the specialist reschedule or cancel a session unilaterally? At what point does a client's request to pause or reduce need Sarah? Is there a spending threshold for materials and tools? Does the specialist have standing authority to act in a true safety emergency without waiting? And is anything on the list in the wrong tier? The Week-One Schedule has this document reviewed together on Day 1.</p>
+      <p class="landed"><b>Written in &mdash; Aug 31.</b> Employee Decision List, renamed from New Hire Decision List · Role Definition</p></div>
+      <div class="tags"><span class="tag">New Hire Decision List</span><span class="tag own own-sarah">Sarah</span></div></li>
+
+    <li class="item t-a" data-own="atty"><input type="checkbox" data-id="b23">
+      <div><p class="q"><b>EEO statement — which federal and Maryland provisions actually apply at one employee?</b></p>
+      <p class="why">Title VII and the ADA have minimum employee counts; Maryland's Fair Employment Practices Act has its own thresholds. The Handbook's position is that adopting the policy early is good practice, but the draft language needs sign-off rather than resting on itself.</p>
+      <p class="landed"><b>Written in &mdash; Aug 31.</b> Handbook §14 — item 5 on the Attorney Review Checklist</p></div>
+      <div class="tags"><span class="tag">Handbook §14</span><span class="tag own own-atty">Attorney</span></div></li>
+
+    <li class="item t-a" data-own="sarah"><input type="checkbox" data-id="b24">
+      <div><p class="q"><b>Breach reporting: what happens after "tell Sarah immediately"?</b></p>
+      <p class="why">Is there a client-notification step, an insurance carrier to call, a regulator? The Confidentiality Agreement stops at the first step.</p>
+      <p class="landed"><b>Written in &mdash; Aug 31.</b> Confidentiality Agreement §5A, new · Data-Handling Policy §6 — item 11 on the Attorney Review Checklist</p></div>
+      <div class="tags"><span class="tag">Confidentiality Agreement</span><span class="tag own own-sarah">Sarah</span></div></li>
+  </ul>
+</section>
+
+<!-- ============ TIER 3 ============ -->
+<section class="tier" id="t3">
+  <div class="tier-head">
+    <span class="tier-gate g-o">Gate · Drive publish</span>
+    <h2>Answer before the set goes to Google Drive as final</h2>
+    <span class="tier-count" data-count="t3"></span>
+  </div>
+  <p class="tier-note">These do not block the first week, but each one is a document that would go into Drive stating something provisional as though it were settled. Anything still open at publish time should carry a visible flag on the document rather than a silent blank.</p>
+  <ul class="items">
+
+    <li class="item t-o" data-own="sarah"><input type="checkbox" data-id="c1">
+      <div><p class="q"><b>Does the proposed business-wide folder structure match how you actually think about the business?</b></p>
+      <p class="why">The Internal Reference Sheet carries a draft structure — client files, onboarding and contracts, admin, employee documents — explicitly labelled a sample to react to. Everything else in the Drive publish depends on this answer.</p></div>
+      <div class="tags"><span class="tag">Internal Reference Sheet</span><span class="tag own own-sarah">Sarah</span></div></li>
+
+    <li class="item t-o" data-own="sarah"><input type="checkbox" data-id="c2">
+      <div><p class="q"><b>Where does the folder structure live — build it in Drive now, or wait for the platform?</b></p>
+      <p class="why">Given the SOPs are being uploaded to Drive this sprint and Zoho does not land until Sprint 04, building it in Drive now is the practical answer — but it should be a decision, not a drift.</p></div>
+      <div class="tags"><span class="tag">Internal Reference Sheet</span><span class="tag own own-sarah">Sarah</span></div></li>
+
+    <li class="item t-o" data-own="sarah"><input type="checkbox" data-id="c3">
+      <div><p class="q"><b>Retention and archiving rule for graduated and inactive clients.</b> A time-based move after 6–12 months with no session, or something else?</p></div>
+      <div class="tags"><span class="tag">Internal Reference Sheet</span><span class="tag own own-sarah">Sarah</span></div></li>
+
+    <li class="item t-o" data-own="atty"><input type="checkbox" data-id="c4">
+      <div><p class="q"><b>How long are client records actually kept after discharge?</b></p>
+      <p class="why">No retention or destruction schedule exists. Minors' educational and health records carry longer state minimums, so this needs checking against the Maryland requirement rather than adopting a common-practice default.</p></div>
+      <div class="tags"><span class="tag">Data-Handling Policy §4</span><span class="tag own own-atty">Attorney</span></div></li>
+
+    <li class="item t-o" data-own="atty"><input type="checkbox" data-id="c5">
+      <div><p class="q"><b>Does HIPAA apply to this practice?</b></p>
+      <p class="why">Still open on the roadmap. It changes the Data-Handling Policy, the Confidentiality Agreement, and the Zoho configuration and price in Sprint 03 — so it is worth answering before that sprint, not during it.</p></div>
+      <div class="tags"><span class="tag">Data-Handling Policy §5</span><span class="tag">Sprint 03</span><span class="tag own own-atty">Attorney</span></div></li>
+
+    <li class="item t-o" data-own="atty"><input type="checkbox" data-id="c6">
+      <div><p class="q"><b>Which student-records and special-education record-keeping obligations apply?</b> And which stay open with an education attorney?</p></div>
+      <div class="tags"><span class="tag">Data-Handling Policy §5</span><span class="tag own own-atty">Attorney</span></div></li>
+
+    <li class="item t-o" data-own="sarah"><input type="checkbox" data-id="c7">
+      <div><p class="q"><b>Should the specialist's data access be scoped narrower than "clients on their own caseload"?</b></p></div>
+      <div class="tags"><span class="tag">Data-Handling Policy §3</span><span class="tag own own-sarah">Sarah</span></div></li>
+
+    <li class="item t-o" data-own="sarah"><input type="checkbox" data-id="c8">
+      <div><p class="q"><b>Any other third party needing defined access</b> — payroll provider, insurance broker, bookkeeper?</p></div>
+      <div class="tags"><span class="tag">Data-Handling Policy §3</span><span class="tag own own-sarah">Sarah</span></div></li>
+
+    <li class="item t-o" data-own="sarah"><input type="checkbox" data-id="c9">
+      <div><p class="q"><b>The Rate Sheet contradicts an earlier decision, and needs your call.</b></p>
+      <p class="why">You previously decided no non-session rate schedule would be published. The Services Agreement's electronic-communication and phone-call billing terms <em>are</em> a non-session rate schedule. Either the earlier decision has changed, or the Services Agreement language needs reconciling. This one cannot be resolved by drafting — only by deciding.</p></div>
+      <div class="tags"><span class="tag">Rate Sheet</span><span class="tag">Services Agreement</span><span class="tag own own-sarah">Sarah</span></div></li>
+
+    <li class="item t-o" data-own="sarah"><input type="checkbox" data-id="c10">
+      <div><p class="q"><b>Confirm rate-sheet pricing, so the live link can go up.</b></p>
+      <p class="why">Sprint 01's rate-sheet item is finished except for this — the permanent URL is waiting on confirmed prices.</p></div>
+      <div class="tags"><span class="tag">Rate Sheet</span><span class="tag own own-sarah">Sarah</span></div></li>
+
+    <li class="item t-o" data-own="both"><input type="checkbox" data-id="c11">
+      <div><p class="q"><b>Where should the permanent rate-sheet URL live</b> — the practice website, a shared Drive doc, or a page in the dashboard?</p></div>
+      <div class="tags"><span class="tag">Rate Sheet</span><span class="tag own own-both">Sarah + Ruby</span></div></li>
+
+    <li class="item t-o" data-own="sarah"><input type="checkbox" data-id="c12">
+      <div><p class="q"><b>The 24-hour cancellation policy: exact fee amount and notice window.</b></p>
+      <p class="why">Referenced in both the No-Show Policy and the Parent Terms of Service, stated in neither. Two client-facing documents currently point at a policy whose terms are not written down anywhere.</p></div>
+      <div class="tags"><span class="tag">No-Show Policy</span><span class="tag">Parent Terms of Service</span><span class="tag own own-sarah">Sarah</span></div></li>
+
+    <li class="item t-o" data-own="sarah"><input type="checkbox" data-id="c13">
+      <div><p class="q"><b>Is the no-show bill the same fee as the 24-hour cancellation, or a different one?</b></p></div>
+      <div class="tags"><span class="tag">No-Show Policy</span><span class="tag own own-sarah">Sarah</span></div></li>
+
+    <li class="item t-o" data-own="sarah"><input type="checkbox" data-id="c14">
+      <div><p class="q"><b>Are there any exceptions to the full-session no-show bill?</b> Documented emergency, provider error, a technical failure on OptiMind's side?</p></div>
+      <div class="tags"><span class="tag">No-Show Policy</span><span class="tag own own-sarah">Sarah</span></div></li>
+
+    <li class="item t-o" data-own="sarah"><input type="checkbox" data-id="c15">
+      <div><p class="q"><b>Does the no-show protocol apply uniformly across school-age, college and adult clients?</b></p>
+      <p class="why">As drafted, the parent-notification step reads as applying to everyone. For adult clients it presumably should not.</p></div>
+      <div class="tags"><span class="tag">No-Show Policy</span><span class="tag own own-sarah">Sarah</span></div></li>
+
+    <li class="item t-o" data-own="both"><input type="checkbox" data-id="c16">
+      <div><p class="q"><b>Exact wording for the "Regulation of Time Management" email template.</b></p></div>
+      <div class="tags"><span class="tag">No-Show Policy</span><span class="tag own own-both">Sarah + Ruby</span></div></li>
+
+    <li class="item t-o" data-own="sarah"><input type="checkbox" data-id="c17">
+      <div><p class="q"><b>Approve the draft Service Agreement no-show clause,</b> so it can be added to the template for future signings.</p></div>
+      <div class="tags"><span class="tag">No-Show Policy</span><span class="tag">Services Agreement</span><span class="tag own own-sarah">Sarah</span></div></li>
+
+    <li class="item t-o" data-own="sarah"><input type="checkbox" data-id="c18">
+      <div><p class="q"><b>How many missed parent sessions before it escalates to Sarah?</b></p>
+      <p class="why">The escalation tier exists in the New Hire Decision List; the trigger number does not.</p></div>
+      <div class="tags"><span class="tag">Parent Terms of Service §4</span><span class="tag own own-sarah">Sarah</span></div></li>
+
+    <li class="item t-o" data-own="sarah"><input type="checkbox" data-id="c19">
+      <div><p class="q"><b>Does continued parent non-adherence affect enrollment,</b> on top of the cancellation fee?</p>
+      <p class="why">Explicitly needs your decision before it can be written as binding policy in a client-facing document.</p></div>
+      <div class="tags"><span class="tag">Parent Terms of Service §4</span><span class="tag own own-sarah">Sarah</span></div></li>
+
+    <li class="item t-o" data-own="ruby"><input type="checkbox" data-id="c20">
+      <div><p class="q"><b>Can Calendly suppress a rebooking prompt</b> when the session was already rebooked in conversation?</p>
+      <p class="why">A technical check on my side before the Parent Terms of Service commits to the behaviour in writing.</p></div>
+      <div class="tags"><span class="tag">Parent Terms of Service §4</span><span class="tag own own-ruby">Gemini Lane</span></div></li>
+
+    <li class="item t-o" data-own="sarah"><input type="checkbox" data-id="c21">
+      <div><p class="q"><b>The maintenance tier: format, cadence options and pricing.</b></p>
+      <p class="why">Currently defined only as "a lower cadence." It appears in the Client Workflow as the end state of every engagement, so the graduation path is incomplete without it.</p></div>
+      <div class="tags"><span class="tag">Client Workflow</span><span class="tag own own-sarah">Sarah</span></div></li>
+
+    <li class="item t-o" data-own="sarah"><input type="checkbox" data-id="c22">
+      <div><p class="q"><b>Body doubling: in or out?</b></p>
+      <p class="why">Under consideration as part of, or alongside, the maintenance tier — but co-working and accountability sessions are a different service line, not a lighter version of EF coaching. Worth an explicit yes or not-yet rather than staying under consideration.</p></div>
+      <div class="tags"><span class="tag">Client Workflow</span><span class="tag own own-sarah">Sarah</span></div></li>
+
+    <li class="item t-o" data-own="sarah"><input type="checkbox" data-id="c23">
+      <div><p class="q"><b>Graduation readiness criteria — what are they, and do they differ by client type?</b></p>
+      <p class="why">Middle and high school, college, and adult clients presumably do not graduate against the same markers. Sprint 10 defines graduation formally; the Client Workflow needs at least a working answer before then.</p></div>
+      <div class="tags"><span class="tag">Client Workflow</span><span class="tag own own-sarah">Sarah</span></div></li>
+
+    <li class="item t-o" data-own="sarah"><input type="checkbox" data-id="c24">
+      <div><p class="q"><b>Screening Protocol: do the full legal templates need to come back as a separate document?</b></p>
+      <p class="why">The disclosure and authorization forms, pre-adverse and adverse-action letters, reference-call script, and the Maryland-specific analysis were trimmed out of the working guide. If the hire involves a background check, they are needed before Sep 4, not after.</p></div>
+      <div class="tags"><span class="tag">Screening Protocol</span><span class="tag own own-sarah">Sarah</span></div></li>
+
+    <li class="item t-o" data-own="sarah"><input type="checkbox" data-id="c25">
+      <div><p class="q"><b>Bookkeeper / CPA — name and contact details.</b></p></div>
+      <div class="tags"><span class="tag">Internal Reference Sheet</span><span class="tag own own-sarah">Sarah</span></div></li>
+
+    <li class="item t-o" data-own="sarah"><input type="checkbox" data-id="c26">
+      <div><p class="q"><b>Website team — name and contact details.</b></p>
+      <p class="why">Needed in both Reference Sheets, and the specialist writes a bio and provides a headshot for the website on Day 1.</p></div>
+      <div class="tags"><span class="tag">Employee Reference Sheet</span><span class="tag">Internal Reference Sheet</span><span class="tag own own-sarah">Sarah</span></div></li>
+
+    <li class="item t-o" data-own="sarah"><input type="checkbox" data-id="c27">
+      <div><p class="q"><b>Any other key external contacts</b> — insurance broker, payroll service — the specialist or the reference sheet should carry?</p></div>
+      <div class="tags"><span class="tag">Internal Reference Sheet</span><span class="tag own own-sarah">Sarah</span></div></li>
+
+    <li class="item t-o" data-own="both"><input type="checkbox" data-id="c28">
+      <div><p class="q"><b>What replaces the email-Sarah-CC-Ruby process for surfacing SOP gaps after Jan 26, 2027?</b></p>
+      <p class="why">The mechanism that keeps the SOPs current is currently tied to the engagement. Worth deciding now, while the reason for it is fresh, rather than in January.</p></div>
+      <div class="tags"><span class="tag">Internal Reference Sheet</span><span class="tag own own-both">Sarah + Ruby</span></div></li>
+  </ul>
+</section>
+
+<!-- ============ TIER 4 ============ -->
+<section class="tier" id="t4">
+  <div class="tier-head">
+    <span class="tier-gate g-b">Blocked</span>
+    <h2>Waiting on a later sprint — flag, don't answer</h2>
+    <span class="tier-count" data-count="t4"></span>
+  </div>
+  <p class="tier-note">These cannot be closed in Sprint 02. What they need is a visible marker on the document so a reader knows the gap is deliberate, plus a note of the sprint that clears it.</p>
+  <ul class="items">
+
+    <li class="item t-b" data-own="ruby"><input type="checkbox" data-id="d1">
+      <div><p class="q"><b>Which session-notetaking tool is chosen.</b> Clears in <b>Sprint 04</b>.</p>
+      <p class="why">Currently TBD in five places: both Reference Sheets, Data-Handling Policy §2, the Week-One pre-day-one checklist, and the Role Definition. Moving notetaking behind the Zoho build was the right call — but it means five documents stay provisional until October, and the Week-One training day needs rewriting in the meantime.</p></div>
+      <div class="tags"><span class="tag">5 documents</span><span class="tag">Sprint 04</span><span class="tag own own-ruby">Gemini Lane</span></div></li>
+
+    <li class="item t-b" data-own="ruby"><input type="checkbox" data-id="d2">
+      <div><p class="q"><b>Which platform holds client records.</b> Clears in <b>Sprint 03</b> with the Zoho One decision.</p>
+      <p class="why">Blocks the "approved systems" language in the Confidentiality Agreement, the storage row in the Data-Handling Policy, and the final home of the folder structure.</p></div>
+      <div class="tags"><span class="tag">Confidentiality Agreement</span><span class="tag">Data-Handling Policy</span><span class="tag">Sprint 03</span><span class="tag own own-ruby">Gemini Lane</span></div></li>
+
+    <li class="item t-b" data-own="ruby"><input type="checkbox" data-id="d3">
+      <div><p class="q"><b>Independent, tested backup — target date and tool.</b> Clears in <b>Sprint 03</b>.</p>
+      <p class="why">Named as a known gap in the Data-Handling Policy. Until it ships, the policy has to say so rather than imply coverage.</p></div>
+      <div class="tags"><span class="tag">Data-Handling Policy §2</span><span class="tag">Sprint 03</span><span class="tag own own-ruby">Gemini Lane</span></div></li>
+
+    <li class="item t-b" data-own="ruby"><input type="checkbox" data-id="d4">
+      <div><p class="q"><b>Primary referral contacts.</b> Clears in <b>Sprint 08</b> when the referral register is built.</p>
+      <p class="why">The Internal Reference Sheet should point at the register rather than list names that will go stale.</p></div>
+      <div class="tags"><span class="tag">Internal Reference Sheet</span><span class="tag">Sprint 08</span><span class="tag own own-ruby">Gemini Lane</span></div></li>
+
+    <li class="item t-b" data-own="ruby"><input type="checkbox" data-id="d5">
+      <div><p class="q"><b>The stale duplicate set must be retired before anything goes to Drive.</b></p>
+      <p class="why">There are two copies of the SOP library on this machine. <span class="tag">OptiMind-SOPs-Export</span> holds thirteen documents dated Aug 17; the live set in <span class="tag">OptiMind-Dashboard</span> holds nineteen dated Aug 21. The export is missing six entirely — the No-Show &amp; Cancellation Policy, Screening Protocol, Services Agreement, Checklists, Logos and Style Guide. If the wrong folder is uploaded, Sarah's Drive gets an older set with no cancellation policy in it.</p></div>
+      <div class="tags"><span class="tag">OptiMind-SOPs-Export</span><span class="tag own own-ruby">Gemini Lane</span></div></li>
+
+    <li class="item t-b" data-own="ruby"><input type="checkbox" data-id="d6">
+      <div><p class="q"><b>Regenerate the .docx and PDF exports after the decisions land.</b></p>
+      <p class="why">The PDF-Export bundle and the .docx set both predate this round of decisions. The PDFs are what Sarah actually hands to a candidate, so they are the copies that matter — and the ones most likely to be forgotten.</p></div>
+      <div class="tags"><span class="tag">PDF-Export</span><span class="tag">All .docx</span><span class="tag own own-ruby">Gemini Lane</span></div></li>
+  </ul>
+</section>
+
+<!-- ============ CALLOUT ============ -->
+<section class="callout">
+  <h2>Three things worth deciding first</h2>
+  <p>If the working session runs short, these are the ones that unblock the most.</p>
+  <ul>
+    <li><b>Compensation, schedule and start date.</b> One answer fills eleven placeholders across three documents and is the only thing standing between you and a sendable offer.</li>
+    <li><b>Company devices or personal devices.</b> A single yes-or-no that closes the same open item in the Confidentiality Agreement, the Employee Handbook and the Data-Handling Policy.</li>
+    <li><b>The safety-disclosure protocol.</b> Flagged as highest priority in three documents, and the one item where a gap has consequences beyond paperwork. If the attorney and consultant answers will not arrive before Sep 8, the interim rule should still be confirmed as written rather than left proposed.</li>
+  </ul>
+</section>
+
+<!-- ============ INDEX ============ -->
+<section class="index">
+  <h2>Document index</h2>
+  <p class="sub">All 23 documents in <span class="tag">OptiMind-Dashboard / sops</span> and <span class="tag">/ onboarding</span>, recounted Aug 31 after the rewrite. The count is open markers of any kind &mdash; TBD, ATTORNEY REVIEW and TO BUILD &mdash; so a document that gained an explicit attorney flag may read higher than before while being further along.</p>
+  <div class="tablewrap">
+    <table>
+      <thead><tr><th>Document</th><th>Set</th><th class="num">TBDs</th><th>Status</th></tr></thead>
+      <tbody>
+        <tr><td class="doc">Employee-Handbook</td><td>onboarding</td><td class="num">15</td><td><span class="pill open">Open</span></td></tr>
+        <tr><td class="doc">Holiday-Vacation-and-Leave-Policy</td><td>onboarding</td><td class="num">11</td><td><span class="pill open">Open</span></td></tr>
+        <tr><td class="doc">Employment-Agreement</td><td>onboarding</td><td class="num">10</td><td><span class="pill open">Open</span></td></tr>
+        <tr><td class="doc">Offer-Letter</td><td>onboarding</td><td class="num">6</td><td><span class="pill open">Open</span></td></tr>
+        <tr><td class="doc">Confidentiality-and-Data-Handling-Agreement</td><td>onboarding</td><td class="num">4</td><td><span class="pill open">Open</span></td></tr>
+        <tr><td class="doc">Data-Handling-Policy</td><td>onboarding</td><td class="num">4</td><td><span class="pill open">Open</span></td></tr>
+        <tr><td class="doc">Organization-and-Labeling-Standards</td><td>sops</td><td class="num">4</td><td><span class="pill open">Open</span></td></tr>
+        <tr><td class="doc">Parent-Terms-of-Service</td><td>sops</td><td class="num">4</td><td><span class="pill open">Open</span></td></tr>
+        <tr><td class="doc">No-Show-and-Cancellation-Policy</td><td>sops</td><td class="num">3</td><td><span class="pill open">Open</span></td></tr>
+        <tr><td class="doc">Add-On-Services-Identification-and-Referral-Process</td><td>sops</td><td class="num">2</td><td><span class="pill open">Open</span></td></tr>
+        <tr><td class="doc">Attorney-Review-Checklist</td><td>sops</td><td class="num">2</td><td><span class="pill open">Open</span></td></tr>
+        <tr><td class="doc">Internal-Reference-Sheet</td><td>sops</td><td class="num">2</td><td><span class="pill open">Open</span></td></tr>
+        <tr><td class="doc">Checklists</td><td>sops</td><td class="num">0</td><td><span class="pill clean">Clean</span></td></tr>
+        <tr><td class="doc">Client-Workflow-Intake-to-Graduation</td><td>sops</td><td class="num">0</td><td><span class="pill clean">Clean</span></td></tr>
+        <tr><td class="doc">Employee-Decision-List</td><td>onboarding</td><td class="num">0</td><td><span class="pill clean">Clean</span></td></tr>
+        <tr><td class="doc">Employee-Reference-Sheet</td><td>sops</td><td class="num">0</td><td><span class="pill clean">Clean</span></td></tr>
+        <tr><td class="doc">Logos</td><td>sops</td><td class="num">0</td><td><span class="pill clean">Clean</span></td></tr>
+        <tr><td class="doc">OptiMind-Screening-Protocol</td><td>sops</td><td class="num">0</td><td><span class="pill clean">Clean</span></td></tr>
+        <tr><td class="doc">OptiMind-Style-Guide</td><td>sops</td><td class="num">0</td><td><span class="pill clean">Clean</span></td></tr>
+        <tr><td class="doc">Rate-Sheet</td><td>sops</td><td class="num">0</td><td><span class="pill clean">Clean</span></td></tr>
+        <tr><td class="doc">Role-Definition-and-Responsibilities</td><td>sops</td><td class="num">0</td><td><span class="pill clean">Clean</span></td></tr>
+        <tr><td class="doc">Services-Agreement</td><td>sops</td><td class="num">0</td><td><span class="pill clean">Clean</span></td></tr>
+        <tr><td class="doc">Week-One-Onboarding-Schedule</td><td>sops</td><td class="num">0</td><td><span class="pill clean">Clean</span></td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<footer>
+  Compiled Aug 30, 2026 · updated Aug 31 after the answer pass · 67 open markers across 12 of 23 documents · Gemini Lane Consulting &amp; Acquisitions<br>
+  Ticks and answers are stored in this browser only — they are not shared between people or devices. Use <b>Copy answers</b> to take them out.
+</footer>
+
+<dialog id="digest">
+  <div class="dlg-hd">
+    <h3>Answers so far</h3>
+    <div style="display:flex;gap:8px">
+      <button type="button" id="dlg-copy">Copy</button>
+      <button type="button" id="dlg-close">Close</button>
+    </div>
+  </div>
+  <textarea id="digest-text" readonly></textarea>
+</dialog>
+
+<div class="toast" id="toast"></div>
+
+</div>
+
+<script>
+(function(){
+  var KEY = "optimind-open-items-v1";
+  var state = {};
+  try { state = JSON.parse(localStorage.getItem(KEY) || "{}") || {}; } catch(e){ state = {}; }
+
+
+  /* --- Aug 31, 2026: one-time seed. Ticks the 22 items answered in the Aug 31 pass.
+     Additive only: it never clears a tick and never touches a typed answer. --- */
+  try {
+    var SEEDK = "optimind-open-items-seed-20260831";
+    if (!localStorage.getItem(SEEDK)) {
+      ["b1","b2","b3","b4","b5","b6","b7","b10","b11","b12","b13","b14","b15","b16","b17","b18","b19","b20","b21","b22","b23","b24"].forEach(function(id){ if (!state[id]) state[id] = true; });
+      localStorage.setItem(SEEDK, "1");
+      save();
+    }
+  } catch(e){}
+  var boxes = Array.prototype.slice.call(document.querySelectorAll('.item input[type=checkbox]'));
+  var fill = document.getElementById("fill");
+  var mlabel = document.getElementById("mlabel");
+  var filter = "all";
+
+  function save(){
+    try { localStorage.setItem(KEY, JSON.stringify(state)); } catch(e){}
+  }
+
+  /* ---- answer box under every question ---- */
+  var PLACEHOLDER = {
+    sarah: "Sarah's answer…",
+    both:  "Sarah's answer…",
+    atty:  "Her position, and what counsel needs to confirm…",
+    ruby:  "Decision, or what it's waiting on…"
+  };
+  function grow(ta){ ta.style.height = "auto"; ta.style.height = Math.max(52, ta.scrollHeight + 2) + "px"; }
+
+  boxes.forEach(function(cb){
+    var item = cb.closest(".item");
+    var id = cb.dataset.id;
+
+    var wrap = document.createElement("div");
+    wrap.className = "answer";
+
+    var lab = document.createElement("label");
+    lab.className = "sr-label";
+    lab.setAttribute("for", "a-" + id);
+    lab.textContent = "Answer";
+
+    var ta = document.createElement("textarea");
+    ta.id = "a-" + id;
+    ta.dataset.a = id;
+    ta.rows = 2;
+    ta.placeholder = PLACEHOLDER[item.dataset.own] || "Answer…";
+    ta.value = state["a:" + id] || "";
+
+    wrap.appendChild(lab);
+    wrap.appendChild(ta);
+    item.appendChild(wrap);
+
+    ta.addEventListener("input", function(){
+      var v = ta.value;
+      if (v.trim()) state["a:" + id] = v; else delete state["a:" + id];
+      item.classList.toggle("noted", !!v.trim());
+      grow(ta);
+      save();
+      applyFilter();
+    });
+  });
+
+  function paint(){
+    var done = 0;
+    boxes.forEach(function(b){
+      var on = !!state[b.dataset.id];
+      b.checked = on;
+      var it = b.closest(".item");
+      it.classList.toggle("done", on);
+      var ta = it.querySelector("textarea");
+      if (ta){ it.classList.toggle("noted", !!ta.value.trim()); grow(ta); }
+      if (on) done++;
+    });
+    var pct = boxes.length ? Math.round(done / boxes.length * 100) : 0;
+    fill.style.width = pct + "%";
+    mlabel.textContent = done + " / " + boxes.length + " resolved";
+
+    document.querySelectorAll(".tier").forEach(function(t){
+      var all = t.querySelectorAll(".item");
+      var d = t.querySelectorAll(".item.done").length;
+      var el = t.querySelector("[data-count]");
+      if (el) el.textContent = d + " of " + all.length + " closed";
+    });
+    applyFilter();
+  }
+
+  function applyFilter(){
+    document.querySelectorAll(".item").forEach(function(it){
+      var show = true;
+      if (filter === "open") show = !it.classList.contains("done");
+      else if (filter === "noted") show = it.classList.contains("noted");
+      else if (filter === "sarah") show = it.dataset.own === "sarah" || it.dataset.own === "both";
+      else if (filter === "atty") show = it.dataset.own === "atty";
+      else if (filter === "ruby") show = it.dataset.own === "ruby" || it.dataset.own === "both";
+      it.classList.toggle("hide", !show);
+    });
+    document.querySelectorAll(".tier").forEach(function(t){
+      var vis = t.querySelectorAll(".item:not(.hide)").length;
+      t.style.display = vis ? "" : "none";
+    });
+  }
+
+  boxes.forEach(function(b){
+    b.addEventListener("change", function(){
+      state[b.dataset.id] = b.checked;
+      if (!b.checked) delete state[b.dataset.id];
+      save(); paint();
+    });
+  });
+
+  document.querySelectorAll(".filters button[data-f]").forEach(function(btn){
+    btn.addEventListener("click", function(){
+      filter = btn.dataset.f;
+      document.querySelectorAll(".filters button[data-f]").forEach(function(o){
+        o.setAttribute("aria-pressed", String(o === btn));
+      });
+      applyFilter();
+    });
+  });
+
+  /* ---- collect answers as plain text ---- */
+  var toast = document.getElementById("toast");
+  var toastTimer;
+  function say(msg){
+    toast.textContent = msg;
+    toast.classList.add("show");
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(function(){ toast.classList.remove("show"); }, 2200);
+  }
+
+  function stamp(){
+    var d = new Date();
+    function pad(x){ return (x < 10 ? "0" : "") + x; }
+    return d.getFullYear() + "-" + pad(d.getMonth() + 1) + "-" + pad(d.getDate());
+  }
+
+  function digest(){
+    var answered = document.querySelectorAll(".item.noted").length;
+    var resolved = document.querySelectorAll(".item.done").length;
+    var total = document.querySelectorAll(".item").length;
+    var out = [
+      "OPTIMIND EDUCATIONAL STRATEGIES — OPEN ITEMS REGISTER",
+      "Answers recorded " + stamp(),
+      answered + " of " + total + " items answered · " + resolved + " marked resolved",
+      "Source: OptiMind-Dashboard / sops + onboarding",
+      "".padEnd ? "".padEnd(60, "=") : "============================================================",
+      ""
+    ];
+    var any = false;
+    document.querySelectorAll(".tier").forEach(function(tier){
+      var heading = tier.querySelector(".tier-head h2").textContent.trim();
+      var gate = tier.querySelector(".tier-gate").textContent.trim();
+      var rows = [];
+      tier.querySelectorAll(".item").forEach(function(it){
+        var ta = it.querySelector("textarea");
+        if (!ta || !ta.value.trim()) return;
+        any = true;
+        var q = it.querySelector(".q").textContent.replace(/\s+/g, " ").trim();
+        var srcs = Array.prototype.slice.call(it.querySelectorAll(".tag:not(.own)"))
+          .map(function(s){ return s.textContent.trim(); }).join(" · ");
+        rows.push("Q: " + q + (srcs ? "\n   [" + srcs + "]" : "") +
+                  "\nA: " + ta.value.trim() +
+                  (it.classList.contains("done") ? "\n   (marked resolved)" : ""));
+      });
+      if (rows.length){
+        out.push("=== " + gate + " — " + heading + " ===", "");
+        out.push(rows.join("\n\n"), "");
+      }
+    });
+    if (!any) out.push("(No answers recorded yet.)");
+    return out.join("\n");
+  }
+
+  var dlg = document.getElementById("digest");
+  var dlgText = document.getElementById("digest-text");
+
+  function copyText(str){
+    if (navigator.clipboard && navigator.clipboard.writeText){
+      return navigator.clipboard.writeText(str);
+    }
+    return Promise.reject();
+  }
+
+  document.getElementById("export").addEventListener("click", function(){
+    var str = digest();
+    copyText(str).then(function(){
+      say("Answers copied to the clipboard");
+    }).catch(function(){
+      dlgText.value = str;
+      if (dlg.showModal) dlg.showModal(); else dlg.setAttribute("open", "");
+      dlgText.focus(); dlgText.select();
+    });
+  });
+
+  document.getElementById("dlg-copy").addEventListener("click", function(){
+    dlgText.select();
+    copyText(dlgText.value).then(function(){ say("Copied"); }).catch(function(){
+      try { document.execCommand("copy"); say("Copied"); }
+      catch(e){ say("Select the text and copy manually"); }
+    });
+  });
+  document.getElementById("dlg-close").addEventListener("click", function(){
+    if (dlg.close) dlg.close(); else dlg.removeAttribute("open");
+  });
+
+  /* ---- save the answers as a .txt file ----
+     On claude.ai the page asks the viewer through the downloads capability.
+     Opened as a local file, that capability is absent, so fall back to a blob. */
+  var dlBtn = document.getElementById("download");
+  var savePromise = null;
+  function downloads(){
+    if (savePromise) return savePromise;
+    savePromise = (window.claude && typeof window.claude.use === "function")
+      ? window.claude.use("downloads").catch(function(){ return null; })
+      : Promise.resolve(null);
+    return savePromise;
+  }
+
+  function blobSave(name, str){
+    try {
+      var url = URL.createObjectURL(new Blob([str], { type: "text/plain;charset=utf-8" }));
+      var a = document.createElement("a");
+      a.href = url; a.download = name;
+      document.body.appendChild(a); a.click(); a.remove();
+      setTimeout(function(){ URL.revokeObjectURL(url); }, 4000);
+      return true;
+    } catch(e){ return false; }
+  }
+
+  dlBtn.addEventListener("click", function(){
+    var str = digest();
+    var name = stamp() + "_OptiMind_Open-Items-Answers.txt";
+    dlBtn.disabled = true;
+
+    downloads().then(function(dl){
+      if (!dl) {
+        if (blobSave(name, str)) say("Saved as " + name);
+        else { dlgText.value = str; if (dlg.showModal) dlg.showModal(); dlgText.select(); }
+        return;
+      }
+      return dl.save({ filename: name, data: str }).then(function(){
+        say("Saved as " + name);
+      }).catch(function(err){
+        var code = (err && err.code) || "unavailable";
+        if (code === "declined") say("Download cancelled");
+        else if (code === "rate_limited") say("Another prompt is open — try again in a moment");
+        else if (code === "too_large") say("Too much text to save as one file");
+        else {
+          dlgText.value = str;
+          if (dlg.showModal) dlg.showModal(); else dlg.setAttribute("open", "");
+          dlgText.focus(); dlgText.select();
+          say("Couldn't save a file here — copy the text instead");
+        }
+      });
+    }).then(function(){ dlBtn.disabled = false; }, function(){ dlBtn.disabled = false; });
+  });
+
+  paint();
+})();
+</script>
+
+</body>
+</html>

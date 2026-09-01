@@ -41,12 +41,9 @@
             <span class="card-title">All Documents</span>
             <span class="doccat-count" id="intake-all-count"></span>
           </div>
-          <div class="card-body" id="intake-all-list"></div>
+          <div class="card-body" style="padding:0" id="intake-table-wrap"></div>
         </div>
       </div>
-
-      <div class="sec-hd" style="margin-top:28px">By Client Type</div>
-      <div id="intake-doc-cats"></div>
     </div>
 
     <div class="tp" id="tp-session">
@@ -56,12 +53,9 @@
             <span class="card-title">All Documents</span>
             <span class="doccat-count" id="session-all-count"></span>
           </div>
-          <div class="card-body" id="session-all-list"></div>
+          <div class="card-body" style="padding:0" id="session-table-wrap"></div>
         </div>
       </div>
-
-      <div class="sec-hd" style="margin-top:28px">By Client Type</div>
-      <div id="session-doc-cats"></div>
     </div>
 
     <div class="tp" id="tp-clients">
@@ -121,6 +115,16 @@
   </div>
 </main>
 
+<div class="modal-backdrop" id="doc-modal-backdrop" style="display:none">
+  <div class="modal-card">
+    <div class="modal-hd">
+      <span class="modal-title" id="doc-modal-title"></span>
+      <button class="btn btn-ghost btn-sm" onclick="closeDocModal()">Close ✕</button>
+    </div>
+    <div class="modal-body" id="doc-modal-body"></div>
+  </div>
+</div>
+
 <script src="js/data.js"></script>
 <script src="js/app.js"></script>
 <script>
@@ -136,69 +140,262 @@
     document.getElementById("tp-" + btn.dataset.tab).classList.add("active");
   });
 
-  function docTitle(d) {
-    return d.link
-      ? '<a href="' + d.link + '" target="_blank" rel="noopener">' + d.title + ' ↗</a>'
-      : d.title;
+  /* ---------- Document Tables (Intake / Session Documents) ---------- */
+  const LS_DOC_META = "optimind_dash_docmeta";
+  const DOC_TABLE_DEFS = {
+    intake:  { groups: NEW_CLIENT_DOCS,        wrapId: "intake-table-wrap",  countId: "intake-all-count" },
+    session: { groups: ESTABLISHED_CLIENT_DOCS, wrapId: "session-table-wrap", countId: "session-all-count" }
+  };
+  const docTableSort = { intake: null, session: null }; // null | "asc" | "desc"
+
+  const STAGE_OPTIONS = ["Consult", "Intake", "Client Agreements", "Reports Collection", "Curriculum Docs", "Checklists", "Graduation"];
+  const CLIENT_TYPE_OPTIONS = ["All Client Types", "Middle & High School", "College", "Adult"];
+
+  function escAttr(s) {
+    return String(s == null ? "" : s).replace(/&/g, "&amp;").replace(/"/g, "&quot;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
   }
 
-  function renderAllDocs(groups, listId, countId) {
+  function selectOptionsHTML(options, current, blankLabel) {
+    let html = blankLabel ? '<option value=""' + (current ? '' : ' selected') + '>' + blankLabel + '</option>' : '';
+    html += options.map(function (opt) {
+      return '<option value="' + escAttr(opt) + '"' + (opt === current ? ' selected' : '') + '>' + opt + '</option>';
+    }).join("");
+    return html;
+  }
+
+  function getDocMeta(key) {
+    const store = loadJSON(LS_DOC_META);
+    return store[key] || { priority: null, notes: "", link: "", gamma: "", stage: "", clientType: null };
+  }
+  function setDocMeta(key, field, value) {
+    const store = loadJSON(LS_DOC_META);
+    if (!store[key]) store[key] = { priority: null, notes: "", link: "", gamma: "", stage: "", clientType: null };
+    store[key][field] = value;
+    saveJSON(LS_DOC_META, store);
+  }
+
+  const docLookup = {};
+
+  function flattenDocs(groups, tabKey) {
     const all = [];
     groups.forEach(function (cat) {
-      cat.docs.forEach(function (d) { all.push({ title: d.title, desc: d.desc, link: d.link, cat: cat.title }); });
+      cat.docs.forEach(function (d) {
+        const key = tabKey + "::" + cat.key + "::" + d.title;
+        const entry = { title: d.title, desc: d.desc, link: d.link, catLabel: cat.title, key: key };
+        docLookup[key] = entry;
+        all.push(entry);
+      });
     });
-
-    document.getElementById(countId).textContent = all.length + ' document' + (all.length === 1 ? '' : 's');
-
-    document.getElementById(listId).innerHTML = all.length
-      ? '<ul class="doc-list">' + all.map(function (d, dIdx) {
-          return '' +
-            '<li class="doc-item">' +
-            '  <span class="doc-num">' + (dIdx + 1) + '.</span>' +
-            '  <div style="flex:1">' +
-            '    <div class="doc-title">' + docTitle(d) + '</div>' +
-            (d.desc ? '    <div class="doc-desc">' + d.desc + '</div>' : '') +
-            '  </div>' +
-            '  <span class="badge b-gray">' + d.cat + '</span>' +
-            '</li>';
-        }).join("") + '</ul>'
-      : '<div class="empty"><div class="empty-ico">🗂️</div><div class="empty-txt">No documents added yet.</div></div>';
+    return all;
   }
 
-  function renderDocGroup(groups, containerId) {
-    const wrap = document.getElementById(containerId);
-    wrap.innerHTML = groups.map(function (cat) {
-      const rows = cat.docs.length
-        ? '<ul class="doc-list">' + cat.docs.map(function (d, dIdx) {
-            return '' +
-              '<li class="doc-item">' +
-              '  <span class="doc-num">' + (dIdx + 1) + '.</span>' +
-              '  <div>' +
-              '    <div class="doc-title">' + docTitle(d) + '</div>' +
-              (d.desc ? '    <div class="doc-desc">' + d.desc + '</div>' : '') +
-              '  </div>' +
-              '</li>';
-          }).join("") + '</ul>'
-        : '<div class="empty"><div class="empty-ico">🗂️</div><div class="empty-txt">No documents added yet.</div></div>';
+  function renderDocTable(tabKey) {
+    const def = DOC_TABLE_DEFS[tabKey];
+    const wrap = document.getElementById(def.wrapId);
+    let docs = flattenDocs(def.groups, tabKey);
 
-      return '' +
-        '<div class="doccat-sec">' +
-        '  <div class="card">' +
-        '    <div class="card-hd">' +
-        '      <span class="card-title">' + cat.title + '</span>' +
-        '      <span class="doccat-count">' + cat.docs.length + ' document' + (cat.docs.length === 1 ? '' : 's') + '</span>' +
-        '    </div>' +
-        '    <div class="card-body">' + rows + '</div>' +
-        '  </div>' +
-        '</div>';
-    }).join("");
+    document.getElementById(def.countId).textContent = docs.length + ' document' + (docs.length === 1 ? '' : 's');
+
+    if (!docs.length) {
+      wrap.innerHTML = '<div class="empty"><div class="empty-ico">🗂️</div><div class="empty-txt">No documents added yet.</div></div>';
+      return;
+    }
+
+    const dir = docTableSort[tabKey];
+    if (dir) {
+      docs = docs.slice().sort(function (a, b) {
+        const pa = getDocMeta(a.key).priority;
+        const pb = getDocMeta(b.key).priority;
+        const va = (pa === null || pa === undefined || pa === "") ? Infinity : Number(pa);
+        const vb = (pb === null || pb === undefined || pb === "") ? Infinity : Number(pb);
+        if (va === Infinity && vb === Infinity) return 0;
+        if (va === Infinity) return 1;
+        if (vb === Infinity) return -1;
+        return dir === "asc" ? va - vb : vb - va;
+      });
+    }
+
+    const arrow = dir === "asc" ? " ▲" : dir === "desc" ? " ▼" : "";
+
+    wrap.innerHTML =
+      '<div style="overflow-x:auto">' +
+      '<table class="doc-table">' +
+      '  <thead><tr>' +
+      '    <th class="sortable" data-sorttab="' + tabKey + '" style="width:56px">#' + arrow + '</th>' +
+      '    <th>Document</th>' +
+      '    <th style="width:150px">Client Type</th>' +
+      '    <th style="width:150px">Stage</th>' +
+      '    <th style="width:180px">Google Doc Link</th>' +
+      '    <th style="width:180px">Gamma Link</th>' +
+      '    <th style="width:200px">Notes</th>' +
+      '    <th style="width:70px"></th>' +
+      '  </tr></thead>' +
+      '  <tbody>' +
+      docs.map(function (d) {
+        const meta = getDocMeta(d.key);
+        const linkVal = meta.link || "";
+        const clientTypeVal = meta.clientType || d.catLabel;
+        const titleHTML = d.link
+          ? '<a href="' + d.link + '" target="_blank" rel="noopener">' + d.title + ' ↗</a>'
+          : d.title;
+        return '' +
+          '<tr>' +
+          '  <td><input type="number" class="fsel doc-priority" data-key="' + d.key + '" value="' + (meta.priority !== null && meta.priority !== undefined ? meta.priority : '') + '"></td>' +
+          '  <td><div class="doc-title">' + titleHTML + '</div>' + (d.desc ? '<div class="doc-desc">' + d.desc + '</div>' : '') + '</td>' +
+          '  <td><select class="fsel doc-clienttype" data-key="' + d.key + '">' + selectOptionsHTML(CLIENT_TYPE_OPTIONS, clientTypeVal, null) + '</select></td>' +
+          '  <td><select class="fsel doc-stage" data-key="' + d.key + '">' + selectOptionsHTML(STAGE_OPTIONS, meta.stage, "— Select —") + '</select></td>' +
+          '  <td><div style="display:flex;gap:4px;align-items:center">' +
+          '    <input type="text" class="fsel doc-link" data-key="' + d.key + '" value="' + escAttr(linkVal) + '" placeholder="Paste Google Doc link">' +
+          (linkVal ? '<a href="' + linkVal + '" target="_blank" rel="noopener" class="chk-link">↗</a>' : '') +
+          '  </div></td>' +
+          '  <td><div style="display:flex;gap:4px;align-items:center">' +
+          '    <input type="text" class="fsel doc-gamma" data-key="' + d.key + '" value="' + escAttr(meta.gamma) + '" placeholder="Paste Gamma link">' +
+          (meta.gamma ? '<a href="' + meta.gamma + '" target="_blank" rel="noopener" class="chk-link">↗</a>' : '') +
+          '  </div></td>' +
+          '  <td><input type="text" class="fsel doc-notes" data-key="' + d.key + '" value="' + escAttr(meta.notes) + '" placeholder="Add a note"></td>' +
+          '  <td><button class="btn btn-ghost btn-sm" onclick="openDocCard(\'' + d.key.replace(/'/g, "\\'") + '\')">View →</button></td>' +
+          '</tr>';
+      }).join("") +
+      '  </tbody>' +
+      '</table>' +
+      '</div>';
+
+    wrap.querySelectorAll(".doc-priority").forEach(function (el) {
+      el.addEventListener("change", function () {
+        setDocMeta(el.dataset.key, "priority", el.value === "" ? null : Number(el.value));
+      });
+    });
+    wrap.querySelectorAll(".doc-clienttype").forEach(function (el) {
+      el.addEventListener("change", function () {
+        setDocMeta(el.dataset.key, "clientType", el.value);
+      });
+    });
+    wrap.querySelectorAll(".doc-stage").forEach(function (el) {
+      el.addEventListener("change", function () {
+        setDocMeta(el.dataset.key, "stage", el.value);
+      });
+    });
+    wrap.querySelectorAll(".doc-link").forEach(function (el) {
+      el.addEventListener("change", function () {
+        setDocMeta(el.dataset.key, "link", el.value.trim());
+        renderDocTable(tabKey);
+      });
+    });
+    wrap.querySelectorAll(".doc-gamma").forEach(function (el) {
+      el.addEventListener("change", function () {
+        setDocMeta(el.dataset.key, "gamma", el.value.trim());
+        renderDocTable(tabKey);
+      });
+    });
+    wrap.querySelectorAll(".doc-notes").forEach(function (el) {
+      el.addEventListener("change", function () {
+        setDocMeta(el.dataset.key, "notes", el.value);
+      });
+    });
+    wrap.querySelectorAll("th.sortable").forEach(function (th) {
+      th.addEventListener("click", function () {
+        const cur = docTableSort[tabKey];
+        docTableSort[tabKey] = cur === "asc" ? "desc" : cur === "desc" ? null : "asc";
+        renderDocTable(tabKey);
+      });
+    });
   }
 
-  renderAllDocs(NEW_CLIENT_DOCS, "intake-all-list", "intake-all-count");
-  renderDocGroup(NEW_CLIENT_DOCS, "intake-doc-cats");
+  /* ---------- Document Card Modal ---------- */
+  function tabKeyOf(key) { return key.split("::")[0]; }
 
-  renderAllDocs(ESTABLISHED_CLIENT_DOCS, "session-all-list", "session-all-count");
-  renderDocGroup(ESTABLISHED_CLIENT_DOCS, "session-doc-cats");
+  function openDocCard(key) {
+    const d = docLookup[key];
+    if (!d) return;
+    renderDocModal(key);
+    document.getElementById("doc-modal-backdrop").style.display = "flex";
+  }
+
+  function closeDocModal() {
+    document.getElementById("doc-modal-backdrop").style.display = "none";
+  }
+
+  function renderDocModal(key) {
+    const d = docLookup[key];
+    const meta = getDocMeta(key);
+
+    const clientTypeVal = meta.clientType || d.catLabel;
+
+    document.getElementById("doc-modal-title").textContent = d.title;
+    document.getElementById("doc-modal-body").innerHTML =
+      '<div class="modal-field">' +
+      '  <span class="modal-label">Client Type</span>' +
+      '  <select class="fsel doc-modal-clienttype">' + selectOptionsHTML(CLIENT_TYPE_OPTIONS, clientTypeVal, null) + '</select>' +
+      '</div>' +
+      '<div class="modal-field">' +
+      '  <span class="modal-label">Stage</span>' +
+      '  <select class="fsel doc-modal-stage">' + selectOptionsHTML(STAGE_OPTIONS, meta.stage, "— Select —") + '</select>' +
+      '</div>' +
+      (d.desc ? '<div class="modal-field"><span class="modal-label">What It Is</span><div class="muted">' + d.desc + '</div></div>' : '') +
+      (d.link ? '<div class="modal-field"><a class="btn btn-ghost btn-sm" href="' + d.link + '" target="_blank" rel="noopener">Open document ↗</a></div>' : '') +
+      '<div class="modal-field">' +
+      '  <span class="modal-label">Priority</span>' +
+      '  <input type="number" class="fsel doc-modal-priority" value="' + (meta.priority !== null && meta.priority !== undefined ? meta.priority : '') + '" style="width:80px">' +
+      '</div>' +
+      '<div class="modal-field">' +
+      '  <span class="modal-label">Google Doc Link</span>' +
+      '  <div style="display:flex;gap:6px;align-items:center">' +
+      '    <input type="text" class="fsel doc-modal-link" value="' + escAttr(meta.link) + '" placeholder="Paste Google Doc link">' +
+      (meta.link ? '<a href="' + meta.link + '" target="_blank" rel="noopener" class="chk-link">↗</a>' : '') +
+      '  </div>' +
+      '</div>' +
+      '<div class="modal-field">' +
+      '  <span class="modal-label">Gamma Link</span>' +
+      '  <div style="display:flex;gap:6px;align-items:center">' +
+      '    <input type="text" class="fsel doc-modal-gamma" value="' + escAttr(meta.gamma) + '" placeholder="Paste Gamma link">' +
+      (meta.gamma ? '<a href="' + meta.gamma + '" target="_blank" rel="noopener" class="chk-link">↗</a>' : '') +
+      '  </div>' +
+      '</div>' +
+      '<div class="modal-field">' +
+      '  <span class="modal-label">Notes</span>' +
+      '  <textarea class="fsel doc-modal-notes" placeholder="Add a note">' + escAttr(meta.notes) + '</textarea>' +
+      '</div>';
+
+    const body = document.getElementById("doc-modal-body");
+    const tabKey = tabKeyOf(key);
+
+    body.querySelector(".doc-modal-priority").addEventListener("change", function (e) {
+      setDocMeta(key, "priority", e.target.value === "" ? null : Number(e.target.value));
+      renderDocTable(tabKey);
+    });
+    body.querySelector(".doc-modal-clienttype").addEventListener("change", function (e) {
+      setDocMeta(key, "clientType", e.target.value);
+      renderDocTable(tabKey);
+    });
+    body.querySelector(".doc-modal-stage").addEventListener("change", function (e) {
+      setDocMeta(key, "stage", e.target.value);
+      renderDocTable(tabKey);
+    });
+    body.querySelector(".doc-modal-link").addEventListener("change", function (e) {
+      setDocMeta(key, "link", e.target.value.trim());
+      renderDocModal(key);
+      renderDocTable(tabKey);
+    });
+    body.querySelector(".doc-modal-gamma").addEventListener("change", function (e) {
+      setDocMeta(key, "gamma", e.target.value.trim());
+      renderDocModal(key);
+      renderDocTable(tabKey);
+    });
+    body.querySelector(".doc-modal-notes").addEventListener("change", function (e) {
+      setDocMeta(key, "notes", e.target.value);
+      renderDocTable(tabKey);
+    });
+  }
+
+  document.getElementById("doc-modal-backdrop").addEventListener("click", function (e) {
+    if (e.target === this) closeDocModal();
+  });
+  document.addEventListener("keydown", function (e) {
+    if (e.key === "Escape") closeDocModal();
+  });
+
+  renderDocTable("intake");
+  renderDocTable("session");
 
   /* ---------- Per-Client Checklists ---------- */
   const LS_CLIENTS = "optimind_dash_clients";

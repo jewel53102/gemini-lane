@@ -14,7 +14,7 @@ const CLIENT = {
 
 const SPRINTS = [
   {
-    id: "01", dates: "Aug 12 – Aug 25, 2026", start: "2026-08-12", end: "2026-08-25",
+    id: "01", dates: "Aug 12 – Aug 31, 2026", start: "2026-08-12", end: "2026-08-31",
     theme: "Onboarding & SOPs", bigRock: "Your new specialist has something to land on",
     cost: 2000, meetings: "Aug 12, 2–4pm ET · Aug 14, 11am–1pm ET",
     goal: "Your new specialist has something to land on, and two long-running irritations disappear.",
@@ -29,31 +29,21 @@ const SPRINTS = [
           "A weekly one-to-one and a supervision slot are on the calendar before she starts.",
           "A reference sheet points to the client folder structure, forms and tools."
         ]},
-      { badge: "2nd Priority", title: "Appointment reminders, case by case", desc: "Investigate how to automate appointment reminders on a case-by-case basis — via Calendly, Zoom, or a separate automation if neither supports it natively.", tag: "Part 1 §02",
-        doneWhen: [
-          "Confirmed whether Calendly or Zoom natively supports per-appointment reminders.",
-          "If neither does, a separate automation is scoped to send reminders case by case.",
-          "Instructions are documented in SOP Manual."
-        ]},
-      { badge: "3rd Priority", title: "Rate sheet", desc: "Turn the service-summary PDF into a live hosted link you update once, instead of re-exporting from Gamma each time.", tag: "Part 1 §02, Rec 13",
-        doneWhen: [
-          "The service summary lives at a permanent URL, and the follow-up email links to it rather than attaching a file."
-        ]},
-      { badge: "4th Priority", title: "Research notetaking software", desc: "Shortlist AI notetakers that write straight into the client record, ahead of the Sprint 02 decision.", tag: "Rec 3",
+      { badge: "2nd Priority", title: "Research notetaking software", desc: "Shortlist AI notetakers that write straight into the client record, ahead of the Sprint 02 decision.", tag: "Rec 3",
         doneWhen: [
           "A shortlist of notetaking software exists, evaluated against that requirement."
         ]},
-      { badge: "5th Priority", title: "Research CRM software", desc: "Shortlist practice-management platforms ahead of the Sprint 03 decision.", tag: "Rec 6",
+      { badge: "3rd Priority", title: "Research CRM software", desc: "Shortlist practice-management platforms ahead of the Sprint 03 decision.", tag: "Rec 6",
         doneWhen: [
           "Multiple CRM systems are investigated, with a document comparing the benefits and drawbacks of each."
         ]},
-      { badge: "6th Priority", title: "Research in-house employment contract drafting", desc: "Fractional HR Specialists quoted $2,000 to draft the new hire's employment contracts. Gemini Lane will research using ChatGPT and Claude whether these can be drawn up in-house first.", tag: "Part 1 §05",
+      { badge: "4th Priority", title: "Research in-house employment contract drafting", desc: "Fractional HR Specialists quoted $2,000 to draft the new hire's employment contracts. Gemini Lane will research using ChatGPT and Claude whether these can be drawn up in-house first.", tag: "Part 1 §05",
         doneWhen: [
           "A list exists of every document a first hire actually requires: offer letter, employment agreement, and any state-required notices.",
           "Draft versions are produced using ChatGPT and Claude and reviewed for adequacy.",
           "A recommendation is given: draft in-house, or take the Fractional HR Specialists' $2,000 quote."
         ]},
-      { badge: "7th Priority", title: "New-employer financial prep", desc: "Sarah's own conversation with her CPA — confirm unemployment insurance registration, workers' comp, and payroll setup for a first employee before her first paycheck. Not a Gemini Lane deliverable.", tag: "Part 1 §07",
+      { badge: "5th Priority", title: "New-employer financial prep", desc: "Sarah's own conversation with her CPA — confirm unemployment insurance registration, workers' comp, and payroll setup for a first employee before her first paycheck. Not a Gemini Lane deliverable.", tag: "Part 1 §07",
         doneWhen: [
           "A conversation is had with your CPA about unemployment insurance registration and workers' comp requirements for a first employee.",
           "What's already handled by your current payroll service, versus what still needs to be set up, is confirmed.",
@@ -62,18 +52,81 @@ const SPRINTS = [
     ]
   },
   {
-    id: "02", dates: "Aug 26 – Sep 8, 2026", start: "2026-08-26", end: "2026-09-08",
-    theme: "Buy back hours", bigRock: "Session notes stop being copy-paste",
-    cost: 3000, meetings: "TBD",
-    goal: "The largest recurring time cost in the week is automated, and the record of what has been taught stops living in session notes.",
+    id: "02", dates: "Sep 1 – Sep 8, 2026", start: "2026-09-01", end: "2026-09-08",
+    theme: "Finalize and hire", bigRock: "Every SOP and onboarding document is final, and the new specialist walks into a written first week",
+    cost: 1200, meetings: "Decision session — week of Aug 31 · Week One support, Sep 8–12",
+    goal: "The SOP and onboarding set stops being a draft. Every open question is answered or explicitly parked, the documents go to Sarah\u2019s Google Drive as final, and the specialist hired Sep 4 starts the following week against a plan that already exists.",
     priorities: [
-      { badge: "1st Priority", title: "Automate the session-notes chain", desc: "One AI notetaker writes straight into the client record — recovers 2.3–5.3 hrs every week.", tag: "Rec 3",
+      { badge: "1st Priority", title: "Close every open question in the SOP and onboarding set", desc: "One working session against a single register of every TBD, placeholder and unresolved decision across the nineteen documents — answered, or explicitly parked with a named owner and date.", tag: "Rec 4, 10",
         doneWhen: [
-          "One notetaker is selected and running on live sessions.",
-          "Its output lands in the client record with no copy-paste step.",
-          "The vendor has confirmed in writing that it does not train on session content, and has stated its retention period.",
-          "The output arrives in your existing note structure, not a generic meeting summary.",
-          "You have established what the current email-summary tool is, and under what data terms."
+          { text: "A single register lists every open question and outstanding to-do across the SOP and onboarding set, grouped by document, with an owner against each.", link: "OptiMind-Open-Items-Register.html" },
+          { text: "Sarah has worked through the register in one sitting and given a decision on each item, or parked it with a date.", link: "OptiMind-Open-Items-Register.html", note: "In progress \u2014 22 of 72 answered Aug 31, covering the safety protocol, time off, communication norms, advocacy flagging and company email. 50 remain." },
+          "Every parked item is visibly marked in the document itself, so a reader knows it is open rather than assuming it is settled.",
+          { text: "The items requiring an attorney (non-compete, mandated-reporter status, EEO thresholds, record retention) are separated out and sent as one bundle, not one at a time.", link: "sops/Attorney-Review-Checklist.html", note: "Done \u2014 consolidated Aug 31 into the Attorney Review Checklist: sixteen questions in four groups, each with the document it blocks and the current working position." }
+        ]},
+      { badge: "2nd Priority", title: "Pre-hire paperwork ready to sign by Sep 4", desc: "Offer letter, employment agreement and confidentiality agreement carrying real terms — name, start date, compensation, schedule — not placeholders, before the offer goes out.", tag: "Rec 4",
+        doneWhen: [
+          { text: "Compensation structure and amount, pay frequency, schedule and start date are decided and written into the Offer Letter and Employment Agreement.", link: "onboarding/Offer-Letter.html" },
+          { text: "The candidate\u2019s name and the acceptance deadline are filled in.", link: "onboarding/Offer-Letter.html" },
+          { text: "Non-solicitation period, termination notice and the arbitration-vs-courts question are decided; the non-compete clause is either removed or attorney-reviewed before it is signed.", link: "onboarding/Employment-Agreement.html" },
+          { text: "The Confidentiality & Data-Handling Agreement states the approved storage locations, the personal-device rule and the post-employment duration.", link: "onboarding/Confidentiality-and-Data-Handling-Agreement.html", note: "Storage locations named Aug 31 (Drive, Workspace, PandaDoc, Zoom, Calendly, JotForms). Personal-device rule and post-employment duration are still open \u2014 both attorney items." },
+          "All three documents are exported clean, with no TBD markers visible to the candidate."
+        ]},
+      { badge: "3rd Priority", title: "Publish the finalized set to Google Drive", desc: "The whole SOP and onboarding library, final and versioned, in the folder structure Sarah will actually use — with anything still open clearly flagged rather than silently left blank.", tag: "Rec 4, 5",
+        doneWhen: [
+          { text: "The folder structure in the Internal Reference Sheet is confirmed by Sarah and built in Drive.", link: "sops/Internal-Reference-Sheet.html" },
+          "Every document is exported to Drive in final form — PDF for anything signed or client-facing, editable for anything Sarah maintains.",
+          "Documents with parked questions carry a visible \u2018open item\u2019 flag at the top, so the specialist never mistakes a gap for a rule.",
+          "A single table of contents points to every document and states which are final and which are provisional.",
+          "The stale OptiMind-SOPs-Export copy is retired, so there is only one live set."
+        ]},
+      { badge: "4th Priority", title: "Week One onboarding support (Sep 8–12)", desc: "Everything in the Week-One Onboarding Schedule — pre-day-one provisioning through the Day 5 one-to-one — supported directly by Gemini Lane.", tag: "Rec 4, 10",
+        doneWhen: [
+          { text: "Before day one: company email created with signature, Calendly seat with all four event types, calendar sync to Sarah, Zoom seat, document and client-file access granted, weekly one-to-one on the calendar.", link: "sops/Week-One-Onboarding-Schedule.html", note: "Email format confirmed as firstname@optimind-es.com. Calendar sync now follows the Calendar Access Procedure in the Internal Reference Sheet. The company phone line is still blocked on an attorney answer." },
+          "Employment paperwork signed and filed before the first day, not during it.",
+          { text: "Day 1–5 run as written: Role Definition walkthrough, Client Workflow and curriculum training, provider-coordination templates, three mock sessions, documentation practice, first one-to-one.", link: "sops/Week-One-Onboarding-Schedule.html" },
+          "Every account and tool the specialist needs in week one is confirmed working before Sep 8, not discovered missing on the day.",
+          "A short end-of-week debrief records what the schedule got wrong, so week two is corrected rather than repeated."
+        ]},
+      { badge: "5th Priority", title: "Caseload ramp curve, weeks 1–8", desc: "Replace the placeholder ramp table in the Week-One Onboarding Schedule with the real week-by-week hour targets, agreed with Sarah.", tag: "Rec 4",
+        doneWhen: [
+          { text: "A target billable-hours figure exists for each of weeks 1 through 8, ending at the confirmed ~30 hours.", link: "sops/Week-One-Onboarding-Schedule.html" },
+          "Which clients Sarah hands off, and in which week, is named against the curve rather than left to be worked out later.",
+          "The curve accounts for the mock-session and shadowing weeks that carry no billable load.",
+          { text: "The Week-One Onboarding Schedule and the Role Definition both reflect the same numbers.", link: "sops/Role-Definition-and-Responsibilities.html" }
+        ]},
+      { badge: "6th Priority", title: "Client resource documents \u2014 inventory and draft the missing set", desc: "The Client Resources page lists twenty-five documents the specialist works from. Three of them exist. These are the forms and worksheets her caseload actually runs on.", tag: "Rec 4, 7",
+        doneWhen: [
+          { text: "Every client resource document is inventoried against what actually exists \u2014 today 3 of 25 have a file behind them.", link: "client-resources.html", note: "New-client set 12 documents, established-client set 11, plus the document-collection checklist." },
+          { text: "The New Client Intake Form is confirmed as the live version, and whether it serves all three client types or only adults.", link: "forms/OptiMind-Adult-Intake-Form.html", note: "Filed under Adult, but listed as an all-client-types document \u2014 one of these is wrong." },
+          { text: "The Parent Accountability Contract is finalized alongside the Parent Terms of Service, rather than duplicating it.", link: "sops/Parent-Terms-of-Service.html" },
+          { text: "The rest of the all-client intake set is drafted: Time Account Spreadsheet, Client Set-up Sheet, Syllabus Form, School and Therapist Information Release Forms.", link: "sops/Client-Workflow-Intake-to-Graduation.html", note: "The release forms gate every provider conversation \u2014 without them the Client Workflow stalls at stage two." },
+          { text: "The school-age set is drafted: School Info Form, Teacher Feedback Form, and the teacher and therapist email templates.", link: "sops/Role-Definition-and-Responsibilities.html", note: "The Role Definition has the specialist using these templates from week one." },
+          { text: "The established-client worksheets are inventoried and prioritized by client type, with a target sprint against each.", link: "client-resources.html", note: "Middle & high school 7, college 3, adult 1 \u2014 none drafted yet. Not all of these belong in Sprint 02." },
+          { text: "Every document that gets drafted is linked from the Client Resources page, so nothing exists only in a folder.", link: "client-resources.html" }
+        ]},
+      { badge: "7th Priority", title: "One-page data-handling policy", desc: "What's held, where it lives, who can access it — signed by the new hire before day one.", tag: "Rec 5",
+        doneWhen: [
+          "One page states what client data is held, where it lives, who can access it, and how long it is kept.",
+          "The new specialist has signed against it.",
+          "A note records which student-records obligations you have confirmed apply, and which are still open with an education attorney."
+        ]}
+    ]
+  },
+  {
+    id: "03", dates: "Sep 9 – Sep 22, 2026", start: "2026-09-09", end: "2026-09-22",
+    theme: "Buy back hours", bigRock: "The record of what has been taught leaves session notes, and the platform decision lands on Zoho One",
+    cost: 3000, meetings: "TBD",
+    goal: "The record of what has been taught stops living in session notes, client data finally has a tested backup, and the platform question is settled against Zoho One so the next sprint can build rather than shop.",
+    priorities: [
+      { badge: "1st Priority", title: "Zoho One — scope, licensing and fit decision", desc: "Zoho One is the named candidate for the practice platform. Test it against the six hard criteria with a real client file before the build sprint commits to it.", tag: "Rec 6",
+        doneWhen: [
+          "A written list exists of what the system must hold: contact and family details, intake responses, session history and notes, documents, service agreement, scheduling, invoicing, curriculum coverage, referral source, and dated deadlines attached to a client or case.",
+          "Zoho One has been demoed with a real client file loaded — not a sales walkthrough — and tested against six criteria: one screen per client; replaces tools rather than adding one; handles minors and family units; supports migration; can hold a dated, reminding deadline against a client record; and exposes a documented API or native automation.",
+          "Which Zoho applications are actually in scope is decided and written down — CRM, Bookings, Sign, Books, Notebook, Flow — rather than \u2018all of Zoho One\u2019.",
+          "Licensing and seat cost for two users is confirmed in writing, with the data-processing terms read.",
+          "You have an answer on whether HIPAA applies to you, since it changes the configuration and the price.",
+          "A named fallback is recorded in case Zoho fails a hard criterion, so the build sprint is not blocked."
         ]},
       { badge: "2nd Priority", title: "Curriculum coverage tracker", desc: "Track what's been taught per client — sequence, modules covered, and a \"next up\" field, in one place.", tag: "Rec 7",
         doneWhen: [
@@ -84,38 +137,45 @@ const SPRINTS = [
         ]},
       { badge: "3rd Priority", title: "Independent backup, tested", desc: "A sync service isn't a backup. Add one beyond Drive sync, and confirm it works by restoring a file.", tag: "Rec 5",
         doneWhen: [
-          "An independent backup of the client folder exists beyond Drive sync, and restoring one file has actually been tested."
+          { text: "An independent backup of the client folder exists beyond Drive sync, and restoring one file has actually been tested.", note: "Escalated Aug 31 \u2014 the Data-Handling Policy now names Google Drive as the interim system of record, so this is the largest single risk in the data set until the dashboard lands. Cadence, restore verification and a target date are all still unset." }
         ]},
-      { badge: "4th Priority", title: "Shortlist the platform to two candidates", desc: "Demo two real platforms against six hard criteria, loaded with a real client file. Decision lands in Sprint 03.", tag: "Rec 6",
+      { badge: "4th Priority", title: "How-to capture for SOP documentation", desc: "Step-by-step visual guides recorded once while the work is being done — Scribe or equivalent — so the written SOPs are backed by something a new hire can follow click by click.", tag: "Rec 4",
         doneWhen: [
-          "A written list exists of what the system must hold: contact and family details, intake responses, session history and notes, documents, service agreement, scheduling, invoicing, curriculum coverage, referral source, and dated deadlines attached to a client or case.",
-          "Two candidates have been demoed with a real client file loaded — not a sales walkthrough.",
-          "Each has been tested against six criteria: one screen per client; replaces tools rather than adding one; handles minors and family units; includes vendor-assisted migration; can hold a dated, reminding deadline against a client record; and exposes a documented API, native automation or webhooks.",
-          "You have an answer on whether HIPAA applies to you, since it changes the shortlist and the price."
+          "A capture tool is selected — Scribe Pro Personal runs $25/seat/month annual, $35 monthly; the free tier is web-only with no desktop capture.",
+          { text: "The recurring tasks worth capturing are listed first: booking through Calendly, running a session in Zoom, filing a session note, updating the curriculum tracker, sending the teacher and therapist templates, invoicing.", link: "sops/Client-Workflow-Intake-to-Graduation.html" },
+          "Each captured guide is exported and linked from the SOP document it belongs to, rather than living only inside the tool.",
+          { text: "A rule is written for who records a new guide when a process changes, so the library does not go stale the moment the engagement ends.", link: "sops/Organization-and-Labeling-Standards.html" }
         ]},
-      { badge: "5th Priority", title: "One-page data-handling policy", desc: "What's held, where it lives, who can access it — signed by the new hire before day one.", tag: "Rec 5",
+      { badge: "5th Priority", title: "Rate sheet", desc: "Turn the service-summary PDF into a live hosted link you update once, instead of re-exporting from Gamma each time.", tag: "Part 1 §02, Rec 13",
         doneWhen: [
-          "One page states what client data is held, where it lives, who can access it, and how long it is kept.",
-          "The new specialist has signed against it.",
-          "A note records which student-records obligations you have confirmed apply, and which are still open with an education attorney."
+          "The service summary lives at a permanent URL, and the follow-up email links to it rather than attaching a file."
         ]}
     ]
   },
   {
-    id: "03", dates: "Sep 9 – Sep 22, 2026", start: "2026-09-09", end: "2026-09-22",
-    theme: "Build and configure", bigRock: "Platform chosen and customized; the scheduling cycle written down",
+    id: "04", dates: "Sep 23 – Oct 6, 2026", start: "2026-09-23", end: "2026-10-06",
+    theme: "Build Zoho One", bigRock: "Zoho One built and configured; session notes automated into it; the scheduling cycle written down",
     cost: 3000, meetings: "TBD",
-    goal: "The platform is chosen, and Gemini Lane builds and customizes it — most of the sprint goes here. The scheduling cycle, dashboard scope, advocacy tracking, and analytics get worked out in parallel.",
+    goal: "Zoho One is built and customized by Gemini Lane — most of the sprint goes here — and the session-notes chain is automated into it now that there is a record for notes to land in. The scheduling cycle, dashboard scope, advocacy tracking and analytics get worked out in parallel.",
     priorities: [
-      { badge: "1st Priority", title: "Choose the platform; Gemini Lane handles setup and customization", desc: "Gemini Lane builds and customizes it directly, rather than Sarah building it personally. This takes most of the sprint.", tag: "Rec 6, 16",
+      { badge: "1st Priority", title: "Build and configure Zoho One", desc: "Gemini Lane builds and customizes Zoho One directly — CRM, Bookings, Sign and Flow — rather than Sarah building it personally. This takes most of the sprint.", tag: "Rec 6, 16",
         doneWhen: [
-          "One platform is chosen and paid for, with the data terms read.",
-          "CRM setup and customization is underway with Gemini Lane.",
+          "Zoho One is licensed and paid for at the agreed seat count, with the data terms read.",
+          "Zoho CRM modules, layouts and client/family record structure are built and customized by Gemini Lane.",
+          "Zoho Bookings is configured against the Calendly event types it replaces, and Zoho Sign against the agreements currently going through PandaDoc.",
           "Your existing client record structure is mapped to the platform's fields — on paper, before any data moves.",
           "A written decision records which of JotForms, PandaDoc, the leads spreadsheet and the billing spreadsheet it will replace, and when.",
           "Deadline handling is configured before any client data is entered: a deadline field or task type that attaches to a client record, carries an owner, and reminds ahead of the date."
         ]},
-      { badge: "2nd Priority", title: "Annual scheduling cycle & waitlist policy", desc: "Availability round, bridge block, four waitlist states, deposit and refund rule — one repeatable process.", tag: "Rec 1, 2",
+      { badge: "2nd Priority", title: "Automate the session-notes chain", desc: "One AI notetaker writes straight into the Zoho client record — recovers 2.3–5.3 hrs every week. Held until the platform exists, so the output has somewhere real to land.", tag: "Rec 3",
+        doneWhen: [
+          "One notetaker is selected and running on live sessions.",
+          "Its output lands in the Zoho client record with no copy-paste step — including whether Zoho covers this natively before a separate tool is bought.",
+          "The vendor has confirmed in writing that it does not train on session content, and has stated its retention period.",
+          "The output arrives in your existing note structure, not a generic meeting summary.",
+          "You have established what the current email-summary tool is, and under what data terms."
+        ]},
+      { badge: "3rd Priority", title: "Annual scheduling cycle & waitlist policy", desc: "Availability round, bridge block, four waitlist states, deposit and refund rule — one repeatable process.", tag: "Rec 1, 2",
         doneWhen: [
           "The annual cycle is written down and dated in the calendar: availability form out in early July with a locked deadline, placement round completed before term starts, and a standing bridge block of three or four recurring slots held outside the contested after-school window.",
           "Ranked preferences replace single-slot requests on the availability form.",
@@ -128,41 +188,47 @@ const SPRINTS = [
           "The bridge offer is defined as its own bounded engagement.",
           "The whole cycle is documented as a repeatable process."
         ]},
-      { badge: "3rd Priority", title: "Define the operations dashboard", desc: "Scope the questions it must answer on one screen before building any widgets.", tag: "Rec 6, 8, 20",
+      { badge: "4th Priority", title: "Define the operations dashboard", desc: "Scope the questions it must answer on one screen before building any widgets.", tag: "Rec 6, 8, 20",
         doneWhen: [
           "A written list of the questions it must answer on one screen.",
           "Each question is mapped to where the data will come from, and which are not yet capturable.",
           "A decision on whether it is built inside the platform, in a spreadsheet, or in a reporting tool."
         ]},
-      { badge: "4th Priority", title: "Advocacy case tracking inside the CRM", desc: "Every statutory deadline entered against the client record — not a thirteenth, standalone system.", tag: "Rec 16",
+      { badge: "5th Priority", title: "Advocacy case tracking inside the CRM", desc: "Every statutory deadline entered against the client record — not a thirteenth, standalone system.", tag: "Rec 16",
         doneWhen: [
           "Every statutory and school deadline for every active case is entered in the CRM against the client record, as the prep date rather than the due date.",
           "Each deadline carries an owner and a reminder, and appears on the operations dashboard when it falls inside thirty days.",
           "A consistent subject-line prefix and label convention exists per case.",
           "Time is being logged against each case from the first one."
         ]},
-      { badge: "5th Priority", title: "Basic analytics & channel tracking", desc: "GA + UTM tagging so a lead's source survives all the way to a booked consult.", tag: "Part 1 §03",
+      { badge: "6th Priority", title: "Basic analytics & channel tracking", desc: "GA + UTM tagging so a lead's source survives all the way to a booked consult.", tag: "Part 1 §03",
         doneWhen: [
           "Basic website analytics (Google Analytics or equivalent) is installed and confirmed working.",
           "Every outbound marketing link carries a UTM tag identifying its source.",
           "A booked consult can be traced back to the channel and, where applicable, the specific referral source that produced it."
         ]},
-      { badge: "6th Priority", title: "College curriculum tracker", desc: "Build the college-counseling timeline and decision points into the CRM alongside the advocacy deadlines, keyed to each school's application deadline.", tag: "Rec 7, 16; Part 1 §01",
+      { badge: "7th Priority", title: "College curriculum tracker", desc: "Build the college-counseling timeline and decision points into the CRM alongside the advocacy deadlines, keyed to each school's application deadline.", tag: "Rec 7, 16; Part 1 §01",
         doneWhen: [
           "Each college-counseling student's decision points and deadlines are entered against the client record in the CRM.",
           "Deadlines are keyed to the specific school's application date, with lead time, not a generic due date.",
           "These deadlines appear on the operations dashboard alongside advocacy deadlines when inside thirty days."
         ]},
-      { badge: "7th Priority", title: "Goals tracking", desc: "A shared record of progress against each client's set goals — equally important as the curriculum tracker, but a separate workflow: what was taught vs. what it was meant to achieve.", tag: "Rec 14; Part 1 §01",
+      { badge: "8th Priority", title: "Goals tracking", desc: "A shared record of progress against each client's set goals — equally important as the curriculum tracker, but a separate workflow: what was taught vs. what it was meant to achieve.", tag: "Rec 14; Part 1 §01",
         doneWhen: [
           "Each client's goals from intake are entered against the client record.",
           "Progress is logged against each goal in a consistent place, not reconstructed from session notes.",
           "The record is in a form Sprint 08's feedback loop can pull a progress snapshot from."
+        ]},
+      { badge: "9th Priority", title: "Appointment reminders, case by case", desc: "Investigate how to automate appointment reminders on a case-by-case basis — via Calendly, Zoom, or a separate automation if neither supports it natively.", tag: "Part 1 §02",
+        doneWhen: [
+          "Confirmed whether Calendly or Zoom natively supports per-appointment reminders.",
+          "If neither does, a separate automation is scoped to send reminders case by case.",
+          "Instructions are documented in SOP Manual."
         ]}
     ]
   },
   {
-    id: "04", dates: "Sep 23 – Oct 6, 2026", start: "2026-09-23", end: "2026-10-06",
+    id: "05", dates: "Oct 7 – Oct 20, 2026", start: "2026-10-07", end: "2026-10-20",
     theme: "Pilot and pay", bigRock: "Platform piloted on real clients; billing goes self-service",
     cost: 2000, meetings: "TBD",
     goal: "The platform is customized and proving itself on real clients before anything is migrated, and invoicing stops being transcription.",
@@ -198,11 +264,18 @@ const SPRINTS = [
           "A quarterly P&L review is on the calendar with the CPA/bookkeeper.",
           "The first review is dated.",
           "Review results feed the pricing and cost decisions they're meant to inform."
+        ]},
+      { badge: "6th Priority", title: "Set up and test AI notetaking software", desc: "Configure the selected notetaker against the Zoho client record and run it on real sessions during the pilot, alongside the three new clients going through the platform.", tag: "Rec 3",
+        doneWhen: [
+          "The notetaker selected in Sprint 04 is configured and running on live sessions with the pilot clients.",
+          "Its output lands in the Zoho client record with no copy-paste step.",
+          "The output is checked against your existing note structure, not a generic meeting summary, and adjusted if it doesn't match.",
+          "Any accuracy or formatting issues found during the pilot are logged and fixed before it runs on the full caseload."
         ]}
     ]
   },
   {
-    id: "05", dates: "Oct 21 – Nov 3, 2026", start: "2026-10-21", end: "2026-11-03",
+    id: "06", dates: "Nov 4 – Nov 17, 2026", start: "2026-11-04", end: "2026-11-17",
     theme: "Migrate the caseload", bigRock: "Existing caseload migration begins",
     cost: 2500, meetings: "TBD",
     goal: "The migration finally starts — over a term break, in two halves, with your new specialist taking a share of it.",
@@ -216,7 +289,7 @@ const SPRINTS = [
     ]
   },
   {
-    id: "06", dates: "Nov 4 – Nov 17, 2026", start: "2026-11-04", end: "2026-11-17",
+    id: "07", dates: "Nov 18 – Dec 1, 2026", start: "2026-11-18", end: "2026-12-01",
     theme: "One record, everything in it", bigRock: "Caseload migrated; four tools retired",
     cost: 3000, meetings: "TBD",
     goal: "The migration finishes, the old tools get switched off, and the dashboard gets built on top.",
@@ -240,7 +313,7 @@ const SPRINTS = [
     ]
   },
   {
-    id: "07", dates: "Nov 18 – Dec 1, 2026", start: "2026-11-18", end: "2026-12-01",
+    id: "08", dates: "Dec 2 – Dec 15, 2026", start: "2026-12-02", end: "2026-12-15",
     theme: "The referral engine", bigRock: "Your best channel finally has a system",
     cost: 2500, meetings: "TBD",
     goal: "Your best channel finally gets a system, a cadence and a number attached to it.",
@@ -284,7 +357,7 @@ const SPRINTS = [
     ]
   },
   {
-    id: "08", dates: "Dec 16 – Dec 29, 2026", start: "2026-12-16", end: "2026-12-29",
+    id: "09", dates: "Dec 30, 2026 – Jan 12, 2027", start: "2026-12-30", end: "2027-01-12",
     theme: "Close the loops", bigRock: "Feedback, follow-up and parent sessions run themselves",
     cost: 2000, meetings: "TBD",
     goal: "The things that currently depend on you remembering stop depending on you remembering.",
@@ -339,7 +412,7 @@ const SPRINTS = [
     ]
   },
   {
-    id: "09", dates: "Dec 30, 2026 – Jan 12, 2027", start: "2026-12-30", end: "2027-01-12",
+    id: "10", dates: "Jan 13 – Jan 26, 2027", start: "2027-01-13", end: "2027-01-26",
     theme: "Definition and evidence", bigRock: "Graduation defined; outcome baseline started",
     cost: 2000, meetings: "TBD",
     goal: "What \"finished\" means gets defined, and the clock starts on outcome data.",
@@ -373,7 +446,7 @@ const SPRINTS = [
     ]
   },
   {
-    id: "10", dates: "Jan 13 – Jan 26, 2027", start: "2027-01-13", end: "2027-01-26",
+    id: "11", dates: "Jan 27 – Feb 9, 2027", start: "2027-01-27", end: "2027-02-09",
     theme: "Look at the numbers", bigRock: "First real read on what a client costs and is worth",
     cost: 2000, meetings: "TBD",
     goal: "Four months of data becomes the first real read on what works — and the input to the 2027 plan.",
@@ -412,7 +485,7 @@ const SPRINTS = [
     ]
   },
   {
-    id: "11", dates: "Q1 2027", start: "2027-01-27", end: "2027-03-31",
+    id: "12", dates: "Q1 2027", start: "2027-02-17", end: "2027-04-21",
     theme: "Billing workflow review", bigRock: "Confirm the billing workflow before it's locked into the new platform",
     cost: 2000, meetings: "TBD",
     goal: "Before the Practice Management platform is locked in as the long-term home for billing, confirm it actually makes recurring billing and client invoicing easier — not just scheduling and notes.",
@@ -429,18 +502,18 @@ const SPRINTS = [
 
 const BUFFERS = [
   {
-    id: "1", position: "Between Sprint 04 and Sprint 05",
-    dates: "Oct 7 – Oct 20, 2026", start: "2026-10-07", end: "2026-10-20",
-    bigRock: "Catch up on unfinished work from Sprints 01–04",
+    id: "1", position: "Between Sprint 05 and Sprint 06",
+    dates: "Oct 21 – Nov 3, 2026", start: "2026-10-21", end: "2026-11-03",
+    bigRock: "Catch up on unfinished work from Sprints 01–05",
     cost: 1200, meetings: "TBD",
-    note: "No new work starts here — what lands in this sprint depends on what's still open when Sprint 04 ends: carried-over done-when items, anything blocked, or work that simply ran long."
+    note: "No new work starts here — what lands in this sprint depends on what's still open when Sprint 05 ends: carried-over done-when items, anything blocked, or work that simply ran long."
   },
   {
-    id: "2", position: "Between Sprint 07 and Sprint 08",
-    dates: "Dec 2 – Dec 15, 2026", start: "2026-12-02", end: "2026-12-15",
-    bigRock: "Catch up on unfinished work from Sprints 05–07",
+    id: "2", position: "Between Sprint 08 and Sprint 09",
+    dates: "Dec 16 – Dec 29, 2026", start: "2026-12-16", end: "2026-12-29",
+    bigRock: "Catch up on unfinished work from Sprints 06–08",
     cost: 1200, meetings: "TBD",
-    note: "No new work starts here — what lands in this sprint depends on what's still open when Sprint 07 ends: carried-over done-when items, anything blocked, or work that simply ran long."
+    note: "No new work starts here — what lands in this sprint depends on what's still open when Sprint 08 ends: carried-over done-when items, anything blocked, or work that simply ran long."
   }
 ];
 
@@ -477,8 +550,7 @@ const NEW_CLIENT_DOCS = [
     { title: "Time Account Spreadsheet" },
     { title: "Parent Accountability Contract", link: "sops/Parent-Terms-of-Service.html" },
     { title: "Client Set-up Sheet" },
-    { title: "School Information Release Form" },
-    { title: "Therapist Information Release Form" },
+    { title: "School & Therapist Information Release Forms" },
     { title: "Syllabus Form" }
   ] },
   { key: "school-age", title: "Middle & High School", docs: [
@@ -528,9 +600,10 @@ const DOCUMENT_COLLECTION_ITEMS = [
 const SOP_DOCS = [
   { title: "Role Definition & Responsibilities", desc: "Which client types, session load, non-session responsibilities, and what stays with Sarah.", link: "sops/Role-Definition-and-Responsibilities.html", category: "employee", reviewTags: [] },
   { title: "Client Workflow — Intake to Graduation", desc: "The end-to-end process: intake, data collection, goal-setting, provider coordination, session cadence, graduation.", link: "sops/Client-Workflow-Intake-to-Graduation.html", category: "employee", reviewTags: [] },
-  { title: "Week-One Onboarding Schedule", desc: "Caseload ramp for a new specialist's first week — how many clients, and who.", link: "sops/Week-One-Onboarding-Schedule.html", category: "employee", reviewTags: [] },
-  { title: "Employee Reference Sheet", desc: "Points to the client folder structure, forms and tools a specialist needs day to day.", link: "sops/Employee-Reference-Sheet.html", category: "employee", reviewTags: [] },
-  { title: "Internal Reference Sheet (Sarah Only)", desc: "The full version — includes financial tools, external contacts, and business-development details.", link: "sops/Internal-Reference-Sheet.html", category: "internal", reviewTags: [] },
+  { title: "Week-One Onboarding Schedule", desc: "Pre-day-one provisioning and the day-by-day first week, through to the first one-to-one and the caseload ramp.", link: "sops/Week-One-Onboarding-Schedule.html", category: "employee", reviewTags: [] },
+  { title: "Employee Reference Sheet", desc: "The day-to-day quick reference: tools, company email, response times, the safety and mental-health crisis steps, and how to escalate a pause or cancellation request.", link: "sops/Employee-Reference-Sheet.html", category: "employee", reviewTags: [] },
+  { title: "Organization & Labeling Standards", desc: "How to name, file, label and schedule consistently \u2014 email signature, subject-line prefixes, email labels, file names, folder placement and calendar conventions.", link: "sops/Organization-and-Labeling-Standards.html", category: "employee", reviewTags: [] },
+  { title: "Internal Reference Sheet (Sarah Only)", desc: "The full version — financial tools, external contacts, business-development details, the Calendar Access Procedure, and what to expect on Sarah's side of a safety event.", link: "sops/Internal-Reference-Sheet.html", category: "internal", reviewTags: [] },
   { title: "Rate Sheet", desc: "The service summary, hosted at one permanent URL instead of a re-exported PDF.", link: "sops/Rate-Sheet.html", category: "newclient", reviewTags: ["accounting"] },
   { title: "Parent Terms of Service", desc: "Required parent-session cadence for minor clients, with reminders and a non-adherence clause.", link: "sops/Parent-Terms-of-Service.html", category: "newclient", reviewTags: ["legal"] },
   { title: "New Client Service Agreement", desc: "Draft template — includes the proposed no-show/cancellation clause, pending attorney review.", link: "sops/Services-Agreement.html", category: "newclient", reviewTags: ["legal"] },
@@ -539,21 +612,29 @@ const SOP_DOCS = [
   { title: "Logos", desc: "Watermark, QuickBooks, email signature, and long-format logo assets.", link: "sops/Logos.html", category: "internal", reviewTags: [] },
   { title: "New Employee Checklist", desc: "SOP build checklist and the new-hire onboarding checklist.", link: "sops/Checklists.html", category: "hiring", reviewTags: [] },
   { title: "Screening Protocol", desc: "Pre-employment background check scope, sequence, Maryland specifics, and the FCRA disclosure/authorization/adverse-action templates.", link: "sops/OptiMind-Screening-Protocol.html", category: "hiring", reviewTags: ["legal"] },
-  { title: "No-Show & Cancellation Policy", desc: "TBD — the no-show timeline, billing terms, and session-environment adherence policy. Needs Sarah's sign-off before it's added to the Services Agreement.", link: "sops/No-Show-and-Cancellation-Policy.html", category: "newclient", reviewTags: ["legal", "accounting"] }
+  { title: "No-Show & Cancellation Policy", desc: "TBD — the no-show timeline, billing terms, and session-environment adherence policy. Needs Sarah's sign-off before it's added to the Services Agreement.", link: "sops/No-Show-and-Cancellation-Policy.html", category: "newclient", reviewTags: ["legal", "accounting"] },
+  { title: "Add-On Services \u2014 Identification & Referral Process", desc: "How a Special Education Advocacy or College Counseling need gets spotted, recorded and passed to Sarah. The identification half is usable now; how the service is sold is still to build.", link: "sops/Add-On-Services-Identification-and-Referral-Process.html", category: "employee", reviewTags: [] },
+  { title: "Attorney Review Checklist", desc: "Every item across the SOP and onboarding set waiting on a lawyer \u2014 sixteen questions in four groups, each with the document it blocks and OptiMind's current working position.", link: "sops/Attorney-Review-Checklist.html", category: "internal", reviewTags: ["legal"] }
 ];
 
 /* Onboarding Documents — for hiring and onboarding a new employee. Flat list; add documents as they're drafted. */
 const EMPLOYEE_ONBOARDING_DOCS = [
-  { title: "Offer Letter", desc: "Role, start date, compensation and at-will status — kept short, points to the employment agreement for detail.", link: "onboarding/Offer-Letter.html", category: "employee", reviewTags: [] },
+  { title: "Offer Letter", desc: "Role, start date, compensation and at-will status — kept short, points to the employment agreement for detail. Now carries the paid closures and the continuing-education stipend.", link: "onboarding/Offer-Letter.html", category: "employee", reviewTags: [] },
+  { title: "Holiday, Vacation & Leave Policy", desc: "Paid closures (winter break, Thanksgiving), summer scheduling, sick and safe leave, and how time off is requested \u2014 with the seven decisions still open listed in one place.", link: "onboarding/Holiday-Vacation-and-Leave-Policy.html", category: "employee", reviewTags: ["legal"] },
   { title: "Employment Agreement", desc: "Duties, compensation/schedule, benefits, termination terms, dispute resolution.", link: "onboarding/Employment-Agreement.html", category: "hiring", reviewTags: ["legal"] },
-  { title: "Confidentiality & Data-Handling Agreement", desc: "Signed separately from the handbook, given the neuropsych, IEP/504 and health data the role touches.", link: "onboarding/Confidentiality-and-Data-Handling-Agreement.html", category: "hiring", reviewTags: ["legal"] },
-  { title: "New Hire Decision List", desc: "What the new specialist decides alone, what needs a conversation, and what always stays with Sarah.", link: "onboarding/New-Hire-Decision-List.html", category: "employee", reviewTags: [] },
-  { title: "Employee Handbook", desc: "PTO, expectations, conduct, communication norms, and safety escalation.", link: "onboarding/Employee-Handbook.html", category: "employee", reviewTags: [] },
-  { title: "Data-Handling Policy", desc: "What client data is held, where it lives, who can access it, and how long it's kept.", link: "onboarding/Data-Handling-Policy.html", category: "newclient", reviewTags: ["legal"] }
+  { title: "Confidentiality & Data-Handling Agreement", desc: "Signed separately from the handbook, given the neuropsych, IEP/504 and health data the role touches. Now names the approved storage systems and carries a four-step breach-reporting sequence.", link: "onboarding/Confidentiality-and-Data-Handling-Agreement.html", category: "hiring", reviewTags: ["legal"] },
+  { title: "Employee Decision List", desc: "What the specialist decides alone, what needs a conversation, and what always stays with Sarah \u2014 including standing authority to call 911 in an emergency and the CLIENTS REQUEST TO CANCEL OR PAUSE escalation.", link: "onboarding/Employee-Decision-List.html", category: "employee", reviewTags: [] },
+  { title: "Employee Handbook", desc: "Time off, conduct, communication norms, advocacy/college flagging, and the confirmed safety-escalation protocol. Updated Aug 31; five sections still carry attorney items.", link: "onboarding/Employee-Handbook.html", category: "employee", reviewTags: ["legal"] },
+  { title: "Data-Handling Policy", desc: "What client data is held, where it lives, who can access it, and how long it's kept \u2014 plus the backup gap: records sit in Google Drive with no independent, tested backup.", link: "onboarding/Data-Handling-Policy.html", category: "newclient", reviewTags: ["legal"] }
 ];
 
 /* SOPs — build checklist. Process documentation for how the practice runs day to day. */
 const SOP_CHECKLIST = [
+  { key: "standards-conventions", title: "Standards & Conventions", items: [
+    { text: "Organization & labeling standards", link: "sops/Organization-and-Labeling-Standards.html", note: "How employees name, file, label and schedule things consistently \u2014 email signature, subject-line prefixes, email labels, file naming, folder placement, calendar conventions. Draft; eight open questions for Sarah." },
+    { text: "Email signature built and set as the Gmail default", link: "sops/Organization-and-Labeling-Standards.html", note: "Blocked on the company email address, phone line and website URL. Pre-day-one task in the Week-One Onboarding Schedule." },
+    { text: "Email labels and calendar colors agreed and created", link: "sops/Organization-and-Labeling-Standards.html", note: "Both calendars have to use the same five colors, so this is decided once rather than per person." }
+  ] },
   { key: "mvp-hire-package", title: "Minimum Viable Hire Package", items: [
     "Role definition",
     "Client workflow written once",
@@ -567,7 +648,7 @@ const SOP_CHECKLIST = [
 const ONBOARDING_CHECKLIST = [
   { key: "contracts-decisions", title: "Contracts & Decisions", items: [
     { text: "Employment contracts", link: "onboarding/Employment-Agreement.html" },
-    { text: "Decision list", link: "onboarding/New-Hire-Decision-List.html" }
+    { text: "Decision list", link: "onboarding/Employee-Decision-List.html" }
   ] },
   { key: "hr-paperwork", title: "Employment & HR Paperwork", items: [
     { text: "Offer letter", link: "onboarding/Offer-Letter.html" },
