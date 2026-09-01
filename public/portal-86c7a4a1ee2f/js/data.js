@@ -285,6 +285,16 @@ const SPRINTS = [
           "Half the active caseload is fully live on the platform, with history, documents and curriculum coverage carried over.",
           "Nothing is being maintained in two places for those clients.",
           "A written issues list from the first half is applied before the second."
+        ]},
+      { badge: "2nd Priority", title: "Birthday tracking — clients & employees (manual, phase 1)", desc: "Capture a client's birthday at intake and text them on the day, so they know you're thinking of them. Run this by hand first; automate later once the pattern is proven.", tag: "New",
+        doneWhen: [
+          "Birthday is a captured field in the intake session and saved to the client's record.",
+          "The birthday is manually added to the owning specialist's working calendar, with a reminder on the day.",
+          "If a client is handed off to another specialist, their birthday reminder moves to that specialist's calendar rather than staying behind on the original one.",
+          "A short happy-birthday text template exists, and is sent manually on the day.",
+          "When a client fully graduates, they're removed from the calendar and the text list — no stale reminders firing after the relationship ends.",
+          "The same process runs for employees, plus a reminder set 10 days ahead of their birthday to find and send a gift.",
+          "A note records what volume or pattern would justify moving this from manual to an automation."
         ]}
     ]
   },
@@ -614,7 +624,8 @@ const SOP_DOCS = [
   { title: "Screening Protocol", desc: "Pre-employment background check scope, sequence, Maryland specifics, and the FCRA disclosure/authorization/adverse-action templates.", link: "sops/OptiMind-Screening-Protocol.html", category: "hiring", reviewTags: ["legal"] },
   { title: "No-Show & Cancellation Policy", desc: "TBD — the no-show timeline, billing terms, and session-environment adherence policy. Needs Sarah's sign-off before it's added to the Services Agreement.", link: "sops/No-Show-and-Cancellation-Policy.html", category: "newclient", reviewTags: ["legal", "accounting"] },
   { title: "Add-On Services \u2014 Identification & Referral Process", desc: "How a Special Education Advocacy or College Counseling need gets spotted, recorded and passed to Sarah. The identification half is usable now; how the service is sold is still to build.", link: "sops/Add-On-Services-Identification-and-Referral-Process.html", category: "employee", reviewTags: [] },
-  { title: "Attorney Review Checklist", desc: "Every item across the SOP and onboarding set waiting on a lawyer \u2014 sixteen questions in four groups, each with the document it blocks and OptiMind's current working position.", link: "sops/Attorney-Review-Checklist.html", category: "internal", reviewTags: ["legal"] }
+  { title: "Attorney Review Checklist", desc: "Every item across the SOP and onboarding set waiting on a lawyer \u2014 sixteen questions in four groups, each with the document it blocks and OptiMind's current working position.", link: "sops/Attorney-Review-Checklist.html", category: "internal", reviewTags: ["legal"] },
+  { title: "Birthday Tracking Protocol", desc: "Placeholder \u2014 TBD. Capturing client and employee birthdays at intake/hire, working-calendar entry, the handoff rule when a client moves specialists, the birthday text, removal at graduation, and the 10-day-ahead employee gift reminder. Manual for now; automate once the pattern is proven. Scheduled for Sprint 06.", category: "employee", reviewTags: [] }
 ];
 
 /* Onboarding Documents — for hiring and onboarding a new employee. Flat list; add documents as they're drafted. */
