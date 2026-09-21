@@ -18,13 +18,17 @@ export async function POST(request: Request) {
       request.headers.get("x-real-ip") ||
       "anonymous";
 
-    const { success } = await rateLimit.limit(`contact:${ip}`);
+    try {
+      const { success } = await rateLimit.limit(`contact:${ip}`);
 
-    if (!success) {
-      return NextResponse.json(
-        { error: "Too many requests. Please try again later." },
-        { status: 429 }
-      );
+      if (!success) {
+        return NextResponse.json(
+          { error: "Too many requests. Please try again later." },
+          { status: 429 }
+        );
+      }
+    } catch (rateLimitError) {
+      console.error("Rate limiter unavailable, failing open:", rateLimitError);
     }
 
     if (!data.name || !emailSchema.safeParse(data.email).success) {
