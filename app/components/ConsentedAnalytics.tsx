@@ -35,6 +35,11 @@ export default function ConsentedAnalytics() {
           gtag('config', '${GA_ID}');
         `}
       </Script>
+      <Script
+        id="mcjs"
+        strategy="afterInteractive"
+        src="https://chimpstatic.com/mcjs-connected/js/users/d71fb23cbb345ef1f1ab6f372/bd19c78bbd08ebc2df52b91aa.js"
+      />
     </>
   );
 }
