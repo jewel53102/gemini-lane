@@ -139,6 +139,12 @@ async function addLeadToMailchimp(data: Record<string, string>, analysis: Analys
         merge_fields: {
           FNAME: data.name || "",
           COMPANY: data.businessName || "",
+          SCORE: analysis.score,
+          LEVEL: analysis.level,
+          TIMELOSS: analysis.timeLoss,
+          PROBAREAS: analysis.problemAreas.join(" • "),
+          QWINS: analysis.quickWins.join(" • "),
+          RECOMMEND: analysis.recommendation,
         },
       }),
     }
