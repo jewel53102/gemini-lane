@@ -16,6 +16,7 @@ export default function robots(): MetadataRoute.Robots {
           "/downloads/",
           "/portal-86c7a4a1ee2f/",
           "/cromwell-review-8376018b5c1c.html",
+          "/Optimind-email-public/",
         ],
       },
     ],
