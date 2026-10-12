@@ -120,6 +120,8 @@ async function addLeadToMailchimp(data: Record<string, string>, analysis: Analys
 
   const emailHash = createHash("md5").update(data.email.toLowerCase()).digest("hex");
 
+  const [firstName = "", ...lastNameParts] = (data.name || "").trim().split(/\s+/);
+
   const baseUrl = `https://${serverPrefix}.api.mailchimp.com/3.0`;
   const authHeader = `Basic ${Buffer.from(`anystring:${apiKey}`).toString(
     "base64"
@@ -137,7 +139,8 @@ async function addLeadToMailchimp(data: Record<string, string>, analysis: Analys
         email_address: data.email,
         status_if_new: "subscribed",
         merge_fields: {
-          FNAME: data.name || "",
+          FNAME: firstName,
+          LNAME: lastNameParts.join(" "),
           COMPANY: data.businessName || "",
           SCORE: analysis.score,
           LEVEL: analysis.level,
