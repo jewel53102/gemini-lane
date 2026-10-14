@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { useState } from "react";
+import { trackMetaEvent } from "@/app/lib/metaPixel";
 
 export default function ContactPage() {
   const [formData, setFormData] = useState({
@@ -43,6 +44,7 @@ export default function ContactPage() {
     }
 
     setStatus("success");
+    trackMetaEvent("Lead", { content_name: "Contact Form" });
     setFormData({
       name: "",
       email: "",

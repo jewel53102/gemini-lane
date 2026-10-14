@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import { trackMetaEvent } from "@/app/lib/metaPixel";
 
 const questions = [
   {
@@ -86,6 +87,7 @@ export default function FreeBusinessAnalysisPage() {
         return;
       }
 
+      trackMetaEvent("Lead", { content_name: "Free Business Analysis" });
       localStorage.setItem("geminiLaneAnalysisResult", JSON.stringify(result));
       router.push("/free-business-analysis/results");
     } catch (error) {

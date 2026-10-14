@@ -31,16 +31,16 @@ const securityHeaders = [
     value: [
       // Default: only load from same origin
       "default-src 'self'",
-      // Scripts: self + inline (required by Next.js) + Vercel Analytics + Google Analytics
-      "script-src 'self' 'unsafe-inline' https://va.vercel-scripts.com https://www.googletagmanager.com",
+      // Scripts: self + inline (required by Next.js) + Vercel Analytics + Google Analytics + Meta Pixel + Mailchimp site script
+      "script-src 'self' 'unsafe-inline' https://va.vercel-scripts.com https://www.googletagmanager.com https://connect.facebook.net https://chimpstatic.com",
       // Styles: self + inline (required by Next.js/Tailwind) + Google Fonts CSS
       "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
       // Fonts: self + Google Fonts files
       "font-src 'self' https://fonts.gstatic.com",
-      // Images: self + data URIs (used by some Next.js internals)
-      "img-src 'self' data: blob:",
-      // Fetch/XHR: self (API routes) + Vercel Speed Insights + Google Analytics telemetry
-      "connect-src 'self' https://vitals.vercel-insights.com https://va.vercel-scripts.com https://calendly.com https://*.calendly.com https://www.google-analytics.com https://analytics.google.com https://region1.google-analytics.com",
+      // Images: self + data URIs (used by some Next.js internals) + Meta Pixel beacon
+      "img-src 'self' data: blob: https://www.facebook.com",
+      // Fetch/XHR: self (API routes) + Vercel Speed Insights + Google Analytics telemetry + Meta Pixel + Mailchimp
+      "connect-src 'self' https://vitals.vercel-insights.com https://va.vercel-scripts.com https://calendly.com https://*.calendly.com https://www.google-analytics.com https://analytics.google.com https://region1.google-analytics.com https://www.facebook.com https://connect.facebook.net https://*.chimpstatic.com https://chimpstatic.com",
       // Block all framing from external origins
       "frame-ancestors 'self'",
       // Restrict <base> tag to same origin
