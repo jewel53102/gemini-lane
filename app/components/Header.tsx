@@ -20,7 +20,7 @@ export default function Header() {
           <div className="nav-dropdown-menu">
             <Link href="/free-business-analysis">Free Business Analysis</Link>
             <Link href="/new-website">New Website Build</Link>
-            <Link href="/full-business-audit">Full Website Audit</Link>
+            <Link href="/full-business-audit">Full Business Audit</Link>
           </div>
         </div>
         <Link href="/dashboards">Business Dashboards</Link>
