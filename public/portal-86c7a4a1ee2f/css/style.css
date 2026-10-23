@@ -250,6 +250,27 @@ body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--tex
 .fw    { flex-wrap: wrap; }
 .muted { color: var(--text-3); font-size: 12px; }
 
+/* ── FLOW / PIPELINE ── */
+.flow { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; }
+.flow-step { background: var(--bg); border: 1px solid var(--border); border-radius: 8px; padding: 7px 13px; font-size: 12px; font-weight: 600; color: var(--text-2); white-space: nowrap; }
+.flow-step.outcome { border-width: 1.5px; font-weight: 700; }
+.flow-step.outcome-green { border-color: var(--success); color: #065f46; background: #d1fae5; }
+.flow-step.outcome-yellow { border-color: var(--warn); color: #92400e; background: #fef3c7; }
+.flow-step.outcome-gray { border-color: var(--text-3); color: var(--text-2); background: #f1f5f9; }
+.flow-arrow { color: var(--text-3); font-size: 14px; }
+
+/* ── CALLOUT ── */
+.callout { background: #fffbeb; border: 1px solid #fde68a; border-left: 3px solid var(--warn); border-radius: 10px; padding: 16px 18px; }
+.callout h5 { font-size: 12.5px; font-weight: 700; margin-bottom: 6px; color: #92400e; }
+.callout p { font-size: 12.5px; color: #78350f; line-height: 1.6; }
+.callout p + p { margin-top: 6px; }
+
+/* ── STATUS LEGEND ── */
+.status-row { display: flex; align-items: flex-start; gap: 12px; padding: 10px 0; border-bottom: 1px solid var(--border); }
+.status-row:last-child { border-bottom: none; }
+.status-row .badge { flex-shrink: 0; margin-top: 1px; }
+.status-row p { font-size: 12.5px; color: var(--text-2); line-height: 1.55; }
+
 @media (max-width: 900px) {
   .stats-row { grid-template-columns: repeat(2, 1fr); }
   .g2, .g3, .g4 { grid-template-columns: 1fr; }

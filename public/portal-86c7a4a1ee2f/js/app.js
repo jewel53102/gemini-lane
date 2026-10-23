@@ -12,6 +12,8 @@ const STATUS_CLASS   = { planned: "st-planned", progress: "st-progress", complet
 
 function priorityId(sprintId, pIdx) { return "s" + sprintId + "-p" + pIdx; }
 function checkId(sprintId, pIdx, cIdx) { return "s" + sprintId + "-p" + pIdx + "-c" + cIdx; }
+function automationId(aIdx) { return "auto-p" + aIdx; }
+function automationCheckId(aIdx, cIdx) { return "auto-p" + aIdx + "-c" + cIdx; }
 
 function loadJSON(key) {
   try { return JSON.parse(localStorage.getItem(key) || "{}"); }
@@ -183,10 +185,13 @@ function sidebarHTML(active) {
   const ico = {
     overview: '<svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1.5" stroke-width="2"/><rect x="14" y="3" width="7" height="7" rx="1.5" stroke-width="2"/><rect x="3" y="14" width="7" height="7" rx="1.5" stroke-width="2"/><rect x="14" y="14" width="7" height="7" rx="1.5" stroke-width="2"/></svg>',
     sprints: '<svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 3v2m6-2v2M4 8h16M5 6h14a1 1 0 011 1v12a1 1 0 01-1 1H5a1 1 0 01-1-1V7a1 1 0 011-1z"/></svg>',
+    leads: '<svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>',
     diagnostic: '<svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14"/></svg>',
+    automation: '<svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 2L3 14h7l-1 8 10-12h-7l1-8z"/></svg>',
     recommendations: '<svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>',
     clientresources: '<svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 5.5C4 4.67 4.67 4 5.5 4H11a2 2 0 012 2v14a2 2 0 00-2-2H4V5.5zM20 5.5c0-.83-.67-1.5-1.5-1.5H13a2 2 0 00-2 2v14a2 2 0 012-2h7V5.5z"/></svg>',
-    sops: '<svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 7h6m-6 4h6"/></svg>'
+    sops: '<svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 7h6m-6 4h6"/></svg>',
+    archive: '<svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 7.5V6a1 1 0 011-1h16a1 1 0 011 1v1.5M3 7.5h18M3 7.5V18a1 1 0 001 1h16a1 1 0 001-1V7.5M10 12h4"/></svg>'
   };
   return '' +
     '<aside class="sidebar">' +
@@ -195,7 +200,10 @@ function sidebarHTML(active) {
     '    <div class="sb-label">Command</div>' +
     item("overview", "index.html", "Overview", ico.overview) +
     item("sprints", "sprints.html", "Sprints", ico.sprints) +
+    item("leads", "leads.html", "Lead Workflow", ico.leads) +
+    item("automation", "automation.html", "Automation", ico.automation) +
     item("sops", "sops.html", "SOPs", ico.sops) +
+    item("archive", "archive.html", "Archive", ico.archive) +
     item("clientresources", "client-resources.html", "Client Resources", ico.clientresources) +
     '  </nav>' +
     '  <div class="sb-actions">' +

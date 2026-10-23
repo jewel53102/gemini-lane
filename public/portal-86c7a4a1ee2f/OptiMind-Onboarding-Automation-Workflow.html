@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>OptiMind — Post-Consult Onboarding Automation</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+<style>
+  body { background: var(--bg); }
+  .wrap { max-width: 900px; margin: 0 auto; padding: 40px 24px 80px; }
+  .back-link { font-size: 12.5px; color: var(--text-2); text-decoration: none; display: inline-block; margin-bottom: 18px; }
+  .back-link:hover { color: var(--accent); }
+  .diag-sec h5.subhd { font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: .3px; color: var(--text-3); margin: 14px 0 6px; }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <a class="back-link" href="automation.html">&larr; Back to Automation</a>
+
+  <div class="ph">
+    <div>
+      <div class="ph-title">Post-Consult Onboarding Automation</div>
+      <div class="ph-sub">Monday + Mailchimp + Zapier + Calendly + PandaDoc. Captured from Sarah walking the Monday board live and describing what she currently does by hand after a consult call. Anything she flagged as undecided is called out as an <span class="badge b-yellow">Open Item</span> below rather than built in as a rule.</div>
+    </div>
+  </div>
+
+  <div class="card mb-20">
+    <div class="card-hd"><span class="card-title">Two Ways a Lead Enters</span></div>
+    <div class="card-body">
+      <div class="flow">
+        <span class="flow-step">Web → Books via Calendly</span><span class="flow-arrow">→</span>
+        <span class="flow-step outcome outcome-green">Consult Booked (Calendly)</span>
+      </div>
+      <div class="flow mt-8">
+        <span class="flow-step">Lead Calls In</span><span class="flow-arrow">→</span>
+        <span class="flow-step outcome outcome-yellow">Sarah manually books the consult in Calendly</span><span class="flow-arrow">→</span>
+        <span class="flow-step outcome outcome-green">Consult Booked (Calendly)</span>
+      </div>
+      <div class="muted mt-8">Everything below this point assumes a Calendly booking exists, regardless of which channel got the lead there. Phone leads currently require Sarah to manually get the caller onto Calendly — she's noted this channel is growing and is harder to track than web leads. Automating that hand-off (the Quo call-menu + auto-text idea) is a separate, lower-priority research item — see the <a href="#open-items">Open Items Register</a>, Section 8 — not yet part of this build.</div>
+    </div>
+  </div>
+
+  <div class="card mb-20">
+    <div class="card-hd"><span class="card-title">Pipeline at a Glance</span></div>
+    <div class="card-body">
+      <div class="flow">
+        <span class="flow-step">Consult Booked (Calendly)</span><span class="flow-arrow">→</span>
+        <span class="flow-step">Consult Held</span><span class="flow-arrow">→</span>
+        <span class="flow-step outcome outcome-yellow">Email 1: Post-Consult Follow-Up</span><span class="flow-arrow">→</span>
+        <span class="flow-step">Nudge Day 3</span><span class="flow-arrow">→</span>
+        <span class="flow-step">Nudge Day 5–7</span><span class="flow-arrow">→</span>
+        <span class="flow-step outcome outcome-gray">Long-Term Nurture</span>
+      </div>
+      <div class="muted mt-8">Runs in parallel off the same trigger: once the service agreement is signed, <strong>Email 2: Welcome</strong> fires and the nudge/nurture branch stops for that lead. Calendly already owns booking confirmations and the 1-hour-before reminder (text + email) for both the consult and the intake session — this workflow doesn't rebuild those.</div>
+    </div>
+  </div>
+
+  <div class="diag-sec" id="data-model">
+    <div class="diag-hd"><span class="diag-num">1</span><span class="diag-title">Fix the Data Model First</span></div>
+    <div class="diag-intro">Everything downstream depends on the record clearly identifying who receives services versus who booked the call — today the two get conflated and Sarah has to manually recode Adult Lead/Minor Lead after the fact.</div>
+    <div class="diag-card">
+      <h5>Separate "client" from "contact" on the booking form</h5>
+      <p>Whichever form the client fills out to book (Calendly today, possibly Monday later — see the note below), relabel the name fields: <strong>Person receiving services</strong> (first/last name), and only if different, <strong>Person reaching out</strong> (first/last name) plus <strong>Relationship to client</strong>. This is the fix for the current bug where a parent's name (e.g. "Heather Hamilton") gets used as the client name instead of the child's.</p>
+    </div>
+    <div class="diag-card">
+      <h5>Move the consult intake form into Monday</h5>
+      <p>Sarah's JotForm — labeled "Parent Consult Form" on the 2026 leads tab but actually used for every consult call, adult or parent — becomes a native Monday form tied to the lead record, so what she asks live on the call writes straight into the record instead of living in a separate tool she has to cross-reference.</p>
+    </div>
+    <div class="diag-card">
+      <h5>New fields needed on the lead/client record</h5>
+      <div style="overflow-x:auto">
+        <table class="doc-table">
+          <thead><tr><th>Field</th><th>Type</th><th>What it's for</th></tr></thead>
+          <tbody>
+            <tr><td>Parent Paying</td><td>Checkbox</td><td>Adult client whose parent or another third party is paying (e.g. a "failure to launch" case) — drives the two-agreement branch in Section 3.</td></tr>
+            <tr><td>All Scheduled</td><td>Checkbox</td><td>Checked live on the intake form if Sarah books the intake session herself during the consult call (rush/emergency cases) — suppresses the "please schedule your intake" line in Email 1 so it doesn't contradict what already happened.</td></tr>
+            <tr><td>Interested Later</td><td>Date</td><td>Target date a not-ready-now lead gave for circling back (e.g. "once I'm through board exams") — drives the re-engagement send in Section 6.</td></tr>
+            <tr><td>Contract Confirmed</td><td>Checkbox</td><td>Fallback manual trigger for Email 2 if the PandaDoc signature can't be watched automatically — see Section 4's open item.</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div class="diag-card">
+      <h5>New pipeline stages needed</h5>
+      <p><span class="badge b-gray">Not Interested (Right Now)</span> <span class="badge b-yellow">Interested Later</span> <span class="badge b-blue">Contract Sent</span> <span class="badge b-blue">Waitlisted</span> — so the nudge and nurture sequences below don't cross-fire against leads who've already been parked somewhere else.</p>
+    </div>
+    <div class="diag-card">
+      <h5>Form placement is flexible — one hard requirement</h5>
+      <p>Sarah has no preference whether the booking/intake form lives in Calendly or Monday. The only requirements: it captures everything the automation needs, and it's <strong>required before the booking is confirmed</strong> — if it comes after scheduling, clients skip it.</p>
+    </div>
+  </div>
+
+  <div class="diag-sec" id="email-1">
+    <div class="diag-hd"><span class="diag-num">2</span><span class="diag-title">Email 1 — Post-Consult Follow-Up</span></div>
+    <div class="diag-intro">Sent right after the consult call. (Exact trigger event is still open — most likely a "Consult Held" status set on the record, since the call itself isn't something Monday or Mailchimp can observe on its own.) This is the most customized email in the sequence — three things vary independently inside it.</div>
+
+    <h5 class="subhd">Always included</h5>
+    <div class="diag-card">
+      <p><strong>Personalized opening</strong> — by the client's own name if the lead is the client (adult), or "your son/daughter, [child's first name]" if it's a parent booking for a minor.</p>
+      <p><strong>Summary of services</strong>, written directly into the email body (Sarah currently attaches this as a PDF export of her rates/services page — Mailchimp lets this live in the email itself instead).</p>
+      <p><strong>Note that the service agreement is coming next</strong>, ideally with a "review &amp; sign" link to PandaDoc embedded in this same email — see Section 3.</p>
+    </div>
+
+    <h5 class="subhd">Variant 1 — which recurring-time case applies</h5>
+    <div style="overflow-x:auto">
+      <table class="doc-table">
+        <thead><tr><th>Case</th><th>What happened on the call</th><th>What the email says</th></tr></thead>
+        <tbody>
+          <tr><td><strong>A — Time agreed</strong></td><td>Sarah offered specific times and the lead accepted informally on the call.</td><td>"You've got [time] — it's yours once the service agreement is signed." (Not held/blocked until then — this is the intentional nudge to sign.)</td></tr>
+          <tr><td><strong>B — Needs to check</strong></td><td>Lead couldn't commit yet (e.g. needs to check a co-parent's or kid's schedule).</td><td>"Here are some proposed times — let me know which works. I'll block it once the agreement's signed."</td></tr>
+          <tr><td><strong>C — No schedule yet</strong></td><td>Lead has no idea of availability yet (e.g. booking in August before the school year starts).</td><td>"Send me your (or your child's) schedule and I'll send proposed times once I have it."</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="muted mt-8">All three end on the same line: the time isn't confirmed until the service agreement is signed.</div>
+
+    <h5 class="subhd">Variant 2 — intake session scheduling</h5>
+    <div class="diag-card">
+      <p>The intake is a separate 90-minute session, distinct from the consult call.</p>
+      <p><strong>Minor/student client:</strong> the parent (person reaching out) books it via the Calendly link included in the email.</p>
+      <p><strong>Adult client:</strong> the adult books it themselves via the same link.</p>
+      <p><strong>College-age judgment call:</strong> Sarah decides live on the call whether the student books alone or both parent and student each book their own intake session — not automatable, but if both are needed the email must carry the link/instruction for both.</p>
+      <p><strong>Override:</strong> if Sarah already booked the intake live during the consult call (rush cases), suppress the "please schedule your intake" instruction entirely — driven by the <strong>All Scheduled</strong> checkbox from Section 1, checked in the same form she's already filling out so she doesn't have to remember to update anything afterward.</p>
+    </div>
+  </div>
+
+  <div class="diag-sec" id="service-agreement">
+    <div class="diag-hd"><span class="diag-num">3</span><span class="diag-title">Service Agreement (PandaDoc)</span></div>
+    <div class="diag-card">
+      <p>One base template covers both the parent-of-a-minor and adult-self-pay cases — the only difference is whether the "child's name" field is filled in, so this doesn't need two documents (the same pattern medical intake forms use for under-18 signers).</p>
+      <p><strong>Exception — Parent Paying:</strong> when an adult client's parent or another third party is paying, <strong>two</strong> agreements go out: one to the payer (consent to be charged) and one to the client (acknowledging terms, cancellation policy, etc.). Triggered by the Parent Paying checkbox from Section 1.</p>
+    </div>
+    <div class="callout">
+      <h5>Open item — confirm with Sarah's attorney</h5>
+      <p>Sarah isn't sure the two-agreement version is actually required. Build the branch so it's ready, but treat the requirement itself as provisional until she's confirmed with her lawyer.</p>
+    </div>
+    <div class="muted mt-8">Longer-term want, not yet scoped: auto-generate the PandaDoc agreement straight from the consult-intake form fields (Section 1), instead of Sarah manually retyping into a PDF and re-uploading. Depends on the Monday-hosted intake form shipping first.</div>
+  </div>
+
+  <div class="diag-sec" id="email-2">
+    <div class="diag-hd"><span class="diag-num">4</span><span class="diag-title">Email 2 — Welcome / Signed Confirmation</span></div>
+    <div class="diag-card">
+      <p><strong>Trigger:</strong> once the service agreement is fully signed in PandaDoc.</p>
+      <p><strong>Content:</strong> celebratory, congratulatory tone ("Welcome to OptiMind! So excited to be working with you...") that reconfirms the agreed recurring session times and the already-scheduled intake time. No separate intake reminder needed — Calendly's own reminder already covers that.</p>
+    </div>
+    <div class="diag-card">
+      <p><strong>Trigger mechanism:</strong> connect Mailchimp directly to PandaDoc — that's the platform Sarah actually sends contracts from, so it's the source of truth for "signed," not Monday. Wire a Zapier automation for PandaDoc's document-completed event that fires the Mailchimp send directly, the same pattern as the Monday↔Mailchimp connector from Sprint 03/04 (<a href="sprints.html#sprint-04">Sprint 04</a>).</p>
+    </div>
+    <div class="callout">
+      <h5>Open item — confirm Zapier supports this PandaDoc trigger</h5>
+      <p>Need to verify Zapier's PandaDoc integration exposes a "document completed by all signers" trigger (not just "viewed" or "completed by one party" — Sarah gets a separate Gmail notification for each of those three, so the trigger has to be the right one or Email 2 fires too early). Fallback if it doesn't: the manual <strong>Contract Confirmed</strong> checkbox from Section 1, which Sarah ticks herself to fire the email.</p>
+    </div>
+  </div>
+
+  <div class="diag-sec" id="nudges">
+    <div class="diag-hd"><span class="diag-num">5</span><span class="diag-title">If the Agreement Isn't Signed — Nudge Sequence</span></div>
+    <div style="overflow-x:auto">
+      <table class="doc-table">
+        <thead><tr><th>When</th><th>Content</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Day 3</strong> after the consult date</td><td>Warm, low-pressure check-in — "just wanted to see if you had any questions about the service agreement" — re-share the signing link, and if intake isn't booked yet, re-share the intake scheduling link too.</td></tr>
+          <tr><td><strong>Day 5–7</strong> after the consult date</td><td>Same intent as Day 3, reworded so it doesn't read as a copy-paste repeat.</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="diag-card">
+      <p><strong>Tone rule (applies to every email in this whole workflow):</strong> "warm and professional" — personal, not corporate. This is an explicit instruction Sarah wants passed to whatever's drafting the copy, in keeping with OptiMind's brand voice.</p>
+      <p><strong>Weekend blackout rule (applies to every automated send in this whole workflow):</strong> never send on Saturday or Sunday. If a calculated send date lands on a weekend, hold and send the next business day. Reason: she doesn't want to train clients to expect weekend responses.</p>
+    </div>
+    <div class="muted mt-8">Beyond ~Day 7, stop agreement nudges — move into long-term nurture (Section 6).</div>
+  </div>
+
+  <div class="diag-sec" id="nurture">
+    <div class="diag-hd"><span class="diag-num">6</span><span class="diag-title">Long-Term Nurture — Not Yet, Not Lost</span></div>
+    <div class="diag-card">
+      <h5>~4 weeks after the last touch</h5>
+      <p>A personal check-in, not a sales nudge — "how's [child] doing?" / "how are things going?" Most of these leads went quiet for life reasons (a death in the family, a rough semester, "we wanted to try on our own first"), not because they said no.</p>
+      <p>If they re-engage → route back into the Email 1 flow (or straight to the agreement link, whichever fits). If they stay quiet → move into the blog/content nurture bucket (future workstream, not yet built) so they keep hearing from OptiMind without a repeated direct pitch.</p>
+    </div>
+    <div class="diag-card">
+      <h5>~3 months after that</h5>
+      <p>A further check-in on the same cadence, for leads still sitting in the nurture bucket.</p>
+    </div>
+    <div class="diag-card">
+      <h5>Exception — school-age / college-age leads</h5>
+      <p>Instead of the generic 4-week/3-month clock, check in at the natural academic checkpoint — mid-January, after fall grades are in ("how did last semester / the first half of the year go?"). Suppress this one if Sarah already emailed the lead for any other reason between roughly early December and mid-January, so it doesn't double up.</p>
+    </div>
+    <div class="diag-card">
+      <h5>"Interested Later" leads</h5>
+      <p>On or near the date the lead gave (the field from Section 1), send a simple re-engagement email — "circling back, you mentioned this might be a better time — want to schedule another consult, or go straight to the service agreement?" Keep this one templated and simple; Sarah flagged that a fully personalized version would be too custom to automate.</p>
+    </div>
+  </div>
+
+  <div class="diag-sec" id="graduates">
+    <div class="diag-hd"><span class="diag-num">7</span><span class="diag-title">Graduated-Client Re-Engagement</span></div>
+    <div class="diag-card">
+      <p>For clients who completed services within roughly the past year, a check-in around the same academic-checkpoint timing as Section 6 — "how are things going now that you're on your own?"</p>
+      <p>Positive response → ask for a review/testimonial. Response that services are needed again → offer to restart, re-entering them into the consult flow.</p>
+    </div>
+  </div>
+
+  <div class="diag-sec" id="open-items">
+    <div class="diag-hd"><span class="diag-num">8</span><span class="diag-title">Open Items Register</span></div>
+    <div class="diag-intro">Everything Sarah explicitly flagged as undecided, so it doesn't get quietly built as if it were settled.</div>
+    <div style="overflow-x:auto">
+      <table class="doc-table">
+        <thead><tr><th>Item</th><th>Status</th></tr></thead>
+        <tbody>
+          <tr><td>PandaDoc → Mailchimp signature trigger for Email 2 — confirm Zapier's PandaDoc integration exposes a "completed by all signers" event (not just "viewed" or "completed by one party"), or fall back to the manual checkbox.</td><td><span class="badge b-yellow">Ruby to check</span></td></tr>
+          <tr><td>Two-agreement requirement for the Parent Paying case — is it legally necessary?</td><td><span class="badge b-yellow">Sarah to ask her attorney</span></td></tr>
+          <tr><td>Auto-generating the PandaDoc agreement from intake-form fields</td><td><span class="badge b-gray">Wanted, not yet scoped — depends on the Monday intake form shipping</span></td></tr>
+          <tr><td>Follow-up cadence numbers (Day 3 / Day 5–7 / 4 weeks / 3 months) — Sarah was thinking out loud ("whatever you think is best")</td><td><span class="badge b-gray">Working default — easy to revise once live</span></td></tr>
+          <tr><td>Quo business-line automation: route the OptiMind number through Quo with a call menu — press 1 for prospective clients (auto-texts the Calendly link right after the call ends), press 2 for existing clients/referral partners (no auto-text) — aimed at capturing phone leads without playing phone tag.</td><td><span class="badge b-gray">Adjacent idea, not part of this build — Ruby to research whether Quo supports it</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="muted mt-8">Not automation, but mentioned in the same session: Sarah still needs to backfill missing emails, phone numbers and first names for resource contacts (therapists, doctors, schools) directly into Monday — manual data cleanup, not a build item.</div>
+  </div>
+
+</div>
+</body>
+</html>

@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>OptiMind Dashboard — Lead Workflow</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<div id="sidebar-mount"></div>
+
+<main class="main">
+  <div class="topbar">
+    <div class="topbar-left">
+      <span class="topbar-title" id="topbar-title">Lead Workflow</span>
+    </div>
+    <span class="topbar-date" id="topbar-date"></span>
+  </div>
+
+  <div class="content">
+
+    <div class="ph">
+      <div>
+        <div class="ph-title">Lead Workflow</div>
+        <div class="ph-sub">How an inquiry becomes a booked consult, a dated follow-up, a cold lead, or a new client — recorded the same way every time, so referral source and outcome survive all the way to closed revenue.</div>
+      </div>
+    </div>
+
+    <div class="card mb-20">
+      <div class="card-hd">
+        <span class="card-title">Pipeline at a Glance</span>
+        <span class="badge b-gray">Precedes Client Workflow Stage 1</span>
+      </div>
+      <div class="card-body">
+        <div class="flow">
+          <span class="flow-step">Inquiry In</span><span class="flow-arrow">→</span>
+          <span class="flow-step">Lead Recorded</span><span class="flow-arrow">→</span>
+          <span class="flow-step">Qualify &amp; Respond</span><span class="flow-arrow">→</span>
+          <span class="flow-step">Consult Scheduled</span><span class="flow-arrow">→</span>
+          <span class="flow-step">Consult Held</span><span class="flow-arrow">→</span>
+          <span class="flow-step outcome outcome-green">Converted</span>
+          <span class="flow-step outcome outcome-yellow">Nurture</span>
+          <span class="flow-step outcome outcome-gray">Cold</span>
+        </div>
+        <div class="muted mt-8">Nurture loops back into Qualify &amp; Respond on the date the lead gave you. Cold is an endpoint — no further outreach unless the lead re-initiates contact. Converted exits this workflow and enters <a href="sops/Client-Workflow-Intake-to-Graduation.html" target="_blank" rel="noopener">Client Workflow Stage 1 ↗</a> at its exit criteria: signed service agreement on file.</div>
+      </div>
+    </div>
+
+    <div class="diag-sec">
+      <div class="diag-hd"><span class="diag-num">1</span><span class="diag-title">Capture the Inquiry</span></div>
+      <div class="diag-intro">Every inquiry — phone, email, web form, or a referral conversation — gets recorded the same way before anything else happens. This is the step that makes revenue attribution possible later; skip it here and it can't be reconstructed at consult.</div>
+      <div class="diag-card">
+        <h5>Respond fast</h5>
+        <p>First response within minutes of contact, regardless of channel. This is already the practice's standard today — the workflow exists to protect it, not to slow it down.</p>
+      </div>
+      <div class="diag-card">
+        <h5>Log it immediately, before responding if it's quick</h5>
+        <p>Name and contact info · referral source (the channel behind 90% of closed business — never skip this) · which service they're asking about (tutoring subject, advocacy, college counseling) · any timeline or urgency they volunteered · verbatim notes on anything specific they said. Recorded on the leads spreadsheet today; moves into Monday.com once it's built in <a href="sprints.html#sprint-04">Sprint 04</a>.</p>
+      </div>
+      <div class="diag-card">
+        <h5>Set status: New</h5>
+        <p>Stays New until the first response goes out, then moves to Contacted.</p>
+      </div>
+    </div>
+
+    <div class="diag-sec">
+      <div class="diag-hd"><span class="diag-num">2</span><span class="diag-title">Qualify &amp; Decide — Act on What the Lead Said</span></div>
+      <div class="diag-intro">The lead's own words are the input to the decision, not a generic follow-up timer. Match what they actually said to the row below.</div>
+      <div style="overflow-x:auto">
+        <table class="doc-table">
+          <thead>
+            <tr><th>What the lead said</th><th>Read</th><th>Do this</th><th>Set status</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Ready now — asks how to book, or agrees when you offer a time</td>
+              <td>Hot</td>
+              <td>Send the Calendly link same day; confirm the consult time back to them in writing.</td>
+              <td><span class="badge b-blue">Consult Scheduled</span></td>
+            </tr>
+            <tr>
+              <td>Asks about pricing or logistics only, no commitment either way</td>
+              <td>Warm, needs more information</td>
+              <td>Answer directly, then invite them to book. If they don't reply, move into the quiet-lead cadence below.</td>
+              <td><span class="badge b-blue">Contacted</span></td>
+            </tr>
+            <tr>
+              <td>Names a specific reason it's not the right time ("after the holidays," "once the semester starts," "in the spring")</td>
+              <td>Real interest, wrong time</td>
+              <td>Log the exact date or season they named. Set the follow-up reminder for that window — not a generic two weeks.</td>
+              <td><span class="badge b-yellow">Nurture (dated)</span></td>
+            </tr>
+            <tr>
+              <td>Comparing other providers, or needs to check with a spouse or co-parent</td>
+              <td>Undecided</td>
+              <td>Short follow-up in 3–5 days. Offer whatever addresses the actual hesitation — testimonials, more detail on approach, a specialist's background.</td>
+              <td><span class="badge b-yellow">Nurture</span></td>
+            </tr>
+            <tr>
+              <td>Goes quiet after the first response — no reply at all</td>
+              <td>Unclear until they answer</td>
+              <td>Three-touch follow-up: Day 2, Day 7, Day 21. Mark Cold only once all three go unanswered.</td>
+              <td><span class="badge b-gray">Cold</span> if unanswered</td>
+            </tr>
+            <tr>
+              <td>Explicit no — went with another provider, budget doesn't work with no flexibility, or needs a service OptiMind doesn't offer</td>
+              <td>Not a fit right now</td>
+              <td>Log the specific reason. No further outreach unless they re-initiate.</td>
+              <td><span class="badge b-gray">Cold</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="diag-sec">
+      <div class="diag-hd"><span class="diag-num">3</span><span class="diag-title">After the Consult</span></div>
+      <div class="diag-intro">The consult itself already follows Client Workflow Stage 1. What happens right after it is the other half of the decision.</div>
+      <div style="overflow-x:auto">
+        <table class="doc-table">
+          <thead>
+            <tr><th>Consult outcome</th><th>Do this</th><th>Set status</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Signs the service agreement</td>
+              <td>Tag the referral source through to closed revenue, then hand off — the lead is now a client. Continue in Client Workflow at Stage 1's exit criteria.</td>
+              <td><span class="badge b-green">Converted</span></td>
+            </tr>
+            <tr>
+              <td>Doesn't sign, cites timing</td>
+              <td>Same as a timing objection above — log the date they named and set the dated follow-up.</td>
+              <td><span class="badge b-yellow">Nurture (dated)</span></td>
+            </tr>
+            <tr>
+              <td>Doesn't sign, cites fit or budget with no flexibility</td>
+              <td>Log the specific reason for later pattern-tracking, then stop outreach.</td>
+              <td><span class="badge b-gray">Cold</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="g2 mb-20">
+      <div class="card">
+        <div class="card-hd"><span class="card-title">Lead Status Reference</span></div>
+        <div class="card-body">
+          <div class="status-row"><span class="badge b-blue">New</span><p>Inquiry received, not yet responded to.</p></div>
+          <div class="status-row"><span class="badge b-blue">Contacted</span><p>First response sent; waiting on the lead or mid-cadence.</p></div>
+          <div class="status-row"><span class="badge b-blue">Consult Scheduled</span><p>Time booked on the calendar.</p></div>
+          <div class="status-row"><span class="badge b-yellow">Nurture</span><p>Real interest, wrong time or still undecided. Carries a dated follow-up, not an open-ended one.</p></div>
+          <div class="status-row"><span class="badge b-gray">Cold</span><p>Not a fit right now. No further outreach unless the lead re-initiates.</p></div>
+          <div class="status-row"><span class="badge b-green">Converted</span><p>Signed the service agreement — now a client in Client Workflow Stage 1.</p></div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-hd"><span class="card-title">Nurture Cadence &amp; Re-approach</span></div>
+        <div class="card-body">
+          <div style="font-size:13px;font-weight:700;margin-bottom:3px">Quiet-lead cadence</div>
+          <p class="mb-16" style="font-size:12.5px;color:var(--text-2);line-height:1.6">Day 2, Day 7, Day 21 — three touches before a non-responsive lead moves to Cold. Run manually today; becomes automated as part of the referral engine build in <a href="sprints.html#sprint-08">Sprint 08</a>.</p>
+          <div style="font-size:13px;font-weight:700;margin-bottom:3px">Seasonal re-approach</div>
+          <p style="font-size:12.5px;color:var(--text-2);line-height:1.6">For Nurture or Cold leads sitting more than a term (roughly 3 months) without contact, one fresh touchpoint before they're treated as fully lapsed.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="callout">
+      <h5>Manual today, automated later</h5>
+      <p>This workflow describes what to do by hand right now, with the leads spreadsheet, Calendly, and PandaDoc. The quiet-lead cadence and revenue-by-referral-source reporting are planned builds — see <a href="sprints.html#sprint-08">Sprint 08, "The referral engine"</a> — but the decision logic on this page doesn't wait on that build to be useful.</p>
+    </div>
+
+  </div>
+</main>
+
+<script src="js/data.js"></script>
+<script src="js/app.js"></script>
+<script>
+  mountSidebar("leads");
+  initChrome("leads", "Lead Workflow");
+</script>
+</body>
+</html>

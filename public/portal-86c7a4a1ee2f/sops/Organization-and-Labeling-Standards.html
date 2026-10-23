@@ -11,14 +11,14 @@
     --border: #e4e9f0; --bg: #f7f9fc; --warn: #f59e0b; --warn-bg: #fffbeb;
   }
   * { box-sizing: border-box; margin: 0; padding: 0; }
-  body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text); font-size: 14.5px; line-height: 1.6; padding: 40px 20px; }
+  body { font-family: 'Calibri', sans-serif; background: var(--bg); color: var(--text); font-size: 14.5px; line-height: 1.6; padding: 40px 20px; }
   .doc { max-width: 780px; margin: 0 auto; background: #fff; border: 1px solid var(--border); border-radius: 14px; padding: 44px 52px; box-shadow: 0 1px 3px rgba(0,0,0,.06); }
   .badge { display: inline-flex; align-items: center; padding: 3px 11px; border-radius: 100px; font-size: 10.5px; font-weight: 700; text-transform: uppercase; letter-spacing: .5px; background: #fef3c7; color: #92400e; margin-bottom: 14px; }
-  h1 { font-size: 25px; font-weight: 700; letter-spacing: -.3px; margin-bottom: 4px; }
+  h1 { font-size: 30pt; font-weight: 700; letter-spacing: -.3px; margin-bottom: 4px; color: #ff5e16; }
   .subtitle { font-size: 13.5px; color: var(--text-2); margin-bottom: 18px; }
   .meta { display: flex; flex-wrap: wrap; gap: 18px; font-size: 12px; color: var(--text-3); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); padding: 12px 0; margin-bottom: 30px; }
   .meta b { color: var(--text-2); font-weight: 600; }
-  h2 { font-size: 15.5px; font-weight: 700; margin: 30px 0 10px; color: var(--text); }
+  h2 { font-size: 15.5px; font-weight: 700; margin: 30px 0 10px; color: #ff5e16; }
   h2:first-of-type { margin-top: 0; }
   p { color: var(--text-2); margin-bottom: 10px; }
   ul { margin: 0 0 6px 20px; color: var(--text-2); }
@@ -68,16 +68,36 @@
   .sig { border: 1px solid var(--border); border-radius: 10px; padding: 20px 22px; background: #fff;
          margin: 4px 0 18px; max-width: 400px; }
   .sig-name { font-weight: 700; font-size: 15px; color: #383838; }
-  .sig-title { color: #FF5E16; font-size: 13.5px; margin-top: 1px; }
+  .sig-title { color: #383838; font-size: 13.5px; margin-top: 1px; }
   .sig-org { color: #383838; font-size: 13.5px; }
   .sig-rule { height: 1px; background: var(--border); margin: 11px 0; }
   .sig-line { color: #383838; font-size: 12.5px; line-height: 1.9; }
+  .sig-line a { color: #FF5E16; text-decoration: underline; }
   .sig-logo { margin-top: 12px; font-size: 11.5px; color: var(--text-3); font-style: italic; }
+  .sig-disc-inline { margin-top: 12px; font-size: 10.5px; line-height: 1.5; color: var(--text-3); }
+  .sig-disc-inline b { color: var(--text-3); }
+  .sig-logo-img { width: 150px; height: auto; margin-top: 12px; display: block; }
   .sw { display: inline-block; width: 11px; height: 11px; border-radius: 3px; margin-right: 8px;
         vertical-align: -1px; border: 1px solid rgba(0,0,0,.12); }
   .sw-1 { background: #3b82f6; } .sw-2 { background: #8b5cf6; } .sw-3 { background: #10b981; }
   .sw-4 { background: #f59e0b; } .sw-5 { background: #cbd5e1; }
   th:first-child, td:first-child { white-space: nowrap; }
+  .session-tpl { width: 100%; border-collapse: collapse; margin: 10px 0 18px; font-size: 13.5px; }
+  .session-tpl td { border: 1px solid var(--border); padding: 10px 14px; vertical-align: top; }
+  .session-tpl .stl-label { width: 200px; white-space: normal; font-weight: 400; }
+  .session-tpl tr:first-child .stl-label { background: #e9edf2; color: var(--text); }
+  .session-tpl tr:first-child .stl-val { font-weight: 700; font-size: 15px; color: var(--text); }
+  .session-tpl .stl-affect, .session-tpl .stl-affect-val { background: #9aa3af; color: #fff; }
+  .session-tpl .stl-sarah { background: #c7d2f5; }
+  .session-tpl .stl-sarah-val { background: #dbe3fb; }
+  .session-tpl .stl-provider { background: #f3ddb8; }
+  .session-tpl .stl-provider-val { background: #faeed8; }
+  .session-tpl .stl-client { background: #d9d3ea; }
+  .session-tpl .stl-client-val { background: #eae6f3; }
+  .session-tpl .stl-zoom { background: #f4f6fc; }
+  .session-tpl .stl-zoom-val { background: #f9fafd; }
+  .session-tpl .stl-val-mauve { background: #b56576; }
+  .session-tpl .stl-val-cyan { background: #00ffff; }
   @media (max-width: 700px) { th:first-child, td:first-child { white-space: normal; } }
 </style>
 </head>
@@ -97,137 +117,116 @@
   <h2>Why This Exists</h2>
   <p>With more than one person in the business, "where did you put it" and "which version is this" stop being small questions. This document sets one way to name, file, label and schedule, so that anyone can find anything without asking, and so a client record looks the same whoever built it.</p>
   <p>None of this is about neatness for its own sake. Consistent naming is what lets a folder sort correctly, a search return the right file, and a calendar be read at a glance by someone who wasn't in the conversation.</p>
-  <p><b>Scope:</b> email signature and subject lines, email labels, file names, where files go, calendar events, and document status. It sits alongside the <a href="Employee-Reference-Sheet.html">Employee Reference Sheet</a> (which tools) and the <a href="Internal-Reference-Sheet.html">Internal Reference Sheet</a> (the folder structure itself).</p>
-
-  <div class="callout">
-    <h2>Two rules that cover most cases</h2>
-    <ol>
-      <li><b>Dates are always <span class="pat">YYYY-MM-DD</span>.</b> Not 9/14/26, not Sept 14. Written this way, files sort into chronological order on their own and there is no ambiguity about which number is the month.</li>
-      <li><b>The client's name always comes before the document type.</b> Everything about one client groups together, whether you are looking at a folder, a search result or a calendar day.</li>
-    </ol>
-  </div>
+  <p><b>Scope:</b> email signature and subject lines, email labels, file names, where files go, calendar events, and document status. It sits alongside the <a href="Employee-Reference-Sheet.html">Employee Reference Sheet</a> (which tools), the <a href="Internal-Reference-Sheet.html">Internal Reference Sheet</a> (the folder structure itself), and the <a href="Logos.html">Logos</a> page (the logo files themselves).</p>
 
   <h2>1. Email Signature</h2>
   <p>One signature, set once in Gmail, applied to new mail and replies. It is the most-seen piece of OptiMind branding after the website, so it does not get improvised.</p>
 
-  <p><b>The block:</b></p>
+  <p><b>The block (template):</b></p>
   <div class="sig">
     <div class="sig-name">Firstname Lastname</div>
+    <div class="sig-title">[Title]</div>
+    <div class="sig-line">[Direct line]</div>
+    <div class="sig-line">Visit us at <a href="https://optimind-es.com">optimind-es.com</a></div>
+    <img class="sig-logo-img" src="Email-Signature-Logo.png" alt="OptiMind Educational Strategies">
+    <div class="sig-disc-inline"><b>Disclaimer</b> This communication, including any attachments, may contain confidential, proprietary, privileged, and/or private information. The information contained herein is intended for the named addressee(s) only. If you are not the intended recipient, please notify the sender immediately by reply e-mail or by telephone at the number listed above and permanently delete this e-mail message and any accompanying attachment(s). Please also be advised that any dissemination, retention, distribution, copying or unauthorized review of this communication is strictly prohibited.</div>
+  </div>
+
+  <p><b>Confirmed example — Sarah Ritter's signature:</b></p>
+  <div class="sig">
+    <div class="sig-name">Sarah Ritter</div>
+    <div class="sig-title">Founder</div>
     <div class="sig-title">Executive Function Specialist</div>
-    <div class="sig-org">OptiMind Educational Strategies</div>
-    <div class="sig-rule"></div>
-    <div class="sig-line"><span class="tbd">TBD — direct line</span> · <span class="tbd">TBD — company email</span></div>
-    <div class="sig-line"><span class="tbd">TBD — website URL</span></div>
-    <div class="sig-logo">[ OptiMind logo — Email-Signature-Logo.png ]</div>
+    <div class="sig-line">(703) 336-7446</div>
+    <div class="sig-line">Visit us at <a href="https://optimind-es.com">optimind-es.com</a></div>
+    <img class="sig-logo-img" src="Email-Signature-Logo.png" alt="OptiMind Educational Strategies">
+    <div class="sig-disc-inline"><b>Disclaimer</b> This communication, including any attachments, may contain confidential, proprietary, privileged, and/or private information. The information contained herein is intended for the named addressee(s) only. If you are not the intended recipient, please notify the sender immediately by reply e-mail or by telephone at the number listed above and permanently delete this e-mail message and any accompanying attachment(s). Please also be advised that any dissemination, retention, distribution, copying or unauthorized review of this communication is strictly prohibited.</div>
   </div>
 
   <p><b>Formatting, per the <a href="OptiMind-Style-Guide.html">Style Guide</a>:</b></p>
   <ul>
     <li>Name — Charcoal Gray <span class="pat">#383838</span>, bold.</li>
-    <li>Job title — OptiMind Orange <span class="pat">#FF5E16</span>, regular weight. This is the only orange in the block.</li>
+    <li>Title — Charcoal Gray, regular weight.</li>
+    <li>Website link — OptiMind Orange <span class="pat">#FF5E16</span>, underlined. This is the only orange in the block.</li>
     <li>Everything else — Charcoal Gray, regular. In Gmail's editor this is "Sans Serif", "Normal" size.</li>
-    <li>Logo — <span class="pat">Email-Signature-Logo.png</span> from <span class="pat">02 – Admin &amp; Operations / Brand Assets</span>, roughly 180px wide, left-aligned below the contact lines.</li>
+    <li>Logo — <span class="pat">Email-Signature-Logo.png</span> from <span class="pat">02 – Admin &amp; Operations / Brand Assets</span>, roughly 150px wide, left-aligned below the contact lines.</li>
+    <li>Disclaimer — light gray, small size, below the logo with a blank line above it.</li>
   </ul>
 
-  <p><b>What the signature does not include:</b> quotes or taglines, a second image, social icons, "sent from my iPhone", or a pronoun line unless you want one — that is your choice, not a standard. <span class="tbd">confirm — does Sarah want a confidentiality footer on outbound email? It is a Data-Handling Policy question as much as a branding one.</span></p>
+  <p><b>What the signature does not include:</b> quotes or taglines, a second image, social icons, "sent from my iPhone", or a pronoun line unless you want one — that is your choice, not a standard.</p>
 
   <p><b>Setting it up:</b> Gmail → Settings → See all settings → General → Signature → Create new, named <span class="pat">OptiMind</span>. Set it as the default for both <em>new emails</em> and <em>on reply/forward</em>, so it does not silently disappear from replies. This is a pre-day-one task in the <a href="Week-One-Onboarding-Schedule.html">Week-One Onboarding Schedule</a>.</p>
 
   <h2>2. Email Subject Lines</h2>
   <p>Every OptiMind email starts with a bracketed prefix. It makes threads filterable, makes a case history searchable, and means Sarah can triage a full inbox without opening anything.</p>
 
-  <p><b>Pattern:</b> <span class="pat">[Prefix] Short, specific description</span></p>
+  <p><b>Client Cancellations:</b> <span class="pat">CANCEL from [Client Name]</span></p>
 
-  <table>
-    <tr><th>Prefix</th><th>Use for</th><th>Example</th></tr>
-    <tr><td><span class="pat">[Session]</span></td><td>Session scheduling, rescheduling, logistics</td><td>[Session] Rivera — moving Thursday to 4pm</td></tr>
-    <tr><td><span class="pat">[Parent]</span></td><td>Parent sessions and parent check-ins</td><td>[Parent] Rivera — September parent session</td></tr>
-    <tr><td><span class="pat">[Advocacy — Lastname]</span></td><td>Every email on one advocacy case, start to finish</td><td>[Advocacy — Rivera] 504 meeting prep, Oct 8</td></tr>
-    <tr><td><span class="pat">[College — Lastname]</span></td><td>College counseling, keyed to a student</td><td>[College — Okafor] Common App deadlines</td></tr>
-    <tr><td><span class="pat">[School]</span></td><td>Teacher and school coordination</td><td>[School] Rivera — teacher feedback form</td></tr>
-    <tr><td><span class="pat">[Provider]</span></td><td>Therapists and outside providers</td><td>[Provider] Rivera — release on file, intro note</td></tr>
-    <tr><td><span class="pat">[Billing]</span></td><td>Invoices, payments, rate questions</td><td>[Billing] August invoice query</td></tr>
-    <tr><td><span class="pat">[Admin]</span></td><td>Internal operations, tools, accounts</td><td>[Admin] Calendly seat needs a second event type</td></tr>
-    <tr><td><span class="pat">[SOP Q]</span></td><td>An operational question the written SOPs don't answer</td><td>[SOP Q] What do I do when a parent asks for session notes?</td></tr>
-  </table>
-
-  <p>The <span class="pat">[Advocacy — Lastname]</span> and <span class="pat">[College — Lastname]</span> prefixes carry the case name because those threads run for months across several people. Keeping the prefix identical for the life of the case means one search returns the whole history — which is what the advocacy deadline tracking in Sprint 04 depends on.</p>
-
-  <div class="callout">
-    <h2>The [SOP Q] prefix has a process attached</h2>
-    <p>When something operational isn't answered by the Employee Handbook or the SOP documents, email Sarah with the <span class="pat">[SOP Q]</span> prefix and CC <span class="pat">ruby.groves@gemini-lane.com</span>. Sarah answers you directly, exactly as she would anyway. The CC is what lets the gap get written into the SOP instead of staying a one-off answer in your inbox. This applies through Jan 26, 2027. <span class="tbd">TBD — what replaces it after that date.</span></p>
-  </div>
-
-  <p><b>Reply, don't restart.</b> Keep one thread per topic rather than starting a fresh email each time. Change the subject line only when the topic genuinely changes — then start a new thread rather than editing the old one, so the history stays intact.</p>
-
-  <p><b>Client names in subject lines.</b> Use the client's last name only — enough to identify the thread, not more than is needed. Full names belong in the body, where they are not sitting in a preview pane or a notification banner. <span class="tbd">confirm with Sarah — whether last-name-only is the right line, or whether initials are preferred for anything sent outside OptiMind.</span></p>
-
-  <h2>3. Email Labels</h2>
-  <p>Labels mirror the folder structure, so the same client sits in the same place in your inbox and in Drive.</p>
-
-  <table>
-    <tr><th>Label</th><th>Holds</th></tr>
-    <tr><td><span class="pat">Clients / Lastname-Firstname</span></td><td>All correspondence for one client and their family</td></tr>
-    <tr><td><span class="pat">Advocacy / Lastname-Firstname</span></td><td>One advocacy case, kept separate from general client mail</td></tr>
-    <tr><td><span class="pat">Schools &amp; Providers</span></td><td>Teachers, therapists, outside providers — nested under the client where it belongs to one</td></tr>
-    <tr><td><span class="pat">Billing</span></td><td>Invoices, payments, rate questions</td></tr>
-    <tr><td><span class="pat">Admin</span></td><td>Tools, accounts, internal operations</td></tr>
-    <tr><td><span class="pat">SOP Questions</span></td><td>Your <span class="pat">[SOP Q]</span> threads, so gaps are easy to review together</td></tr>
-  </table>
+  <p><b>Emails to medical professionals or outside providers.</b> Subject line and body use the client's initials only — never the full name or last name — to stay HIPAA compliant. This applies to therapists, doctors, psychologists, and any other outside medical or clinical provider.</p>
 
   <ul>
-    <li><b>Every client thread gets its client label.</b> A thread can carry more than one label; it should never carry none.</li>
-    <li><b>Archive, don't delete.</b> Client correspondence is part of the client record. Archiving keeps it searchable and out of the way. <span class="tbd">TBD — the retention and destruction schedule is still open in the Data-Handling Policy; until it is set, nothing client-related gets deleted.</span></li>
-    <li><b>Labels are created by Sarah or during onboarding,</b> not invented mid-week — otherwise two people end up with two spellings of the same client.</li>
+    <li><b>Archive, don't delete.</b> Client correspondence is part of the client record. Archiving keeps it searchable and out of the way.</li>
   </ul>
 
   <h2>4. File Names</h2>
-  <p>One pattern, used everywhere.</p>
+  <p><span class="tbd">TBD — this section is being rewritten.</span></p>
 
-  <p><b>Client files:</b></p>
-  <p class="pat-block">YYYY-MM-DD_Lastname-Firstname_DocumentType.ext</p>
-
-  <p><b>Business and admin files:</b></p>
-  <p class="pat-block">YYYY-MM-DD_Category_Description.ext</p>
-
-  <table>
-    <tr><th>Example</th><th>What it is</th></tr>
-    <tr><td><span class="pat">2026-09-14_Rivera-Mateo_SessionNotes.pdf</span></td><td>Session notes for one session</td></tr>
-    <tr><td><span class="pat">2026-09-02_Rivera-Mateo_ServiceAgreement-signed.pdf</span></td><td>Executed agreement</td></tr>
-    <tr><td><span class="pat">2026-10-08_Rivera-Mateo_504-Meeting-Notes.docx</span></td><td>Advocacy meeting record</td></tr>
-    <tr><td><span class="pat">2026-09-30_Rivera-Mateo_CurriculumTracker.xlsx</span></td><td>Coverage record as of a date</td></tr>
-    <tr><td><span class="pat">2026-08-31_Invoices_August-Batch.pdf</span></td><td>Admin file, no client in the name</td></tr>
-  </table>
-
-  <p><b>The rules behind the pattern:</b></p>
-  <ul>
-    <li><b>Underscores separate the parts; hyphens join words inside a part.</b> <span class="pat">Rivera-Mateo</span> is one part; <span class="pat">2026-09-14_Rivera-Mateo_SessionNotes</span> is three.</li>
-    <li><b>No spaces.</b> They break links, get encoded as <span class="pat">%20</span>, and cause trouble in anything that isn't a Finder window.</li>
-    <li><b>The date is the date the thing happened,</b> not the date you saved it. A session note is dated by the session.</li>
-    <li><b>No <span class="pat">final</span>, <span class="pat">FINAL</span>, <span class="pat">v2-final</span> or <span class="pat">final-really</span>.</b> If a file needs a version, it is <span class="pat">_v2</span>, <span class="pat">_v3</span>. Most files never need one, because the date already distinguishes them.</li>
-    <li><b>Signed documents carry <span class="pat">-signed</span></b> so the executed copy is never confused with the draft it came from.</li>
-    <li><b>Never rename someone else's file to fix its name without saying so</b> — a renamed file breaks every link that pointed at it.</li>
-  </ul>
-
-  <p><b>Folders use <span class="pat">Last, First</span>; file names use <span class="pat">Lastname-Firstname</span>.</b> The comma and space read better in a folder list; the hyphenated form keeps file names clean. This is the one place the two conventions deliberately differ. <span class="tbd">confirm with Sarah — the folder convention comes from the draft structure in the Internal Reference Sheet and is not final yet.</span></p>
+  <p><b>Grade Tracker:</b> <span class="pat">First Last - Doc Name</span></p>
 
   <h2>5. Where Files Go</h2>
   <p>The full structure lives in the <a href="Internal-Reference-Sheet.html">Internal Reference Sheet</a>. What matters day to day is the client level:</p>
 
+  <p>Four main folders sit inside each client's folder:</p>
+
   <table>
     <tr><th>Folder</th><th>What belongs in it</th></tr>
-    <tr><td><span class="pat">Intake &amp; Agreements</span></td><td>Service Agreement, Parent Terms of Service, release forms, the intake form</td></tr>
-    <tr><td><span class="pat">Session Notes &amp; Progress</span></td><td>Session notes, curriculum tracker, goals tracker</td></tr>
-    <tr><td><span class="pat">School &amp; Provider Records</span></td><td>IEP/504 documents, report cards, therapist notes, teacher feedback forms</td></tr>
+    <tr><td><span class="pat">Intake Docs</span></td><td>Service Agreement, Parent Terms of Service, release forms, the intake form</td></tr>
+    <tr><td><span class="pat">Session Notes</span></td><td>Session notes, curriculum tracker, goals tracker</td></tr>
+    <tr><td><span class="pat">Reports Doc</span></td><td>IEP/504 documents, report cards, therapist notes, teacher feedback forms</td></tr>
+    <tr><td><span class="pat">2026-27</span> (student) or <span class="pat">2026</span> (adult, not in school)</td><td></td></tr>
   </table>
 
-  <ul>
-    <li><b>Invoices and payments do not live in the client folder.</b> They are centralized under <span class="pat">02 – Admin &amp; Operations / Financials</span>, so the finances can be read in one place.</li>
-    <li><b>Blank forms live in <span class="pat">_Templates</span>,</b> never inside a client folder. Copy out, never edit in place.</li>
-    <li><b>If you can't tell which folder something goes in, it goes in the one where you would look for it first</b> — and then it becomes an <span class="pat">[SOP Q]</span>, so the answer gets written down.</li>
-  </ul>
+  <p><b>Never take notes in the calendar invite.</b> Session notes go in the client's Session Notes file, using the templates below — never in a calendar event's description or notes field.</p>
 
-  <p><span class="tbd">TBD — where this structure actually lives is still open: Google Drive now, or the Zoho One build in Sprint 04. Whichever it is, the naming conventions above carry across unchanged.</span></p>
+  <p><b>Session note template — parent sessions:</b></p>
+  <table class="session-tpl">
+    <tr><td class="stl-label">DATE:</td><td class="stl-val stl-val-mauve">9/4 – Parent Session (Names of Parents Attending)</td></tr>
+    <tr><td class="stl-label stl-affect">Affect:</td><td class="stl-affect-val"></td></tr>
+    <tr><td class="stl-label stl-sarah">Sarah Notes:</td><td class="stl-sarah-val"></td></tr>
+    <tr><td class="stl-label stl-provider"><b>Provider</b><br>Follow-Up<br>Expectations</td><td class="stl-provider-val"></td></tr>
+    <tr><td class="stl-label stl-client"><b>Client/Parent</b><br>Follow-Up<br>Expectations:</td><td class="stl-client-val"></td></tr>
+    <tr><td class="stl-label stl-zoom">Zoom Notes:</td><td class="stl-zoom-val"></td></tr>
+  </table>
+
+  <p><b>Session note template — parent calls:</b></p>
+  <table class="session-tpl">
+    <tr><td class="stl-label">DATE:</td><td class="stl-val stl-val-mauve">9/4 – Parent Call (who they talked to)</td></tr>
+    <tr><td class="stl-label stl-affect">Affect:</td><td class="stl-affect-val"></td></tr>
+    <tr><td class="stl-label stl-sarah">Sarah Notes:</td><td class="stl-sarah-val"></td></tr>
+    <tr><td class="stl-label stl-provider"><b>Provider</b><br>Follow-Up<br>Expectations</td><td class="stl-provider-val"></td></tr>
+    <tr><td class="stl-label stl-client"><b>Client/Parent</b><br>Follow-Up<br>Expectations:</td><td class="stl-client-val"></td></tr>
+    <tr><td class="stl-label stl-zoom">Zoom Notes:</td><td class="stl-zoom-val"></td></tr>
+  </table>
+
+  <p><b>Session note template — school and therapist meetings:</b></p>
+  <table class="session-tpl">
+    <tr><td class="stl-label">DATE:</td><td class="stl-val stl-val-cyan">9/4 – Therapist Meeting (Name of therapist)</td></tr>
+    <tr><td class="stl-label stl-affect">Affect:</td><td class="stl-affect-val"></td></tr>
+    <tr><td class="stl-label stl-sarah">Sarah Notes:</td><td class="stl-sarah-val"></td></tr>
+    <tr><td class="stl-label stl-provider"><b>Provider</b><br>Follow-Up<br>Expectations</td><td class="stl-provider-val"></td></tr>
+    <tr><td class="stl-label stl-client"><b>Client/Parent</b><br>Follow-Up<br>Expectations:</td><td class="stl-client-val"></td></tr>
+    <tr><td class="stl-label stl-zoom">Zoom Notes:</td><td class="stl-zoom-val"></td></tr>
+  </table>
+
+  <p><b>Session note template — no-show or late cancel:</b></p>
+  <table class="session-tpl">
+    <tr><td class="stl-label">DATE:</td><td class="stl-val">9/4 – NO SHOW or LATE CANCEL</td></tr>
+    <tr><td class="stl-label stl-affect">Affect:</td><td class="stl-affect-val"></td></tr>
+    <tr><td class="stl-label stl-sarah">Sarah Notes:</td><td class="stl-sarah-val"></td></tr>
+    <tr><td class="stl-label stl-provider"><b>Provider</b><br>Follow-Up<br>Expectations</td><td class="stl-provider-val"></td></tr>
+    <tr><td class="stl-label stl-client"><b>Client/Parent</b><br>Follow-Up<br>Expectations:</td><td class="stl-client-val"></td></tr>
+    <tr><td class="stl-label stl-zoom">Zoom Notes:</td><td class="stl-zoom-val"></td></tr>
+  </table>
 
   <h2>6. Calendar</h2>
   <p>Your work calendar syncs to Sarah's, so it is a shared operational document, not a private one. Anything that consumes a working hour goes on it — sessions, prep, admin blocks, travel. If it isn't on the calendar, your available hours look larger than they are, and the caseload ramp can't be measured.</p>
@@ -235,76 +234,34 @@
   <p><b>Event titles:</b></p>
   <table>
     <tr><th>Event</th><th>Title</th></tr>
-    <tr><td>Client session</td><td><span class="pat">Rivera, Mateo — Session</span></td></tr>
-    <tr><td>Parent session</td><td><span class="pat">Rivera, Mateo — Parent Session</span></td></tr>
-    <tr><td>First meeting with a prospective client</td><td><span class="pat">Rivera, Mateo — Meet &amp; Greet</span></td></tr>
-    <tr><td>Teacher, therapist or school meeting</td><td><span class="pat">Rivera, Mateo — Collaboration (School)</span></td></tr>
+    <tr><td>Client session</td><td><span class="pat">Mateo Rivera - Session Notes</span></td></tr>
+    <tr><td>First EF Session</td><td><span class="pat">Mateo Rivera - First EF Session</span></td></tr>
+    <tr><td>Parent session</td><td><span class="pat">Parent EG Session - Mateo Rivera</span></td></tr>
+    <tr><td>Collab Session</td><td><span class="pat">Collab Meeting - ProviderName Employee and Mateo Rivera</span></td></tr>
+    <tr><td>Full School Meeting</td><td><span class="pat">Mateo - Full School Meeting</span></td></tr>
     <tr><td>Weekly one-to-one</td><td><span class="pat">1:1 with Sarah</span></td></tr>
-    <tr><td>Notes, prep, admin</td><td><span class="pat">ADMIN — session notes</span></td></tr>
     <tr><td>Not available</td><td><span class="pat">BLOCKED — unavailable</span></td></tr>
-    <tr><td>Away</td><td><span class="pat">OOO — Lastname</span></td></tr>
   </table>
 
-  <p>These match the four Calendly event types set up before day one — Parent Sessions, Meet-and-Greet, Collaboration Meetings, and Meetings with Sarah — so a booking Calendly creates and an event you type in by hand look the same on the calendar.</p>
+  <p><b>Duplicate first names.</b> If the client's first name matches another client's, add the last name to the event title so the two are never confused on the calendar.</p>
 
-  <p><b>Colors mean the same thing on both calendars.</b> Because your calendar is read by someone else, a color key only works if it is shared:</p>
-  <table>
-    <tr><th>Color</th><th>Meaning</th></tr>
-    <tr><td><span class="sw sw-1"></span>Colour 1</td><td>Client sessions</td></tr>
-    <tr><td><span class="sw sw-2"></span>Colour 2</td><td>Parent sessions</td></tr>
-    <tr><td><span class="sw sw-3"></span>Colour 3</td><td>Collaboration and provider meetings</td></tr>
-    <tr><td><span class="sw sw-4"></span>Colour 4</td><td>Internal — one-to-ones, admin, prep</td></tr>
-    <tr><td><span class="sw sw-5"></span>Grey</td><td>Blocked, unavailable, out of office</td></tr>
-  </table>
-  <p><span class="tbd">confirm with Sarah — the specific colors, since they have to be agreed once and then not changed. What matters is that both calendars use the same five.</span></p>
-
-  <p><b>Other calendar rules:</b></p>
+<p><b>Other calendar rules:</b></p>
   <ul>
     <li><b>Block time rather than declining bookings.</b> Calendly can only avoid a slot it knows is taken.</li>
     <li><b>Working hours are 9am–7pm ET Monday–Thursday and 9am–4pm ET Friday,</b> per the Role Definition. Calendly availability should match, not exceed it.</li>
     <li><b>No client detail in an event title or description</b> beyond the name — the calendar is visible to more people and more devices than the client record is.</li>
-    <li><b>Cancellations and reschedules are logged as distinct outcomes,</b> not both deleted off the calendar. See the <a href="No-Show-and-Cancellation-Policy.html">No-Show &amp; Cancellation Policy</a>.</li>
   </ul>
 
-  <h2>7. Document Status</h2>
-  <p>Every internal OptiMind document carries a status line in its header, so nobody has to guess whether they are reading a proposal or a rule:</p>
+  <h2>7. Calendar &amp; Billing</h2>
+  <p>The calendar is also how Sarah bills, so what stays on it — and what gets logged separately — is not optional.</p>
   <ul>
-    <li><b>Draft</b> — written, not yet confirmed by Sarah. Do not rely on it as policy.</li>
-    <li><b>Final</b> — confirmed. This is how the practice operates.</li>
-    <li><b>Reference</b> — factual material rather than policy: the Style Guide, the logo files.</li>
+    <li><b>A late cancellation (inside the 24-hour cancellation window) is billed,</b> and needs an entry in the cancellation document. Never delete a late cancellation — Sarah reads the calendar for billing, and a deleted session looks like it never happened.</li>
+    <li><b>A reschedule is not a cancellation.</b> Move the event on the calendar to its new time; it does not get an entry in the cancellation document.</li>
+    <li><b>A no-show is billed, and the session stays on the calendar.</b> Never delete a no-show — Sarah reads the calendar for billing, and a deleted session looks like it never happened.</li>
+    <li><b>The cancellation document tracks two lists:</b> sessions that were billed (no-shows and late cancellations), and sessions that were not billed because they were cancelled outside the policy window and not rescheduled.</li>
   </ul>
-  <p>Documents also carry a <b>Last updated</b> date. If you change one, change the date in the same edit. Anything still open inside an otherwise-final document is marked <span class="tbd">like this</span>, so a gap never reads as a settled answer.</p>
 
-  <h2>Quick Reference</h2>
-  <table>
-    <tr><th>Thing</th><th>Convention</th></tr>
-    <tr><td>Dates, everywhere</td><td><span class="pat">YYYY-MM-DD</span></td></tr>
-    <tr><td>Client folder</td><td><span class="pat">Last, First</span></td></tr>
-    <tr><td>Client in a file name</td><td><span class="pat">Lastname-Firstname</span></td></tr>
-    <tr><td>Client file</td><td><span class="pat">YYYY-MM-DD_Lastname-Firstname_DocumentType.ext</span></td></tr>
-    <tr><td>Admin file</td><td><span class="pat">YYYY-MM-DD_Category_Description.ext</span></td></tr>
-    <tr><td>Email subject</td><td><span class="pat">[Prefix] Short, specific description</span></td></tr>
-    <tr><td>Email label</td><td><span class="pat">Clients / Lastname-Firstname</span></td></tr>
-    <tr><td>Calendar event</td><td><span class="pat">Last, First — Event Type</span></td></tr>
-    <tr><td>Version, when needed</td><td><span class="pat">_v2</span> — never <span class="pat">final</span></td></tr>
-    <tr><td>Signed copy</td><td><span class="pat">-signed</span></td></tr>
-  </table>
-
-  <div class="callout">
-    <h2>Open Questions for Sarah</h2>
-    <ol>
-      <li>What is the company email address and domain, and the website URL, so the signature block can be built rather than described?</li>
-      <li>What is the business phone line for the signature — company handset, forwarding number, or VoIP?</li>
-      <li>Do you want a confidentiality footer on outbound email? If so, drafted by whom — this touches the Data-Handling Policy.</li>
-      <li>Confirm the five calendar colors. They only work if both calendars use the same key, so this needs deciding once.</li>
-      <li>Confirm the client naming split: <span class="pat">Last, First</span> for folders, <span class="pat">Lastname-Firstname</span> in file names.</li>
-      <li>Last name only in email subject lines, or initials for anything leaving OptiMind?</li>
-      <li>Do you want to adopt these conventions yourself and rename existing files to match, or apply them to new material only from the specialist's start date? Both are workable; a mix is not.</li>
-      <li>Should any of these labels or prefixes be set up before day one, so the specialist starts inside the convention rather than migrating into it later?</li>
-    </ol>
-  </div>
-
-  <div class="foot">OptiMind Educational Strategies · Internal SOP — not for client distribution.</div>
+<div class="foot">OptiMind Educational Strategies · Internal SOP — not for client distribution.</div>
 
 </div>
 

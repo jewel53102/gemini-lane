@@ -52,16 +52,6 @@
       <div class="doccat-sec">
         <div class="card">
           <div class="card-hd">
-            <span class="card-title">New Client Agreements and Information</span>
-            <span class="doccat-count" id="doc-count-newclient"></span>
-          </div>
-          <div class="card-body" id="doc-list-newclient"></div>
-        </div>
-      </div>
-
-      <div class="doccat-sec">
-        <div class="card">
-          <div class="card-hd">
             <span class="card-title">Employee &amp; Potential Employee Resources</span>
             <span class="doccat-count" id="doc-count-hiring"></span>
           </div>
@@ -146,7 +136,6 @@
 
     function render() {
       renderDocSection(all, "internal", "doc-list-internal", "doc-count-internal", emptyText);
-      renderDocSection(all, "newclient", "doc-list-newclient", "doc-count-newclient", emptyText);
       renderDocSection(all, "hiring", "doc-list-hiring", "doc-count-hiring", emptyText);
       renderDocSection(all, "employee", "doc-list-employee", "doc-count-employee", emptyText);
     }

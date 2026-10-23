@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>OptiMind Dashboard — Archive</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<div id="sidebar-mount"></div>
+
+<main class="main">
+  <div class="topbar">
+    <div class="topbar-left">
+      <span class="topbar-title" id="topbar-title">Archive</span>
+    </div>
+    <span class="topbar-date" id="topbar-date"></span>
+  </div>
+
+  <div class="content">
+
+    <div class="ph">
+      <div>
+        <img src="sops/OptiMind-Logo-Long-Transparent.png" alt="OptiMind" style="width:240px;height:auto;margin-bottom:14px;display:block">
+        <div class="ph-title">Archive</div>
+        <div class="ph-sub">Everything filed in a <code>_archive</code> folder instead of the main SOPs or Onboarding lists — for two different reasons, tagged per document below.</div>
+      </div>
+    </div>
+
+    <div class="doccat-sec">
+      <div class="card">
+        <div class="card-hd">
+          <span class="card-title">Still Active — Just Filed Here</span>
+          <span class="doccat-count" id="doc-count-active"></span>
+        </div>
+        <div class="card-body" id="doc-list-active"></div>
+      </div>
+    </div>
+
+    <div class="doccat-sec">
+      <div class="card">
+        <div class="card-hd">
+          <span class="card-title">Archived</span>
+          <span class="doccat-count" id="doc-count-archived"></span>
+        </div>
+        <div class="card-body" id="doc-list-archived"></div>
+      </div>
+    </div>
+
+  </div>
+</main>
+
+<script src="js/data.js"></script>
+<script src="js/app.js"></script>
+<script>
+  mountSidebar("archive");
+  initChrome("archive", "Archive");
+
+  function docTitle(d) {
+    return '<a href="' + d.link + '" target="_blank" rel="noopener">' + d.title + ' ↗</a>';
+  }
+
+  function renderGroup(filedAs, listId, countId, emptyText) {
+    const filtered = ARCHIVED_DOCS.filter(function (d) { return d.filedAs === filedAs; });
+    document.getElementById(countId).textContent = filtered.length + ' document' + (filtered.length === 1 ? '' : 's');
+    document.getElementById(listId).innerHTML = filtered.length
+      ? '<ul class="doc-list">' + filtered.map(function (d, dIdx) {
+          return '' +
+            '<li class="doc-item">' +
+            '  <span class="doc-num">' + (dIdx + 1) + '.</span>' +
+            '  <div style="flex:1">' +
+            '    <div class="doc-title">' + docTitle(d) + '</div>' +
+            '    <div class="doc-desc">' + d.desc + '</div>' +
+            '    <div class="doc-desc" style="margin-top:4px;font-style:italic">' + d.filedNote + '</div>' +
+            '  </div>' +
+            '  <div style="display:flex;gap:6px;flex-wrap:wrap;justify-content:flex-end;align-items:flex-start">' +
+            '    <span class="badge b-gray">' + d.location + '</span>' +
+            '  </div>' +
+            '</li>';
+        }).join("") + '</ul>'
+      : '<div class="empty"><div class="empty-ico">🗂️</div><div class="empty-txt">' + emptyText + '</div></div>';
+  }
+
+  renderGroup("active", "doc-list-active", "doc-count-active", "Nothing filed here yet.");
+  renderGroup("archived", "doc-list-archived", "doc-count-archived", "Nothing archived yet.");
+</script>
+</body>
+</html>

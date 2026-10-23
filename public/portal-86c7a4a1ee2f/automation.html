@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>OptiMind Dashboard — Automation</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<div id="sidebar-mount"></div>
+
+<main class="main">
+  <div class="topbar">
+    <div class="topbar-left">
+      <span class="topbar-title" id="topbar-title">Automation</span>
+    </div>
+    <span class="topbar-date" id="topbar-date"></span>
+  </div>
+
+  <div class="content">
+
+    <div class="ph">
+      <div>
+        <div class="ph-title">Automation</div>
+        <div class="ph-sub">A new work stream for automation opportunities across the engagement — not yet scheduled into a dated sprint. Items live here while they're being scoped; once one has a sprint and cost attached, it moves into the <a href="sprints.html">Sprint Board</a>.</div>
+      </div>
+    </div>
+
+    <div class="card mb-20">
+      <div class="card-body">
+        <div class="progress-track"><div class="progress-fill" id="auto-progress-fill" style="width:0%"></div></div>
+        <div class="progress-label" id="auto-progress-label"></div>
+      </div>
+    </div>
+
+    <div class="board-list" id="auto-list" style="display:flex;flex-direction:column;gap:10px;max-width:640px"></div>
+
+  </div>
+</main>
+
+<div class="toast" id="toast"></div>
+<script src="js/data.js"></script>
+<script src="js/app.js"></script>
+<script>
+  mountSidebar("automation");
+  initChrome("automation", "Automation");
+
+  function renderList() {
+    const list = document.getElementById("auto-list");
+
+    if (!AUTOMATION.length) {
+      list.innerHTML = '<div class="empty"><div class="empty-ico">⚡</div><div class="empty-txt">Nothing scoped yet — add items to the AUTOMATION array in js/data.js as they come up.</div></div>';
+      return;
+    }
+
+    list.innerHTML = AUTOMATION.map(function (item, aIdx) {
+      const aid = automationId(aIdx);
+      const status = getStatus(aid);
+      const checksHTML = (item.doneWhen || []).map(function (raw, cIdx) {
+        const c = typeof raw === "string" ? { text: raw } : raw;
+        const cid = automationCheckId(aIdx, cIdx);
+        const checked = getCheck(cid);
+        return '' +
+          '<label class="kchk-row' + (checked ? ' done' : '') + '">' +
+          '  <input type="checkbox" data-acheck="' + cid + '" ' + (checked ? "checked" : "") + '>' +
+          '  <div>' +
+          '    <span>' + c.text +
+                 (c.link ? ' <a class="chk-link" href="' + c.link + '" target="_blank" rel="noopener" onclick="event.stopPropagation()" title="Open the document">↗</a>' : '') +
+          '    </span>' +
+                 (c.note ? '<div class="chk-note">' + c.note + '</div>' : '') +
+          '  </div>' +
+          '</label>';
+      }).join("");
+      const stepsDone = (item.doneWhen || []).filter(function (_, cIdx) { return getCheck(automationCheckId(aIdx, cIdx)); }).length;
+
+      return '' +
+        '<div class="kcard ' + STATUS_CLASS[status] + '" data-aid="' + aid + '">' +
+        '  <div class="kcard-top">' +
+        (item.badge ? '<span class="kcard-badge">' + item.badge + '</span>' : '<span></span>') +
+        (item.tag ? '<span class="kcard-tag">' + item.tag + '</span>' : '') +
+        '  </div>' +
+        '  <h4 class="' + (status === "complete" ? "done" : "") + '">' + item.title + '</h4>' +
+        '  <p>' + item.desc + '</p>' +
+        '  <select class="fsel kcard-status" data-astatus="' + aid + '">' +
+        '    <option value="planned"' + (status === "planned" ? " selected" : "") + '>Planned</option>' +
+        '    <option value="progress"' + (status === "progress" ? " selected" : "") + '>In Progress</option>' +
+        '    <option value="complete"' + (status === "complete" ? " selected" : "") + '>Complete</option>' +
+        '    <option value="blocked"' + (status === "blocked" ? " selected" : "") + '>Blocked</option>' +
+        '  </select>' +
+        ((item.doneWhen || []).length
+          ? '<span class="kcard-toggle" data-atoggle="' + aid + '">' + stepsDone + ' / ' + item.doneWhen.length + ' steps ▾</span>' +
+            '<div class="kcard-checks" id="acks-' + aid + '">' + checksHTML + '</div>'
+          : '') +
+        '</div>';
+    }).join("");
+
+    list.querySelectorAll("[data-astatus]").forEach(function (el) {
+      el.addEventListener("change", function () {
+        setStatus(el.dataset.astatus, el.value);
+        toast("Status updated");
+        renderList();
+        updateProgress();
+      });
+    });
+    list.querySelectorAll("[data-acheck]").forEach(function (el) {
+      el.addEventListener("change", function () {
+        setCheck(el.dataset.acheck, el.checked);
+        const row = el.closest(".kchk-row");
+        row.classList.toggle("done", el.checked);
+        const aid = el.dataset.acheck.split("-c")[0];
+        const card = list.querySelector('[data-aid="' + aid + '"]');
+        const total = card.querySelectorAll("[data-acheck]").length;
+        const done = card.querySelectorAll("[data-acheck]:checked").length;
+        card.querySelector(".kcard-toggle").textContent = done + " / " + total + " steps " + (card.querySelector(".kcard-checks").classList.contains("open") ? "▴" : "▾");
+      });
+    });
+    list.querySelectorAll("[data-atoggle]").forEach(function (el) {
+      el.addEventListener("click", function () {
+        const aid = el.dataset.atoggle;
+        const panel = document.getElementById("acks-" + aid);
+        panel.classList.toggle("open");
+        el.textContent = el.textContent.replace(/[▾▴]/, panel.classList.contains("open") ? "▴" : "▾");
+      });
+    });
+  }
+
+  function updateProgress() {
+    let complete = 0;
+    AUTOMATION.forEach(function (item, aIdx) {
+      if (getStatus(automationId(aIdx)) === "complete") complete++;
+    });
+    const pct = AUTOMATION.length ? Math.round(complete / AUTOMATION.length * 100) : 0;
+    document.getElementById("auto-progress-fill").style.width = pct + "%";
+    document.getElementById("auto-progress-label").textContent = AUTOMATION.length
+      ? (complete + " of " + AUTOMATION.length + " automation items complete (" + pct + "%)")
+      : "No automation items yet";
+  }
+
+  renderList();
+  updateProgress();
+</script>
+</body>
+</html>

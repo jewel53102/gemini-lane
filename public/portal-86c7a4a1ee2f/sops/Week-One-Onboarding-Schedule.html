@@ -11,14 +11,14 @@
     --border: #e4e9f0; --bg: #f7f9fc; --warn: #f59e0b; --warn-bg: #fffbeb;
   }
   * { box-sizing: border-box; margin: 0; padding: 0; }
-  body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text); font-size: 14.5px; line-height: 1.6; padding: 40px 20px; }
+  body { font-family: 'Calibri', sans-serif; background: var(--bg); color: var(--text); font-size: 14.5px; line-height: 1.6; padding: 40px 20px; }
   .doc { max-width: 760px; margin: 0 auto; background: #fff; border: 1px solid var(--border); border-radius: 14px; padding: 44px 52px; box-shadow: 0 1px 3px rgba(0,0,0,.06); }
   .badge { display: inline-flex; align-items: center; padding: 3px 11px; border-radius: 100px; font-size: 10.5px; font-weight: 700; text-transform: uppercase; letter-spacing: .5px; background: #fef3c7; color: #92400e; margin-bottom: 14px; }
-  h1 { font-size: 25px; font-weight: 700; letter-spacing: -.3px; margin-bottom: 4px; }
+  h1 { font-size: 30pt; font-weight: 700; letter-spacing: -.3px; margin-bottom: 4px; color: #ff5e16; }
   .subtitle { font-size: 13.5px; color: var(--text-2); margin-bottom: 18px; }
   .meta { display: flex; flex-wrap: wrap; gap: 18px; font-size: 12px; color: var(--text-3); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); padding: 12px 0; margin-bottom: 30px; }
   .meta b { color: var(--text-2); font-weight: 600; }
-  h2 { font-size: 15.5px; font-weight: 700; margin: 30px 0 10px; color: var(--text); }
+  h2 { font-size: 15.5px; font-weight: 700; margin: 30px 0 10px; color: #ff5e16; }
   h2:first-of-type { margin-top: 0; }
   p { color: var(--text-2); margin-bottom: 10px; }
   ul { margin: 0 0 6px 20px; color: var(--text-2); }
@@ -30,6 +30,9 @@
   .callout li { margin-bottom: 9px; }
   .foot { margin-top: 36px; padding-top: 16px; border-top: 1px solid var(--border); font-size: 11.5px; color: var(--text-3); }
   a { color: var(--accent); }
+  ul.checklist { list-style: none; margin: 0 0 8px; padding: 0; }
+  ul.checklist li { display: flex; align-items: flex-start; gap: 9px; margin-bottom: 9px; }
+  ul.checklist input[type="checkbox"] { margin-top: 3px; width: 15px; height: 15px; accent-color: var(--accent); flex-shrink: 0; }
   @media print {
     body { background: #fff; padding: 0; }
     .doc { border: none; box-shadow: none; padding: 0; max-width: 100%; }
@@ -108,63 +111,61 @@
   <p>Something for the new specialist to land on in week one, rather than improvising against a business with nothing written down. Assumes the Role Definition and Client Workflow documents are finished first — this schedule is what walks the specialist through them.</p>
   <h2>Before Day One</h2>
   <p>Confirmed and in place before the specialist's first day:</p>
-  <p>Create Calendly login link for new specialist, with event types set up for: Parent Sessions, Meet-and-Greet, Collaboration Meetings, and Meetings with Me (Sarah books a time with the specialist directly and it lands on their calendar).</p>
-  <p>Employment paperwork signed (offer letter, employment agreement, confidentiality/data-handling agreement).</p>
-  <p>Complete all payroll documents through the ADP Portal.</p>
-  <p>Weekly one-to-one is on the calendar.</p>
-  <p><strong>Sarah sets up the specialist's company email address </strong>at firstname@optimind-es.com (Google Workspace).</p>
-  <p>Create an auto-email signature in Gmail for the specialist's company email account.</p>
-  <p><strong>Sync the specialist's work calendar to Sarah's </strong>so Sarah can see their scheduled sessions and book onto the calendar directly. Follow the Calendar Access Procedure in the <a href="Internal-Reference-Sheet.html">Internal Reference Sheet</a>.</p>
-  <p>Sarah grants access to her session documents, and to any client files she has decided to onboard the specialist to.</p>
-  <p>Zoom subscription set up for the specialist.</p>
-  <p>Remaining accounts and access provisioned</p>
-  <p><strong>Documents ready to hand over: </strong><a href="Role-Definition-and-Responsibilities.html">Role Definition &amp; Responsibilities</a>, <a href="Client-Workflow-Intake-to-Graduation.html">Client Workflow — Intake to Graduation</a>, <a href="Employee-Reference-Sheet.html">Employee Reference Sheet</a>, <a href="../onboarding/Employee-Handbook.html">Employee Handbook</a>, <a href="../onboarding/Data-Handling-Policy.html">Data-Handling Policy</a>, <a href="../onboarding/Confidentiality-and-Data-Handling-Agreement.html">Confidentiality &amp; Data-Handling Agreement</a>, and the <a href="../onboarding/Holiday-Vacation-and-Leave-Policy.html">Holiday, Vacation &amp; Leave Policy</a>.</p>
-  <p><strong><a href="../onboarding/Employee-Decision-List.html">Employee Decision List</a> reviewed together, </strong>so the specialist knows what they decide alone versus what needs a conversation — including the standing authority to call 911 in a true emergency.</p>
+  <ul class="checklist">
+  <li><input type="checkbox">Create Calendly login link for new specialist, with event types set up for: Parent Sessions, Meet-and-Greet, Collaboration Meetings, and Meetings with Me (Sarah books a time with the specialist directly and it lands on their calendar).</li>
+  <li><input type="checkbox">Employment paperwork signed (offer letter, employment agreement, confidentiality/data-handling agreement).</li>
+  <li><input type="checkbox">Complete all payroll documents through the ADP Portal.</li>
+  <li><input type="checkbox">Weekly one-to-one is on the calendar.</li>
+  <li><input type="checkbox"><strong>Sarah sets up the specialist's company email address </strong>at firstname@optimind-es.com (Google Workspace).</li>
+  <li><input type="checkbox">Create an auto-email signature in Gmail for the specialist's company email account.</li>
+  <li><input type="checkbox"><strong>Sync the specialist's work calendar to Sarah's </strong>so Sarah can see their scheduled sessions and book onto the calendar directly. Follow the Calendar Access Procedure in the <a href="Internal-Reference-Sheet.html">Internal Reference Sheet</a>.</li>
+  <li><input type="checkbox">Sarah grants access to her session documents, and to any client files she has decided to onboard the specialist to.</li>
+  <li><input type="checkbox">Zoom subscription set up for the specialist.</li>
+  <li><input type="checkbox">Remaining accounts and access provisioned.</li>
+  <li><input type="checkbox"><strong>Documents ready to hand over: </strong><a href="Role-Definition-and-Responsibilities.html">Role Definition &amp; Responsibilities</a>, <a href="Client-Workflow-Intake-to-Graduation.html">Client Workflow — Intake to Graduation</a>, <a href="Employee-Reference-Sheet.html">Employee Reference Sheet</a>, <a href="../onboarding/_archive/Employee-Handbook.html">Employee Handbook</a>, <a href="../onboarding/_archive/Data-Handling-Policy.html">Data-Handling Policy</a>, <a href="../onboarding/_archive/Confidentiality-and-Data-Handling-Agreement.html">Confidentiality &amp; Data-Handling Agreement</a>, and the <a href="../onboarding/_archive/Holiday-Vacation-and-Leave-Policy.html">Holiday, Vacation &amp; Leave Policy</a>.</li>
+  <li><input type="checkbox"><strong><a href="../onboarding/Employee-Decision-List.html">Employee Decision List</a> reviewed together, </strong>so the specialist knows what they decide alone versus what needs a conversation — including the standing authority to call 911 in a true emergency.</li>
+  </ul>
   <h2>Week One, Day by Day</h2>
-  <p><strong>Day 1</strong> Orientation</p>
-  <ul>
-  <li>Walk through the Role Definition &amp; Responsibilities document together.</li>
-  <li>Hand over the Employee Reference Sheet: client folder structure, forms, and tools.</li>
-  <li>Confirm account access to everything needed for week one.</li>
+  <h3>Day 1 — Orientation</h3>
+  <ul class="checklist">
+  <li><input type="checkbox">Walk through the Role Definition &amp; Responsibilities document together.</li>
+  <li><input type="checkbox">Hand over the Employee Reference Sheet: client folder structure, forms, and tools.</li>
+  <li><input type="checkbox">Confirm account access to everything needed for week one.</li>
+  <li><input type="checkbox"><strong>Walk through the Employee Handbook, </strong>covering Section 10 (Safety &amp; Escalation) explicitly. The specialist confirms they understand the escalation steps before taking any live session.</li>
+  <li><input type="checkbox"><strong>Walk through the Holiday, Vacation &amp; Leave Policy </strong>— paid closures, how time off is requested, and the sick-day procedure.</li>
+  <li><input type="checkbox">Specialist writes their employee bio and provides a headshot for the website.</li>
   </ul>
-  <p><strong>Walk through the Employee Handbook, </strong>covering Section 10 (Safety &amp; Escalation) explicitly. The specialist confirms they understand the escalation steps before taking any live session.</p>
-  <p><strong>Walk through the Holiday, Vacation &amp; Leave Policy </strong>— paid closures, how time off is requested, and the sick-day procedure.</p>
-  <ul>
-  <li>Specialist writes their employee bio and provides a headshot for the website.</li>
+  <h3>Day 2 — Tools</h3>
+  <ul class="checklist">
+  <li><input type="checkbox">Walk through the Client Workflow — Intake to Graduation document together.</li>
+  <li><input type="checkbox">Training on curriculum documents.</li>
+  <li><input type="checkbox"><strong>Walk through Handbook Section 9 </strong>— how to spot and flag a Special Education Advocacy or College Counseling need, and the standing college-counseling question for juniors and seniors.</li>
+  <li><input type="checkbox"><strong>Training on the current session notetaker (Zoom AI Notes) </strong>and where notes land in the client record. The practice will move to a different AI notetaker and to the operational dashboard once those decisions land — training is repeated at migration, so train on what exists today rather than waiting.</li>
+  <li><input type="checkbox">Mock session with Sarah, so the specialist can see how she conducts a session.</li>
   </ul>
-  <p><strong>Day 2</strong> Tools</p>
-  <ul>
-  <li>Walk through the Client Workflow — Intake to Graduation document together.</li>
-  <li>Training on curriculum documents.</li>
+  <h3>Day 3 — Provider Coordination &amp; Templates</h3>
+  <ul class="checklist">
+  <li><input type="checkbox">Walk through the Teacher Email Template, Therapist Email Template, and Teacher Feedback Form.</li>
+  <li><input type="checkbox">Mock session with Sarah, so the specialist can see how she conducts a session.</li>
   </ul>
-  <p><strong>Walk through Handbook Section 9 </strong>— how to spot and flag a Special Education Advocacy or College Counseling need, and the standing college-counseling question for juniors and seniors.</p>
-  <p><strong>Training on the current session notetaker (Zoom AI Notes) </strong>and where notes land in the client record. The practice will move to a different AI notetaker and to the operational dashboard once those decisions land — training is repeated at migration, so train on what exists today rather than waiting.</p>
-  <ul>
-  <li>Mock session with Sarah, so the specialist can see how she conducts a session.</li>
+  <h3>Day 4 — Mock Sessions &amp; Documentation</h3>
+  <ul class="checklist">
+  <li><input type="checkbox">Mock session with Sarah, so the specialist can see how she conducts a session.</li>
+  <li><input type="checkbox">Specialist gets used to the documentation — session notes, curriculum tracker — logging notes for the mock session and reviewing them together afterward.</li>
   </ul>
-  <p><strong>Day 3</strong> Provider Coordination &amp; Templates</p>
-  <ul>
-  <li>Walk through the Teacher Email Template, Therapist Email Template, and Teacher Feedback Form.</li>
-  <li>Mock session with Sarah, so the specialist can see how she conducts a session.</li>
-  </ul>
-  <p><strong>Day 4</strong> Mock Sessions &amp; Documentation</p>
-  <ul>
-  <li>Mock session with Sarah, so the specialist can see how she conducts a session.</li>
-  <li>Specialist gets used to the documentation — session notes, curriculum tracker — logging notes for the mock session and reviewing them together afterward.</li>
-  </ul>
-  <p><strong>Day 5</strong> First Weekly One-to-One</p>
-  <ul>
-  <li>First scheduled one-to-one: a discussion on what the ongoing one-to-ones will look like going forward, plus feedback covering the whole first week.</li>
-  <li>Specialist continues getting familiar with the documentation — session notes, curriculum tracker.</li>
-  <li>Confirm the caseload ramp for week two against the table below.</li>
+  <h3>Day 5 — First Weekly One-to-One</h3>
+  <ul class="checklist">
+  <li><input type="checkbox">First scheduled one-to-one: a discussion on what the ongoing one-to-ones will look like going forward, plus feedback covering the whole first week.</li>
+  <li><input type="checkbox">Specialist continues getting familiar with the documentation — session notes, curriculum tracker.</li>
+  <li><input type="checkbox">Confirm the caseload ramp for week two against the table below.</li>
   </ul>
   <h2>Caseload Ramp</h2>
   <p>Steady-state target is confirmed at ~30 billable hours per week, reached by week 8. Sarah passes off enough clients to reach that target, but the specialist manages her own daily session schedule. </p>
   <p>The week-by-week ramp curve between week 2 and week 8 is still a placeholder.</p>
   <table class="dt"><tr><td><strong>Week</strong></td><td><strong>Target Hours</strong></td><td><strong>Notes</strong></td></tr><tr><td>Week 1</td><td><span class="tbd">TBD</span></td><td>Basic onboarding and mock sessions with Sarah</td></tr><tr><td>Week 2</td><td><span class="tbd">TBD</span></td><td>Shadows one or more of Sarah's live sessions; reverse mock sessions</td></tr><tr><td>Week 3</td><td><span class="tbd">TBD</span></td><td></td></tr><tr><td>Week 4</td><td><span class="tbd">TBD</span></td><td></td></tr><tr><td>Week 5</td><td><span class="tbd">TBD</span></td><td></td></tr><tr><td>Week 6</td><td><span class="tbd">TBD</span></td><td></td></tr><tr><td>Week 7</td><td><span class="tbd">TBD</span></td><td></td></tr><tr><td>Week 8</td><td>~30</td><td>Steady-state caseload target reached</td></tr></table>
   <h2>Standing Rhythm (Ongoing From Week One)</h2>
-  <ul>
-  <li>Weekly one-to-one with Sarah.</li>
+  <ul class="checklist">
+  <li><input type="checkbox">Weekly one-to-one with Sarah.</li>
   </ul>
 
   <div class="foot">OptiMind Educational Strategies · Internal SOP — not for client distribution.</div>
