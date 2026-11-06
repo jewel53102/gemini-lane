@@ -218,61 +218,21 @@ const SPRINTS = [
     id: "05", dates: "Oct 14 – Nov 3, 2026", start: "2026-10-14", end: "2026-11-03",
     theme: "Marketing outreach", bigRock: "Email outreach starts bringing in new clients, and the systems behind it are ready for them",
     cost: 3000, meetings: "TBD",
-    goal: "This sprint sets up the things that bring on new clients: the podcast promotion blast and a six-month lead nurture workflow go out through FloDesk, the rate sheet moves to a live link leads can always reach, and invoicing goes self-service so new clients can start without card numbers taken by phone.",
+    goal: "This sprint sets up the things that bring on new clients: a six-month lead nurture workflow goes out through FloDesk, and invoicing goes self-service so new clients can start without card numbers taken by phone.",
     priorities: [
-      { badge: "1st Priority", title: "Rate sheet", desc: "Turn the service-summary PDF into a live hosted link you update once, instead of re-exporting from Gamma each time.", tag: "Part 1 §02, Rec 13",
-        doneWhen: [
-          "The service summary lives at a permanent URL, and the follow-up email links to it rather than attaching a file."
-        ]},
-      { badge: "2nd Priority", title: "Set up permanent links for contracts", desc: "Give each contract one permanent link that redirects to its current version. When a contract is updated, only the redirect changes — the link stays the same everywhere it's already been used, so nothing has to be replaced in multiple places.", tag: "New",
-        doneWhen: [
-          "Every place a contract link is used today is listed — emails, FloDesk workflows, Monday, the website, SOPs and templates.",
-          "A redirect method is chosen, ideally on OptiMind's own domain so the links look trustworthy and stay under OptiMind's control.",
-          "Each contract has a permanent link that redirects to its current version.",
-          "Every place on the list is updated to use the permanent link instead of the direct contract URL.",
-          "Updating a redirect to a new contract version is tested, and the link works everywhere without anything else changing.",
-          "The steps for updating a redirect when a contract changes are written down and linked from the SOP Manual."
-        ]},
-      { badge: "3rd Priority", title: "Bookkeeping decision-making", desc: "Not a Gemini Lane deliverable — flagged here for your own awareness, and scheduled alongside the QuickBooks review above. Talk to your bookkeeper about moving to a monthly cadence and get a quote on what that would cost.", tag: "Part 1 §07",
+      { badge: "1st Priority", title: "Bookkeeping decision-making", desc: "Not a Gemini Lane deliverable — flagged here for your own awareness, and scheduled alongside the QuickBooks review above. Talk to your bookkeeper about moving to a monthly cadence and get a quote on what that would cost.", tag: "Part 1 §07",
         doneWhen: [
           "A conversation is had with your bookkeeper about the current balancing cadence.",
           "A quote is in hand for monthly bookkeeping.",
           "A decision is made on whether the cost is worth moving off the current cadence."
         ]},
-      { badge: "4th Priority", title: "Migrate the existing caseload — Part 2", desc: "Picks up from Part 1 in Sprint 04, with its issues list applied first. Your new hire can take a share as a way to learn the base.", tag: "Rec 6",
-        doneWhen: [
-          "The issues list from Part 1 is applied before any more clients move.",
-          "The next group of active clients is fully live on the platform, with history, documents and curriculum coverage carried over.",
-          "Nothing is being maintained in two places for those clients."
-        ]},
-      { badge: "5th Priority", title: "Set up Podcast Promotion Email Blast", desc: "A new mass email sent through FloDesk to leads and clients, promoting Sarah's podcast.", tag: "Rec 13, 21",
-        doneWhen: [
-          "The send list of leads and clients is pulled together in FloDesk, with anyone who has opted out excluded.",
-          "The email is drafted in FloDesk using the branded template, with a clear link to listen to the podcast, and reviewed and approved by Sarah before it goes out.",
-          "A test send is checked for formatting, links and personalization before the real send.",
-          "The blast is sent, and opens, clicks on the podcast link, and replies are reviewed afterward."
-        ]},
-      { badge: "6th Priority", title: "Build and configure Monday.com — Part 2", desc: "Picks up from Part 1 in Sprint 04: refine the Monday build based on what the pilot clients and first migration turned up, finish the integrations and automations, and hand it over so Sarah and the team can run it day to day.", tag: "Rec 6, 16",
+      { badge: "2nd Priority", title: "Build and configure Monday.com — Part 2", desc: "Picks up from Part 1 in Sprint 04: refine the Monday build based on what the pilot clients and first migration turned up, finish the integrations and automations, and hand it over so Sarah and the team can run it day to day.", tag: "Rec 6, 16",
         doneWhen: [
           "Boards, columns and views are adjusted based on the issues found with the Sprint 04 pilot clients and Migration Part 1.",
           "The Calendly, PandaDoc and FloDesk connections (native or via Zapier) are finished and tested on real records, so bookings, signed agreements and email activity show up on the client record without re-entry.",
           "The Monday automations the practice relies on — status changes, deadline reminders, task assignments — are built and tested.",
           "Sarah and the team are walked through the build and can add a client, update a record and find a document without help.",
           "How the boards are set up and how to use them is written down and linked from the SOP Manual."
-        ]},
-      { badge: "7th Priority", title: "Verify OptiMind's domain with FloDesk", desc: "Authenticate OptiMind's sending domain in FloDesk so emails go out from OptiMind's own address and land in inboxes, not spam folders.", tag: "Rec 13, 21",
-        doneWhen: [
-          "OptiMind's domain is added in FloDesk and the DNS records FloDesk provides are added with the domain host.",
-          "FloDesk shows the domain as verified.",
-          "A test email sent from the OptiMind address arrives in the inbox, not spam, with no \"via FloDesk\" sender label."
-        ]},
-      { badge: "8th Priority", title: "Set up blog email blasts with the SEO company", desc: "Work with the SEO company so each new blog post goes out to leads and clients as a FloDesk email blast.", tag: "Rec 13, 21",
-        doneWhen: [
-          "Who does what is agreed with the SEO company: who writes the post, who drafts the email, and who sends it.",
-          "A blog email template is set up in FloDesk using the branded template, with a clear link back to the post on the website.",
-          "A send cadence is agreed, matched to how often the SEO company publishes posts.",
-          "The first blog email is reviewed and approved by Sarah, test-sent, and then sent to leads and clients, with opt-outs excluded.",
-          "Opens and clicks through to the blog are reviewed after the first send."
         ]}
     ]
   },
@@ -346,19 +306,14 @@ const SPRINTS = [
           "The workflow is tested end to end, including the loop back to the first email, before real leads are added.",
           "Leads are being added to the workflow automatically, and opens, clicks and bookings are reviewed after the first few sends."
         ]},
-      { badge: "10th Priority", title: "Claude onboarding — retire Gamma", desc: "Moved up from the Sprint 09 AI-training slot: get Sarah working directly in Claude now, specifically so Gamma can be fully retired once the Rate Sheet's live-hosted-link migration (below) lands.", tag: "Part 1 §06",
+      { badge: "10th Priority", title: "Claude onboarding — retire Gamma", desc: "Moved up from the Sprint 09 AI-training slot: get Sarah working directly in Claude now, specifically so Gamma can be fully retired once the Rate Sheet's live-hosted-link migration (Buffer, Nov 4–10) lands.", tag: "Part 1 §06",
         doneWhen: [
           "A short Claude onboarding session is held with Sarah, covering how to organize and update business content directly, without exporting from Gamma.",
           "The service-summary/rate-sheet content currently built in Gamma is recreated with Claude's help, in a form Sarah can edit and update herself.",
           "Gamma is cancelled once the recreated content is confirmed working and linked from the live Rate Sheet URL.",
           "Any other content still produced in Gamma is inventoried, so nothing is silently orphaned when the subscription is cancelled."
         ]},
-      { badge: "11th Priority", title: "Define the operations dashboard — Part 1", desc: "Scope the questions it must answer on one screen before building any widgets. Part 2 follows in Sprint 07.", tag: "Rec 6, 8, 20",
-        doneWhen: [
-          "A written list of the questions it must answer on one screen.",
-          "Each question is mapped to where the data will come from, and which are not yet capturable."
-        ]},
-      { badge: "12th Priority", title: "Move SOPs into Monday — Part 1: library setup and client workflow", desc: "Set up one SOP library in Monday that every SOP, policy and reference document will live in, then move the core client workflow documents in first. Parts 2–5 follow in Sprints 07–10, so by the end every item has a place in Monday Sarah can find and use easily.", tag: "Rec 9",
+      { badge: "11th Priority", title: "Move SOPs into Monday — Part 1: library setup and client workflow", desc: "Set up one SOP library in Monday that every SOP, policy and reference document will live in, then move the core client workflow documents in first. Parts 2–5 follow in Sprints 07–10, so by the end every item has a place in Monday Sarah can find and use easily.", tag: "Rec 9",
         doneWhen: [
           "An SOP library is set up in Monday with groups for each type of document — client workflow, policies and agreements, team and onboarding, client resources and forms, brand and standards — and a column for each document's owner, last-reviewed date and whether it's a link or a Monday doc.",
           "Every SOP and reference document that exists today is listed in the library, even before it's moved, so nothing is missed in later parts.",
@@ -447,17 +402,24 @@ const SPRINTS = [
           "A landing page hosts the explainer with a Calendly link to the consult beneath it.",
           "Cold-lead inquiries route to the landing page automatically before a consult is booked."
         ]},
-      { badge: "11th Priority", title: "Define the operations dashboard — Part 2", desc: "Picks up from Part 1 in Sprint 06: decide where the dashboard gets built, against the question list and data sources already mapped.", tag: "Rec 6, 8, 20",
+      { badge: "11th Priority", title: "Define the operations dashboard — Part 2", desc: "Picks up from Part 1 in the Nov 4–10 buffer: decide where the dashboard gets built, against the question list and data sources already mapped.", tag: "Rec 6, 8, 20",
         doneWhen: [
           "A decision on whether it is built inside the platform, in a spreadsheet, or in a reporting tool."
         ]},
       { badge: "12th Priority", title: "Move SOPs into Monday — Part 2: policies and agreements", desc: "Picks up from Part 1 in Sprint 06: move the client-facing policies, terms and agreements into the Monday SOP library.", tag: "Rec 9",
         doneWhen: [
           "Moved this sprint: No-Show & Cancellation Policy, Parent Terms of Service, New Client Service Agreement, Rate Sheet, Screening Protocol, Add-On Services Identification & Referral Process, and the Attorney Review Checklist.",
-          "Contracts and the rate sheet use the permanent links set up in Sprint 05, so Monday never points at an out-of-date version.",
+          "Contracts and the rate sheet use the permanent links set up in the Nov 4–10 buffer, so Monday never points at an out-of-date version.",
           "Each document is either linked from Monday or recreated as a Monday doc, and which one is noted against it — a link where the original stays the source of truth, a new Monday doc where Sarah will edit it there.",
           "Each one is filed in the right group of the Monday SOP library, named consistently, and opens from Monday in one click.",
           "Sarah has found and opened each one from Monday herself, without help."
+        ]},
+      { badge: "13th Priority", title: "Set up Podcast Promotion Email Blast", desc: "A new mass email sent through FloDesk to leads and clients, promoting Sarah's podcast.", tag: "Rec 13, 21",
+        doneWhen: [
+          "The send list of leads and clients is pulled together in FloDesk, with anyone who has opted out excluded.",
+          "The email is drafted in FloDesk using the branded template, with a clear link to listen to the podcast, and reviewed and approved by Sarah before it goes out.",
+          "A test send is checked for formatting, links and personalization before the real send.",
+          "The blast is sent, and opens, clicks on the podcast link, and replies are reviewed afterward."
         ]}
     ]
   },
@@ -496,27 +458,39 @@ const SPRINTS = [
           "Each document is either linked from Monday or recreated as a Monday doc, and which one is noted against it — a link where the original stays the source of truth, a new Monday doc where Sarah will edit it there.",
           "Each one is filed in the right group of the Monday SOP library, named consistently, and opens from Monday in one click.",
           "Sarah has found and opened each one from Monday herself, without help."
+        ]},
+      { badge: "5th Priority", title: "Create a Graduation email", desc: "A congratulatory email sent to clients who have completed the program — marking the milestone, recapping what they've achieved, and letting them know how to stay in touch or come back if they need support later.", tag: "Rec 10",
+        doneWhen: [
+          "The email is drafted using the branded template, and reviewed and approved by Sarah.",
+          "It covers congratulations on completing the program, a short recap of what the client has achieved, and how to reach OptiMind if they need support again.",
+          { text: "The email is set up to send when a client is marked as graduated, so nobody has to remember to send it.", note: "Provisional — graduation criteria are defined in Sprint 10, so revisit the trigger then." },
+          "A test send is checked for formatting, links and personalization before it goes to a real client."
+        ]},
+      { badge: "6th Priority", title: "Create a system around Parent Sessions", desc: "A system that tracks meetings with each client's parents, so every family is actually having their parent sessions on schedule and none get pushed off for too long. Once parent sessions are a contract term, this is how they're kept: automatic reminders ahead of each session and a rebooking prompt whenever one is missed. Merged in from Sprint 09's parent session adherence tracking.", tag: "Rec 15",
+        doneWhen: [
+          "How often each family should have a parent session is agreed with Sarah, along with how overdue is too long.",
+          "Each client record in Monday shows the last parent session date and when the next one is due.",
+          "Automatic reminders go out ahead of each scheduled parent session.",
+          "A missed parent session automatically triggers a rebooking prompt.",
+          "Overdue or unscheduled parent sessions are flagged automatically, so nobody has to remember to check.",
+          "A view in Monday shows every family's parent-session status at a glance, with overdue ones at the top.",
+          "The process is written down and linked from the SOP Manual."
         ]}
     ]
   },
   {
     id: "09", dates: "Jan 6 – Jan 19, 2027", start: "2027-01-06", end: "2027-01-19",
-    theme: "Close the loops", bigRock: "Feedback, follow-up and parent sessions run themselves",
+    theme: "Close the loops", bigRock: "Feedback and follow-up run themselves",
     cost: 2000, meetings: "TBD",
     goal: "The things that currently depend on you remembering stop depending on you remembering.",
     priorities: [
-      { badge: "1st Priority", title: "Parent session adherence tracking", desc: "Once it's a contract term, make sure it's kept: automatic reminders and a rebooking prompt whenever a parent session is missed.", tag: "Rec 15",
-        doneWhen: [
-          "Automatic reminders go out ahead of each scheduled parent session.",
-          "A missed parent session automatically triggers a rebooking prompt."
-        ]},
-      { badge: "2nd Priority", title: "ChatGPT training", desc: "One-hour session for Sarah and her husband on Projects and Markdown files, so the two businesses' chats stop getting jumbled together.", tag: "Part 1 §06",
+      { badge: "1st Priority", title: "ChatGPT training", desc: "One-hour session for Sarah and her husband on Projects and Markdown files, so the two businesses' chats stop getting jumbled together.", tag: "Part 1 §06",
         doneWhen: [
           "A one-hour training session is held with both Sarah and her husband.",
           "Separate Projects exist for each business, with chats filed into the correct one going forward.",
           "Both of them can explain how Markdown files and Projects keep the two businesses' information apart."
         ]},
-      { badge: "3rd Priority", title: "Move SOPs into Monday — Part 4: client resources and forms", desc: "Picks up from Part 3 in Sprint 08: move the client resource documents, intake forms and brand standards into the Monday SOP library.", tag: "Rec 9",
+      { badge: "2nd Priority", title: "Move SOPs into Monday — Part 4: client resources and forms", desc: "Picks up from Part 3 in Sprint 08: move the client resource documents, intake forms and brand standards into the Monday SOP library.", tag: "Rec 9",
         doneWhen: [
           "Moved this sprint: the new-client and established-client resource documents from the Client Resources page, the New Client Intake Form, and the document-collection checklist.",
           "Also moved: Organization & Labeling Standards, the OptiMind Style Guide, and the logos and email signature files.",
@@ -621,14 +595,73 @@ const SPRINTS = [
 
 const BUFFERS = [
   {
-    id: "", position: "Between Sprint 05 and Sprint 06",
+    id: "B1", position: "Between Sprint 05 and Sprint 06",
     dates: "Nov 4 – Nov 10, 2026", start: "2026-11-04", end: "2026-11-10",
     bigRock: "Catch up on unfinished work from Sprints 01–05",
     cost: 1200, meetings: "TBD",
-    note: "No new work starts here — what lands in this sprint depends on what's still open when Sprint 05 ends: carried-over done-when items, anything blocked, or work that simply ran long."
+    note: "No new work starts here — this sprint holds what was carried over from Sprint 05.",
+    priorities: [
+      { badge: "1st Priority", title: "Set up permanent links for the rate sheet and contracts", desc: "Turn the service-summary PDF into a live hosted rate sheet you update once, instead of re-exporting from Gamma each time — and give it and each contract one permanent link that redirects to its current version. When a document is updated, only the redirect changes — the link stays the same everywhere it's already been used, so nothing has to be replaced in multiple places.", tag: "Part 1 §02, Rec 13",
+        doneWhen: [
+          "The service summary is rebuilt as a live hosted page, so it no longer has to be re-exported from Gamma.",
+          "Every place the rate sheet or a contract link is used today is listed — emails, FloDesk workflows, Monday, the website, SOPs and templates.",
+          "A redirect method is chosen, ideally on OptiMind's own domain so the links look trustworthy and stay under OptiMind's control.",
+          "The rate sheet and each contract have a permanent link that redirects to the current version.",
+          "Every place on the list is updated to use the permanent link instead of the direct URL.",
+          "Updating a redirect to a new version is tested, and the link works everywhere without anything else changing.",
+          "The steps for updating a redirect when a document changes are written down and linked from the SOP Manual.",
+          "The follow-up email links to the rate sheet's permanent link rather than attaching a file."
+        ]},
+      { badge: "2nd Priority", title: "Migrate the existing caseload — Part 2", desc: "Picks up from Part 1 in Sprint 04, with its issues list applied first. Your new hire can take a share as a way to learn the base.", tag: "Rec 6",
+        doneWhen: [
+          "The issues list from Part 1 is applied before any more clients move.",
+          "The next group of active clients is fully live on the platform, with history, documents and curriculum coverage carried over.",
+          "Nothing is being maintained in two places for those clients."
+        ]},
+      { badge: "3rd Priority", title: "Verify OptiMind's domain with FloDesk", desc: "Authenticate OptiMind's sending domain in FloDesk so emails go out from OptiMind's own address and land in inboxes, not spam folders.", tag: "Rec 13, 21",
+        doneWhen: [
+          "OptiMind's domain is added in FloDesk and the DNS records FloDesk provides are added with the domain host.",
+          "FloDesk shows the domain as verified.",
+          "A test email sent from the OptiMind address arrives in the inbox, not spam, with no \"via FloDesk\" sender label."
+        ]},
+      { badge: "4th Priority", title: "Set up blog email blasts with the SEO company", desc: "Work with the SEO company so each new blog post goes out to leads and clients as a FloDesk email blast.", tag: "Rec 13, 21",
+        doneWhen: [
+          "Who does what is agreed with the SEO company: who writes the post, who drafts the email, and who sends it.",
+          "A blog email template is set up in FloDesk using the branded template, with a clear link back to the post on the website.",
+          "A send cadence is agreed, matched to how often the SEO company publishes posts.",
+          "The first blog email is reviewed and approved by Sarah, test-sent, and then sent to leads and clients, with opt-outs excluded.",
+          "Opens and clicks through to the blog are reviewed after the first send."
+        ]},
+      { badge: "5th Priority", title: "Transfer subscriptions to admin@optimind-es.com", desc: "Move the Monday, Zapier, FloDesk and SignNow subscriptions so admin@optimind-es.com is the main login on each, keeping every account under OptiMind's control rather than tied to one person's email.", tag: "New",
+        doneWhen: [
+          "Monday.com: admin@optimind-es.com is the main login and account owner.",
+          "Zapier: admin@optimind-es.com is the main login and account owner.",
+          "FloDesk: admin@optimind-es.com is the main login and account owner.",
+          "SignNow: admin@optimind-es.com is the main login and account owner.",
+          "Each account is signed into with the new login to confirm it works, and billing, existing workflows and integrations are still running after the change."
+        ]},
+      { badge: "6th Priority", title: "Brainstorm how to integrate session notes into Monday", desc: "Talk through how session notes should get into the Monday client record, so the notetaker setup and session-notes automation in Sprint 06 start from an agreed approach.", tag: "Rec 3",
+        doneWhen: [
+          "How session notes are written and stored today is walked through with Sarah.",
+          "Options for getting notes into the Monday client record are listed, such as an AI notetaker writing in directly, a Zapier step, or a Monday doc template, along with what each needs.",
+          "A preferred approach is picked, with any open questions written down to carry into Sprint 06."
+        ]},
+      { badge: "7th Priority", title: "Define the operations dashboard — Part 1", desc: "Scope the questions it must answer on one screen before building any widgets. Part 2 follows in Sprint 07.", tag: "Rec 6, 8, 20",
+        doneWhen: [
+          "A written list of the questions it must answer on one screen.",
+          "Each question is mapped to where the data will come from, and which are not yet capturable."
+        ]},
+      { badge: "8th Priority", title: "Update the Contracts and the Welcome Email functionality", desc: "Bring the service agreement contracts and the welcome email up to date, so a newly signed client gets the current contract and the right welcome email fires once it's signed.", tag: "Workflow §3–4",
+        doneWhen: [
+          { text: "The contracts are updated to their current versions, and the updates are confirmed with Sarah.", link: "OptiMind-Onboarding-Automation-Workflow.html#service-agreement" },
+          { text: "The welcome email's content is updated, and it reconfirms the client's recurring session times and scheduled intake.", link: "OptiMind-Onboarding-Automation-Workflow.html#email-2" },
+          { text: "The welcome email fires automatically once the contract is signed.", link: "OptiMind-Onboarding-Automation-Workflow.html#email-2" },
+          "The flow is tested end to end, from a contract being sent and signed to the welcome email arriving, before it's used with a real client."
+        ]}
+    ]
   },
   {
-    id: "", position: "Between Sprint 08 and Sprint 09",
+    id: "B2", position: "Between Sprint 08 and Sprint 09",
     dates: "Dec 23, 2026 – Jan 5, 2027", start: "2026-12-23", end: "2027-01-05",
     bigRock: "Catch up on unfinished work from Sprints 06–08",
     cost: 1200, meetings: "TBD",

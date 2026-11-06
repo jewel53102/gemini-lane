@@ -51,6 +51,91 @@ function setRecStatus(n, status) {
   saveJSON(LS_RECS, store);
 }
 
+/* ---------- One-time migration: Nov 2026 Sprint 05 reshuffle ----------
+   Status/check ids are index-based, so moving items between sprints would
+   otherwise leave saved progress attached to the wrong card. Rate sheet +
+   contract permanent links were merged and moved (with Migration Part 2,
+   FloDesk domain verification and blog email blasts) into Buffer B1; the podcast blast went to
+   Sprint 07. Remaps saved keys once per browser. */
+(function migrateSprint05Reshuffle() {
+  const FLAG = "optimind_dash_mig_2026_11_s05";
+  try { if (localStorage.getItem(FLAG)) return; } catch (e) { return; }
+  const st = loadJSON(LS_STATUS), ck = loadJSON(LS_CHECKS);
+  const oldSt = Object.assign({}, st), oldCk = Object.assign({}, ck);
+  function moveItem(from, to, checkMap) {
+    if (from in oldSt) st[to] = oldSt[from];
+    Object.keys(checkMap).forEach(function (c) {
+      const k = from + "-c" + c;
+      if (k in oldCk) ck[to + "-c" + checkMap[c]] = oldCk[k];
+    });
+  }
+  function same(n) { const m = {}; for (let i = 0; i < n; i++) m[i] = i; return m; }
+  Object.keys(oldSt).concat(Object.keys(oldCk)).forEach(function (k) {
+    if (k.indexOf("s05-") === 0) { delete st[k]; delete ck[k]; }
+  });
+  // Combined permanent-links item: rate sheet's one check goes last; contracts' status wins.
+  moveItem("s05-p0", "sB1-p0", { 0: 7 });
+  moveItem("s05-p1", "sB1-p0", { 0: 1, 1: 2, 2: 3, 3: 4, 4: 5, 5: 6 });
+  moveItem("s05-p3", "sB1-p1", same(10));
+  moveItem("s05-p6", "sB1-p2", same(10));
+  moveItem("s05-p2", "s05-p0", same(10));
+  moveItem("s05-p5", "s05-p1", same(10));
+  moveItem("s05-p7", "sB1-p3", same(10));
+  moveItem("s05-p4", "s07-p12", same(10));
+  saveJSON(LS_STATUS, st); saveJSON(LS_CHECKS, ck);
+  try { localStorage.setItem(FLAG, "1"); } catch (e) {}
+})();
+
+/* One-time migration: "Define the operations dashboard — Part 1" moved from
+   Sprint 06 (index 10) to Buffer B1 (index 6); Sprint 06's index 11 shifts up. */
+(function migrateOpsDashboardPart1() {
+  const FLAG = "optimind_dash_mig_2026_11_s06_opsdash";
+  try { if (localStorage.getItem(FLAG)) return; } catch (e) { return; }
+  const st = loadJSON(LS_STATUS), ck = loadJSON(LS_CHECKS);
+  const oldSt = Object.assign({}, st), oldCk = Object.assign({}, ck);
+  [["s06-p10", "sB1-p6"], ["s06-p11", "s06-p10"]].forEach(function (pair) {
+    const from = pair[0], to = pair[1];
+    delete st[from];
+    Object.keys(oldCk).forEach(function (k) { if (k.indexOf(from + "-c") === 0) delete ck[k]; });
+  });
+  [["s06-p10", "sB1-p6"], ["s06-p11", "s06-p10"]].forEach(function (pair) {
+    const from = pair[0], to = pair[1];
+    if (from in oldSt) st[to] = oldSt[from];
+    Object.keys(oldCk).forEach(function (k) {
+      if (k.indexOf(from + "-c") === 0) ck[to + k.slice(from.length)] = oldCk[k];
+    });
+  });
+  saveJSON(LS_STATUS, st); saveJSON(LS_CHECKS, ck);
+  try { localStorage.setItem(FLAG, "1"); } catch (e) {}
+})();
+
+/* One-time migration: Sprint 09's "Parent session adherence tracking" (index 0)
+   merged into Sprint 08's "Create a system around Parent Sessions" (index 5);
+   Sprint 09's remaining items shift up one. */
+(function migrateParentSessionsMerge() {
+  const FLAG = "optimind_dash_mig_2026_11_s09_parent";
+  try { if (localStorage.getItem(FLAG)) return; } catch (e) { return; }
+  const st = loadJSON(LS_STATUS), ck = loadJSON(LS_CHECKS);
+  const oldSt = Object.assign({}, st), oldCk = Object.assign({}, ck);
+  Object.keys(oldSt).concat(Object.keys(oldCk)).forEach(function (k) {
+    if (k.indexOf("s09-") === 0) { delete st[k]; delete ck[k]; }
+  });
+  function moveItem(from, to, checkMap) {
+    if (from in oldSt && !(to in oldSt)) st[to] = oldSt[from];
+    Object.keys(oldCk).forEach(function (k) {
+      if (k.indexOf(from + "-c") !== 0) return;
+      const c = k.slice(from.length + 2);
+      const nc = checkMap ? checkMap[c] : c;
+      if (nc !== undefined) ck[to + "-c" + nc] = oldCk[k];
+    });
+  }
+  moveItem("s09-p0", "s08-p5", { 0: 2, 1: 3 });
+  moveItem("s09-p1", "s09-p0");
+  moveItem("s09-p2", "s09-p1");
+  saveJSON(LS_STATUS, st); saveJSON(LS_CHECKS, ck);
+  try { localStorage.setItem(FLAG, "1"); } catch (e) {}
+})();
+
 /* ---------- Backup / Restore ---------- */
 const BACKUP_KEYS = [LS_STATUS, LS_CHECKS, LS_RECS, "optimind_dash_sopchecks", "optimind_dash_onboardchecks", "optimind_dash_clients", "optimind_dash_clientdocs", "optimind_dash_docmeta"];
 
@@ -119,6 +204,17 @@ function computeStats() {
 
   BUFFERS.forEach(function (b) {
     totalCost += b.cost;
+    (b.priorities || []).forEach(function (p, pIdx) {
+      totalItems++;
+      const st = getStatus(priorityId(b.id, pIdx));
+      if (st === "complete") completeItems++;
+      if (st === "progress") inProgressItems++;
+      if (st === "blocked") blockedItems++;
+      (p.doneWhen || []).forEach(function (_, cIdx) {
+        totalChecks++;
+        if (getCheck(checkId(b.id, pIdx, cIdx))) doneChecks++;
+      });
+    });
   });
 
   let recsComplete = 0;

@@ -47,6 +47,46 @@
   mountSidebar("sprints");
   initChrome("sprints", "Sprints");
 
+  function renderCards(colId, priorities) {
+    let doneCount = 0;
+    const cards = priorities.map(function (p, pIdx) {
+      const pid = priorityId(colId, pIdx);
+      const status = getStatus(pid);
+      if (status === "complete") doneCount++;
+      const checksHTML = (p.doneWhen || []).map(function (raw, cIdx) {
+        const item = typeof raw === "string" ? { text: raw } : raw;
+        const cid = checkId(colId, pIdx, cIdx);
+        const checked = getCheck(cid);
+        return '' +
+          '<label class="kchk-row' + (checked ? ' done' : '') + '">' +
+          '  <input type="checkbox" data-check="' + cid + '" ' + (checked ? "checked" : "") + '>' +
+          '  <div>' +
+          '    <span>' + item.text +
+                 (item.link ? ' <a class="chk-link" href="' + item.link + '" target="_blank" rel="noopener" onclick="event.stopPropagation()" title="Open the document">\u2197</a>' : '') +
+          '    </span>' +
+                 (item.note ? '<div class="chk-note">' + item.note + '</div>' : '') +
+          '  </div>' +
+          '</label>';
+      }).join("");
+      const stepsDone = (p.doneWhen || []).filter(function (_, cIdx) { return getCheck(checkId(colId, pIdx, cIdx)); }).length;
+      return '' +
+        '<div class="kcard ' + STATUS_CLASS[status] + '" data-pid="' + pid + '">' +
+        '  <div class="kcard-top"><span class="kcard-badge">' + p.badge + '</span><span class="kcard-tag">' + p.tag + '</span></div>' +
+        '  <h4 class="' + (status === "complete" ? "done" : "") + '">' + p.title + '</h4>' +
+        '  <p>' + p.desc + '</p>' +
+        '  <select class="fsel kcard-status" data-status="' + pid + '">' +
+        '    <option value="planned"' + (status === "planned" ? " selected" : "") + '>Planned</option>' +
+        '    <option value="progress"' + (status === "progress" ? " selected" : "") + '>In Progress</option>' +
+        '    <option value="complete"' + (status === "complete" ? " selected" : "") + '>Complete</option>' +
+        '    <option value="blocked"' + (status === "blocked" ? " selected" : "") + '>Blocked</option>' +
+        '  </select>' +
+        '  <span class="kcard-toggle" data-toggle="' + pid + '">' + stepsDone + ' / ' + (p.doneWhen || []).length + ' steps ▾</span>' +
+        '  <div class="kcard-checks" id="checks-' + pid + '">' + checksHTML + '</div>' +
+        '</div>';
+    }).join("");
+    return { html: cards, done: doneCount };
+  }
+
   function renderBufferColumn(b) {
     return '' +
       '<div class="kcol buffer" id="buffer-' + b.id + '">' +
@@ -59,49 +99,17 @@
       '      <div><b>Meetings</b>' + b.meetings + '</div>' +
       '    </div>' +
       '  </div>' +
-      '  <div class="kcol-body"><p class="kcol-buffer-note"><strong>Contents: TBD.</strong> ' + b.note + '</p></div>' +
+      '  <div class="kcol-body">' + ((b.priorities || []).length
+            ? '<p class="kcol-buffer-note">' + b.note + '</p>' + renderCards(b.id, b.priorities).html
+            : '<p class="kcol-buffer-note"><strong>Contents: TBD.</strong> ' + b.note + '</p>') + '</div>' +
       '</div>';
   }
 
   function renderBoard() {
     const board = document.getElementById("board");
     board.innerHTML = SPRINTS.map(function (s) {
-      let doneCount = 0;
-      const cards = s.priorities.map(function (p, pIdx) {
-        const pid = priorityId(s.id, pIdx);
-        const status = getStatus(pid);
-        if (status === "complete") doneCount++;
-        const checksHTML = (p.doneWhen || []).map(function (raw, cIdx) {
-          const item = typeof raw === "string" ? { text: raw } : raw;
-          const cid = checkId(s.id, pIdx, cIdx);
-          const checked = getCheck(cid);
-          return '' +
-            '<label class="kchk-row' + (checked ? ' done' : '') + '">' +
-            '  <input type="checkbox" data-check="' + cid + '" ' + (checked ? "checked" : "") + '>' +
-            '  <div>' +
-            '    <span>' + item.text +
-                   (item.link ? ' <a class="chk-link" href="' + item.link + '" target="_blank" rel="noopener" onclick="event.stopPropagation()" title="Open the document">\u2197</a>' : '') +
-            '    </span>' +
-                   (item.note ? '<div class="chk-note">' + item.note + '</div>' : '') +
-            '  </div>' +
-            '</label>';
-        }).join("");
-        const stepsDone = (p.doneWhen || []).filter(function (_, cIdx) { return getCheck(checkId(s.id, pIdx, cIdx)); }).length;
-        return '' +
-          '<div class="kcard ' + STATUS_CLASS[status] + '" data-pid="' + pid + '">' +
-          '  <div class="kcard-top"><span class="kcard-badge">' + p.badge + '</span><span class="kcard-tag">' + p.tag + '</span></div>' +
-          '  <h4 class="' + (status === "complete" ? "done" : "") + '">' + p.title + '</h4>' +
-          '  <p>' + p.desc + '</p>' +
-          '  <select class="fsel kcard-status" data-status="' + pid + '">' +
-          '    <option value="planned"' + (status === "planned" ? " selected" : "") + '>Planned</option>' +
-          '    <option value="progress"' + (status === "progress" ? " selected" : "") + '>In Progress</option>' +
-          '    <option value="complete"' + (status === "complete" ? " selected" : "") + '>Complete</option>' +
-          '    <option value="blocked"' + (status === "blocked" ? " selected" : "") + '>Blocked</option>' +
-          '  </select>' +
-          '  <span class="kcard-toggle" data-toggle="' + pid + '">' + stepsDone + ' / ' + (p.doneWhen || []).length + ' steps ▾</span>' +
-          '  <div class="kcard-checks" id="checks-' + pid + '">' + checksHTML + '</div>' +
-          '</div>';
-      }).join("");
+      const r = renderCards(s.id, s.priorities);
+      const cards = r.html, doneCount = r.done;
 
       const pct = s.priorities.length ? Math.round(doneCount / s.priorities.length * 100) : 0;
 
