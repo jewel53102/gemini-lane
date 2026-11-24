@@ -653,11 +653,12 @@ const BUFFERS = [
           "The next group of active clients is fully live on the platform, with history, documents and curriculum coverage carried over.",
           "Nothing is being maintained in two places for those clients."
         ]},
-      { badge: "3rd Priority", title: "Verify OptiMind's domain with FloDesk", desc: "Authenticate OptiMind's sending domain in FloDesk so emails go out from OptiMind's own address and land in inboxes, not spam folders.", tag: "Rec 13, 21",
+      { badge: "3rd Priority", title: "Verify OptiMind's domain with FloDesk", desc: "Authenticate OptiMind's sending domain in FloDesk so emails go out from OptiMind's own address and land in inboxes, not spam folders. This includes setting up Ruby's login to Sarah's WordPress website.", tag: "Rec 13, 21",
         doneWhen: [
           "OptiMind's domain is added in FloDesk and the DNS records FloDesk provides are added with the domain host.",
           "FloDesk shows the domain as verified.",
-          "A test email sent from the OptiMind address arrives in the inbox, not spam, with no \"via FloDesk\" sender label."
+          "A test email sent from the OptiMind address arrives in the inbox, not spam, with no \"via FloDesk\" sender label.",
+          "Ruby's login to Sarah's WordPress website is set up and tested."
         ]},
       { badge: "4th Priority", title: "Set up blog email blasts with the SEO company", desc: "Work with the SEO company so each new blog post goes out to leads and clients as a FloDesk email blast.", tag: "Rec 13, 21",
         doneWhen: [
@@ -680,6 +681,13 @@ const BUFFERS = [
           "How session notes are written and stored today is walked through with Sarah.",
           "Options for getting notes into the Monday client record are listed, such as an AI notetaker writing in directly, a Zapier step, or a Monday doc template, along with what each needs.",
           "A preferred approach is picked, with any open questions written down to carry into Sprint 06."
+        ]},
+      { badge: "7th Priority", title: "Update Flodesk and Parent Capture Information Automations to Monday", desc: "Integrate Sarah's intake into Monday, and port Parent and Provider input directly into their correct boards.", tag: "New",
+        doneWhen: [
+          "Sarah's intake is integrated into Monday.",
+          "Parent input goes directly into its correct Monday board.",
+          "Provider input goes directly into its correct Monday board.",
+          "The FloDesk and parent capture automations are updated and tested, and each submission lands in the right board without re-entry."
         ]}
     ]
   },
