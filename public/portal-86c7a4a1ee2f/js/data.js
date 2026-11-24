@@ -245,6 +245,12 @@ const SPRINTS = [
           "The workshop details, audience and send date are confirmed with Sarah.",
           "The email is drafted in FloDesk, reviewed and approved by Sarah, and test-sent.",
           "The email is sent to the agreed audience, with opt-outs excluded."
+        ]},
+      { badge: "5th Priority", title: "Determine Email Templates", desc: "Decide on branding and general email template options for email blasts.", tag: "New",
+        doneWhen: [
+          "Branding for email blasts is decided with Sarah.",
+          "General email template options are put together and reviewed with Sarah.",
+          "The template or templates to use for email blasts are chosen."
         ]}
     ]
   },
