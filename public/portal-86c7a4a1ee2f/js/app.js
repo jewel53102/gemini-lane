@@ -136,6 +136,239 @@ function setRecStatus(n, status) {
   try { localStorage.setItem(FLAG, "1"); } catch (e) {}
 })();
 
+/* One-time migration: "Update the Contracts and the Welcome Email functionality"
+   moved from Buffer B1 (index 7, last) to Sprint 06 (index 11, last). */
+(function migrateContractsWelcomeEmail() {
+  const FLAG = "optimind_dash_mig_2026_11_s06_contracts";
+  try { if (localStorage.getItem(FLAG)) return; } catch (e) { return; }
+  const st = loadJSON(LS_STATUS), ck = loadJSON(LS_CHECKS);
+  const from = "sB1-p7", to = "s06-p11";
+  if (from in st) { st[to] = st[from]; delete st[from]; }
+  Object.keys(ck).forEach(function (k) {
+    if (k.indexOf(from + "-c") !== 0) return;
+    ck[to + k.slice(from.length)] = ck[k];
+    delete ck[k];
+  });
+  saveJSON(LS_STATUS, st); saveJSON(LS_CHECKS, ck);
+  try { localStorage.setItem(FLAG, "1"); } catch (e) {}
+})();
+
+/* One-time migration: "Define the operations dashboard — Part 1"
+   moved back from Buffer B1 (index 6, last) to Sprint 06 (index 12, last). */
+(function migrateOpsDashboardPart1Back() {
+  const FLAG = "optimind_dash_mig_2026_11_s06_opsdash_back";
+  try { if (localStorage.getItem(FLAG)) return; } catch (e) { return; }
+  const st = loadJSON(LS_STATUS), ck = loadJSON(LS_CHECKS);
+  const from = "sB1-p6", to = "s06-p12";
+  if (from in st) { st[to] = st[from]; delete st[from]; }
+  Object.keys(ck).forEach(function (k) {
+    if (k.indexOf(from + "-c") !== 0) return;
+    ck[to + k.slice(from.length)] = ck[k];
+    delete ck[k];
+  });
+  saveJSON(LS_STATUS, st); saveJSON(LS_CHECKS, ck);
+  try { localStorage.setItem(FLAG, "1"); } catch (e) {}
+})();
+
+/* One-time migration: "Cancellation & billing tracking document" moved from
+   Sprint 06 (index 4) to Sprint 07 (index 13, last); Sprint 06's later items
+   shift up one. */
+(function migrateCancellationBilling() {
+  const FLAG = "optimind_dash_mig_2026_11_s07_cancelbilling";
+  try { if (localStorage.getItem(FLAG)) return; } catch (e) { return; }
+  const st = loadJSON(LS_STATUS), ck = loadJSON(LS_CHECKS);
+  const oldSt = Object.assign({}, st), oldCk = Object.assign({}, ck);
+  const pairs = [["s06-p4", "s07-p13"]];
+  for (let i = 5; i <= 12; i++) pairs.push(["s06-p" + i, "s06-p" + (i - 1)]);
+  pairs.forEach(function (pair) {
+    delete st[pair[0]];
+    Object.keys(oldCk).forEach(function (k) { if (k.indexOf(pair[0] + "-c") === 0) delete ck[k]; });
+  });
+  pairs.forEach(function (pair) {
+    const from = pair[0], to = pair[1];
+    if (from in oldSt) st[to] = oldSt[from];
+    Object.keys(oldCk).forEach(function (k) {
+      if (k.indexOf(from + "-c") === 0) ck[to + k.slice(from.length)] = oldCk[k];
+    });
+  });
+  saveJSON(LS_STATUS, st); saveJSON(LS_CHECKS, ck);
+  try { localStorage.setItem(FLAG, "1"); } catch (e) {}
+})();
+
+/* One-time migration: "Independent backup, tested" moved from Sprint 06
+   (index 1) to Sprint 08 (index 6, last); Sprint 06's later items shift up one. */
+(function migrateIndependentBackup() {
+  const FLAG = "optimind_dash_mig_2026_11_s08_backup";
+  try { if (localStorage.getItem(FLAG)) return; } catch (e) { return; }
+  const st = loadJSON(LS_STATUS), ck = loadJSON(LS_CHECKS);
+  const oldSt = Object.assign({}, st), oldCk = Object.assign({}, ck);
+  const pairs = [["s06-p1", "s08-p6"]];
+  for (let i = 2; i <= 12; i++) pairs.push(["s06-p" + i, "s06-p" + (i - 1)]);
+  pairs.forEach(function (pair) {
+    delete st[pair[0]];
+    Object.keys(oldCk).forEach(function (k) { if (k.indexOf(pair[0] + "-c") === 0) delete ck[k]; });
+  });
+  pairs.forEach(function (pair) {
+    const from = pair[0], to = pair[1];
+    if (from in oldSt) st[to] = oldSt[from];
+    Object.keys(oldCk).forEach(function (k) {
+      if (k.indexOf(from + "-c") === 0) ck[to + k.slice(from.length)] = oldCk[k];
+    });
+  });
+  saveJSON(LS_STATUS, st); saveJSON(LS_CHECKS, ck);
+  try { localStorage.setItem(FLAG, "1"); } catch (e) {}
+})();
+
+/* One-time migration: "Birthday tracking — clients & employees (manual, phase 1)"
+   moved from Sprint 06 (index 0) to Sprint 07 (index 14, last); Sprint 06's
+   later items shift up one. */
+(function migrateBirthdayTracking() {
+  const FLAG = "optimind_dash_mig_2026_11_s07_birthday";
+  try { if (localStorage.getItem(FLAG)) return; } catch (e) { return; }
+  const st = loadJSON(LS_STATUS), ck = loadJSON(LS_CHECKS);
+  const oldSt = Object.assign({}, st), oldCk = Object.assign({}, ck);
+  const pairs = [["s06-p0", "s07-p14"]];
+  for (let i = 1; i <= 11; i++) pairs.push(["s06-p" + i, "s06-p" + (i - 1)]);
+  pairs.forEach(function (pair) {
+    delete st[pair[0]];
+    Object.keys(oldCk).forEach(function (k) { if (k.indexOf(pair[0] + "-c") === 0) delete ck[k]; });
+  });
+  pairs.forEach(function (pair) {
+    const from = pair[0], to = pair[1];
+    if (from in oldSt) st[to] = oldSt[from];
+    Object.keys(oldCk).forEach(function (k) {
+      if (k.indexOf(from + "-c") === 0) ck[to + k.slice(from.length)] = oldCk[k];
+    });
+  });
+  saveJSON(LS_STATUS, st); saveJSON(LS_CHECKS, ck);
+  try { localStorage.setItem(FLAG, "1"); } catch (e) {}
+})();
+
+/* One-time migration: "Cancellation & billing tracking document" moved on from
+   Sprint 07 (index 13) to Sprint 08 (index 7, last); Sprint 07's index 14
+   shifts up one. */
+(function migrateCancellationBillingS08() {
+  const FLAG = "optimind_dash_mig_2026_11_s08_cancelbilling";
+  try { if (localStorage.getItem(FLAG)) return; } catch (e) { return; }
+  const st = loadJSON(LS_STATUS), ck = loadJSON(LS_CHECKS);
+  const oldSt = Object.assign({}, st), oldCk = Object.assign({}, ck);
+  const pairs = [["s07-p13", "s08-p7"], ["s07-p14", "s07-p13"]];
+  pairs.forEach(function (pair) {
+    delete st[pair[0]];
+    Object.keys(oldCk).forEach(function (k) { if (k.indexOf(pair[0] + "-c") === 0) delete ck[k]; });
+  });
+  pairs.forEach(function (pair) {
+    const from = pair[0], to = pair[1];
+    if (from in oldSt) st[to] = oldSt[from];
+    Object.keys(oldCk).forEach(function (k) {
+      if (k.indexOf(from + "-c") === 0) ck[to + k.slice(from.length)] = oldCk[k];
+    });
+  });
+  saveJSON(LS_STATUS, st); saveJSON(LS_CHECKS, ck);
+  try { localStorage.setItem(FLAG, "1"); } catch (e) {}
+})();
+
+/* One-time migration: "Capture outreach efforts for each resource" moved from
+   Sprint 06 (index 4) to Sprint 08 (index 8, last); Sprint 06's later items
+   shift up one. */
+(function migrateOutreachCapture() {
+  const FLAG = "optimind_dash_mig_2026_11_s08_outreach";
+  try { if (localStorage.getItem(FLAG)) return; } catch (e) { return; }
+  const st = loadJSON(LS_STATUS), ck = loadJSON(LS_CHECKS);
+  const oldSt = Object.assign({}, st), oldCk = Object.assign({}, ck);
+  const pairs = [["s06-p4", "s08-p8"]];
+  for (let i = 5; i <= 10; i++) pairs.push(["s06-p" + i, "s06-p" + (i - 1)]);
+  pairs.forEach(function (pair) {
+    delete st[pair[0]];
+    Object.keys(oldCk).forEach(function (k) { if (k.indexOf(pair[0] + "-c") === 0) delete ck[k]; });
+  });
+  pairs.forEach(function (pair) {
+    const from = pair[0], to = pair[1];
+    if (from in oldSt) st[to] = oldSt[from];
+    Object.keys(oldCk).forEach(function (k) {
+      if (k.indexOf(from + "-c") === 0) ck[to + k.slice(from.length)] = oldCk[k];
+    });
+  });
+  saveJSON(LS_STATUS, st); saveJSON(LS_CHECKS, ck);
+  try { localStorage.setItem(FLAG, "1"); } catch (e) {}
+})();
+
+/* One-time migration: "Set up 6-month lead nurture email workflow" moved from
+   Sprint 06 (index 4) to Sprint 09 (index 2, last); Sprint 06's later items
+   shift up one. */
+(function migrateLeadNurture() {
+  const FLAG = "optimind_dash_mig_2026_11_s09_nurture";
+  try { if (localStorage.getItem(FLAG)) return; } catch (e) { return; }
+  const st = loadJSON(LS_STATUS), ck = loadJSON(LS_CHECKS);
+  const oldSt = Object.assign({}, st), oldCk = Object.assign({}, ck);
+  const pairs = [["s06-p4", "s09-p2"]];
+  for (let i = 5; i <= 9; i++) pairs.push(["s06-p" + i, "s06-p" + (i - 1)]);
+  pairs.forEach(function (pair) {
+    delete st[pair[0]];
+    Object.keys(oldCk).forEach(function (k) { if (k.indexOf(pair[0] + "-c") === 0) delete ck[k]; });
+  });
+  pairs.forEach(function (pair) {
+    const from = pair[0], to = pair[1];
+    if (from in oldSt) st[to] = oldSt[from];
+    Object.keys(oldCk).forEach(function (k) {
+      if (k.indexOf(from + "-c") === 0) ck[to + k.slice(from.length)] = oldCk[k];
+    });
+  });
+  saveJSON(LS_STATUS, st); saveJSON(LS_CHECKS, ck);
+  try { localStorage.setItem(FLAG, "1"); } catch (e) {}
+})();
+
+/* One-time migration: "Create a system around Parent Sessions" moved from
+   Sprint 08 (index 5) to Sprint 07 (index 14, last); Sprint 08's later items
+   shift up one. */
+(function migrateParentSessionsS07() {
+  const FLAG = "optimind_dash_mig_2026_11_s07_parentsessions";
+  try { if (localStorage.getItem(FLAG)) return; } catch (e) { return; }
+  const st = loadJSON(LS_STATUS), ck = loadJSON(LS_CHECKS);
+  const oldSt = Object.assign({}, st), oldCk = Object.assign({}, ck);
+  const pairs = [["s08-p5", "s07-p14"]];
+  for (let i = 6; i <= 8; i++) pairs.push(["s08-p" + i, "s08-p" + (i - 1)]);
+  pairs.forEach(function (pair) {
+    delete st[pair[0]];
+    Object.keys(oldCk).forEach(function (k) { if (k.indexOf(pair[0] + "-c") === 0) delete ck[k]; });
+  });
+  pairs.forEach(function (pair) {
+    const from = pair[0], to = pair[1];
+    if (from in oldSt) st[to] = oldSt[from];
+    Object.keys(oldCk).forEach(function (k) {
+      if (k.indexOf(from + "-c") === 0) ck[to + k.slice(from.length)] = oldCk[k];
+    });
+  });
+  saveJSON(LS_STATUS, st); saveJSON(LS_CHECKS, ck);
+  try { localStorage.setItem(FLAG, "1"); } catch (e) {}
+})();
+
+/* One-time migration: Sprint 07's "Automate parent-session reminders & reschedule
+   follow-ups" (index 0) and "Create a system around Parent Sessions" (index 14,
+   last) merged into one card at index 0. The two overlapping step pairs count as
+   checked only if both were. */
+(function migrateParentSessionsMergeS07() {
+  const FLAG = "optimind_dash_mig_2026_11_s07_parentmerge";
+  try { if (localStorage.getItem(FLAG)) return; } catch (e) { return; }
+  const st = loadJSON(LS_STATUS), ck = loadJSON(LS_CHECKS);
+  const oldSt = Object.assign({}, st), oldCk = Object.assign({}, ck);
+  const A = "s07-p0", B = "s07-p14";
+  const a = oldSt[A] || "planned", b = oldSt[B] || "planned";
+  delete st[A]; delete st[B];
+  Object.keys(oldCk).forEach(function (k) {
+    if (k.indexOf(A + "-c") === 0 || k.indexOf(B + "-c") === 0) delete ck[k];
+  });
+  const merged = a === b ? a : (a === "blocked" || b === "blocked") ? "blocked" : "progress";
+  if (merged !== "planned") st[A] = merged;
+  function was(id, c) { return !!oldCk[id + "-c" + c]; }
+  [was(B, 0), was(B, 1), was(A, 0), was(A, 2) && was(B, 2), was(A, 1) && was(B, 3),
+   was(B, 4), was(A, 3), was(B, 5), was(B, 6)].forEach(function (on, i) {
+    if (on) ck[A + "-c" + i] = true;
+  });
+  saveJSON(LS_STATUS, st); saveJSON(LS_CHECKS, ck);
+  try { localStorage.setItem(FLAG, "1"); } catch (e) {}
+})();
+
 /* ---------- Backup / Restore ---------- */
 const BACKUP_KEYS = [LS_STATUS, LS_CHECKS, LS_RECS, "optimind_dash_sopchecks", "optimind_dash_onboardchecks", "optimind_dash_clients", "optimind_dash_clientdocs", "optimind_dash_docmeta"];
 

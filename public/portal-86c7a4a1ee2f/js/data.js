@@ -233,6 +233,18 @@ const SPRINTS = [
           "The Monday automations the practice relies on — status changes, deadline reminders, task assignments — are built and tested.",
           "Sarah and the team are walked through the build and can add a client, update a record and find a document without help.",
           "How the boards are set up and how to use them is written down and linked from the SOP Manual."
+        ]},
+      { badge: "3rd Priority", title: "Save PandaDocs to Google Drive", desc: "Save OptiMind's PandaDoc documents to Google Drive, so there's a copy of each one outside PandaDoc.", tag: "New",
+        doneWhen: [
+          "Every document in PandaDoc that needs to be kept is listed.",
+          "Each one is downloaded from PandaDoc and saved in the right Google Drive folder.",
+          "The saved copies are checked against the list, and each one opens from Drive."
+        ]},
+      { badge: "4th Priority", title: "New email blast for Workshop", desc: "Create and send a new FloDesk email blast promoting the workshop.", tag: "New",
+        doneWhen: [
+          "The workshop details, audience and send date are confirmed with Sarah.",
+          "The email is drafted in FloDesk, reviewed and approved by Sarah, and test-sent.",
+          "The email is sent to the agreed audience, with opt-outs excluded."
         ]}
     ]
   },
@@ -242,41 +254,21 @@ const SPRINTS = [
     cost: 2500, meetings: "TBD",
     goal: "Session notes stop being a manual job: an AI notetaker is selected, set up and tested on live sessions, writing straight into the Monday client record. Alongside it, any client data left over from Sprints 04 and 05 finishes migrating, so nothing is still being kept in two places.",
     priorities: [
-      { badge: "1st Priority", title: "Birthday tracking — clients & employees (manual, phase 1)", desc: "Capture a client's birthday at intake and text them on the day, so they know you're thinking of them. Run this by hand first; automate later once the pattern is proven.", tag: "New",
-        doneWhen: [
-          "Birthday is a captured field in the intake session and saved to the client's record.",
-          "The birthday is manually added to the owning specialist's working calendar, with a reminder on the day.",
-          "If a client is handed off to another specialist, their birthday reminder moves to that specialist's calendar rather than staying behind on the original one.",
-          "A short happy-birthday text template exists, and is sent manually on the day.",
-          "When a client fully graduates, they're removed from the calendar and the text list — no stale reminders firing after the relationship ends.",
-          "The same process runs for employees, plus a reminder set 10 days ahead of their birthday to find and send a gift.",
-          "A note records what volume or pattern would justify moving this from manual to an automation."
-        ]},
-      { badge: "2nd Priority", title: "Independent backup, tested", desc: "A sync service isn't a backup. Add one beyond Drive sync, and confirm it works by restoring a file.", tag: "Rec 5",
-        doneWhen: [
-          { text: "An independent backup of the client folder exists beyond Drive sync, and restoring one file has actually been tested.", note: "Escalated Aug 31 \u2014 the Data-Handling Policy now names Google Drive as the interim system of record, so this is the largest single risk in the data set until the dashboard lands. Cadence, restore verification and a target date are all still unset." }
-        ]},
-      { badge: "3rd Priority", title: "Advocacy case tracking inside the CRM", desc: "Every statutory deadline entered against the client record — not a thirteenth, standalone system.", tag: "Rec 16",
+      { badge: "1st Priority", title: "Advocacy case tracking inside the CRM", desc: "Every statutory deadline entered against the client record — not a thirteenth, standalone system.", tag: "Rec 16",
         doneWhen: [
           "Every statutory and school deadline for every active case is entered in the CRM against the client record, as the prep date rather than the due date.",
           "Each deadline carries an owner and a reminder, and appears on the operations dashboard when it falls inside thirty days.",
           "A consistent subject-line prefix and label convention exists per case.",
           "Time is being logged against each case from the first one."
         ]},
-      { badge: "4th Priority", title: "Set up and test AI notetaking software", desc: "Configure the selected notetaker against the Monday client record and run it on real sessions during the pilot, alongside the three new clients going through the platform.", tag: "Rec 3",
+      { badge: "2nd Priority", title: "Set up and test AI notetaking software", desc: "Configure the selected notetaker against the Monday client record and run it on real sessions during the pilot, alongside the three new clients going through the platform.", tag: "Rec 3",
         doneWhen: [
           "The notetaker selected in Sprint 04 is configured and running on live sessions with the pilot clients.",
           "Its output lands in the Monday client record with no copy-paste step.",
           "The output is checked against your existing note structure, not a generic meeting summary, and adjusted if it doesn't match.",
           "Any accuracy or formatting issues found during the pilot are logged and fixed before it runs on the full caseload."
         ]},
-      { badge: "5th Priority", title: "Cancellation & billing tracking document", desc: "A dedicated document Sarah bills from — the calendar shows what happened to a session, this is where it gets billed or cleared.", tag: "Organization & Labeling Standards §7",
-        doneWhen: [
-          { text: "The document exists and is linked from the Organization & Labeling Standards SOP.", link: "sops/Organization-and-Labeling-Standards.html" },
-          "It carries two lists: sessions billed (no-shows and late cancellations, outside the 24-hour window) and sessions not billed (cancelled within the policy window, or rescheduled).",
-          "The workflow for adding an entry — who logs it, and when — is written down."
-        ]},
-      { badge: "6th Priority", title: "Automate the session-notes chain", desc: "One AI notetaker writes straight into the Monday client record — recovers 2.3–5.3 hrs every week. Held until the platform exists, so the output has somewhere real to land.", tag: "Rec 3",
+      { badge: "3rd Priority", title: "Automate the session-notes chain", desc: "One AI notetaker writes straight into the Monday client record — recovers 2.3–5.3 hrs every week. Held until the platform exists, so the output has somewhere real to land.", tag: "Rec 3",
         doneWhen: [
           "One notetaker is selected and running on live sessions.",
           "Its output lands in the Monday client record with no copy-paste step — including whether Monday covers this natively before a separate tool is bought.",
@@ -284,36 +276,20 @@ const SPRINTS = [
           "The output arrives in your existing note structure, not a generic meeting summary.",
           "You have established what the current email-summary tool is, and under what data terms."
         ]},
-      { badge: "7th Priority", title: "Finish the migration and retire the replaced tools", desc: "Whole caseload live; JotForms and the two spreadsheets cancelled. PandaDoc stays in place — Monday doesn't replace e-signature — so the recovered-cost figure needs recalculating without it (see Open Items).", tag: "Rec 6",
+      { badge: "4th Priority", title: "Finish the migration and retire the replaced tools", desc: "Whole caseload live; JotForms and the two spreadsheets cancelled. PandaDoc stays in place — Monday doesn't replace e-signature — so the recovered-cost figure needs recalculating without it (see Open Items).", tag: "Rec 6",
         doneWhen: [
           "The whole caseload is live on the platform.",
           "JotForms and the two spreadsheets are cancelled or archived. PandaDoc remains in use; the annual savings figure is recalculated without it and written down.",
           "Nothing is being entered in two places."
         ]},
-      { badge: "8th Priority", title: "Capture outreach efforts for each resource", desc: "Every outreach effort to a referral resource — provider, school or practice — gets logged against that resource's record in the referral register built in Sprint 03, so who was contacted, when and how never depends on memory.", tag: "Rec 11",
-        doneWhen: [
-          "Each outreach effort — email, call, meeting, treat delivery or event — is logged against the resource's record in the referral register.",
-          "Each entry records the date, the type of outreach, who on the team made it, and any response or next step.",
-          "Every resource record shows its last contact and next planned contact, updated from the outreach log rather than by hand.",
-          "The logging process — who logs it, and when — is written down so the record stays current as outreach scales."
-        ]},
-      { badge: "9th Priority", title: "Set up 6-month lead nurture email workflow", desc: "A FloDesk workflow that sends leads a new email every two weeks for six months, then starts back at the first email and runs the full sequence again for another six months.", tag: "Rec 13, 21",
-        doneWhen: [
-          "The sequence is planned and written: about 13 emails, one every two weeks across six months, with each email's topic set before any are built.",
-          "Every email is drafted in FloDesk using the branded template, and reviewed and approved by Sarah.",
-          "The workflow is built in FloDesk to send one email every two weeks, then loop back to the first email and repeat the full sequence for a second six months.",
-          "A rule is set for when a lead leaves the workflow — booking a consult, becoming a client, or unsubscribing — so nobody keeps getting lead emails after they convert or opt out.",
-          "The workflow is tested end to end, including the loop back to the first email, before real leads are added.",
-          "Leads are being added to the workflow automatically, and opens, clicks and bookings are reviewed after the first few sends."
-        ]},
-      { badge: "10th Priority", title: "Claude onboarding — retire Gamma", desc: "Moved up from the Sprint 09 AI-training slot: get Sarah working directly in Claude now, specifically so Gamma can be fully retired once the Rate Sheet's live-hosted-link migration (Buffer, Nov 4–10) lands.", tag: "Part 1 §06",
+      { badge: "5th Priority", title: "Claude onboarding — retire Gamma", desc: "Moved up from the Sprint 09 AI-training slot: get Sarah working directly in Claude now, specifically so Gamma can be fully retired once the Rate Sheet's live-hosted-link migration (Buffer, Nov 4–10) lands.", tag: "Part 1 §06",
         doneWhen: [
           "A short Claude onboarding session is held with Sarah, covering how to organize and update business content directly, without exporting from Gamma.",
           "The service-summary/rate-sheet content currently built in Gamma is recreated with Claude's help, in a form Sarah can edit and update herself.",
           "Gamma is cancelled once the recreated content is confirmed working and linked from the live Rate Sheet URL.",
           "Any other content still produced in Gamma is inventoried, so nothing is silently orphaned when the subscription is cancelled."
         ]},
-      { badge: "11th Priority", title: "Move SOPs into Monday — Part 1: library setup and client workflow", desc: "Set up one SOP library in Monday that every SOP, policy and reference document will live in, then move the core client workflow documents in first. Parts 2–5 follow in Sprints 07–10, so by the end every item has a place in Monday Sarah can find and use easily.", tag: "Rec 9",
+      { badge: "6th Priority", title: "Move SOPs into Monday — Part 1: library setup and client workflow", desc: "Set up one SOP library in Monday that every SOP, policy and reference document will live in, then move the core client workflow documents in first. Parts 2–5 follow in Sprints 07–10, so by the end every item has a place in Monday Sarah can find and use easily.", tag: "Rec 9",
         doneWhen: [
           "An SOP library is set up in Monday with groups for each type of document — client workflow, policies and agreements, team and onboarding, client resources and forms, brand and standards — and a column for each document's owner, last-reviewed date and whether it's a link or a Monday doc.",
           "Every SOP and reference document that exists today is listed in the library, even before it's moved, so nothing is missed in later parts.",
@@ -321,6 +297,30 @@ const SPRINTS = [
           "Each document is either linked from Monday or recreated as a Monday doc, and which one is noted against it — a link where the original stays the source of truth, a new Monday doc where Sarah will edit it there.",
           "Each one is filed in the right group of the Monday SOP library, named consistently, and opens from Monday in one click.",
           "Sarah has found and opened each one from Monday herself, without help."
+        ]},
+      { badge: "7th Priority", title: "Update the Contracts and the Welcome Email functionality", desc: "Bring the service agreement contracts and the welcome email up to date, so a newly signed client gets the current contract and the right welcome email fires once it's signed.", tag: "Workflow §3–4",
+        doneWhen: [
+          { text: "The contracts are updated to their current versions, and the updates are confirmed with Sarah.", link: "OptiMind-Onboarding-Automation-Workflow.html#service-agreement" },
+          { text: "The welcome email's content is updated, and it reconfirms the client's recurring session times and scheduled intake.", link: "OptiMind-Onboarding-Automation-Workflow.html#email-2" },
+          { text: "The welcome email fires automatically once the contract is signed.", link: "OptiMind-Onboarding-Automation-Workflow.html#email-2" },
+          "The flow is tested end to end, from a contract being sent and signed to the welcome email arriving, before it's used with a real client."
+        ]},
+      { badge: "8th Priority", title: "Define the operations dashboard — Part 1", desc: "Scope the questions it must answer on one screen before building any widgets. Part 2 follows in Sprint 07.", tag: "Rec 6, 8, 20",
+        doneWhen: [
+          "A written list of the questions it must answer on one screen.",
+          "Each question is mapped to where the data will come from, and which are not yet capturable."
+        ]},
+      { badge: "9th Priority", title: "Permissions set-up for Employee in Monday", desc: "Set up the employee's access in Monday so they can see and edit what their role needs, and nothing beyond it.", tag: "New",
+        doneWhen: [
+          "What the employee needs to view, edit and not see in Monday is listed and agreed with Sarah.",
+          "The employee's Monday account is set up with those permissions applied.",
+          "Access is tested from the employee's login: they can open and edit what they need, and can't see what's restricted."
+        ]},
+      { badge: "10th Priority", title: "Add Curriculum schedule to Monday", desc: "Add the curriculum schedule to Monday so it can be found and used alongside the client records.", tag: "New",
+        doneWhen: [
+          "The current curriculum schedule is confirmed with Sarah.",
+          "The schedule is added to Monday.",
+          "The schedule in Monday is checked against the original, and Sarah and the team can find and open it."
         ]}
     ]
   },
@@ -330,12 +330,17 @@ const SPRINTS = [
     cost: 3000, meetings: "TBD",
     goal: "The migration finishes, the old tools get switched off, and the dashboard gets built on top.",
     priorities: [
-      { badge: "1st Priority", title: "Automate parent-session reminders & reschedule follow-ups", desc: "A missed or unrescheduled required parent session currently depends on someone remembering to email the parent. Figure out how to automate the reminder and the reschedule follow-up instead.", tag: "Parent Terms of Service §2",
+      { badge: "1st Priority", title: "Create a system around Parent Sessions", desc: "A system that tracks meetings with each client's parents, so every family is actually having their parent sessions on schedule and none get pushed off for too long. Reminders and reschedule follow-ups currently depend on someone remembering to email the parent; once parent sessions are a contract term, automatic reminders ahead of each session and a rebooking prompt whenever one is missed are how they're kept.", tag: "Rec 15; Parent Terms of Service §2",
         doneWhen: [
+          "How often each family should have a parent session is agreed with Sarah, along with how overdue is too long.",
+          "Each client record in Monday shows the last parent session date and when the next one is due.",
           "Automation options are evaluated — Calendly's built-in reminders, a Monday.com automation once the platform lands this sprint, or a lighter interim tool — and one is recommended with cost and setup effort attached.",
-          "A missed parent session automatically triggers a reschedule-request email to the parent, without a specialist having to send it by hand.",
-          "The cadence reminder ahead of each scheduled session (every other week for the first two months, then monthly) keeps firing without manual re-entry.",
-          { text: "The escalation trigger — a parent missing multiple required sessions in a row — still reaches Sarah, whether or not the parent responds to the automated follow-up.", link: "sops/_archive/Parent-Terms-of-Service.html" }
+          "Automatic reminders go out ahead of each scheduled parent session, and the cadence (every other week for the first two months, then monthly) keeps firing without manual re-entry.",
+          "A missed parent session automatically triggers a reschedule-request email prompting the parent to rebook, without a specialist having to send it by hand.",
+          "Overdue or unscheduled parent sessions are flagged automatically, so nobody has to remember to check.",
+          { text: "The escalation trigger — a parent missing multiple required sessions in a row — still reaches Sarah, whether or not the parent responds to the automated follow-up.", link: "sops/_archive/Parent-Terms-of-Service.html" },
+          "A view in Monday shows every family's parent-session status at a glance, with overdue ones at the top.",
+          "The process is written down and linked from the SOP Manual."
         ]},
       { badge: "2nd Priority", title: "Annual scheduling cycle & waitlist policy", desc: "Availability round, bridge block, four waitlist states, deposit and refund rule — one repeatable process.", tag: "Rec 1, 2",
         doneWhen: [
@@ -420,6 +425,16 @@ const SPRINTS = [
           "The email is drafted in FloDesk using the branded template, with a clear link to listen to the podcast, and reviewed and approved by Sarah before it goes out.",
           "A test send is checked for formatting, links and personalization before the real send.",
           "The blast is sent, and opens, clicks on the podcast link, and replies are reviewed afterward."
+        ]},
+      { badge: "14th Priority", title: "Birthday tracking — clients & employees (manual, phase 1)", desc: "Capture a client's birthday at intake and text them on the day, so they know you're thinking of them. Run this by hand first; automate later once the pattern is proven.", tag: "New",
+        doneWhen: [
+          "Birthday is a captured field in the intake session and saved to the client's record.",
+          "The birthday is manually added to the owning specialist's working calendar, with a reminder on the day.",
+          "If a client is handed off to another specialist, their birthday reminder moves to that specialist's calendar rather than staying behind on the original one.",
+          "A short happy-birthday text template exists, and is sent manually on the day.",
+          "When a client fully graduates, they're removed from the calendar and the text list — no stale reminders firing after the relationship ends.",
+          "The same process runs for employees, plus a reminder set 10 days ahead of their birthday to find and send a gift.",
+          "A note records what volume or pattern would justify moving this from manual to an automation."
         ]}
     ]
   },
@@ -466,15 +481,22 @@ const SPRINTS = [
           { text: "The email is set up to send when a client is marked as graduated, so nobody has to remember to send it.", note: "Provisional — graduation criteria are defined in Sprint 10, so revisit the trigger then." },
           "A test send is checked for formatting, links and personalization before it goes to a real client."
         ]},
-      { badge: "6th Priority", title: "Create a system around Parent Sessions", desc: "A system that tracks meetings with each client's parents, so every family is actually having their parent sessions on schedule and none get pushed off for too long. Once parent sessions are a contract term, this is how they're kept: automatic reminders ahead of each session and a rebooking prompt whenever one is missed. Merged in from Sprint 09's parent session adherence tracking.", tag: "Rec 15",
+      { badge: "6th Priority", title: "Independent backup, tested", desc: "A sync service isn't a backup. Add one beyond Drive sync, and confirm it works by restoring a file.", tag: "Rec 5",
         doneWhen: [
-          "How often each family should have a parent session is agreed with Sarah, along with how overdue is too long.",
-          "Each client record in Monday shows the last parent session date and when the next one is due.",
-          "Automatic reminders go out ahead of each scheduled parent session.",
-          "A missed parent session automatically triggers a rebooking prompt.",
-          "Overdue or unscheduled parent sessions are flagged automatically, so nobody has to remember to check.",
-          "A view in Monday shows every family's parent-session status at a glance, with overdue ones at the top.",
-          "The process is written down and linked from the SOP Manual."
+          { text: "An independent backup of the client folder exists beyond Drive sync, and restoring one file has actually been tested.", note: "Escalated Aug 31 \u2014 the Data-Handling Policy now names Google Drive as the interim system of record, so this is the largest single risk in the data set until the dashboard lands. Cadence, restore verification and a target date are all still unset." }
+        ]},
+      { badge: "7th Priority", title: "Cancellation & billing tracking document", desc: "A dedicated document Sarah bills from — the calendar shows what happened to a session, this is where it gets billed or cleared.", tag: "Organization & Labeling Standards §7",
+        doneWhen: [
+          { text: "The document exists and is linked from the Organization & Labeling Standards SOP.", link: "sops/Organization-and-Labeling-Standards.html" },
+          "It carries two lists: sessions billed (no-shows and late cancellations, outside the 24-hour window) and sessions not billed (cancelled within the policy window, or rescheduled).",
+          "The workflow for adding an entry — who logs it, and when — is written down."
+        ]},
+      { badge: "8th Priority", title: "Capture outreach efforts for each resource", desc: "Every outreach effort to a referral resource — provider, school or practice — gets logged against that resource's record in the referral register built in Sprint 03, so who was contacted, when and how never depends on memory.", tag: "Rec 11",
+        doneWhen: [
+          "Each outreach effort — email, call, meeting, treat delivery or event — is logged against the resource's record in the referral register.",
+          "Each entry records the date, the type of outreach, who on the team made it, and any response or next step.",
+          "Every resource record shows its last contact and next planned contact, updated from the outreach log rather than by hand.",
+          "The logging process — who logs it, and when — is written down so the record stays current as outreach scales."
         ]}
     ]
   },
@@ -498,6 +520,15 @@ const SPRINTS = [
           "Each document is either linked from Monday or recreated as a Monday doc, and which one is noted against it — a link where the original stays the source of truth, a new Monday doc where Sarah will edit it there.",
           "Each one is filed in the right group of the Monday SOP library, named consistently, and opens from Monday in one click.",
           "Sarah has found and opened each one from Monday herself, without help."
+        ]},
+      { badge: "3rd Priority", title: "Set up 6-month lead nurture email workflow", desc: "A FloDesk workflow that sends leads a new email every two weeks for six months, then starts back at the first email and runs the full sequence again for another six months.", tag: "Rec 13, 21",
+        doneWhen: [
+          "The sequence is planned and written: about 13 emails, one every two weeks across six months, with each email's topic set before any are built.",
+          "Every email is drafted in FloDesk using the branded template, and reviewed and approved by Sarah.",
+          "The workflow is built in FloDesk to send one email every two weeks, then loop back to the first email and repeat the full sequence for a second six months.",
+          "A rule is set for when a lead leaves the workflow — booking a consult, becoming a client, or unsubscribing — so nobody keeps getting lead emails after they convert or opt out.",
+          "The workflow is tested end to end, including the loop back to the first email, before real leads are added.",
+          "Leads are being added to the workflow automatically, and opens, clicks and bookings are reviewed after the first few sends."
         ]}
     ]
   },
@@ -646,17 +677,11 @@ const BUFFERS = [
           "Options for getting notes into the Monday client record are listed, such as an AI notetaker writing in directly, a Zapier step, or a Monday doc template, along with what each needs.",
           "A preferred approach is picked, with any open questions written down to carry into Sprint 06."
         ]},
-      { badge: "7th Priority", title: "Define the operations dashboard — Part 1", desc: "Scope the questions it must answer on one screen before building any widgets. Part 2 follows in Sprint 07.", tag: "Rec 6, 8, 20",
+      { badge: "7th Priority", title: "Link SOPs into Monday", desc: "Link the existing SOPs into Monday so each one can be opened from there.", tag: "New",
         doneWhen: [
-          "A written list of the questions it must answer on one screen.",
-          "Each question is mapped to where the data will come from, and which are not yet capturable."
-        ]},
-      { badge: "8th Priority", title: "Update the Contracts and the Welcome Email functionality", desc: "Bring the service agreement contracts and the welcome email up to date, so a newly signed client gets the current contract and the right welcome email fires once it's signed.", tag: "Workflow §3–4",
-        doneWhen: [
-          { text: "The contracts are updated to their current versions, and the updates are confirmed with Sarah.", link: "OptiMind-Onboarding-Automation-Workflow.html#service-agreement" },
-          { text: "The welcome email's content is updated, and it reconfirms the client's recurring session times and scheduled intake.", link: "OptiMind-Onboarding-Automation-Workflow.html#email-2" },
-          { text: "The welcome email fires automatically once the contract is signed.", link: "OptiMind-Onboarding-Automation-Workflow.html#email-2" },
-          "The flow is tested end to end, from a contract being sent and signed to the welcome email arriving, before it's used with a real client."
+          "The SOPs to be linked are listed.",
+          "Each SOP on the list is linked in Monday.",
+          "Every link is tested and opens the current version of the SOP."
         ]}
     ]
   },
