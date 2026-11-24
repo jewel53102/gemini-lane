@@ -251,6 +251,12 @@ const SPRINTS = [
           "Branding for email blasts is decided with Sarah.",
           "General email template options are put together and reviewed with Sarah.",
           "The template or templates to use for email blasts are chosen."
+        ]},
+      { badge: "6th Priority", title: "Update Main Dashboard in Monday", desc: "Update the Main Dashboard so that Sarah can access important client information without searching in multiple places for it.", tag: "New",
+        doneWhen: [
+          "The client information Sarah needs to see on the Main Dashboard is listed and agreed with her.",
+          "The Main Dashboard is updated in Monday to show it.",
+          "Sarah has found that information from the Main Dashboard herself, without searching in multiple places."
         ]}
     ]
   },
@@ -313,6 +319,17 @@ const SPRINTS = [
           "The current curriculum schedule is confirmed with Sarah.",
           "The schedule is added to Monday.",
           "The schedule in Monday is checked against the original, and Sarah and the team can find and open it."
+        ]},
+      { badge: "9th Priority", title: "Set up permanent links for the rate sheet and contracts", desc: "Turn the service-summary PDF into a live hosted rate sheet you update once, instead of re-exporting from Gamma each time — and give it and each contract one permanent link that redirects to its current version. When a document is updated, only the redirect changes — the link stays the same everywhere it's already been used, so nothing has to be replaced in multiple places.", tag: "Part 1 §02, Rec 13",
+        doneWhen: [
+          "The service summary is rebuilt as a live hosted page, so it no longer has to be re-exported from Gamma.",
+          "Every place the rate sheet or a contract link is used today is listed — emails, FloDesk workflows, Monday, the website, SOPs and templates.",
+          "A redirect method is chosen, ideally on OptiMind's own domain so the links look trustworthy and stay under OptiMind's control.",
+          "The rate sheet and each contract have a permanent link that redirects to the current version.",
+          "Every place on the list is updated to use the permanent link instead of the direct URL.",
+          "Updating a redirect to a new version is tested, and the link works everywhere without anything else changing.",
+          "The steps for updating a redirect when a document changes are written down and linked from the SOP Manual.",
+          "The follow-up email links to the rate sheet's permanent link rather than attaching a file."
         ]}
     ]
   },
@@ -411,7 +428,7 @@ const SPRINTS = [
       { badge: "13th Priority", title: "Move SOPs into Monday — Part 2: policies and agreements", desc: "Picks up from Part 1 in Sprint 06: move the client-facing policies, terms and agreements into the Monday SOP library.", tag: "Rec 9",
         doneWhen: [
           "Moved this sprint: No-Show & Cancellation Policy, Parent Terms of Service, New Client Service Agreement, Rate Sheet, Screening Protocol, Add-On Services Identification & Referral Process, and the Attorney Review Checklist.",
-          "Contracts and the rate sheet use the permanent links set up in the Nov 4–10 buffer, so Monday never points at an out-of-date version.",
+          "Contracts and the rate sheet use the permanent links set up in Sprint 06, so Monday never points at an out-of-date version.",
           "Each document is either linked from Monday or recreated as a Monday doc, and which one is noted against it — a link where the original stays the source of truth, a new Monday doc where Sarah will edit it there.",
           "Each one is filed in the right group of the Monday SOP library, named consistently, and opens from Monday in one click.",
           "Sarah has found and opened each one from Monday herself, without help."
@@ -433,7 +450,7 @@ const SPRINTS = [
           "The same process runs for employees, plus a reminder set 10 days ahead of their birthday to find and send a gift.",
           "A note records what volume or pattern would justify moving this from manual to an automation."
         ]},
-      { badge: "16th Priority", title: "Claude onboarding — retire Gamma", desc: "Moved up from the Sprint 09 AI-training slot: get Sarah working directly in Claude now, specifically so Gamma can be fully retired once the Rate Sheet's live-hosted-link migration (Buffer, Nov 4–10) lands.", tag: "Part 1 §06",
+      { badge: "16th Priority", title: "Claude onboarding — retire Gamma", desc: "Moved up from the Sprint 09 AI-training slot: get Sarah working directly in Claude now, specifically so Gamma can be fully retired once the Rate Sheet's live-hosted-link migration (Sprint 06) lands.", tag: "Part 1 §06",
         doneWhen: [
           "A short Claude onboarding session is held with Sarah, covering how to organize and update business content directly, without exporting from Gamma.",
           "The service-summary/rate-sheet content currently built in Gamma is recreated with Claude's help, in a form Sarah can edit and update herself.",
@@ -636,31 +653,20 @@ const BUFFERS = [
     cost: 1200, meetings: "TBD",
     note: "No new work starts here — this sprint holds what was carried over from Sprint 05.",
     priorities: [
-      { badge: "1st Priority", title: "Set up permanent links for the rate sheet and contracts", desc: "Turn the service-summary PDF into a live hosted rate sheet you update once, instead of re-exporting from Gamma each time — and give it and each contract one permanent link that redirects to its current version. When a document is updated, only the redirect changes — the link stays the same everywhere it's already been used, so nothing has to be replaced in multiple places.", tag: "Part 1 §02, Rec 13",
-        doneWhen: [
-          "The service summary is rebuilt as a live hosted page, so it no longer has to be re-exported from Gamma.",
-          "Every place the rate sheet or a contract link is used today is listed — emails, FloDesk workflows, Monday, the website, SOPs and templates.",
-          "A redirect method is chosen, ideally on OptiMind's own domain so the links look trustworthy and stay under OptiMind's control.",
-          "The rate sheet and each contract have a permanent link that redirects to the current version.",
-          "Every place on the list is updated to use the permanent link instead of the direct URL.",
-          "Updating a redirect to a new version is tested, and the link works everywhere without anything else changing.",
-          "The steps for updating a redirect when a document changes are written down and linked from the SOP Manual.",
-          "The follow-up email links to the rate sheet's permanent link rather than attaching a file."
-        ]},
-      { badge: "2nd Priority", title: "Continue to Migrate the existing caseload into Monday", desc: "Picks up from Part 1 in Sprint 04, with its issues list applied first. Your new hire can take a share as a way to learn the base.", tag: "Rec 6",
+      { badge: "1st Priority", title: "Continue to Migrate the existing caseload into Monday", desc: "Picks up from Part 1 in Sprint 04, with its issues list applied first. Your new hire can take a share as a way to learn the base.", tag: "Rec 6",
         doneWhen: [
           "The issues list from Part 1 is applied before any more clients move.",
           "The next group of active clients is fully live on the platform, with history, documents and curriculum coverage carried over.",
           "Nothing is being maintained in two places for those clients."
         ]},
-      { badge: "3rd Priority", title: "Verify OptiMind's domain with FloDesk", desc: "Authenticate OptiMind's sending domain in FloDesk so emails go out from OptiMind's own address and land in inboxes, not spam folders. This includes setting up Ruby's login to Sarah's WordPress website.", tag: "Rec 13, 21",
+      { badge: "2nd Priority", title: "Verify OptiMind's domain with FloDesk", desc: "Authenticate OptiMind's sending domain in FloDesk so emails go out from OptiMind's own address and land in inboxes, not spam folders. This includes setting up Ruby's login to Sarah's WordPress website.", tag: "Rec 13, 21",
         doneWhen: [
           "OptiMind's domain is added in FloDesk and the DNS records FloDesk provides are added with the domain host.",
           "FloDesk shows the domain as verified.",
           "A test email sent from the OptiMind address arrives in the inbox, not spam, with no \"via FloDesk\" sender label.",
           "Ruby's login to Sarah's WordPress website is set up and tested."
         ]},
-      { badge: "4th Priority", title: "Set up blog email blasts with the SEO company", desc: "Work with the SEO company so each new blog post goes out to leads and clients as a FloDesk email blast.", tag: "Rec 13, 21",
+      { badge: "3rd Priority", title: "Set up blog email blasts with the SEO company", desc: "Work with the SEO company so each new blog post goes out to leads and clients as a FloDesk email blast.", tag: "Rec 13, 21",
         doneWhen: [
           "Who does what is agreed with the SEO company: who writes the post, who drafts the email, and who sends it.",
           "A blog email template is set up in FloDesk using the branded template, with a clear link back to the post on the website.",
@@ -668,7 +674,7 @@ const BUFFERS = [
           "The first blog email is reviewed and approved by Sarah, test-sent, and then sent to leads and clients, with opt-outs excluded.",
           "Opens and clicks through to the blog are reviewed after the first send."
         ]},
-      { badge: "5th Priority", title: "Transfer subscriptions to admin@optimind-es.com", desc: "Move the Monday, Zapier, FloDesk and SignNow subscriptions so admin@optimind-es.com is the main login on each, keeping every account under OptiMind's control rather than tied to one person's email.", tag: "New",
+      { badge: "4th Priority", title: "Transfer subscriptions to admin@optimind-es.com", desc: "Move the Monday, Zapier, FloDesk and SignNow subscriptions so admin@optimind-es.com is the main login on each, keeping every account under OptiMind's control rather than tied to one person's email.", tag: "New",
         doneWhen: [
           "Monday.com: admin@optimind-es.com is the main login and account owner.",
           "Zapier: admin@optimind-es.com is the main login and account owner.",
@@ -676,13 +682,13 @@ const BUFFERS = [
           "SignNow: admin@optimind-es.com is the main login and account owner.",
           "Each account is signed into with the new login to confirm it works, and billing, existing workflows and integrations are still running after the change."
         ]},
-      { badge: "6th Priority", title: "Brainstorm how to integrate session notes into Monday", desc: "Talk through how session notes should get into the Monday client record, so the notetaker setup and session-notes automation in Sprint 06 start from an agreed approach.", tag: "Rec 3",
+      { badge: "5th Priority", title: "Brainstorm how to integrate session notes into Monday", desc: "Talk through how session notes should get into the Monday client record, so the notetaker setup and session-notes automation in Sprint 06 start from an agreed approach.", tag: "Rec 3",
         doneWhen: [
           "How session notes are written and stored today is walked through with Sarah.",
           "Options for getting notes into the Monday client record are listed, such as an AI notetaker writing in directly, a Zapier step, or a Monday doc template, along with what each needs.",
           "A preferred approach is picked, with any open questions written down to carry into Sprint 06."
         ]},
-      { badge: "7th Priority", title: "Update Flodesk and Parent Capture Information Automations to Monday", desc: "Integrate Sarah's intake into Monday, and port Parent and Provider input directly into their correct boards.", tag: "New",
+      { badge: "6th Priority", title: "Update Flodesk and Parent Capture Information Automations to Monday", desc: "Integrate Sarah's intake into Monday, and port Parent and Provider input directly into their correct boards.", tag: "New",
         doneWhen: [
           "Sarah's intake is integrated into Monday.",
           "Parent input goes directly into its correct Monday board.",

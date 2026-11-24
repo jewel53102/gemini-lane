@@ -412,6 +412,31 @@ function setRecStatus(n, status) {
   try { localStorage.setItem(FLAG, "1"); } catch (e) {}
 })();
 
+/* One-time migration: "Set up permanent links for the rate sheet and contracts"
+   moved from Buffer B1 (index 0) to Sprint 06 (index 8, last); B1's later items
+   shift up one. */
+(function migratePermanentLinksS06() {
+  const FLAG = "optimind_dash_mig_2026_11_s06_permlinks";
+  try { if (localStorage.getItem(FLAG)) return; } catch (e) { return; }
+  const st = loadJSON(LS_STATUS), ck = loadJSON(LS_CHECKS);
+  const oldSt = Object.assign({}, st), oldCk = Object.assign({}, ck);
+  const pairs = [["sB1-p0", "s06-p8"]];
+  for (let i = 1; i <= 6; i++) pairs.push(["sB1-p" + i, "sB1-p" + (i - 1)]);
+  pairs.forEach(function (pair) {
+    delete st[pair[0]];
+    Object.keys(oldCk).forEach(function (k) { if (k.indexOf(pair[0] + "-c") === 0) delete ck[k]; });
+  });
+  pairs.forEach(function (pair) {
+    const from = pair[0], to = pair[1];
+    if (from in oldSt) st[to] = oldSt[from];
+    Object.keys(oldCk).forEach(function (k) {
+      if (k.indexOf(from + "-c") === 0) ck[to + k.slice(from.length)] = oldCk[k];
+    });
+  });
+  saveJSON(LS_STATUS, st); saveJSON(LS_CHECKS, ck);
+  try { localStorage.setItem(FLAG, "1"); } catch (e) {}
+})();
+
 /* ---------- Backup / Restore ---------- */
 const BACKUP_KEYS = [LS_STATUS, LS_CHECKS, LS_RECS, "optimind_dash_sopchecks", "optimind_dash_onboardchecks", "optimind_dash_clients", "optimind_dash_clientdocs", "optimind_dash_docmeta"];
 
