@@ -437,6 +437,136 @@ function setRecStatus(n, status) {
   try { localStorage.setItem(FLAG, "1"); } catch (e) {}
 })();
 
+/* One-time migration: "Define the operations dashboard — Part 2" moved from
+   Sprint 07 (index 11) to the end of Sprint 08; "Choose automation tool, map
+   workflows" (Sprint 08 index 0) to the end of Sprint 09; "Basic analytics &
+   channel tracking" (Sprint 08 index 2) to the end of Sprint 10. */
+(function migrateNov24Batch4() {
+  const FLAG = "optimind_dash_mig_2026_11_s07_s10_batch4";
+  try { if (localStorage.getItem(FLAG)) return; } catch (e) { return; }
+  const st = loadJSON(LS_STATUS), ck = loadJSON(LS_CHECKS);
+  const oldSt = Object.assign({}, st), oldCk = Object.assign({}, ck);
+  const pairs = [
+    ["s07-p11", "s08-p6"], ["s08-p0", "s09-p3"], ["s08-p2", "s10-p4"],
+    ["s07-p12", "s07-p11"], ["s07-p13", "s07-p12"], ["s07-p14", "s07-p13"], ["s07-p15", "s07-p14"],
+    ["s08-p1", "s08-p0"], ["s08-p3", "s08-p1"], ["s08-p4", "s08-p2"],
+    ["s08-p5", "s08-p3"], ["s08-p6", "s08-p4"], ["s08-p7", "s08-p5"]
+  ];
+  pairs.forEach(function (pair) {
+    delete st[pair[0]];
+    Object.keys(oldCk).forEach(function (k) { if (k.indexOf(pair[0] + "-c") === 0) delete ck[k]; });
+  });
+  pairs.forEach(function (pair) {
+    const from = pair[0], to = pair[1];
+    if (from in oldSt) st[to] = oldSt[from];
+    Object.keys(oldCk).forEach(function (k) {
+      if (k.indexOf(from + "-c") === 0) ck[to + k.slice(from.length)] = oldCk[k];
+    });
+  });
+  saveJSON(LS_STATUS, st); saveJSON(LS_CHECKS, ck);
+  try { localStorage.setItem(FLAG, "1"); } catch (e) {}
+})();
+
+/* One-time migration: from Sprint 08, "Move SOPs into Monday — Part 3" (index 1)
+   moved to the end of Sprint 06 and "Independent backup, tested" (index 3) to the
+   end of Sprint 10; Sprint 08's other items shift up. */
+(function migrateNov24Batch5() {
+  const FLAG = "optimind_dash_mig_2026_11_s08_batch5";
+  try { if (localStorage.getItem(FLAG)) return; } catch (e) { return; }
+  const st = loadJSON(LS_STATUS), ck = loadJSON(LS_CHECKS);
+  const oldSt = Object.assign({}, st), oldCk = Object.assign({}, ck);
+  const pairs = [
+    ["s08-p1", "s06-p9"], ["s08-p3", "s10-p5"],
+    ["s08-p2", "s08-p1"], ["s08-p4", "s08-p2"], ["s08-p5", "s08-p3"], ["s08-p6", "s08-p4"]
+  ];
+  pairs.forEach(function (pair) {
+    delete st[pair[0]];
+    Object.keys(oldCk).forEach(function (k) { if (k.indexOf(pair[0] + "-c") === 0) delete ck[k]; });
+  });
+  pairs.forEach(function (pair) {
+    const from = pair[0], to = pair[1];
+    if (from in oldSt) st[to] = oldSt[from];
+    Object.keys(oldCk).forEach(function (k) {
+      if (k.indexOf(from + "-c") === 0) ck[to + k.slice(from.length)] = oldCk[k];
+    });
+  });
+  saveJSON(LS_STATUS, st); saveJSON(LS_CHECKS, ck);
+  try { localStorage.setItem(FLAG, "1"); } catch (e) {}
+})();
+
+/* One-time migration: Sprint 07's indexes 6–8 (self-service card updates,
+   QuickBooks tier review, quarterly P&L review) were deleted; later items shift
+   up three. */
+(function migrateSprint07Deletions() {
+  const FLAG = "optimind_dash_mig_2026_11_s07_deletions";
+  try { if (localStorage.getItem(FLAG)) return; } catch (e) { return; }
+  const st = loadJSON(LS_STATUS), ck = loadJSON(LS_CHECKS);
+  const oldSt = Object.assign({}, st), oldCk = Object.assign({}, ck);
+  for (let i = 6; i <= 14; i++) {
+    delete st["s07-p" + i];
+    Object.keys(oldCk).forEach(function (k) { if (k.indexOf("s07-p" + i + "-c") === 0) delete ck[k]; });
+  }
+  for (let i = 9; i <= 14; i++) {
+    const from = "s07-p" + i, to = "s07-p" + (i - 3);
+    if (from in oldSt) st[to] = oldSt[from];
+    Object.keys(oldCk).forEach(function (k) {
+      if (k.indexOf(from + "-c") === 0) ck[to + k.slice(from.length)] = oldCk[k];
+    });
+  }
+  saveJSON(LS_STATUS, st); saveJSON(LS_CHECKS, ck);
+  try { localStorage.setItem(FLAG, "1"); } catch (e) {}
+})();
+
+/* One-time migration: "Build the cold-lead pre-qualification funnel" moved from
+   Sprint 07 (index 6) to the end of Sprint 09; Sprint 07's later items shift up. */
+(function migrateColdLeadFunnel() {
+  const FLAG = "optimind_dash_mig_2026_11_s09_coldlead";
+  try { if (localStorage.getItem(FLAG)) return; } catch (e) { return; }
+  const st = loadJSON(LS_STATUS), ck = loadJSON(LS_CHECKS);
+  const oldSt = Object.assign({}, st), oldCk = Object.assign({}, ck);
+  const pairs = [["s07-p6", "s09-p4"]];
+  for (let i = 7; i <= 11; i++) pairs.push(["s07-p" + i, "s07-p" + (i - 1)]);
+  pairs.forEach(function (pair) {
+    delete st[pair[0]];
+    Object.keys(oldCk).forEach(function (k) { if (k.indexOf(pair[0] + "-c") === 0) delete ck[k]; });
+  });
+  pairs.forEach(function (pair) {
+    const from = pair[0], to = pair[1];
+    if (from in oldSt) st[to] = oldSt[from];
+    Object.keys(oldCk).forEach(function (k) {
+      if (k.indexOf(from + "-c") === 0) ck[to + k.slice(from.length)] = oldCk[k];
+    });
+  });
+  saveJSON(LS_STATUS, st); saveJSON(LS_CHECKS, ck);
+  try { localStorage.setItem(FLAG, "1"); } catch (e) {}
+})();
+
+/* One-time migration: deleted "Bookkeeping decision-making" (Sprint 05 index 0),
+   "Choose automation tool, map workflows" (Sprint 09 index 3) and "Evaluate the
+   billing & recurring-invoice workflow" (Sprint 12 index 0); later items shift up. */
+(function migrateBookkeepingDeletions() {
+  const FLAG = "optimind_dash_mig_2026_11_bookkeeping_deletions";
+  try { if (localStorage.getItem(FLAG)) return; } catch (e) { return; }
+  const st = loadJSON(LS_STATUS), ck = loadJSON(LS_CHECKS);
+  const oldSt = Object.assign({}, st), oldCk = Object.assign({}, ck);
+  const pairs = [["s05-p0", null], ["s09-p3", null], ["s12-p0", null], ["s09-p4", "s09-p3"]];
+  for (let i = 1; i <= 5; i++) pairs.push(["s05-p" + i, "s05-p" + (i - 1)]);
+  pairs.forEach(function (pair) {
+    delete st[pair[0]];
+    Object.keys(oldCk).forEach(function (k) { if (k.indexOf(pair[0] + "-c") === 0) delete ck[k]; });
+  });
+  pairs.forEach(function (pair) {
+    const from = pair[0], to = pair[1];
+    if (!to) return;
+    if (from in oldSt) st[to] = oldSt[from];
+    Object.keys(oldCk).forEach(function (k) {
+      if (k.indexOf(from + "-c") === 0) ck[to + k.slice(from.length)] = oldCk[k];
+    });
+  });
+  saveJSON(LS_STATUS, st); saveJSON(LS_CHECKS, ck);
+  try { localStorage.setItem(FLAG, "1"); } catch (e) {}
+})();
+
 /* ---------- Backup / Restore ---------- */
 const BACKUP_KEYS = [LS_STATUS, LS_CHECKS, LS_RECS, "optimind_dash_sopchecks", "optimind_dash_onboardchecks", "optimind_dash_clients", "optimind_dash_clientdocs", "optimind_dash_docmeta"];
 

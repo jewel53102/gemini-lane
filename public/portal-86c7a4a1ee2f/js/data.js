@@ -151,7 +151,7 @@ const SPRINTS = [
           "Calendly's plan tier is confirmed to include Workflows — it's a paid-tier feature, so this is checked before building anything on top of it.",
           "A test Workflow is built and fires correctly on a real event type before it's relied on for parent-session reminders."
         ]},
-      { badge: "5th Priority", title: "Research automation tool", desc: "Evaluate native platform automation vs. a dedicated tool, against CRM and dashboard integration. Decision lands in Sprint 07.", tag: "Rec 6, Part 1 §02",
+      { badge: "5th Priority", title: "Research automation tool", desc: "Evaluate native platform automation vs. a dedicated tool, against CRM and dashboard integration.", tag: "Rec 6, Part 1 §02",
         doneWhen: [
           "A shortlist of automation tools is investigated — native platform automation versus a dedicated tool — evaluated against CRM and dashboard integration."
         ]},
@@ -218,15 +218,9 @@ const SPRINTS = [
     id: "05", dates: "Oct 14 – Nov 3, 2026", start: "2026-10-14", end: "2026-11-03",
     theme: "Marketing outreach", bigRock: "Email outreach starts bringing in new clients, and the systems behind it are ready for them",
     cost: 3000, meetings: "TBD",
-    goal: "This sprint sets up the things that bring on new clients: a six-month lead nurture workflow goes out through FloDesk, and invoicing goes self-service so new clients can start without card numbers taken by phone.",
+    goal: "This sprint sets up the things that bring on new clients: email templates and a workshop email blast, and the Monday build behind them.",
     priorities: [
-      { badge: "1st Priority", title: "Bookkeeping decision-making", desc: "Not a Gemini Lane deliverable — flagged here for your own awareness, and scheduled alongside the QuickBooks review above. Talk to your bookkeeper about moving to a monthly cadence and get a quote on what that would cost.", tag: "Part 1 §07",
-        doneWhen: [
-          "A conversation is had with your bookkeeper about the current balancing cadence.",
-          "A quote is in hand for monthly bookkeeping.",
-          "A decision is made on whether the cost is worth moving off the current cadence."
-        ]},
-      { badge: "2nd Priority", title: "Build and configure Monday.com — Part 2", desc: "Picks up from Part 1 in Sprint 04: refine the Monday build based on what the pilot clients and first migration turned up, finish the integrations and automations, and hand it over so Sarah and the team can run it day to day.", tag: "Rec 6, 16",
+      { badge: "1st Priority", title: "Build and configure Monday.com — Part 2", desc: "Picks up from Part 1 in Sprint 04: refine the Monday build based on what the pilot clients and first migration turned up, finish the integrations and automations, and hand it over so Sarah and the team can run it day to day.", tag: "Rec 6, 16",
         doneWhen: [
           "Boards, columns and views are adjusted based on the issues found with the Sprint 04 pilot clients and Migration Part 1.",
           "The Calendly, PandaDoc and FloDesk connections (native or via Zapier) are finished and tested on real records, so bookings, signed agreements and email activity show up on the client record without re-entry.",
@@ -234,25 +228,25 @@ const SPRINTS = [
           "Sarah and the team are walked through the build and can add a client, update a record and find a document without help.",
           "How the boards are set up and how to use them is written down and linked from the SOP Manual."
         ]},
-      { badge: "3rd Priority", title: "Save PandaDocs to Google Drive", desc: "Save OptiMind's PandaDoc documents to Google Drive, so there's a copy of each one outside PandaDoc.", tag: "New",
+      { badge: "2nd Priority", title: "Save PandaDocs to Google Drive", desc: "Save OptiMind's PandaDoc documents to Google Drive, so there's a copy of each one outside PandaDoc.", tag: "New",
         doneWhen: [
           "Every document in PandaDoc that needs to be kept is listed.",
           "Each one is downloaded from PandaDoc and saved in the right Google Drive folder.",
           "The saved copies are checked against the list, and each one opens from Drive."
         ]},
-      { badge: "4th Priority", title: "New email blast for Workshop", desc: "Create and send a new FloDesk email blast promoting the workshop.", tag: "New",
+      { badge: "3rd Priority", title: "New email blast for Workshop", desc: "Create and send a new FloDesk email blast promoting the workshop.", tag: "New",
         doneWhen: [
           "The workshop details, audience and send date are confirmed with Sarah.",
           "The email is drafted in FloDesk, reviewed and approved by Sarah, and test-sent.",
           "The email is sent to the agreed audience, with opt-outs excluded."
         ]},
-      { badge: "5th Priority", title: "Determine Email Templates", desc: "Decide on branding and general email template options for email blasts.", tag: "New",
+      { badge: "4th Priority", title: "Determine Email Templates", desc: "Decide on branding and general email template options for email blasts.", tag: "New",
         doneWhen: [
           "Branding for email blasts is decided with Sarah.",
           "General email template options are put together and reviewed with Sarah.",
           "The template or templates to use for email blasts are chosen."
         ]},
-      { badge: "6th Priority", title: "Update Main Dashboard in Monday", desc: "Update the Main Dashboard so that Sarah can access important client information without searching in multiple places for it.", tag: "New",
+      { badge: "5th Priority", title: "Update Main Dashboard in Monday", desc: "Update the Main Dashboard so that Sarah can access important client information without searching in multiple places for it.", tag: "New",
         doneWhen: [
           "The client information Sarah needs to see on the Main Dashboard is listed and agreed with her.",
           "The Main Dashboard is updated in Monday to show it.",
@@ -294,7 +288,7 @@ const SPRINTS = [
           "JotForms and the two spreadsheets are cancelled or archived. PandaDoc remains in use; the annual savings figure is recalculated without it and written down.",
           "Nothing is being entered in two places."
         ]},
-      { badge: "5th Priority", title: "Move SOPs into Monday — Part 1: link existing SOPs", desc: "Link the existing SOPs in Monday, so Sarah can open each one from there. Parts 2–5 follow in Sprints 07–10.", tag: "Rec 9",
+      { badge: "5th Priority", title: "Move SOPs into Monday — Part 1: link existing SOPs", desc: "Link the existing SOPs in Monday, so Sarah can open each one from there. Part 3 is also in this sprint; Parts 2, 4 and 5 follow in Sprints 07, 09 and 10.", tag: "Rec 9",
         doneWhen: [
           "Every SOP and reference document that exists today is listed, so nothing is missed.",
           "Each one is linked in Monday.",
@@ -330,6 +324,14 @@ const SPRINTS = [
           "Updating a redirect to a new version is tested, and the link works everywhere without anything else changing.",
           "The steps for updating a redirect when a document changes are written down and linked from the SOP Manual.",
           "The follow-up email links to the rate sheet's permanent link rather than attaching a file."
+        ]},
+      { badge: "10th Priority", title: "Move SOPs into Monday — Part 3: team and onboarding", desc: "Picks up from Part 1: move the documents a specialist needs to do the job into the Monday SOP library.", tag: "Rec 9",
+        doneWhen: [
+          "Moved this sprint: Role Definition & Responsibilities, Employee Reference Sheet, Internal Reference Sheet, Week-One Onboarding Schedule, and the Employee Decision List.",
+          "The team's Monday view shows these documents without them having to search the whole library.",
+          "Each document is either linked from Monday or recreated as a Monday doc, and which one is noted against it — a link where the original stays the source of truth, a new Monday doc where Sarah will edit it there.",
+          "Each one is filed in the right group of the Monday SOP library, named consistently, and opens from Monday in one click.",
+          "Sarah has found and opened each one from Monday herself, without help."
         ]}
     ]
   },
@@ -389,43 +391,12 @@ const SPRINTS = [
           "Each client record carries an intended \"next up\" module.",
           "It lives in one place and the whole picture is visible on one screen."
         ]},
-      { badge: "7th Priority", title: "Self-service card updates and automated invoicing", desc: "No more card numbers by phone; invoices generate from completed appointments, not a spreadsheet. Includes looking into Stripe as the invoicing and payment tool.", tag: "Rec 8",
-        doneWhen: [
-          "Stripe is evaluated for invoicing — fees (card and ACH), recurring billing, self-service card updates, and how it connects to QuickBooks, Monday and Calendly — and a decision to use it or not is written down.",
-          "Clients update their own card through a secure link; no card number is ever taken by voice again.",
-          "Invoices generate from completed appointments rather than from a spreadsheet.",
-          "Automatic payment reminders and a stated late-fee schedule apply without a manual decision each month.",
-          "ACH is published as the default option rather than offered on complaint.",
-          "Cancellations and no-shows are being recorded as data — early cancellations, late cancellations, and reschedules are each logged as distinct outcomes, not lumped into one \"cancelled\" bucket, per the No-Show & Cancellation Policy."
-        ]},
-      { badge: "8th Priority", title: "Review the QuickBooks tier and the subscription stack", desc: "Fifteen minutes with the CPA on whether the current tier is still the right one.", tag: "Rec 8",
-        doneWhen: [
-          "A decision on the QuickBooks tier, taken with your CPA.",
-          "Any tool the platform has replaced is cancelled rather than left running.",
-          "The Grammarly and Calendly line items are confirmed as monthly or annual."
-        ]},
-      { badge: "9th Priority", title: "Set up the quarterly P&L review", desc: "Decided: quarterly, with your CPA/bookkeeper, replacing the annual-only cadence that let pricing and cost problems surface up to twelve months late. Not a Gemini Lane deliverable.", tag: "Part 1 §07",
-        doneWhen: [
-          "A quarterly P&L review is on the calendar with the CPA/bookkeeper.",
-          "The first review is dated.",
-          "Review results feed the pricing and cost decisions they're meant to inform."
-        ]},
-      { badge: "10th Priority", title: "Build the cold-lead pre-qualification funnel", desc: "Lower priority. An explainer + landing page so cold leads self-qualify before thirty minutes with you.", tag: "Rec 21, Part 1 §03",
-        doneWhen: [
-          "A short explainer exists covering what the work is, who it's for, and what it costs.",
-          "A landing page hosts the explainer with a Calendly link to the consult beneath it.",
-          "Cold-lead inquiries route to the landing page automatically before a consult is booked."
-        ]},
-      { badge: "11th Priority", title: "Define the operations dashboard — Part 1", desc: "Scope the questions it must answer on one screen before building any widgets. Part 2 follows.", tag: "Rec 6, 8, 20",
+      { badge: "7th Priority", title: "Define the operations dashboard — Part 1", desc: "Scope the questions it must answer on one screen before building any widgets. Part 2 follows.", tag: "Rec 6, 8, 20",
         doneWhen: [
           "A written list of the questions it must answer on one screen.",
           "Each question is mapped to where the data will come from, and which are not yet capturable."
         ]},
-      { badge: "12th Priority", title: "Define the operations dashboard — Part 2", desc: "Picks up from Part 1: decide where the dashboard gets built, against the question list and data sources already mapped.", tag: "Rec 6, 8, 20",
-        doneWhen: [
-          "A decision on whether it is built inside the platform, in a spreadsheet, or in a reporting tool."
-        ]},
-      { badge: "13th Priority", title: "Move SOPs into Monday — Part 2: policies and agreements", desc: "Picks up from Part 1 in Sprint 06: move the client-facing policies, terms and agreements into the Monday SOP library.", tag: "Rec 9",
+      { badge: "8th Priority", title: "Move SOPs into Monday — Part 2: policies and agreements", desc: "Picks up from Part 1 in Sprint 06: move the client-facing policies, terms and agreements into the Monday SOP library.", tag: "Rec 9",
         doneWhen: [
           "Moved this sprint: No-Show & Cancellation Policy, Parent Terms of Service, New Client Service Agreement, Rate Sheet, Screening Protocol, Add-On Services Identification & Referral Process, and the Attorney Review Checklist.",
           "Contracts and the rate sheet use the permanent links set up in Sprint 06, so Monday never points at an out-of-date version.",
@@ -433,14 +404,14 @@ const SPRINTS = [
           "Each one is filed in the right group of the Monday SOP library, named consistently, and opens from Monday in one click.",
           "Sarah has found and opened each one from Monday herself, without help."
         ]},
-      { badge: "14th Priority", title: "Set up Podcast Promotion Email Blast", desc: "A new mass email sent through FloDesk to leads and clients, promoting Sarah's podcast.", tag: "Rec 13, 21",
+      { badge: "9th Priority", title: "Set up Podcast Promotion Email Blast", desc: "A new mass email sent through FloDesk to leads and clients, promoting Sarah's podcast.", tag: "Rec 13, 21",
         doneWhen: [
           "The send list of leads and clients is pulled together in FloDesk, with anyone who has opted out excluded.",
           "The email is drafted in FloDesk using the branded template, with a clear link to listen to the podcast, and reviewed and approved by Sarah before it goes out.",
           "A test send is checked for formatting, links and personalization before the real send.",
           "The blast is sent, and opens, clicks on the podcast link, and replies are reviewed afterward."
         ]},
-      { badge: "15th Priority", title: "Birthday tracking — clients & employees (manual, phase 1)", desc: "Capture a client's birthday at intake and text them on the day, so they know you're thinking of them. Run this by hand first; automate later once the pattern is proven.", tag: "New",
+      { badge: "10th Priority", title: "Birthday tracking — clients & employees (manual, phase 1)", desc: "Capture a client's birthday at intake and text them on the day, so they know you're thinking of them. Run this by hand first; automate later once the pattern is proven.", tag: "New",
         doneWhen: [
           "Birthday is a captured field in the intake session and saved to the client's record.",
           "The birthday is manually added to the owning specialist's working calendar, with a reminder on the day.",
@@ -450,7 +421,7 @@ const SPRINTS = [
           "The same process runs for employees, plus a reminder set 10 days ahead of their birthday to find and send a gift.",
           "A note records what volume or pattern would justify moving this from manual to an automation."
         ]},
-      { badge: "16th Priority", title: "Claude onboarding — retire Gamma", desc: "Moved up from the Sprint 09 AI-training slot: get Sarah working directly in Claude now, specifically so Gamma can be fully retired once the Rate Sheet's live-hosted-link migration (Sprint 06) lands.", tag: "Part 1 §06",
+      { badge: "11th Priority", title: "Claude onboarding — retire Gamma", desc: "Moved up from the Sprint 09 AI-training slot: get Sarah working directly in Claude now, specifically so Gamma can be fully retired once the Rate Sheet's live-hosted-link migration (Sprint 06) lands.", tag: "Part 1 §06",
         doneWhen: [
           "A short Claude onboarding session is held with Sarah, covering how to organize and update business content directly, without exporting from Gamma.",
           "The service-summary/rate-sheet content currently built in Gamma is recreated with Claude's help, in a form Sarah can edit and update herself.",
@@ -465,59 +436,36 @@ const SPRINTS = [
     cost: 2500, meetings: "TBD",
     goal: "Your best channel finally gets a system, a cadence and a number attached to it.",
     priorities: [
-      { badge: "1st Priority", title: "Choose automation tool, map workflows", desc: "The decision, plus mapping every process the tool will touch before anything gets built.", tag: "Rec 6, Part 1 §02",
-        doneWhen: [
-          "A written workflow map exists: every process to be automated, its trigger, its steps.",
-          "One automation tool is chosen and tested end to end before commitment.",
-          "The intake form → client folder pipeline is confirmed as native or as workflow one.",
-          "A build order is set, cheapest and least risky first.",
-          "Every workflow has a named owner and a documented trigger.",
-          "The build itself is scoped and quoted as outside work with a fixed acceptance test."
-        ]},
-      { badge: "2nd Priority", title: "Build workflow one — the onboarding sequence", desc: "Agreement, intake, scheduling and forms all fire from a single trigger.", tag: "Rec 6, Part 1 §06",
+      { badge: "1st Priority", title: "Build workflow one — the onboarding sequence", desc: "Agreement, intake, scheduling and forms all fire from a single trigger.", tag: "Rec 6, Part 1 §06",
         doneWhen: [
           "Agreement, intake scheduling, forms and client-record creation fire from one trigger.",
           "Agreement reminders are automatic.",
           "You have run one new client through it end to end without touching anything manually.",
           "It is documented in the workflow map with a named owner."
         ]},
-      { badge: "3rd Priority", title: "Basic analytics & channel tracking", desc: "GA + UTM tagging so a lead's source survives all the way to a booked consult.", tag: "Part 1 §03",
-        doneWhen: [
-          "Basic website analytics (Google Analytics or equivalent) is installed and confirmed working.",
-          "Every outbound marketing link carries a UTM tag identifying its source.",
-          "A booked consult can be traced back to the channel and, where applicable, the specific referral source that produced it."
-        ]},
-      { badge: "4th Priority", title: "Move SOPs into Monday — Part 3: team and onboarding", desc: "Picks up from Part 2 in Sprint 07: move the documents a specialist needs to do the job into the Monday SOP library.", tag: "Rec 9",
-        doneWhen: [
-          "Moved this sprint: Role Definition & Responsibilities, Employee Reference Sheet, Internal Reference Sheet, Week-One Onboarding Schedule, and the Employee Decision List.",
-          "The team's Monday view shows these documents without them having to search the whole library.",
-          "Each document is either linked from Monday or recreated as a Monday doc, and which one is noted against it — a link where the original stays the source of truth, a new Monday doc where Sarah will edit it there.",
-          "Each one is filed in the right group of the Monday SOP library, named consistently, and opens from Monday in one click.",
-          "Sarah has found and opened each one from Monday herself, without help."
-        ]},
-      { badge: "5th Priority", title: "Create a Graduation email", desc: "A congratulatory email sent to clients who have completed the program — marking the milestone, recapping what they've achieved, and letting them know how to stay in touch or come back if they need support later.", tag: "Rec 10",
+      { badge: "2nd Priority", title: "Create a Graduation email", desc: "A congratulatory email sent to clients who have completed the program — marking the milestone, recapping what they've achieved, and letting them know how to stay in touch or come back if they need support later.", tag: "Rec 10",
         doneWhen: [
           "The email is drafted using the branded template, and reviewed and approved by Sarah.",
           "It covers congratulations on completing the program, a short recap of what the client has achieved, and how to reach OptiMind if they need support again.",
           { text: "The email is set up to send when a client is marked as graduated, so nobody has to remember to send it.", note: "Provisional — graduation criteria are defined in Sprint 10, so revisit the trigger then." },
           "A test send is checked for formatting, links and personalization before it goes to a real client."
         ]},
-      { badge: "6th Priority", title: "Independent backup, tested", desc: "A sync service isn't a backup. Add one beyond Drive sync, and confirm it works by restoring a file.", tag: "Rec 5",
-        doneWhen: [
-          { text: "An independent backup of the client folder exists beyond Drive sync, and restoring one file has actually been tested.", note: "Escalated Aug 31 \u2014 the Data-Handling Policy now names Google Drive as the interim system of record, so this is the largest single risk in the data set until the dashboard lands. Cadence, restore verification and a target date are all still unset." }
-        ]},
-      { badge: "7th Priority", title: "Cancellation & billing tracking document", desc: "A dedicated document Sarah bills from — the calendar shows what happened to a session, this is where it gets billed or cleared.", tag: "Organization & Labeling Standards §7",
+      { badge: "3rd Priority", title: "Cancellation & billing tracking document", desc: "A dedicated document Sarah bills from — the calendar shows what happened to a session, this is where it gets billed or cleared.", tag: "Organization & Labeling Standards §7",
         doneWhen: [
           { text: "The document exists and is linked from the Organization & Labeling Standards SOP.", link: "sops/Organization-and-Labeling-Standards.html" },
           "It carries two lists: sessions billed (no-shows and late cancellations, outside the 24-hour window) and sessions not billed (cancelled within the policy window, or rescheduled).",
           "The workflow for adding an entry — who logs it, and when — is written down."
         ]},
-      { badge: "8th Priority", title: "Capture outreach efforts for each resource", desc: "Every outreach effort to a referral resource — provider, school or practice — gets logged against that resource's record in the referral register built in Sprint 03, so who was contacted, when and how never depends on memory.", tag: "Rec 11",
+      { badge: "4th Priority", title: "Capture outreach efforts for each resource", desc: "Every outreach effort to a referral resource — provider, school or practice — gets logged against that resource's record in the referral register built in Sprint 03, so who was contacted, when and how never depends on memory.", tag: "Rec 11",
         doneWhen: [
           "Each outreach effort — email, call, meeting, treat delivery or event — is logged against the resource's record in the referral register.",
           "Each entry records the date, the type of outreach, who on the team made it, and any response or next step.",
           "Every resource record shows its last contact and next planned contact, updated from the outreach log rather than by hand.",
           "The logging process — who logs it, and when — is written down so the record stays current as outreach scales."
+        ]},
+      { badge: "5th Priority", title: "Define the operations dashboard — Part 2", desc: "Picks up from Part 1: decide where the dashboard gets built, against the question list and data sources already mapped.", tag: "Rec 6, 8, 20",
+        doneWhen: [
+          "A decision on whether it is built inside the platform, in a spreadsheet, or in a reporting tool."
         ]}
     ]
   },
@@ -533,7 +481,7 @@ const SPRINTS = [
           "Separate Projects exist for each business, with chats filed into the correct one going forward.",
           "Both of them can explain how Markdown files and Projects keep the two businesses' information apart."
         ]},
-      { badge: "2nd Priority", title: "Move SOPs into Monday — Part 4: client resources and forms", desc: "Picks up from Part 3 in Sprint 08: move the client resource documents, intake forms and brand standards into the Monday SOP library.", tag: "Rec 9",
+      { badge: "2nd Priority", title: "Move SOPs into Monday — Part 4: client resources and forms", desc: "Picks up from Part 2 in Sprint 07: move the client resource documents, intake forms and brand standards into the Monday SOP library.", tag: "Rec 9",
         doneWhen: [
           "Moved this sprint: the new-client and established-client resource documents from the Client Resources page, the New Client Intake Form, and the document-collection checklist.",
           "Also moved: Organization & Labeling Standards, the OptiMind Style Guide, and the logos and email signature files.",
@@ -550,6 +498,12 @@ const SPRINTS = [
           "A rule is set for when a lead leaves the workflow — booking a consult, becoming a client, or unsubscribing — so nobody keeps getting lead emails after they convert or opt out.",
           "The workflow is tested end to end, including the loop back to the first email, before real leads are added.",
           "Leads are being added to the workflow automatically, and opens, clicks and bookings are reviewed after the first few sends."
+        ]},
+      { badge: "4th Priority", title: "Build the cold-lead pre-qualification funnel", desc: "Lower priority. An explainer + landing page so cold leads self-qualify before thirty minutes with you.", tag: "Rec 21, Part 1 §03",
+        doneWhen: [
+          "A short explainer exists covering what the work is, who it's for, and what it costs.",
+          "A landing page hosts the explainer with a Calendly link to the consult beneath it.",
+          "Cold-lead inquiries route to the landing page automatically before a consult is booked."
         ]}
     ]
   },
@@ -587,6 +541,16 @@ const SPRINTS = [
           "Each document is either linked from Monday or recreated as a Monday doc, and which one is noted against it — a link where the original stays the source of truth, a new Monday doc where Sarah will edit it there.",
           "Each one is filed in the right group of the Monday SOP library, named consistently, and opens from Monday in one click.",
           "Sarah has found and opened each one from Monday herself, without help."
+        ]},
+      { badge: "5th Priority", title: "Basic analytics & channel tracking", desc: "GA + UTM tagging so a lead's source survives all the way to a booked consult.", tag: "Part 1 §03",
+        doneWhen: [
+          "Basic website analytics (Google Analytics or equivalent) is installed and confirmed working.",
+          "Every outbound marketing link carries a UTM tag identifying its source.",
+          "A booked consult can be traced back to the channel and, where applicable, the specific referral source that produced it."
+        ]},
+      { badge: "6th Priority", title: "Independent backup, tested", desc: "A sync service isn't a backup. Add one beyond Drive sync, and confirm it works by restoring a file.", tag: "Rec 5",
+        doneWhen: [
+          { text: "An independent backup of the client folder exists beyond Drive sync, and restoring one file has actually been tested.", note: "Escalated Aug 31 \u2014 the Data-Handling Policy now names Google Drive as the interim system of record, so this is the largest single risk in the data set until the dashboard lands. Cadence, restore verification and a target date are all still unset." }
         ]}
     ]
   },
@@ -631,17 +595,10 @@ const SPRINTS = [
   },
   {
     id: "12", dates: "Q1 2027", start: "2027-02-24", end: "2027-04-28",
-    theme: "Billing workflow review", bigRock: "Confirm the billing workflow before it's locked into the new platform",
+    theme: "TBD", bigRock: "TBD",
     cost: 2000, meetings: "TBD",
-    goal: "Before the Practice Management platform is locked in as the long-term home for billing, confirm it actually makes recurring billing and client invoicing easier — not just scheduling and notes.",
-    priorities: [
-      { badge: "1st Priority", title: "Evaluate the billing & recurring-invoice workflow", desc: "Lower priority than the rest of this roadmap, but worth a dedicated look once the platform chosen in Sprint 03 has been in use for a while: how well does it handle recurring billing, and how easy is it to actually get a bill in front of a client, compared to the current QuickBooks-plus-card-on-file setup?", tag: "Part 1 §07",
-        doneWhen: [
-          "The platform's recurring-billing workflow is tested against a real client's schedule.",
-          "The steps to send a one-off or updated bill to a client are documented and timed.",
-          "A written decision: keep billing in QuickBooks, or move it into the new platform."
-        ]}
-    ]
+    goal: "TBD",
+    priorities: []
   }
 ];
 
