@@ -450,20 +450,14 @@ const SPRINTS = [
           { text: "The email is set up to send when a client is marked as graduated, so nobody has to remember to send it.", note: "Provisional — graduation criteria are defined in Sprint 10, so revisit the trigger then." },
           "A test send is checked for formatting, links and personalization before it goes to a real client."
         ]},
-      { badge: "3rd Priority", title: "Cancellation & billing tracking document", desc: "A dedicated document Sarah bills from — the calendar shows what happened to a session, this is where it gets billed or cleared.", tag: "Organization & Labeling Standards §7",
-        doneWhen: [
-          { text: "The document exists and is linked from the Organization & Labeling Standards SOP.", link: "sops/Organization-and-Labeling-Standards.html" },
-          "It carries two lists: sessions billed (no-shows and late cancellations, outside the 24-hour window) and sessions not billed (cancelled within the policy window, or rescheduled).",
-          "The workflow for adding an entry — who logs it, and when — is written down."
-        ]},
-      { badge: "4th Priority", title: "Capture outreach efforts for each resource", desc: "Every outreach effort to a referral resource — provider, school or practice — gets logged against that resource's record in the referral register built in Sprint 03, so who was contacted, when and how never depends on memory.", tag: "Rec 11",
+      { badge: "3rd Priority", title: "Capture outreach efforts for each resource", desc: "Every outreach effort to a referral resource — provider, school or practice — gets logged against that resource's record in the referral register built in Sprint 03, so who was contacted, when and how never depends on memory.", tag: "Rec 11",
         doneWhen: [
           "Each outreach effort — email, call, meeting, treat delivery or event — is logged against the resource's record in the referral register.",
           "Each entry records the date, the type of outreach, who on the team made it, and any response or next step.",
           "Every resource record shows its last contact and next planned contact, updated from the outreach log rather than by hand.",
           "The logging process — who logs it, and when — is written down so the record stays current as outreach scales."
         ]},
-      { badge: "5th Priority", title: "Define the operations dashboard — Part 2", desc: "Picks up from Part 1: decide where the dashboard gets built, against the question list and data sources already mapped.", tag: "Rec 6, 8, 20",
+      { badge: "4th Priority", title: "Define the operations dashboard — Part 2", desc: "Picks up from Part 1: decide where the dashboard gets built, against the question list and data sources already mapped.", tag: "Rec 6, 8, 20",
         doneWhen: [
           "A decision on whether it is built inside the platform, in a spreadsheet, or in a reporting tool."
         ]}
@@ -535,7 +529,7 @@ const SPRINTS = [
         ]},
       { badge: "4th Priority", title: "Move SOPs into Monday — Part 5: remaining documents and final check", desc: "Picks up from Part 4 in Sprint 09: move anything still left, including SOPs written during the engagement, and confirm every item has a place in Monday before the engagement ends.", tag: "Rec 9",
         doneWhen: [
-          "Moved this sprint: anything written or captured since Part 1 — the how-to capture guides, the cancellation & billing tracking document, the data-handling policy, and the automation workflow documentation.",
+          "Moved this sprint: anything written or captured since Part 1 — the how-to capture guides, the data-handling policy, and the automation workflow documentation.",
           "The full list from Part 1 is checked line by line: every item is in the Monday SOP library, and nothing exists only in Drive, the dashboard or a folder.",
           "Sarah is walked through the whole library, and a rule is written down for where new SOPs go and who files them, so it stays complete after the engagement ends.",
           "Each document is either linked from Monday or recreated as a Monday doc, and which one is noted against it — a link where the original stays the source of truth, a new Monday doc where Sarah will edit it there.",
