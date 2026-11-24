@@ -200,11 +200,11 @@ const SPRINTS = [
           "A short list exists of what did not work, and whether each is a configuration problem or a product limitation.",
           "A go / no-go decision on migrating the existing caseload has been made and written down."
         ]},
-      { badge: "5th Priority", title: "Migrate the existing caseload — Part 1", desc: "In two parts, not one weekend. Your new hire can take a share as a way to learn the base. Part 2 follows in Sprint 05.", tag: "Rec 6",
+      { badge: "5th Priority", title: "Migrate the existing caseload — Part 1", desc: "In two parts, not one weekend. Your new hire can take a share as a way to learn the base. The migration continues in the Nov 4–10 buffer.", tag: "Rec 6",
         doneWhen: [
           "The first group of active clients is fully live on the platform, with history, documents and curriculum coverage carried over.",
           "Nothing is being maintained in two places for those clients.",
-          "A written issues list from Part 1 exists before Part 2 starts."
+          "A written issues list from Part 1 exists before the migration continues."
         ]},
       { badge: "6th Priority", title: "Three-touch follow-up for leads who go quiet", desc: "Automated day 2 / 7 / 21 sequence — \"very leaky\" today, by Sarah's own description.", tag: "Rec 13",
         doneWhen: [
@@ -282,41 +282,27 @@ const SPRINTS = [
           "JotForms and the two spreadsheets are cancelled or archived. PandaDoc remains in use; the annual savings figure is recalculated without it and written down.",
           "Nothing is being entered in two places."
         ]},
-      { badge: "5th Priority", title: "Claude onboarding — retire Gamma", desc: "Moved up from the Sprint 09 AI-training slot: get Sarah working directly in Claude now, specifically so Gamma can be fully retired once the Rate Sheet's live-hosted-link migration (Buffer, Nov 4–10) lands.", tag: "Part 1 §06",
+      { badge: "5th Priority", title: "Move SOPs into Monday — Part 1: link existing SOPs", desc: "Link the existing SOPs in Monday, so Sarah can open each one from there. Parts 2–5 follow in Sprints 07–10.", tag: "Rec 9",
         doneWhen: [
-          "A short Claude onboarding session is held with Sarah, covering how to organize and update business content directly, without exporting from Gamma.",
-          "The service-summary/rate-sheet content currently built in Gamma is recreated with Claude's help, in a form Sarah can edit and update herself.",
-          "Gamma is cancelled once the recreated content is confirmed working and linked from the live Rate Sheet URL.",
-          "Any other content still produced in Gamma is inventoried, so nothing is silently orphaned when the subscription is cancelled."
-        ]},
-      { badge: "6th Priority", title: "Move SOPs into Monday — Part 1: library setup and client workflow", desc: "Set up one SOP library in Monday that every SOP, policy and reference document will live in, then move the core client workflow documents in first. Parts 2–5 follow in Sprints 07–10, so by the end every item has a place in Monday Sarah can find and use easily.", tag: "Rec 9",
-        doneWhen: [
-          "An SOP library is set up in Monday with groups for each type of document — client workflow, policies and agreements, team and onboarding, client resources and forms, brand and standards — and a column for each document's owner, last-reviewed date and whether it's a link or a Monday doc.",
-          "Every SOP and reference document that exists today is listed in the library, even before it's moved, so nothing is missed in later parts.",
-          "Moved this sprint: Client Workflow — Intake to Graduation, the Checklists, and Curriculum by Client Type.",
-          "Each document is either linked from Monday or recreated as a Monday doc, and which one is noted against it — a link where the original stays the source of truth, a new Monday doc where Sarah will edit it there.",
-          "Each one is filed in the right group of the Monday SOP library, named consistently, and opens from Monday in one click.",
+          "Every SOP and reference document that exists today is listed, so nothing is missed.",
+          "Each one is linked in Monday.",
+          "Each link opens the current version from Monday in one click.",
           "Sarah has found and opened each one from Monday herself, without help."
         ]},
-      { badge: "7th Priority", title: "Update the Contracts and the Welcome Email functionality", desc: "Bring the service agreement contracts and the welcome email up to date, so a newly signed client gets the current contract and the right welcome email fires once it's signed.", tag: "Workflow §3–4",
+      { badge: "6th Priority", title: "Update the Contracts and the Welcome Email functionality", desc: "Bring the service agreement contracts and the welcome email up to date, so a newly signed client gets the current contract and the right welcome email fires once it's signed.", tag: "Workflow §3–4",
         doneWhen: [
           { text: "The contracts are updated to their current versions, and the updates are confirmed with Sarah.", link: "OptiMind-Onboarding-Automation-Workflow.html#service-agreement" },
           { text: "The welcome email's content is updated, and it reconfirms the client's recurring session times and scheduled intake.", link: "OptiMind-Onboarding-Automation-Workflow.html#email-2" },
           { text: "The welcome email fires automatically once the contract is signed.", link: "OptiMind-Onboarding-Automation-Workflow.html#email-2" },
           "The flow is tested end to end, from a contract being sent and signed to the welcome email arriving, before it's used with a real client."
         ]},
-      { badge: "8th Priority", title: "Define the operations dashboard — Part 1", desc: "Scope the questions it must answer on one screen before building any widgets. Part 2 follows in Sprint 07.", tag: "Rec 6, 8, 20",
-        doneWhen: [
-          "A written list of the questions it must answer on one screen.",
-          "Each question is mapped to where the data will come from, and which are not yet capturable."
-        ]},
-      { badge: "9th Priority", title: "Permissions set-up for Employee in Monday", desc: "Set up the employee's access in Monday so they can see and edit what their role needs, and nothing beyond it.", tag: "New",
+      { badge: "7th Priority", title: "Permissions set-up for Employee in Monday", desc: "Set up the employee's access in Monday so they can see and edit what their role needs, and nothing beyond it.", tag: "New",
         doneWhen: [
           "What the employee needs to view, edit and not see in Monday is listed and agreed with Sarah.",
           "The employee's Monday account is set up with those permissions applied.",
           "Access is tested from the employee's login: they can open and edit what they need, and can't see what's restricted."
         ]},
-      { badge: "10th Priority", title: "Add Curriculum schedule to Monday", desc: "Add the curriculum schedule to Monday so it can be found and used alongside the client records.", tag: "New",
+      { badge: "8th Priority", title: "Add Curriculum schedule to Monday", desc: "Add the curriculum schedule to Monday so it can be found and used alongside the client records.", tag: "New",
         doneWhen: [
           "The current curriculum schedule is confirmed with Sarah.",
           "The schedule is added to Monday.",
@@ -407,11 +393,16 @@ const SPRINTS = [
           "A landing page hosts the explainer with a Calendly link to the consult beneath it.",
           "Cold-lead inquiries route to the landing page automatically before a consult is booked."
         ]},
-      { badge: "11th Priority", title: "Define the operations dashboard — Part 2", desc: "Picks up from Part 1 in the Nov 4–10 buffer: decide where the dashboard gets built, against the question list and data sources already mapped.", tag: "Rec 6, 8, 20",
+      { badge: "11th Priority", title: "Define the operations dashboard — Part 1", desc: "Scope the questions it must answer on one screen before building any widgets. Part 2 follows.", tag: "Rec 6, 8, 20",
+        doneWhen: [
+          "A written list of the questions it must answer on one screen.",
+          "Each question is mapped to where the data will come from, and which are not yet capturable."
+        ]},
+      { badge: "12th Priority", title: "Define the operations dashboard — Part 2", desc: "Picks up from Part 1: decide where the dashboard gets built, against the question list and data sources already mapped.", tag: "Rec 6, 8, 20",
         doneWhen: [
           "A decision on whether it is built inside the platform, in a spreadsheet, or in a reporting tool."
         ]},
-      { badge: "12th Priority", title: "Move SOPs into Monday — Part 2: policies and agreements", desc: "Picks up from Part 1 in Sprint 06: move the client-facing policies, terms and agreements into the Monday SOP library.", tag: "Rec 9",
+      { badge: "13th Priority", title: "Move SOPs into Monday — Part 2: policies and agreements", desc: "Picks up from Part 1 in Sprint 06: move the client-facing policies, terms and agreements into the Monday SOP library.", tag: "Rec 9",
         doneWhen: [
           "Moved this sprint: No-Show & Cancellation Policy, Parent Terms of Service, New Client Service Agreement, Rate Sheet, Screening Protocol, Add-On Services Identification & Referral Process, and the Attorney Review Checklist.",
           "Contracts and the rate sheet use the permanent links set up in the Nov 4–10 buffer, so Monday never points at an out-of-date version.",
@@ -419,14 +410,14 @@ const SPRINTS = [
           "Each one is filed in the right group of the Monday SOP library, named consistently, and opens from Monday in one click.",
           "Sarah has found and opened each one from Monday herself, without help."
         ]},
-      { badge: "13th Priority", title: "Set up Podcast Promotion Email Blast", desc: "A new mass email sent through FloDesk to leads and clients, promoting Sarah's podcast.", tag: "Rec 13, 21",
+      { badge: "14th Priority", title: "Set up Podcast Promotion Email Blast", desc: "A new mass email sent through FloDesk to leads and clients, promoting Sarah's podcast.", tag: "Rec 13, 21",
         doneWhen: [
           "The send list of leads and clients is pulled together in FloDesk, with anyone who has opted out excluded.",
           "The email is drafted in FloDesk using the branded template, with a clear link to listen to the podcast, and reviewed and approved by Sarah before it goes out.",
           "A test send is checked for formatting, links and personalization before the real send.",
           "The blast is sent, and opens, clicks on the podcast link, and replies are reviewed afterward."
         ]},
-      { badge: "14th Priority", title: "Birthday tracking — clients & employees (manual, phase 1)", desc: "Capture a client's birthday at intake and text them on the day, so they know you're thinking of them. Run this by hand first; automate later once the pattern is proven.", tag: "New",
+      { badge: "15th Priority", title: "Birthday tracking — clients & employees (manual, phase 1)", desc: "Capture a client's birthday at intake and text them on the day, so they know you're thinking of them. Run this by hand first; automate later once the pattern is proven.", tag: "New",
         doneWhen: [
           "Birthday is a captured field in the intake session and saved to the client's record.",
           "The birthday is manually added to the owning specialist's working calendar, with a reminder on the day.",
@@ -435,6 +426,13 @@ const SPRINTS = [
           "When a client fully graduates, they're removed from the calendar and the text list — no stale reminders firing after the relationship ends.",
           "The same process runs for employees, plus a reminder set 10 days ahead of their birthday to find and send a gift.",
           "A note records what volume or pattern would justify moving this from manual to an automation."
+        ]},
+      { badge: "16th Priority", title: "Claude onboarding — retire Gamma", desc: "Moved up from the Sprint 09 AI-training slot: get Sarah working directly in Claude now, specifically so Gamma can be fully retired once the Rate Sheet's live-hosted-link migration (Buffer, Nov 4–10) lands.", tag: "Part 1 §06",
+        doneWhen: [
+          "A short Claude onboarding session is held with Sarah, covering how to organize and update business content directly, without exporting from Gamma.",
+          "The service-summary/rate-sheet content currently built in Gamma is recreated with Claude's help, in a form Sarah can edit and update herself.",
+          "Gamma is cancelled once the recreated content is confirmed working and linked from the live Rate Sheet URL.",
+          "Any other content still produced in Gamma is inventoried, so nothing is silently orphaned when the subscription is cancelled."
         ]}
     ]
   },
@@ -643,7 +641,7 @@ const BUFFERS = [
           "The steps for updating a redirect when a document changes are written down and linked from the SOP Manual.",
           "The follow-up email links to the rate sheet's permanent link rather than attaching a file."
         ]},
-      { badge: "2nd Priority", title: "Migrate the existing caseload — Part 2", desc: "Picks up from Part 1 in Sprint 04, with its issues list applied first. Your new hire can take a share as a way to learn the base.", tag: "Rec 6",
+      { badge: "2nd Priority", title: "Continue to Migrate the existing caseload into Monday", desc: "Picks up from Part 1 in Sprint 04, with its issues list applied first. Your new hire can take a share as a way to learn the base.", tag: "Rec 6",
         doneWhen: [
           "The issues list from Part 1 is applied before any more clients move.",
           "The next group of active clients is fully live on the platform, with history, documents and curriculum coverage carried over.",
@@ -676,12 +674,6 @@ const BUFFERS = [
           "How session notes are written and stored today is walked through with Sarah.",
           "Options for getting notes into the Monday client record are listed, such as an AI notetaker writing in directly, a Zapier step, or a Monday doc template, along with what each needs.",
           "A preferred approach is picked, with any open questions written down to carry into Sprint 06."
-        ]},
-      { badge: "7th Priority", title: "Link SOPs into Monday", desc: "Link the existing SOPs into Monday so each one can be opened from there.", tag: "New",
-        doneWhen: [
-          "The SOPs to be linked are listed.",
-          "Each SOP on the list is linked in Monday.",
-          "Every link is tested and opens the current version of the SOP."
         ]}
     ]
   },

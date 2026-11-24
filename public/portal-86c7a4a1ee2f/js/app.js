@@ -369,6 +369,49 @@ function setRecStatus(n, status) {
   try { localStorage.setItem(FLAG, "1"); } catch (e) {}
 })();
 
+/* One-time migration: from Sprint 06, "Claude onboarding — retire Gamma" (index 4)
+   moved to the end of Sprint 07 and "Define the operations dashboard — Part 1"
+   (index 7) moved to Sprint 07 just ahead of Part 2. "Move SOPs into Monday —
+   Part 1" was rescoped to linking only; its two surviving steps keep their checks. */
+(function migrateNov24Batch2() {
+  const FLAG = "optimind_dash_mig_2026_11_s06_s07_batch2";
+  try { if (localStorage.getItem(FLAG)) return; } catch (e) { return; }
+  const st = loadJSON(LS_STATUS), ck = loadJSON(LS_CHECKS);
+  const oldSt = Object.assign({}, st), oldCk = Object.assign({}, ck);
+  const moves = [
+    ["s06-p4", "s07-p15"], ["s06-p5", "s06-p4", { 1: 0, 5: 3 }], ["s06-p6", "s06-p5"],
+    ["s06-p7", "s07-p10"], ["s06-p8", "s06-p6"], ["s06-p9", "s06-p7"],
+    ["s07-p10", "s07-p11"], ["s07-p11", "s07-p12"], ["s07-p12", "s07-p13"], ["s07-p13", "s07-p14"]
+  ];
+  moves.forEach(function (m) {
+    delete st[m[0]];
+    Object.keys(oldCk).forEach(function (k) { if (k.indexOf(m[0] + "-c") === 0) delete ck[k]; });
+  });
+  moves.forEach(function (m) {
+    if (m[0] in oldSt) st[m[1]] = oldSt[m[0]];
+    Object.keys(oldCk).forEach(function (k) {
+      if (k.indexOf(m[0] + "-c") !== 0) return;
+      const c = k.slice(m[0].length + 2);
+      const nc = m[2] ? m[2][c] : c;
+      if (nc !== undefined) ck[m[1] + "-c" + nc] = oldCk[k];
+    });
+  });
+  saveJSON(LS_STATUS, st); saveJSON(LS_CHECKS, ck);
+  try { localStorage.setItem(FLAG, "1"); } catch (e) {}
+})();
+
+/* One-time cleanup: Buffer B1's "Link SOPs into Monday" (index 6, last) was removed
+   as a duplicate of Sprint 06's "Move SOPs into Monday — Part 1". */
+(function removeBufferLinkSops() {
+  const FLAG = "optimind_dash_mig_2026_11_b1_rm_linksops";
+  try { if (localStorage.getItem(FLAG)) return; } catch (e) { return; }
+  const st = loadJSON(LS_STATUS), ck = loadJSON(LS_CHECKS);
+  delete st["sB1-p6"];
+  Object.keys(ck).forEach(function (k) { if (k.indexOf("sB1-p6-c") === 0) delete ck[k]; });
+  saveJSON(LS_STATUS, st); saveJSON(LS_CHECKS, ck);
+  try { localStorage.setItem(FLAG, "1"); } catch (e) {}
+})();
+
 /* ---------- Backup / Restore ---------- */
 const BACKUP_KEYS = [LS_STATUS, LS_CHECKS, LS_RECS, "optimind_dash_sopchecks", "optimind_dash_onboardchecks", "optimind_dash_clients", "optimind_dash_clientdocs", "optimind_dash_docmeta"];
 
